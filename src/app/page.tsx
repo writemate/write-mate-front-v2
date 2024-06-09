@@ -3,6 +3,7 @@ import Header from '@/components/Header';
 import { MainContainer } from '@/styles';
 import * as Style from '@/styles/Home.styles';
 import Link from 'next/link';
+import Background1 from '@/assets/home/background1.svg';
 
 export default function Home() {
   return (
@@ -14,11 +15,12 @@ export default function Home() {
           <Style.TopTitle color>더욱 쉽게</Style.TopTitle>
           <Style.SubTitle><b>라이트메이트</b>와 함께 빠르고 간편한 웹소설 창작을 시작하세요.</Style.SubTitle>
         </div>
-          <Style.LoginButton>
-            <Link href="/signup">
-              무료로 시작하기
-            </Link>
-          </Style.LoginButton>
+        <Style.LoginButton>
+          <Link href="/signup">무료로 시작하기</Link>
+        </Style.LoginButton>
+        <div style={{width:"100%", position:"relative"}}>
+          <Background1/>
+        </div>
       </MainContainer>
     </>
   );
