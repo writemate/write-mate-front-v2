@@ -101,6 +101,7 @@ export const MainContainer = styled.main<{ $background?: string, $flexdirection?
   width: 100%;
   display: flex;
   flex-direction: ${props => props.$flexdirection || 'column'};
+  align-items: center;
   background: ${props => props.$background || 'none'};
   gap: 20px;
   flex-wrap: wrap;
