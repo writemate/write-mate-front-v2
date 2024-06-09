@@ -12,7 +12,9 @@ export default function Header() {
             <RightMenuButton title="서비스 소개">서비스 소개</RightMenuButton>
             <StartButton tagName='button'
                 eventType={signupAtHeader.type} eventProperties={signupAtHeader.generateProperties()}>
-                무료로 시작하기
+                <Link href="/signup">
+                    무료로 시작하기
+                </Link>
             </StartButton>
         </HeaderContainer>
     );
