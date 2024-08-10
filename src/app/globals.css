@@ -1,7 +1,8 @@
 @import url(https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap);
 
 :root {
-  --main-color: #ff6600;
+  --main-color: rgb(197 88 88);
+  --main-color-dark: rgb(197 88 88 / 0.8);
   --text-color: #4e4e4e;
   --important-text-color: rgb(31, 35, 40);
   --muted-text-color: rgb(101, 109, 118);
