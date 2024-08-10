@@ -36,6 +36,23 @@ export const LoginButton = styled.button`
     transition: all 0.3s;
 `;
 
+export const UserContainer = styled.div`
+    ${FlexColumnCenter};
+    gap: 1rem;
+    margin-top: 2rem;
+    position: relative;
+    padding: 5rem 0;
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        width: 100vw;
+        height: 100%;
+        background: rgb(226 232 240 / 0.4);
+        z-index: -1;
+    }
+`;
+
 export const FeatureContainer = styled.div<{ $background?: boolean }>`
     ${FlexRowCenter};
     position: relative;
@@ -47,7 +64,7 @@ export const FeatureContainer = styled.div<{ $background?: boolean }>`
         top: 0;
         width: 100vw;
         height: 100%;
-        background: ${({ $background }) => $background ? "#eaeaea" : "white"};
+        background: ${({ $background }) => $background ? "rgb(226 232 240 / 0.4)" : "white"};
         z-index: -1;
     }
 `;
@@ -60,8 +77,12 @@ export const FeatureTitle = styled.h2<{ $color?: boolean }>`
 `;
 
 //color면 #d65554에서 #ff7d7e로 그라데이션
-export const ColorableText = styled.span<{ $color?: boolean }>`
+export const ColorableText = styled.span<{ $color?: boolean, $isBig?:boolean }>`
     ${({ $color }) => !$color ? "color: black;" : `color: transparent; background: linear-gradient(90deg, #d65554, #ff7d7e); -webkit-background-clip: text; background-clip: text;`}
+    ${({ $isBig }) => $isBig ? `
+        font-size: 6rem;
+        font-weight: 500;
+    ` : ""}
 `;
 
 export const BoldableText = styled.span<{ $bold?: boolean }>`
@@ -135,5 +156,15 @@ export const FeatureComment = styled.div<{ $position: 'left' | 'right' }>`
             border-right: 0;
         `}
         
+    }
+`;
+
+export const CounterContainer = styled.div`
+    ${FlexRowCenter};
+    gap: 10rem;
+    margin-top: 2rem;
+    > div {
+        ${FlexColumnCenter};
+        gap: 0.5rem;
     }
 `;
