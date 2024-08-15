@@ -1,33 +1,17 @@
 'use client';
 import "./globals.css";
-import { HeadScripts } from "@/utils/HeadScripts";
+import { HeadScripts } from "@/components/HeadScripts";
 import StyledComponentsRegistry from "@/utils/StyledComponentsRegistry";
-import { usePathname } from 'next/navigation';
-import { useEffect } from 'react';
-import { debounce } from '@/utils';
-import { resizeEvent } from '@/utils/googleAnalytics/eventList';
-import { event, handleRouteChange } from "@/utils/gtag";
+import useInitGoogleAnalytics from "@/hooks/useInitGoogleAnalytics";
+import useInitLogin from "@/hooks/useInitLogin";
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const pathname = usePathname();
-  useEffect(() => {
-    handleRouteChange(pathname);
-  }, [pathname]);
-
-  const handleResize = debounce(() => {
-    event({ type: resizeEvent.type, properties: resizeEvent.generateProperties() });
-  }, 1000);
-
-  useEffect(() => {
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+  useInitGoogleAnalytics();
+  useInitLogin();
 
   return (
     <html lang="ko">
