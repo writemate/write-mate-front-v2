@@ -1,10 +1,10 @@
 'use client';
 import { useEffect } from 'react';
+import { useLogin } from '@/stores/useLogin';
 
 function useInitLogin() {
-    useEffect(() => {
-        console.log('useInitLogin');
-    }, []);
+  const checkLogin = useLogin((state) => state.checkLogin);
+  useEffect(() => checkLogin(), []);
 }
 
 export default useInitLogin;
