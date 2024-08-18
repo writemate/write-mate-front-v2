@@ -11,6 +11,14 @@ const nextConfig = {
     
         return config;
     },
+    async rewrites() {
+        return [
+        {
+            source: '/api/:path*',
+            destination: 'https://fuk1eiks47.execute-api.ap-northeast-2.amazonaws.com/dev/:path*',
+        },
+        ];
+    },
 };
 
 export default nextConfig;
