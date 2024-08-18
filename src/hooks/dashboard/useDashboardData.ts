@@ -1,15 +1,28 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { dashboardQueryKeys } from "@/utils/APIs/queryKeys";
-import { getWorkStudio } from "@/utils/APIs/dashboard";
+import { getWorkStudio, addWorkStudio } from "@/utils/APIs/dashboard";
 
 export default function useDashboardData() {
-  const { data: workStudio, error, isLoading } = useQuery({
+  const queryClient = useQueryClient();
+  const { data, error, isLoading } = useQuery({
     queryKey: dashboardQueryKeys.workStudio(),
     queryFn: getWorkStudio,
   });
 
+  const { mutate, isPending: isAdding } = useMutation({
+    mutationFn: addWorkStudio,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: dashboardQueryKeys.workStudio(),
+      });
+    }
+  });
+
+
   return {
-    workStudio,
+    data,
+    mutate,
+    isAdding,
     error,
     isLoading,
   };
