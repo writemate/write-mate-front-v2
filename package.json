@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.51.23",
     "@types/gtag.js": "^0.0.20",
     "axios": "^1.7.2",
     "firebase": "^10.12.5",
