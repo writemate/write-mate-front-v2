@@ -1,6 +1,6 @@
 'use client';
 import { styled } from 'styled-components';
-import { clickable, FlexColumnCenter, FlexColumnLeftStart, FlexRowCenter } from '..';
+import { clickable, FlexColumnCenter, FlexColumnLeftStart, FlexRowCenter } from '@/styles';
 import { GtagForClick } from '@/utils/GtagForClick';
 import Image from 'next/image';
 import Link from 'next/link';
