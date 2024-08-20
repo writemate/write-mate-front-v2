@@ -1,6 +1,6 @@
 'use client';
 import { styled } from 'styled-components';
-import { clickable } from '.';
+import { clickable } from '@/styles';
 import { GtagForClick } from '@/utils/GtagForClick';
 
 export const HeaderContainer = styled.header`

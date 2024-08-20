@@ -1,4 +1,4 @@
-import * as Style from '@/styles/Home.styles';
+import * as Style from '@/styles/home/Home.styles';
 import Link from 'next/link';
 
 export default function StartPage() {
