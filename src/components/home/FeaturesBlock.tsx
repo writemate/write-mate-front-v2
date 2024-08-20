@@ -2,7 +2,7 @@ import Image, { StaticImageData } from 'next/image';
 import {
   FeatrueInfoContainer, FeatureContainer, FeatureTitle,ColorableText, FeatureImage,
   FeatureDescription, FeatureLink, CommentContainer, FeatureComment, BoldableText
-} from '@/styles/Home.styles';
+} from '@/styles/home/Home.styles';
 
 import React from 'react';
 

@@ -1,4 +1,4 @@
-import { HeaderContainer, RightMenuButton, StartButton } from "@/styles/Header.styles";
+import { HeaderContainer, RightMenuButton, StartButton } from "@/styles/home/Header.styles";
 import Logo from "@/assets/logo.svg";
 import Link from "next/link";
 import { signupAtHeader } from "@/utils/googleAnalytics/eventList";

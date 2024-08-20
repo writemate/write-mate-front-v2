@@ -1,5 +1,5 @@
 import useCountUp from "@/hooks/useCountUp";
-import { UserContainer, FeatureTitle,ColorableText, CounterContainer } from "@/styles/Home.styles";
+import { UserContainer, FeatureTitle,ColorableText, CounterContainer } from "@/styles/home/Home.styles";
 import { useRef, useEffect } from "react";
 
 export default function CurrentUsers() {
