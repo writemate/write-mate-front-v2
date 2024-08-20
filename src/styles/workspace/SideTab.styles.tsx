@@ -11,6 +11,8 @@ export const SideTabContainer = styled.nav`
   background-color: var(--background-50);
   border-right: 1px solid var(--background-200);
   gap: 10px;
+  flex-shrink: 0;
+  flex-grow: 0;
 `;
 
 export const LogoLink = styled(Link)`

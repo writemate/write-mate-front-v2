@@ -9,6 +9,8 @@ export const HeaderContainer = styled.header`
   height: 72px;
   background-color: #ffffff;
   border-bottom: 1px solid #D7DCE7;
+  flex-shrink: 0;
+  flex-grow: 0;
 `;
 
 export const HeaderTitle = styled.h1`

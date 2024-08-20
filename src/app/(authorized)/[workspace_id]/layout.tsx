@@ -1,5 +1,5 @@
 'use client';
-import { WorkspaceContainer, HeaderAndMainContainer, SideBarAndMainContainer } from '@/styles/workspace';
+import { WorkspaceContainer, HeaderAndMainContainer, SideBarAndMainContainer, MainContainer } from '@/styles/workspace';
 import Header from '@/components/workspcae/Header';
 import SideTab from '@/components/workspcae/SideTab';
 import PlotSidebar from '@/components/workspcae/plot/PlotSidebar';
@@ -19,7 +19,9 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
           {isPlotOpen && <PlotSidebar />}
           {isScriptOpen && <ScriptSidebar />}
           {isCharacterOpen && <CharacterSidebar />}
-          {children}
+          <MainContainer>
+            {children}
+          </MainContainer>
         </SideBarAndMainContainer>
       </HeaderAndMainContainer>
     </WorkspaceContainer>

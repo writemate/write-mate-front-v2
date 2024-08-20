@@ -18,11 +18,22 @@ export const HeaderAndMainContainer = styled.div`
 export const SideBarAndMainContainer = styled.div`
   ${FlexRowLeftStart}
   width: 100%;
-  height: 100%;
+  height: calc(100% - 72px);
 `;
 
 export const SidebarContainer = styled.div`
   width: 258px;
   height: 100%;
   background-color: #ffffff;
+  flex-shrink: 0;
+  flex-grow: 0;
+`;
+
+export const MainContainer = styled.div`
+  ${FlexColumnCenter}
+  flex-grow: 1;
+  height: 100%;
+  calc(100% - 72px);
+  overflow-y: auto;
+  padding: 28px;
 `;
