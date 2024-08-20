@@ -1,10 +1,10 @@
 'use client';
 import { HeaderContainer, HeaderTitle, SaveStatus, VersionControlButton, RightContainer } from "@/styles/workspace/Header.styles";
 import Link from "next/link";
-import RightArrow from "@/assets/workspace/RightArrow.svg";
+import RightArrow from "@/assets/icons/rightArrow.svg";
 import { useLogin } from "@/stores/useLogin";
 
-export default function Header() {
+export default function Header({toggleIdeaBox}: {toggleIdeaBox: () => void}) {
   return (
     <HeaderContainer>
       <HeaderTitle>예시 제목</HeaderTitle>
@@ -20,7 +20,7 @@ export default function Header() {
         {/*TODO: 맞는 아이콘으로 교체해야함 */}
         <RightArrow />
         <RightArrow />
-        <RightArrow />
+        <RightArrow onClick={toggleIdeaBox}/>
         <RightArrow />
       </RightContainer>
     </HeaderContainer>
