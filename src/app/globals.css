@@ -6,6 +6,12 @@
   --text-color: #4e4e4e;
   --important-text-color: rgb(31, 35, 40);
   --muted-text-color: rgb(101, 109, 118);
+  --background-50: #fff4ee;
+  --background-75: #ffede4;
+  --background-200: #FEDBC8;
+  --background-500: #f49661;
+  --icon-black: #353535;
+  --cod-black: #191919;
 }
 
 body,
@@ -14,6 +20,8 @@ html {
   margin: 0;
   padding: 0;
   max-width: 100vw;
+  height: 100%;
+  min-height: 100vh;
   overflow-x: hidden;
 }
 
@@ -25,7 +33,6 @@ html {
 }
 
 body {
-  min-height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: column;
