@@ -8,11 +8,12 @@ import CharacterSidebar from '@/components/workspcae/character/CharacterSidebar'
 import { useSidebar } from '@/hooks/workspace/useSidebar';
 
 export default function WorkspaceLayout({ children }: { children: React.ReactNode }) {
-  const { togglePlot, toggleScript, toggleCharacter, isPlotOpen, isScriptOpen, isCharacterOpen } = useSidebar();
+  const sidebar = useSidebar();
+  const { isPlotOpen, isScriptOpen, isCharacterOpen } = sidebar;
 
   return (
     <WorkspaceContainer>
-      <SideTab togglePlot={togglePlot} toggleScript={toggleScript} toggleCharacter={toggleCharacter} />
+      <SideTab {...sidebar} />
       <HeaderAndMainContainer>
         <Header />
         <SideBarAndMainContainer>

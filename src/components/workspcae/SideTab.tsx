@@ -7,27 +7,32 @@ import Plot from '@/assets/workspace/sideTab/plot.svg';
 import Script from '@/assets/workspace/sideTab/script.svg';
 import Character from '@/assets/workspace/sideTab/character.svg';
 import { usePathname  } from 'next/navigation';
+import { useSidebar } from "@/hooks/workspace/useSidebar";
 
-export default function SideTab({ togglePlot, toggleScript, toggleCharacter }: { togglePlot: () => void, toggleScript: () => void, toggleCharacter: () => void }) {
+export default function SideTab({ togglePlot, toggleScript, toggleCharacter, isPlotOpen, isScriptOpen, isCharacterOpen }: ReturnType<typeof useSidebar>) {
   const pathname = usePathname();
+
+  const sideTab = [
+    { name: 'plot', icon: Plot, onClick: togglePlot, open: isPlotOpen },
+    { name: 'script', icon: Script, onClick: toggleScript, open: isScriptOpen },
+    { name: 'character', icon: Character, onClick: toggleCharacter, open: isCharacterOpen },
+  ]
 
   return (
       <SideTabContainer>
         <LogoLink href="/dashboard">
             <Logo />
         </LogoLink>
-        <SideTabLink $active={pathname.endsWith('/info')} href="./info">
+        <SideTabLink $inPage={pathname.endsWith('/info')} href="./info">
           <Info />
         </SideTabLink>
-        <SideTabButton $active={pathname.endsWith('/plot')} onClick={togglePlot}>
-          <Plot />
-        </SideTabButton>
-        <SideTabButton $active={pathname.endsWith('/script')} onClick={toggleScript}>
-          <Script />
-        </SideTabButton>
-        <SideTabButton $active={pathname.endsWith('/character')} onClick={toggleCharacter}>
-          <Character />
-        </SideTabButton>
+        {
+          sideTab.map((tab, index) => (
+            <SideTabButton key={index} $inPage={pathname.endsWith(`/${tab.name}`)} $isOpened={tab.open} onClick={tab.onClick}>
+              <tab.icon />
+            </SideTabButton>
+          ))
+        }
         <Footer />
       </SideTabContainer>
   );
