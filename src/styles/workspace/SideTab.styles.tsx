@@ -1,14 +1,20 @@
 'use client';
 import { styled,css } from 'styled-components';
-import { clickable } from '@/styles';
+import { clickable, FlexColumnCenter } from '@/styles';
 import Link from 'next/link';
 
 export const SideTabContainer = styled.div`
+  ${FlexColumnCenter}
   width: 78px;
   padding: 14px 17px;
   height: 100%;
   background-color: var(--background-50);
   border-right: 1px solid var(--background-200);
+  gap: 10px;
+`;
+
+export const LogoLink = styled(Link)`
+  margin-bottom: 20px;
 `;
 
 const SideTabSVG = css<{ $active?: boolean }>`
@@ -18,7 +24,6 @@ const SideTabSVG = css<{ $active?: boolean }>`
   justify-content: center;
   align-items: center;
   border-radius: 5px;
-  margin: 0 auto 10px;
   background-color: ${({ $active }) => $active ? 'var(--background-200)' : 'transparent'};
   & *{
     stroke: ${({ $active }) => $active ? 'var(--background-500)' : '#353535'};

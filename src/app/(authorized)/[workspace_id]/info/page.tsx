@@ -2,7 +2,6 @@
 import { MainContainer } from '@/styles';
 
 export default function Info({params: {workspace_id}}: {params: {workspace_id: string}}) {
-  console.log(workspace_id);
 
   return (
       <MainContainer>
