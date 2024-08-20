@@ -3,7 +3,7 @@ import { styled,css } from 'styled-components';
 import { clickable, FlexColumnCenter } from '@/styles';
 import Link from 'next/link';
 
-export const SideTabContainer = styled.div`
+export const SideTabContainer = styled.nav`
   ${FlexColumnCenter}
   width: 78px;
   padding: 14px 17px;
@@ -14,7 +14,7 @@ export const SideTabContainer = styled.div`
 `;
 
 export const LogoLink = styled(Link)`
-  margin-bottom: 20px;
+  margin-bottom: 42px;
 `;
 
 const SideTabSVG = css<{ $active?: boolean }>`

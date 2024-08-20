@@ -8,7 +8,7 @@ import Script from '@/assets/workspace/sideTab/script.svg';
 import Character from '@/assets/workspace/sideTab/character.svg';
 import { usePathname  } from 'next/navigation';
 
-export default function SideTab() {
+export default function SideTab({ togglePlot, toggleScript, toggleCharacter }: { togglePlot: () => void, toggleScript: () => void, toggleCharacter: () => void }) {
   const pathname = usePathname();
 
   return (
@@ -19,13 +19,13 @@ export default function SideTab() {
         <SideTabLink $active={pathname.endsWith('/info')} href="./info">
           <Info />
         </SideTabLink>
-        <SideTabButton $active={pathname.endsWith('/plot')} >
+        <SideTabButton $active={pathname.endsWith('/plot')} onClick={togglePlot}>
           <Plot />
         </SideTabButton>
-        <SideTabButton $active={pathname.endsWith('/script')} >
+        <SideTabButton $active={pathname.endsWith('/script')} onClick={toggleScript}>
           <Script />
         </SideTabButton>
-        <SideTabButton $active={pathname.endsWith('/character')} >
+        <SideTabButton $active={pathname.endsWith('/character')} onClick={toggleCharacter}>
           <Character />
         </SideTabButton>
         <Footer />

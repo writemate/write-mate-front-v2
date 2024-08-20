@@ -1,15 +1,26 @@
-import { WorkspaceContainer, HeaderAndMainContainer } from '@/styles/workspace';
+'use client';
+import { WorkspaceContainer, HeaderAndMainContainer, SideBarAndMainContainer } from '@/styles/workspace';
 import Header from '@/components/workspcae/Header';
 import SideTab from '@/components/workspcae/SideTab';
+import PlotSidebar from '@/components/workspcae/plot/PlotSidebar';
+import ScriptSidebar from '@/components/workspcae/script/ScriptSidebar';
+import CharacterSidebar from '@/components/workspcae/character/CharacterSidebar';
+import { useSidebar } from '@/hooks/workspace/useSidebar';
 
 export default function WorkspaceLayout({ children }: { children: React.ReactNode }) {
+  const { togglePlot, toggleScript, toggleCharacter, isPlotOpen, isScriptOpen, isCharacterOpen } = useSidebar();
 
   return (
     <WorkspaceContainer>
-      <SideTab />
+      <SideTab togglePlot={togglePlot} toggleScript={toggleScript} toggleCharacter={toggleCharacter} />
       <HeaderAndMainContainer>
         <Header />
-        {children}
+        <SideBarAndMainContainer>
+          {isPlotOpen && <PlotSidebar />}
+          {isScriptOpen && <ScriptSidebar />}
+          {isCharacterOpen && <CharacterSidebar />}
+          {children}
+        </SideBarAndMainContainer>
       </HeaderAndMainContainer>
     </WorkspaceContainer>
   );
