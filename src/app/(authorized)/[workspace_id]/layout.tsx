@@ -1,11 +1,11 @@
 'use client';
 import { WorkspaceContainer, HeaderAndMainContainer, SideBarAndMainContainer, MainContainer } from '@/styles/workspace';
-import Header from '@/components/workspcae/Header';
-import SideTab from '@/components/workspcae/SideTab';
-import PlotSidebar from '@/components/workspcae/plot/PlotSidebar';
-import ScriptSidebar from '@/components/workspcae/script/ScriptSidebar';
-import CharacterSidebar from '@/components/workspcae/character/CharacterSidebar';
-import IdeaBox from '@/components/workspcae/IdeaBox';
+import Header from '@/components/workspace/Header';
+import SideTab from '@/components/workspace/SideTab';
+import PlotSidebar from '@/components/workspace/plot/PlotSidebar';
+import ScriptSidebar from '@/components/workspace/script/ScriptSidebar';
+import CharacterSidebar from '@/components/workspace/character/CharacterSidebar';
+import IdeaBox from '@/components/workspace/IdeaBox';
 import { useSidebar } from '@/hooks/workspace/useSidebar';
 import { useState } from 'react';
 
