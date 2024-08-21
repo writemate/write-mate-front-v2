@@ -88,8 +88,8 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
         color: ${props => props.$color};
       `;
       ```
-  * TODO: 여러 페이지에서 자주 사용될 button이나 input 등의 스타일은 index.ts 파일에 작성하여 사용
-  * TODO: 컴포넌트의 스타일이 길어지는 경우, 최대한 스타일을 분리하여 작성(의미 있는 이름을 붙일 수 있는 단위로)
+  * 여러 페이지에서 자주 사용될 button이나 input 등의 스타일은 index.ts 파일에 작성하여 사용
+  * 컴포넌트의 스타일이 길어지는 경우, 최대한 스타일을 분리하여 작성(의미 있는 이름을 붙일 수 있는 단위로)
     * ex)
       ```ts
       const importantTextStyle = css`
