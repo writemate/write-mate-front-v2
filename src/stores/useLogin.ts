@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { User, Unsubscribe, signInWithPopup } from 'firebase/auth';
 import { auth, provider } from '@/utils/initFirebase';
+import { getUserInfoWithToken, signUp } from '@/utils/APIs/user';
 
 type State = {
   user: null | User;  // null: not checked or logout, User: login
@@ -16,6 +17,17 @@ export const useLogin = create<State>((set) => ({
   checkLogin: ()=> auth.onAuthStateChanged((user) => set({ user, isLogin: !!user })),
   login: async () => {
     const result = await signInWithPopup(auth, provider);
+    try{
+      await getUserInfoWithToken(await result.user.getIdToken());
+    } catch (error) {
+      console.log("getUserInfo error: ", error);
+      try{
+        await signUp(await result.user.getIdToken());
+      } catch (error) {
+        console.log("signUp error: ", error);
+        return;
+      }
+    }
     //TODO: check if the user is already registered in the database, if not, register the user
   },
   logout: async () => {
