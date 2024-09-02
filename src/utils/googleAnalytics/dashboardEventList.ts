@@ -4,7 +4,7 @@ export const workstudioEventList = {
     tap: {
         type: 'workstudio_tap',
         description: '작품 스튜디오에서 집필 전/중/완료 탭 클릭',
-        generateProperties: Generator.useEvent<"before" | "ongoing" | "complete">(),
+        generateProperties: Generator.executeEvent<"before" | "ongoing" | "complete">(),
     },
     moveToBefore: {
         type: 'workstudio_move_to_before',
@@ -42,7 +42,7 @@ export const ideaBoxEventList = {
     tap: {
         type: 'idea_box_tap',
         description: '아이디어 보관함에서 메모/인물/사건 탭 클릭',
-        generateProperties: Generator.useEvent<"events" | "characters" | "memos">(),
+        generateProperties: Generator.executeEvent<"events" | "characters" | "memos">(),
     },
     moveToTrash: {
         type: 'idea_box_delete',
@@ -59,5 +59,5 @@ export const ideaBoxEventList = {
 export const trashEvent = {
     type: 'trash',
     description: '휴지통에서 작품 삭제 or 복원',
-    generateProperties: Generator.useEvent<"delete" | "restore">(),
+    generateProperties: Generator.executeEvent<"delete" | "restore">(),
 }

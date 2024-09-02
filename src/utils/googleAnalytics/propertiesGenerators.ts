@@ -9,7 +9,7 @@ export const signupEvent = (from: string) => () => ({
     from
 });
 
-export const useEvent = <T extends string>() => (use: T) => ({
+export const executeEvent = <T extends string>() => (use: T) => ({
     use: use
 });
 
