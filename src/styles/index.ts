@@ -38,16 +38,16 @@ export const FlexColumnStretchCenter = css`
 `;
 
 export const MainColorBackground = css`
-  background-color: var(--main-color);
+  background-color: ${({ theme }) => theme.color.red400};
   color: white;
-  border: 1px solid var(--main-color);
+  border: 1px solid ${({ theme }) => theme.color.red400};
   border-radius: 5px;
 `;
 
 export const ReverseMainColorBackground = css`
   background-color: white;
-  color: var(--main-color);
-  border: 1px solid var(--main-color);
+  color: ${({ theme }) => theme.color.red400};
+  border: 1px solid ${({ theme }) => theme.color.red400};
   border-radius: 5px;
 `;
 
@@ -109,11 +109,11 @@ export const MainContainer = styled.main<{ $background?: string, $flexdirection?
 
 export const Input = styled.input`
   padding: 10px;
-  border: 1px solid var(--main-color);
+  border: 1px solid ${({ theme }) => theme.color.red400};
   border-radius: 5px;
   flex-grow: 0;
   &:focus {
     outline: none;
-    border: 1px solid var(--main-color);
+    border: 1px solid ${({ theme }) => theme.color.red400};
   }
 `;

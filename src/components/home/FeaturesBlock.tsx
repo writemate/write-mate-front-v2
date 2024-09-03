@@ -20,7 +20,7 @@ export type FeatureType = {
 export default function FeaturesBlock({title, description, linkText, image, imageAlt, comment, direction, background}: FeatureType) {
   return (
     <FeatureContainer $background={background}>
-      {direction === 'left' && <FeatureImage src={image} alt={imageAlt}/>}
+      {direction === 'left' && <FeatureImage src={image} alt={imageAlt} unoptimized={true}/>}
       
       <FeatrueInfoContainer>
         <FeatureTitle>
@@ -39,7 +39,7 @@ export default function FeaturesBlock({title, description, linkText, image, imag
         </CommentContainer>
       </FeatrueInfoContainer>
 
-      {direction === 'right' && <FeatureImage src={image} alt={imageAlt}/>}
+      {direction === 'right' && <FeatureImage src={image} alt={imageAlt} unoptimized={true}/>}
     </FeatureContainer>
   );
 }

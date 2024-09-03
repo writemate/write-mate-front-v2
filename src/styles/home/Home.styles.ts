@@ -29,9 +29,9 @@ export const LoginButton = styled.button`
     padding: 12px 32px;
     font-size: 1rem;
     font-weight: 600;
-    background-color: var(--main-color);
+    background-color: ${({ theme }) => theme.color.red400};
     color: white;
-    border: 1px solid var(--main-color);
+    border: 1px solid ${({ theme }) => theme.color.red400};
     border-radius: 5px;
     transition: all 0.3s;
 `;
@@ -111,10 +111,10 @@ export const FeatureLink = styled(Link)`
     ${clickable};
     font-size: 1.2rem;
     font-weight: 400;
-    color: var(--main-color);
+    color: ${({ theme }) => theme.color.red400};
     transition: all 0.3s;
     &:hover {
-        color: var(--main-color-dark);
+        color: ${({ theme }) => theme.color.red500};
     }
     &::after {
         content: '→';

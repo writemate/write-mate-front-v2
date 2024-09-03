@@ -1,10 +1,12 @@
 'use client';
-import "./globals.css";
 import { HeadScripts } from "@/components/HeadScripts";
 import StyledComponentsRegistry from "@/utils/StyledComponentsRegistry";
 import useInitGoogleAnalytics from "@/hooks/useInitGoogleAnalytics";
 import useInitLogin from "@/hooks/useInitLogin";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { colorSystem } from '@/styles/colorSystem';
+import { GlobalStyles } from '@/styles/GlobalStyles';
+import { ThemeProvider } from 'styled-components';
 
 const queryClient = new QueryClient();
 
@@ -34,9 +36,12 @@ export default function RootLayout({
       </head>
       <body>
         <StyledComponentsRegistry>
-          <QueryClientProvider client={queryClient}>
-            {children}
-          </QueryClientProvider>
+          <GlobalStyles />
+          <ThemeProvider theme={{color:colorSystem}}>
+            <QueryClientProvider client={queryClient}>
+              {children}
+            </QueryClientProvider>
+          </ThemeProvider>
         </StyledComponentsRegistry>
       </body>
     </html>
