@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useServerInsertedHTML } from 'next/navigation';
 import { ServerStyleSheet, StyleSheetManager, ThemeProvider } from 'styled-components';
-import { colorSystem } from './colorSystem';
+import { colorSystem } from '@/styles/colorSystem';
 
  
 export default function StyledComponentsRegistry({
