@@ -1,3 +1,14 @@
+export type TFile = {
+  _id: string;
+  file_name: string;
+  isPinned: boolean;
+};
+
+export type TFolder = {
+  folder_name: string;
+  files: Array<TFile|TFolder>;
+};
+
 /**
  * 플롯 타입
  */
