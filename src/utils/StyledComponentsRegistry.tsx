@@ -3,8 +3,6 @@
 import React, { useState } from 'react';
 import { useServerInsertedHTML } from 'next/navigation';
 import { ServerStyleSheet, StyleSheetManager, ThemeProvider } from 'styled-components';
-import { colorSystem } from '@/styles/colorSystem';
-
  
 export default function StyledComponentsRegistry({
   children,
@@ -20,14 +18,11 @@ export default function StyledComponentsRegistry({
     styledComponentsStyleSheet.instance.clearTag()
     return <>{styles}</>
   })
- 
-  if (typeof window !== 'undefined') return <>{children}</>
+  if (typeof window !== 'undefined') return (<>{children}</>);
  
   return (
     <StyleSheetManager sheet={styledComponentsStyleSheet.instance}>
-      <ThemeProvider theme={{color:colorSystem}}>
         {children}
-      </ThemeProvider>
     </StyleSheetManager>
   )
 }

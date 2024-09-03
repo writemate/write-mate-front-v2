@@ -8,8 +8,8 @@ export const SideTabContainer = styled.nav`
   width: 78px;
   padding: 14px 17px;
   height: 100%;
-  background-color: var(--background-50);
-  border-right: 1px solid var(--background-200);
+  background-color: ${({ theme }) => theme.color.orange75};
+  border-right: 1px solid ${({ theme }) => theme.color.orange200};
   gap: 10px;
   flex-shrink: 0;
   flex-grow: 0;
@@ -26,9 +26,12 @@ const SideTabSVG = css<{ $inPage?: boolean, $isOpened?: boolean }>`
   justify-content: center;
   align-items: center;
   border-radius: 5px;
-  background-color: ${({ $inPage, $isOpened }) => $inPage||$isOpened ? 'var(--background-200)' : 'transparent'};
+  background-color: ${({ $isOpened, theme }) => $isOpened ? theme.color.orange200 : 'transparent'};
+  &:hover {
+    background-color: ${({ theme }) => theme.color.orange200};
+  }
   & *{
-    stroke: ${({ $isOpened }) => $isOpened ? 'var(--background-500)' : '#353535'};
+    stroke: ${({ $isOpened,theme }) => $isOpened ? theme.color.orange400 : '#353535'};
   }
 `;
 
