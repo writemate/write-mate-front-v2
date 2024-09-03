@@ -1,8 +1,10 @@
 'use client'
  
-import React, { useState } from 'react'
-import { useServerInsertedHTML } from 'next/navigation'
-import { ServerStyleSheet, StyleSheetManager } from 'styled-components'
+import React, { useState } from 'react';
+import { useServerInsertedHTML } from 'next/navigation';
+import { ServerStyleSheet, StyleSheetManager, ThemeProvider } from 'styled-components';
+import { colorSystem } from './colorSystem';
+
  
 export default function StyledComponentsRegistry({
   children,
@@ -23,7 +25,9 @@ export default function StyledComponentsRegistry({
  
   return (
     <StyleSheetManager sheet={styledComponentsStyleSheet.instance}>
-      {children}
+      <ThemeProvider theme={{color:colorSystem}}>
+        {children}
+      </ThemeProvider>
     </StyleSheetManager>
   )
 }
