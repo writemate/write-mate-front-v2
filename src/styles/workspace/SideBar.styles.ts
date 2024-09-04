@@ -40,19 +40,12 @@ export const SidebarIconContainer = styled.div`
   }
 `;
 
-const ListContainerCss = css`
+
+export const FileListContainer = styled.div`
   ${FlexColumnCenter};
   ${clickable};
   width: 100%;
   gap: 6px;
-`;
-
-export const FileListContainer = styled.div`
-  ${ListContainerCss};
-`;
-
-export const FolderContainer = styled.details`
-  ${ListContainerCss};
 `;
 
 export const Kebab = styled(KebabIcon)`
@@ -68,7 +61,13 @@ export const Kebab = styled(KebabIcon)`
   }
 `;
 
-export const FileContainer = styled.summary<{ $isFolder: boolean, $nestedLevel?:number, $isSelect?:boolean }>`
+export const FileName = styled.div`
+  font-weight: 400;
+  margin-left: 6px;
+  line-height: 24px;
+`;
+
+export const FileContainer = styled.div<{ $isFolder: boolean, $nestedLevel?:number, $isSelect?:boolean }>`
   ${FlexRowLeftStart};
   align-items: flex-start;
   width: 100%;
@@ -92,10 +91,8 @@ export const FileContainer = styled.summary<{ $isFolder: boolean, $nestedLevel?:
       display: block;
     }
   }
-`;
-
-export const FileName = styled.div`
-  font-weight: 400;
-  margin-left: 6px;
-  line-height: 24px;
+  ${FileName}{
+    color: ${({ $isSelect, theme }) => $isSelect ? theme.color.orange400 : "inherit"};
+    font-weight: ${({ $isSelect }) => $isSelect ? 600 : 400};
+  }
 `;

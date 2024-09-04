@@ -11,11 +11,12 @@ export type TFolder = {
   files: Array<TFile|TFolder>;
 };
 
-export type TFolderWithOpenOption = {
+export type TFolderWithOptions = {
   isFolder: true;
   folder_name: string;
   isOpen: boolean;
-  files: Array<TFile|TFolderWithOpenOption>;
+  isSelect: boolean;
+  files: Array<TFile|TFolderWithOptions>;
 }
 
 /**

@@ -20,7 +20,24 @@ const mockFolderList: TFolder = {
           _id: "2",
           file_name: "플레이보이가 롯폰기에서",
           isPinned: false,
-        },
+        },{
+          isFolder: true,
+          folder_name: "폴로 더위사냥",
+          files: [
+            {
+              isFolder: false,
+              _id: "1",
+              file_name: "플롯1",
+              isPinned: false,
+            },
+            {
+              isFolder: false,
+              _id: "2",
+              file_name: "플롯2",
+              isPinned: false,
+            },
+          ]
+        }
       ]
     },
     {
