@@ -33,9 +33,15 @@ export default function usePlotSidebar() {
     }
   }, [data]);
 
-  const handleToggleFolder = (folder: TFolderWithOpenOption) => {
+  const toggleFolder = (folder: TFolderWithOpenOption) => () => {
     if (rootFolder === null) return;
     folder.isOpen = !folder.isOpen;
+    setRootFolder([...rootFolder]);
+  };
+
+  const openFolder = (folder: TFolderWithOpenOption) => () => {
+    if(rootFolder === null) return;
+    folder.isOpen = true;
     setRootFolder([...rootFolder]);
   };
 
@@ -44,6 +50,7 @@ export default function usePlotSidebar() {
     rootFolder,
     isLoading,
     error,
-    handleToggleFolder,
+    openFolder,
+    toggleFolder,
   };  
 }
