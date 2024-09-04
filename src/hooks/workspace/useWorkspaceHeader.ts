@@ -7,7 +7,7 @@ export default function useWorkspaceHeader() {
   const {workspace_id} = useParams<{ workspace_id: string }>();
   const { data, error, isLoading } = useQuery({
     queryKey: workspaceQueryKeys.work(workspace_id),
-    queryFn: () => getWork(workspace_id),
+    queryFn: getWork(workspace_id),
   });
 
 
