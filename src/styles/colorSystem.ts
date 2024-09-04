@@ -6,6 +6,7 @@ export const colorSystem = {
   red400: "var(--red-400)",
   red500: "var(--red-500)",
   gray25: "var(--gray-25)",
+  gray75: "var(--gray-75)",
   gray100: "var(--gray-100)",
   gray200: "var(--gray-200)",
   gray300: "var(--gray-300)",
