@@ -6,15 +6,12 @@ const peelOffVarFunc = (color: string) => {
 }
 
 export const GlobalStyles = createGlobalStyle`
-  @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css");
-  @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css");
-  @import url(https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap);
-
   :root {
     ${peelOffVarFunc(colorSystem.black)}: #191919;
     ${peelOffVarFunc(colorSystem.orange75)}:#FFF4EE;
     ${peelOffVarFunc(colorSystem.orange100)}:#FDEFE7;
     ${peelOffVarFunc(colorSystem.orange200)}:#FEDBC8;
+    ${peelOffVarFunc(colorSystem.orange300)}:#FFC4A4;
     ${peelOffVarFunc(colorSystem.orange400)}:#F49661;
     ${peelOffVarFunc(colorSystem.red400)}:#C55858;
     ${peelOffVarFunc(colorSystem.red500)}:#a44c4c;

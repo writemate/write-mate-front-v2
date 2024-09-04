@@ -1,4 +1,5 @@
 'use client';
+import "./globalFont.css";
 import { HeadScripts } from "@/components/HeadScripts";
 import StyledComponentsRegistry from "@/utils/StyledComponentsRegistry";
 import useInitGoogleAnalytics from "@/hooks/useInitGoogleAnalytics";
