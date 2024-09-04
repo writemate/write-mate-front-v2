@@ -58,6 +58,13 @@ export default function usePlotSidebar() {
     setRootFolder([...rootFolder]);
   };
 
+  const clearSelect = (e: React.MouseEvent) => {
+    if(e.target !== e.currentTarget) return;
+    if(rootFolder === null) return;
+    rootFolder.filter((file) => file.isFolder).forEach(recursiveFolderUnselect);
+    setRootFolder([...rootFolder]);
+  }
+
   return {
     workspace_id,
     rootFolder,
@@ -65,5 +72,6 @@ export default function usePlotSidebar() {
     error,
     openFolder,
     toggleFolder,
+    clearSelect,
   };  
 }

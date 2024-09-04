@@ -6,9 +6,9 @@ import { SidebarContainer, SidebarTitleContainer, SidebarTitle, SidebarIconConta
 import { Folder, File } from "@/components/workspace/SideBar";
 
 export default function PlotSidebar() {
-    const { rootFolder, isLoading, error, toggleFolder, openFolder } = usePlotSidebar();
+    const { rootFolder, isLoading, error, toggleFolder, openFolder, clearSelect } = usePlotSidebar();
     return (
-        <SidebarContainer>
+        <SidebarContainer onClick={clearSelect}>
             <SidebarTitleContainer>
                 <SidebarTitle>플롯</SidebarTitle>
                 <SidebarIconContainer>
