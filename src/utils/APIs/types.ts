@@ -11,6 +11,13 @@ export type TFolder = {
   files: Array<TFile|TFolder>;
 };
 
+export type TFolderWithOpenOption = {
+  isFolder: true;
+  folder_name: string;
+  isOpen: boolean;
+  files: Array<TFile|TFolderWithOpenOption>;
+}
+
 /**
  * 플롯 타입
  */

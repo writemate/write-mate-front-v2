@@ -4,13 +4,24 @@ import { workspaceQueryKeys } from "@/utils/APIs/queryKeys";
 import { useQuery } from "@tanstack/react-query";
 import { getPlotFolderList } from "@/utils/APIs/workspace";
 import { useParams } from "next/navigation";
-import { TFile, TFolder } from '@/utils/APIs/types';
+import { TFile, TFolder, TFolderWithOpenOption } from '@/utils/APIs/types';
 
-type TFolderWithOpenOption = TFolder & { isOpen: boolean };
+const recursiveFolderAddOpenOption = (folder: TFolder): TFolderWithOpenOption => {
+  return {
+    ...folder,
+    isOpen: false,
+    files: folder.files.map((file) => {
+      if (file.isFolder) {
+        return recursiveFolderAddOpenOption(file);
+      }
+      return file;
+    }),
+  };
+};
 
 export default function usePlotSidebar() {
   const { workspace_id } = useParams<{ workspace_id: string }>();
-  const [rootFolder, setRootFolder] = useState<Array<TFile|TFolder>|null>(null);
+  const [rootFolder, setRootFolder] = useState<Array<TFile|TFolderWithOpenOption>|null>(null);
   const { data, error, isLoading } = useQuery({
     queryKey: workspaceQueryKeys.plotSidebar(workspace_id),
     queryFn: getPlotFolderList(workspace_id),
@@ -18,7 +29,7 @@ export default function usePlotSidebar() {
 
   useEffect(() => {
     if (data) {
-      setRootFolder(data.files);
+      setRootFolder(recursiveFolderAddOpenOption(data).files);
     }
   }, [data]);
 
