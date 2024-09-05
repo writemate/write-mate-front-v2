@@ -1,6 +1,6 @@
 'use client'
 import Link from "next/link";
-import { TFolderWithOptions, TFile } from "@/utils/APIs/types";
+import { TFolderWithOptions, TFileWithOptions } from "@/utils/APIs/types";
 import OpendDropButton from "@/assets/workspace/sideBar/opendDropButton.svg";
 import CloseDropButton from "@/assets/workspace/sideBar/closedDropButton.svg";
 import FileIcon from "@/assets/workspace/sideBar/file.svg";
@@ -15,9 +15,11 @@ interface IFolder {
   nestedLevel?: number;
   toggleFolder: (folder: TFolderWithOptions) => (e: React.MouseEvent) => void;
   openFolder: (folder: TFolderWithOptions) => () => void;
+  onChange: (folderOrfile: TFolderWithOptions | TFileWithOptions) => (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur: (folderOrfile: TFolderWithOptions | TFileWithOptions) => () => void;
 }
 
-export function Folder({ folder, nestedLevel = 0, toggleFolder, openFolder }: IFolder) {
+export function Folder({ folder, nestedLevel = 0, toggleFolder, openFolder, onChange, onBlur }: IFolder) {
   return (
     <FileListContainer>
       <FileContainer onClick={openFolder(folder)} $isFolder={true} $nestedLevel={nestedLevel} $isSelect={folder.isSelect}>
@@ -25,15 +27,14 @@ export function Folder({ folder, nestedLevel = 0, toggleFolder, openFolder }: IF
         {!folder.isOpen && <CloseDropButton onClick={toggleFolder(folder)} />}
         {folder.isSelect && <SeletedFolder />}
         {!folder.isSelect && <FolderIcon />}
-        <FileName>
-          {folder.folder_name}
-        </FileName>
+        {!folder.isEditing&&<FileName>{folder.folder_name}</FileName>}
+        {folder.isEditing&&<input type="text" value={folder.folder_name} onChange={onChange(folder)} onBlur={onBlur(folder)} autoFocus/>}
         <Kebab />
       </FileContainer>
       <FileListContainer>
         {folder.isOpen&&folder.files.map((subFile, i) => {
           if (subFile.isFolder) {
-            return <Folder key={i + 1} folder={subFile} nestedLevel={nestedLevel + 1} toggleFolder={toggleFolder} openFolder={openFolder} />;
+            return <Folder key={i + 1} folder={subFile} nestedLevel={nestedLevel + 1} toggleFolder={toggleFolder} openFolder={openFolder} onChange={onChange} onBlur={onBlur} />;
           }
           else {
             return <File key={i + 1} file={subFile} nestedLevel={nestedLevel + 1} />;
@@ -44,7 +45,7 @@ export function Folder({ folder, nestedLevel = 0, toggleFolder, openFolder }: IF
   );
 }
 
-export function File({ file, nestedLevel = 0 }: { file: TFile, nestedLevel?: number }) {
+export function File({ file, nestedLevel = 0 }: { file: TFileWithOptions, nestedLevel?: number }) {
   return (
     <FileContainer $isFolder={false} $nestedLevel={nestedLevel}>
       <FileIcon />

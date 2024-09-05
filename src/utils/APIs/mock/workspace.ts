@@ -1,5 +1,6 @@
 import { TFolder, TPlot } from "../types";
 import axiosInstance from "../axiosInstance";
+import { mock } from "node:test";
 
 const mockFolderList: TFolder = {
   isFolder: true,
@@ -62,4 +63,8 @@ export const getPlotFolderListMock = (workId: string) => async ()=> {
 export const getChapterListMock = (workId: string) => async () => {
   const response = await axiosInstance.get<TPlot>(`/api/works/${workId}/plots`);
   return response.data;
+}
+
+export const updatePlotFolderMock = async ({folder}:{workId: string, folder:TFolder}) => {
+  mockFolderList.files = folder.files;
 }

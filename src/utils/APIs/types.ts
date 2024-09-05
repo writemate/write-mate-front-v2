@@ -1,22 +1,26 @@
-export type TFile = {
+export interface TFile {
   _id: string;
   isFolder: false;
   file_name: string;
   isPinned: boolean;
 };
 
-export type TFolder = {
+export interface TFolder {
   isFolder: true;
   folder_name: string;
   files: Array<TFile|TFolder>;
 };
 
-export type TFolderWithOptions = {
-  isFolder: true;
-  folder_name: string;
+export interface TFileWithOptions extends TFile {
+  isSelect: boolean;
+  isEditing: boolean;
+}
+
+export interface TFolderWithOptions extends TFolder {
   isOpen: boolean;
   isSelect: boolean;
-  files: Array<TFile|TFolderWithOptions>;
+  isEditing: boolean;
+  files: Array<TFileWithOptions|TFolderWithOptions>;
 }
 
 /**

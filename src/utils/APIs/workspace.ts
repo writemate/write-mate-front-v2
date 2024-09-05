@@ -1,5 +1,5 @@
 import axiosInstance from "./axiosInstance";
-import { getChapterListMock, getPlotFolderListMock } from "./mock/workspace";
+import { getChapterListMock, getPlotFolderListMock, updatePlotFolderMock } from "./mock/workspace";
 import { TWork } from "./types";
 
 export const getWork = (workId: string) => async () => {
@@ -10,4 +10,6 @@ export const getWork = (workId: string) => async () => {
 export const getPlotFolderList = getPlotFolderListMock;
 
 export const getChapterList = getChapterListMock;
+
+export const updatePlotFolder = updatePlotFolderMock; 
 

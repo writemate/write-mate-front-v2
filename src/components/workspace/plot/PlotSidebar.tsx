@@ -6,22 +6,22 @@ import { SidebarContainer, SidebarTitleContainer, SidebarTitle, SidebarIconConta
 import { Folder, File } from "@/components/workspace/SideBar";
 
 export default function PlotSidebar() {
-    const { rootFolder, isLoading, error, toggleFolder, openFolder, clearSelect } = usePlotSidebar();
+    const { rootFolder, isLoading, error, clearSelect, createFolder, createFile, ...hookValues } = usePlotSidebar();
     return (
         <SidebarContainer onClick={clearSelect}>
             <SidebarTitleContainer>
                 <SidebarTitle>플롯</SidebarTitle>
                 <SidebarIconContainer>
-                    <FolderIcon />
-                    <FileIcon />
+                    <FolderIcon onClick={createFolder} />
+                    <FileIcon onClick={createFile} />
                 </SidebarIconContainer>
             </SidebarTitleContainer>
             {isLoading && <div>Loading...</div>}
             {error && <div>Error</div>}
             <FileListContainer>
-                {rootFolder && rootFolder.map((file) => {
+                {rootFolder && rootFolder.files.map((file) => {
                     if (file.isFolder) {
-                        return <Folder key={file.folder_name} folder={file} toggleFolder={toggleFolder} openFolder={openFolder} />;
+                        return <Folder key={file.folder_name} folder={file} {...hookValues} />;
                     }
                     return <File key={file.file_name} file={file} />;
                 })}
