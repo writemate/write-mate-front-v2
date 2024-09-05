@@ -95,14 +95,23 @@ export default function usePlotSidebar() {
     setRootFolder({...rootFolder});
   }
 
-  const onBlur = (folderOrfile: TFolderWithOptions|TFileWithOptions) => () => {
+  const applyChange = (folderOrfile: TFolderWithOptions|TFileWithOptions) => {
     if(rootFolder === null) return;
+    folderOrfile.isEditing = false;
     if(folderOrfile.isFolder)
-      folderOrfile.isEditing = false;
+      folderOrfile.folder_name = folderOrfile.folder_name.trim();
     else
-      folderOrfile.isEditing = false;
+      folderOrfile.file_name = folderOrfile.file_name.trim();
     setRootFolder({...rootFolder});
     mutate({ workId: workspace_id, folder: rootFolder });
+  }
+
+  const onBlur = (folderOrfile: TFolderWithOptions|TFileWithOptions) => () => applyChange(folderOrfile);
+
+  const onKeyDown = (folderOrfile: TFolderWithOptions|TFileWithOptions) => (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      applyChange(folderOrfile);
+    }
   }
 
   return {
@@ -117,6 +126,7 @@ export default function usePlotSidebar() {
     createFolder,
     createFile,
     onChange,
-    onBlur
+    onBlur,
+    onKeyDown,
   };  
 }
