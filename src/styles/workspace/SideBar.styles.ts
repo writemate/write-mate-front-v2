@@ -33,9 +33,13 @@ export const SidebarIconContainer = styled.div`
   ${FlexRowCenter};
   &>*{
     ${clickable}
+    &>rect:nth-child(1){
+      display: none;
+    }
     &:hover{
-      background-color: ${({ theme }) => theme.color.gray75};
-      border-radius: 3px;
+      &>rect:nth-child(1){
+        display: block;
+      }
     }
   }
 `;
