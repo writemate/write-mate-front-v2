@@ -1,4 +1,4 @@
-import { TFolder, TFolderWithOptions } from '@/utils/APIs/types';
+import { TFileWithOptions, TFolder, TFolderWithOptions } from '@/utils/APIs/types';
 
 export const recursiveFolderAddOptions = (folder: TFolder): TFolderWithOptions => {
   return {
@@ -19,12 +19,11 @@ export const recursiveFolderAddOptions = (folder: TFolder): TFolderWithOptions =
   };
 };
 
-export const recursiveFolderUnselect = (folder: TFolderWithOptions) => {
+export const recursiveFolderUnselect = (folder: TFolderWithOptions|TFileWithOptions) => {
   folder.isSelect = false;
+  if(!folder.isFolder) return;
   folder.files.forEach((file) => {
-    if (file.isFolder) {
-      recursiveFolderUnselect(file);
-    }
+    recursiveFolderUnselect(file);
   });
 };
 
