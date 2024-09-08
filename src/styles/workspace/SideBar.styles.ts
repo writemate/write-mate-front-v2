@@ -44,13 +44,34 @@ export const SidebarIconContainer = styled.div`
   }
 `;
 
+export const SidebarContentsContainer = styled.div`
+  width: 100%;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #c4c4c4;
+    border-radius: 3px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+  }
+`;
+
 
 export const FileListContainer = styled.div`
   ${FlexColumnCenter};
-  ${clickable};
   width: 100%;
   gap: 6px;
 `;
+
+export const FolderContainer = styled.div`
+  width: 100%;
+  &>div:nth-child(1){
+    margin-bottom: 6px;
+  }
+`
 
 export const Kebab = styled(KebabIcon)`
   ${clickable}
@@ -73,6 +94,7 @@ export const FileName = styled.div`
 
 export const FileContainer = styled.div<{ $isFolder: boolean, $nestedLevel?:number, $isSelect?:boolean }>`
   ${FlexRowLeftStart};
+  ${clickable};
   align-items: flex-start;
   width: 100%;
   padding: 6px 10px 6px 0px;
@@ -84,7 +106,7 @@ export const FileContainer = styled.div<{ $isFolder: boolean, $nestedLevel?:numb
   background-color: ${({ $isSelect,theme }) => $isSelect ? theme.color.orange100 : 'transparent'};
   color: ${({ $isSelect,theme }) => $isSelect ? theme.color.orange400 : "inherit"};
   ${Kebab}{
-    display: none;
+    opacity: 0;
     &>rect{
       fill: ${({ $isSelect, theme }) => $isSelect ? theme.color.orange300 : theme.color.gray100};
     }
@@ -92,7 +114,7 @@ export const FileContainer = styled.div<{ $isFolder: boolean, $nestedLevel?:numb
   &:hover{
     background-color: ${({ $isSelect, theme }) => $isSelect ? theme.color.orange200 : theme.color.gray75};
     ${Kebab}{
-      display: block;
+      opacity: 1;
     }
   }
   ${FileName}{

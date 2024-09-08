@@ -10,7 +10,7 @@ import Pin from "@/assets/workspace/sideBar/pin.svg";
 import SeletedFolder from "@/assets/workspace/sideBar/selectedFolder.svg";
 import { SidebarContext } from "@/stores/sidebarContext";
 import SeletedFile from "@/assets/workspace/sideBar/selectedFile.svg";
-import { FileListContainer, FileContainer, FileName, Kebab } from "@/styles/workspace/SideBar.styles";
+import { FileListContainer, FolderContainer, FileContainer, FileName, Kebab } from "@/styles/workspace/SideBar.styles";
 
 
 export function Folder({ folder, nestedLevel = 0}:
@@ -18,7 +18,7 @@ export function Folder({ folder, nestedLevel = 0}:
 
   const { toggleFolder, openFolder, onChange, onBlur, onKeyDown } = useContext(SidebarContext);
   return (
-    <FileListContainer>
+    <FolderContainer>
       <FileContainer onClick={openFolder(folder)} $isFolder={true} $nestedLevel={nestedLevel} $isSelect={folder.isSelect}>
         {folder.isOpen && <OpendDropButton onClick={toggleFolder(folder)} />}
         {!folder.isOpen && <CloseDropButton onClick={toggleFolder(folder)} />}
@@ -42,7 +42,7 @@ export function Folder({ folder, nestedLevel = 0}:
           }
         })}
       </FileListContainer>
-    </FileListContainer>
+    </FolderContainer>
   );
 }
 
