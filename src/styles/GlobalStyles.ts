@@ -6,17 +6,17 @@ const peelOffVarFunc = (color: string) => {
 }
 
 export const GlobalStyles = createGlobalStyle`
-  @import url(https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap);
-
   :root {
     ${peelOffVarFunc(colorSystem.black)}: #191919;
     ${peelOffVarFunc(colorSystem.orange75)}:#FFF4EE;
     ${peelOffVarFunc(colorSystem.orange100)}:#FDEFE7;
     ${peelOffVarFunc(colorSystem.orange200)}:#FEDBC8;
+    ${peelOffVarFunc(colorSystem.orange300)}:#FFC4A4;
     ${peelOffVarFunc(colorSystem.orange400)}:#F49661;
     ${peelOffVarFunc(colorSystem.red400)}:#C55858;
     ${peelOffVarFunc(colorSystem.red500)}:#a44c4c;
     ${peelOffVarFunc(colorSystem.gray25)}:#F8FAFE;
+    ${peelOffVarFunc(colorSystem.gray75)}:#EFF1F8;
     ${peelOffVarFunc(colorSystem.gray100)}:#D7DDEA;
     ${peelOffVarFunc(colorSystem.gray200)}:#B1B5C4;
     ${peelOffVarFunc(colorSystem.gray300)}:#898D9D;
@@ -25,7 +25,7 @@ export const GlobalStyles = createGlobalStyle`
 
   body,
   html {
-    font-family: Noto Sans KR, sans-serif;
+    font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
     margin: 0;
     padding: 0;
     max-width: 100vw;
@@ -36,7 +36,7 @@ export const GlobalStyles = createGlobalStyle`
 
   * {
     box-sizing: border-box;
-    font-family: Noto Sans KR, sans-serif;
+    font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
     padding: 0;
     margin: 0;
   }

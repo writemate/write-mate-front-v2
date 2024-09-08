@@ -17,8 +17,8 @@ export const userQueryKeys = {
 export const workspaceQueryKeys = {
   all: ['workspace'] as const,
   work: (id:string) => [...workspaceQueryKeys.all, 'work', id] as const,
-  sidebar: () => [...workspaceQueryKeys.all, 'sidebar'] as const,
-  plotSidebar: () => [...workspaceQueryKeys.sidebar(), 'plot'] as const,
-  characterSidebar: () => [...workspaceQueryKeys.sidebar(), 'character'] as const,
-  scriptSidebar: () => [...workspaceQueryKeys.sidebar(), 'event'] as const,
+  sidebar: (id:string) => [...workspaceQueryKeys.all, 'sidebar',id] as const,
+  plotSidebar: (id:string) => [...workspaceQueryKeys.sidebar(id), 'plot'] as const,
+  characterSidebar: (id:string) => [...workspaceQueryKeys.sidebar(id), 'character'] as const,
+  scriptSidebar: (id:string) => [...workspaceQueryKeys.sidebar(id), 'event'] as const,
 }
