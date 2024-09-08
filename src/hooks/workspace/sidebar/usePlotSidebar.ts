@@ -5,11 +5,11 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getPlotFolderList, updatePlotFolder } from "@/utils/APIs/workspace";
 import { useParams } from "next/navigation";
 import { TFileWithOptions, TFolderWithOptions } from '@/utils/APIs/types';
-import { recursiveFolderAddOptions, recursiveFolderUnselect, getSelectedFolder, recursiveFileUnpin, recursiveFindParent } from '@/utils/controlFolders';
+import { recursiveFolderAddOptions, recursiveUnselect, currentFileSelect, getSelectedFolder, recursiveFileUnpin, recursiveFindParent } from '@/utils/controlFolders';
 
 export default function usePlotSidebar() {
   const queryClient = useQueryClient();
-  const { workspace_id } = useParams<{ workspace_id: string }>();
+  const { workspace_id, plot_id } = useParams<{ workspace_id: string, plot_id?: string }>();
   const [rootFolder, setRootFolder] = useState<TFolderWithOptions|null>(null);
   const { data, error, isLoading } = useQuery({
     queryKey: workspaceQueryKeys.plotSidebar(workspace_id),
@@ -29,9 +29,18 @@ export default function usePlotSidebar() {
     if (data) {
       const rootFolder = recursiveFolderAddOptions(data);
       rootFolder.isSelect = true;
+      if (plot_id) currentFileSelect(rootFolder, plot_id);
       setRootFolder(rootFolder);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (rootFolder) {
+      if (plot_id) currentFileSelect(rootFolder, plot_id);
+      else recursiveUnselect(rootFolder);
+      setRootFolder({...rootFolder});
+    }
+  }, [plot_id]);
 
   const toggleFolder = (folder: TFolderWithOptions) => (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -42,7 +51,8 @@ export default function usePlotSidebar() {
 
   const openFolder = (folder: TFolderWithOptions) => () => {
     if(rootFolder === null) return;
-    recursiveFolderUnselect(rootFolder);
+    //폴더를 열면 나머지 폴더와 파일들의 선택을 해제하고 해당 폴더를 선택한다.
+    recursiveUnselect(rootFolder);
     folder.isOpen = true;
     folder.isSelect = true;
     setRootFolder({...rootFolder});
@@ -51,7 +61,9 @@ export default function usePlotSidebar() {
   const clearSelect = (e: React.MouseEvent) => {
     if(e.target !== e.currentTarget) return;
     if(rootFolder === null) return;
-    recursiveFolderUnselect(rootFolder);
+    //사이드바에서 빈 곳을 클릭하면 모든 선택을 해제한다.(현재 접속 중인 파일이 있을 경우 해당 파일을 선택한다).
+    if(plot_id) currentFileSelect(rootFolder, plot_id);
+    else recursiveUnselect(rootFolder);
     rootFolder.isSelect = true;
     setRootFolder({...rootFolder});
   }
@@ -60,7 +72,8 @@ export default function usePlotSidebar() {
     if(rootFolder === null) return;
     const selectedFolder = getSelectedFolder(rootFolder);
     if (!selectedFolder) return;
-    recursiveFolderUnselect(rootFolder);
+    //폴더를 생성하면 나머지 폴더와 파일들의 선택을 해제하고 새로 생성한 폴더를 선택한다.
+    recursiveUnselect(rootFolder);
     selectedFolder.files.push({
       isFolder: true,
       isOpen: true,
@@ -68,7 +81,7 @@ export default function usePlotSidebar() {
       isEditing: true,
       folder_name: "새 폴더",
       files: [],
-    }as TFolderWithOptions);
+    });
     setRootFolder({...rootFolder});
   };
 
@@ -76,13 +89,16 @@ export default function usePlotSidebar() {
     if(rootFolder === null) return;
     const selectedFolder = getSelectedFolder(rootFolder);
     if (!selectedFolder) return;
-    recursiveFolderUnselect(rootFolder);
+    //파일을 생성하면 나머지 폴더와 파일들의 선택을 해제하고 새로 생성한 파일을 선택한다.
+    recursiveUnselect(rootFolder);
     selectedFolder.files.push({
+      _id: "",
       isFolder: false,
       file_name: "새 파일",
       isSelect: true,
       isEditing: true,
-    }as TFileWithOptions);
+      isPinned: false,
+    });
     setRootFolder({...rootFolder});
   };
 
@@ -100,8 +116,13 @@ export default function usePlotSidebar() {
     folderOrfile.isEditing = false;
     if(folderOrfile.isFolder)
       folderOrfile.folder_name = folderOrfile.folder_name.trim();
-    else
+    else {
       folderOrfile.file_name = folderOrfile.file_name.trim();
+      //파일 이름 변경 완료 시 해당 파일의 선택을 해제한다(현재 접속 중인 파일이 있을 경우 해당 파일을 선택한다).
+      //만약 이름 변경 시 해당 파일로 이동해야 한다면 이 부분을 수정해야 한다.
+      if(plot_id) currentFileSelect(rootFolder, plot_id);
+      recursiveUnselect(rootFolder);
+    }
     setRootFolder({...rootFolder});
     mutate({ workId: workspace_id, folder: rootFolder });
   }
@@ -116,7 +137,7 @@ export default function usePlotSidebar() {
 
   const changeName = (folderOrfile: TFolderWithOptions|TFileWithOptions) => () => {
     if(rootFolder === null) return;
-    recursiveFolderUnselect(rootFolder);
+    recursiveUnselect(rootFolder);
     folderOrfile.isSelect = true;
     folderOrfile.isEditing = true;
     setRootFolder({...rootFolder});
@@ -130,7 +151,9 @@ export default function usePlotSidebar() {
     const index = parent.files.indexOf(folderOrfile);
     parent.files.splice(index, 1);
     setRootFolder({...rootFolder});
+    //서버에 폴더 구조 반영
     mutate({ workId: workspace_id, folder: rootFolder });
+    //TODO: 서버에 파일 삭제 반영
   }
 
   const setMainPlot = (file: TFileWithOptions) => () => {

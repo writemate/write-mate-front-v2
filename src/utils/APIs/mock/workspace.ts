@@ -1,6 +1,5 @@
 import { TFolder, TPlot } from "../types";
 import axiosInstance from "../axiosInstance";
-import { mock } from "node:test";
 
 const mockFolderList: TFolder = {
   isFolder: true,
@@ -27,13 +26,13 @@ const mockFolderList: TFolder = {
           files: [
             {
               isFolder: false,
-              _id: "1",
+              _id: "5",
               file_name: "플롯1",
               isPinned: false,
             },
             {
               isFolder: false,
-              _id: "2",
+              _id: "6",
               file_name: "플롯2",
               isPinned: false,
             },

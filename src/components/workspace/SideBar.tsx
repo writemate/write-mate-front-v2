@@ -1,5 +1,4 @@
-'use client'
-import Link from "next/link";
+'use client';
 import { useContext } from "react";
 import { useKebab } from "@/hooks/workspace/sidebar/useKebab";
 import { TFolderWithOptions, TFileWithOptions } from "@/utils/APIs/types";
@@ -11,7 +10,7 @@ import Pin from "@/assets/workspace/sideBar/pin.svg";
 import SeletedFolder from "@/assets/workspace/sideBar/selectedFolder.svg";
 import { SidebarContext } from "@/stores/sidebarContext";
 import SeletedFile from "@/assets/workspace/sideBar/selectedFile.svg";
-import { FileListContainer, FolderContainer, FileContainer, FileName, KebabWrapper, Kebab, KebabContainer, KebabItem } from "@/styles/workspace/SideBar.styles";
+import { FileListContainer, FolderContainer, FileContainer,FolderName, FileName, KebabWrapper, Kebab, KebabContainer, KebabItem } from "@/styles/workspace/SideBar.styles";
 
 export function Folder({ folder, nestedLevel = 0}:
   { folder: TFolderWithOptions; nestedLevel?: number; }) {
@@ -26,7 +25,7 @@ export function Folder({ folder, nestedLevel = 0}:
         {!folder.isOpen && <CloseDropButton onClick={toggleFolder(folder)} />}
         {folder.isSelect && <SeletedFolder />}
         {!folder.isSelect && <FolderIcon />}
-        {!folder.isEditing&&<FileName>{folder.folder_name}</FileName>}
+        {!folder.isEditing&&<FolderName>{folder.folder_name}</FolderName>}
         {folder.isEditing&&
           <input type="text" value={folder.folder_name}
             onChange={onChange(folder)} onBlur={onBlur(folder)} onKeyDown={onKeyDown(folder)}
@@ -57,13 +56,14 @@ export function Folder({ folder, nestedLevel = 0}:
 
 export function File({ file, nestedLevel = 0 }: { file: TFileWithOptions, nestedLevel?: number }) {
   
-  const { onChange, onBlur, onKeyDown, changeName, deleteFolderOrFile, setMainPlot  } = useContext(SidebarContext);
+  const { workspace_id, onChange, onBlur, onKeyDown, changeName, deleteFolderOrFile, setMainPlot  } = useContext(SidebarContext);
   const { isKebabOpen, openKebab, closeKebab } = useKebab();
 
   return (
-    <FileContainer $isFolder={false} $nestedLevel={nestedLevel}>
-      <FileIcon />
-      {!file.isEditing && <FileName>{file.file_name}</FileName>}
+    <FileContainer $isFolder={false} $nestedLevel={nestedLevel} $isSelect={file.isSelect}>
+      {file.isSelect && <SeletedFile />}
+      {!file.isSelect && <FileIcon />}
+      {!file.isEditing && <FileName href={`/${workspace_id}/plot/${file._id}`}>{file.file_name}</FileName>}
       {file.isEditing &&
         <input type="text" value={file.file_name} 
           onChange={onChange(file)} onBlur={onBlur(file)} onKeyDown={onKeyDown(file)}

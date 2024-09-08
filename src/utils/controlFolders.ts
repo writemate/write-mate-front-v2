@@ -19,11 +19,22 @@ export const recursiveFolderAddOptions = (folder: TFolder): TFolderWithOptions =
   };
 };
 
-export const recursiveFolderUnselect = (folder: TFolderWithOptions|TFileWithOptions) => {
+export const recursiveUnselect = (folder: TFolderWithOptions|TFileWithOptions) => {
   folder.isSelect = false;
   if(!folder.isFolder) return;
   folder.files.forEach((file) => {
-    recursiveFolderUnselect(file);
+    recursiveUnselect(file);
+  });
+};
+
+export const currentFileSelect = (folderOrFile: TFolderWithOptions|TFileWithOptions, fileId: string) => {
+  folderOrFile.isSelect = false;
+  if(!folderOrFile.isFolder && folderOrFile._id === fileId){
+    folderOrFile.isSelect = true;
+  }
+  if(!folderOrFile.isFolder) return;
+  folderOrFile.files.forEach((file) => {
+    currentFileSelect(file, fileId);
   });
 };
 

@@ -1,7 +1,8 @@
 'use client';
-import { css, styled } from 'styled-components';
+import { styled } from 'styled-components';
 import { clickable, FlexColumnCenter, FlexRowCenter, FlexRowLeftStart, FlexRowSpaceBetween } from '@/styles';
 import KebabIcon from "@/assets/workspace/sideBar/kebab.svg";
+import Link from 'next/link';
 
 export const SidebarContainer = styled.div`
   ${FlexColumnCenter}
@@ -90,7 +91,13 @@ export const Kebab = styled(KebabIcon)`
   }
 `;
 
-export const FileName = styled.div`
+export const FolderName = styled.div`
+  font-weight: 400;
+  margin-left: 6px;
+  line-height: 24px;
+`;
+
+export const FileName = styled(Link)`
   font-weight: 400;
   margin-left: 6px;
   line-height: 24px;
@@ -131,6 +138,7 @@ export const FileContainer = styled.div<{ $isFolder: boolean, $nestedLevel?:numb
 export const KebabContainer = styled.div`
   ${FlexColumnCenter};
   cursor: default;
+  color: ${({ theme }) => theme.color.gray900};
   position: fixed;
   z-index: 1;
   padding: 6px 10px;
