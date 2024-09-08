@@ -1,6 +1,7 @@
 'use client'
 import Link from "next/link";
 import { useContext } from "react";
+import { useKebab } from "@/hooks/workspace/sidebar/useKebab";
 import { TFolderWithOptions, TFileWithOptions } from "@/utils/APIs/types";
 import OpendDropButton from "@/assets/workspace/sideBar/opendDropButton.svg";
 import CloseDropButton from "@/assets/workspace/sideBar/closedDropButton.svg";
@@ -10,13 +11,14 @@ import Pin from "@/assets/workspace/sideBar/pin.svg";
 import SeletedFolder from "@/assets/workspace/sideBar/selectedFolder.svg";
 import { SidebarContext } from "@/stores/sidebarContext";
 import SeletedFile from "@/assets/workspace/sideBar/selectedFile.svg";
-import { FileListContainer, FolderContainer, FileContainer, FileName, Kebab } from "@/styles/workspace/SideBar.styles";
-
+import { FileListContainer, FolderContainer, FileContainer, FileName, KebabWrapper, Kebab, KebabContainer, KebabItem } from "@/styles/workspace/SideBar.styles";
 
 export function Folder({ folder, nestedLevel = 0}:
   { folder: TFolderWithOptions; nestedLevel?: number; }) {
 
   const { toggleFolder, openFolder, onChange, onBlur, onKeyDown } = useContext(SidebarContext);
+  const { isKebabOpen, openKebab, closeKebab } = useKebab();
+  
   return (
     <FolderContainer>
       <FileContainer onClick={openFolder(folder)} $isFolder={true} $nestedLevel={nestedLevel} $isSelect={folder.isSelect}>
@@ -30,7 +32,14 @@ export function Folder({ folder, nestedLevel = 0}:
             onChange={onChange(folder)} onBlur={onBlur(folder)} onKeyDown={onKeyDown(folder)}
             autoFocus/>
         }
-        <Kebab />
+        <KebabWrapper tabIndex={0} onBlur={closeKebab}>
+          <Kebab onClick={openKebab} />
+          {isKebabOpen && <KebabContainer>
+            <KebabItem>이름 변경</KebabItem>
+            <KebabItem>복제하기</KebabItem>
+            <KebabItem>삭제하기</KebabItem>
+          </KebabContainer>}
+        </KebabWrapper>
       </FileContainer>
       <FileListContainer>
         {folder.isOpen&&folder.files.map((subFile, i) => {
@@ -49,6 +58,8 @@ export function Folder({ folder, nestedLevel = 0}:
 export function File({ file, nestedLevel = 0 }: { file: TFileWithOptions, nestedLevel?: number }) {
   
   const { onChange, onBlur, onKeyDown } = useContext(SidebarContext);
+  const { isKebabOpen, openKebab, closeKebab } = useKebab();
+
   return (
     <FileContainer $isFolder={false} $nestedLevel={nestedLevel}>
       <FileIcon />
@@ -59,7 +70,15 @@ export function File({ file, nestedLevel = 0 }: { file: TFileWithOptions, nested
           autoFocus/>
       }
       {file.isPinned && <Pin />}
-      <Kebab />
+      <KebabWrapper tabIndex={0} onBlur={closeKebab}>
+        <Kebab onClick={openKebab} />
+        {isKebabOpen && <KebabContainer>
+          <KebabItem>이름 변경</KebabItem>
+          <KebabItem>메인플롯으로 지정</KebabItem>
+          <KebabItem>복제하기</KebabItem>
+          <KebabItem>삭제하기</KebabItem>
+        </KebabContainer>}
+      </KebabWrapper>
     </FileContainer>
   );
 }
