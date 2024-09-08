@@ -1,12 +1,35 @@
 'use client';
-import { SidebarContainer } from "@/styles/workspace";
-import Link from "next/link";
-import { useLogin } from "@/stores/useLogin";
+import usePlotSidebar from "@/hooks/workspace/sidebar/usePlotSidebar";
+import FolderIcon from "@/assets/workspace/sideBar/addFolder.svg";
+import FileIcon from "@/assets/workspace/sideBar/addFile.svg";
+import { SidebarContainer, SidebarTitleContainer, SidebarTitle, SidebarIconContainer, SidebarContentsContainer } from "@/styles/workspace/SideBar.styles";
+import { Folder, File } from "@/components/workspace/SideBar";
+import { SidebarContext } from "@/stores/sidebarContext";
 
 export default function PlotSidebar() {
-    return (
-        <SidebarContainer>
-
-        </SidebarContainer>
-    );
+  const hookValues = usePlotSidebar();
+  const {isLoading, error, rootFolder, createFolder, createFile, clearSelect } = hookValues;
+  return (
+    <SidebarContext.Provider value={hookValues}>
+      <SidebarContainer onClick={clearSelect}>
+        <SidebarTitleContainer>
+          <SidebarTitle>플롯</SidebarTitle>
+          <SidebarIconContainer>
+            <FolderIcon onClick={createFolder} />
+            <FileIcon onClick={createFile} />
+          </SidebarIconContainer>
+        </SidebarTitleContainer>
+        {isLoading && <div>Loading...</div>}
+        {error && <div>Error</div>}
+        <SidebarContentsContainer>
+          {rootFolder && rootFolder.files.map((file) => {
+            if (file.isFolder) {
+              return <Folder key={file.folder_name} folder={file}/>;
+            }
+            return <File key={file.file_name} file={file} />;
+          })}
+        </SidebarContentsContainer>
+      </SidebarContainer>
+    </SidebarContext.Provider>
+  );
 }

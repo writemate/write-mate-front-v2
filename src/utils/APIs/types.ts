@@ -1,3 +1,28 @@
+export interface TFile {
+  _id: string;
+  isFolder: false;
+  file_name: string;
+  isPinned: boolean;
+};
+
+export interface TFolder {
+  isFolder: true;
+  folder_name: string;
+  files: Array<TFile|TFolder>;
+};
+
+export interface TFileWithOptions extends TFile {
+  isSelect: boolean;
+  isEditing: boolean;
+}
+
+export interface TFolderWithOptions extends TFolder {
+  isOpen: boolean;
+  isSelect: boolean;
+  isEditing: boolean;
+  files: Array<TFileWithOptions|TFolderWithOptions>;
+}
+
 /**
  * 플롯 타입
  */
