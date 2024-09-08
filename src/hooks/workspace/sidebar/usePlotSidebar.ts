@@ -5,7 +5,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getPlotFolderList, updatePlotFolder } from "@/utils/APIs/workspace";
 import { useParams } from "next/navigation";
 import { TFileWithOptions, TFolderWithOptions } from '@/utils/APIs/types';
-import { recursiveFolderAddOptions, recursiveFolderUnselect, getSelectedFolder } from '@/utils/controlFolders';
+import { recursiveFolderAddOptions, recursiveFolderUnselect, getSelectedFolder, recursiveFileUnpin, recursiveFindParent } from '@/utils/controlFolders';
 
 export default function usePlotSidebar() {
   const queryClient = useQueryClient();
@@ -114,6 +114,33 @@ export default function usePlotSidebar() {
     }
   }
 
+  const changeName = (folderOrfile: TFolderWithOptions|TFileWithOptions) => () => {
+    if(rootFolder === null) return;
+    recursiveFolderUnselect(rootFolder);
+    folderOrfile.isSelect = true;
+    folderOrfile.isEditing = true;
+    setRootFolder({...rootFolder});
+  }
+
+  const deleteFolderOrFile = (folderOrfile: TFolderWithOptions|TFileWithOptions) => () => {
+    if(rootFolder === null) return;
+    if(confirm(`정말 ${folderOrfile.isFolder? `폴더 "${folderOrfile.folder_name}"` : `파일 "${folderOrfile.file_name}"`}을 삭제하시겠습니까?`) === false) return;
+    const parent = recursiveFindParent(rootFolder, folderOrfile);
+    if(parent === null) return;
+    const index = parent.files.indexOf(folderOrfile);
+    parent.files.splice(index, 1);
+    setRootFolder({...rootFolder});
+    mutate({ workId: workspace_id, folder: rootFolder });
+  }
+
+  const setMainPlot = (file: TFileWithOptions) => () => {
+    if(rootFolder === null) return;
+    recursiveFileUnpin(rootFolder);
+    file.isPinned = true;
+    setRootFolder({...rootFolder});
+    mutate({ workId: workspace_id, folder: rootFolder });
+  }
+
   return {
     workspace_id,
     rootFolder,
@@ -128,5 +155,8 @@ export default function usePlotSidebar() {
     onChange,
     onBlur,
     onKeyDown,
+    changeName,
+    deleteFolderOrFile,
+    setMainPlot,
   };  
 }

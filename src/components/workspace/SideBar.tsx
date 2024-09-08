@@ -16,7 +16,7 @@ import { FileListContainer, FolderContainer, FileContainer, FileName, KebabWrapp
 export function Folder({ folder, nestedLevel = 0}:
   { folder: TFolderWithOptions; nestedLevel?: number; }) {
 
-  const { toggleFolder, openFolder, onChange, onBlur, onKeyDown } = useContext(SidebarContext);
+  const { toggleFolder, openFolder, onChange, onBlur, onKeyDown, changeName, deleteFolderOrFile } = useContext(SidebarContext);
   const { isKebabOpen, openKebab, closeKebab } = useKebab();
   
   return (
@@ -34,10 +34,10 @@ export function Folder({ folder, nestedLevel = 0}:
         }
         <KebabWrapper tabIndex={0} onBlur={closeKebab}>
           <Kebab onClick={openKebab} />
-          {isKebabOpen && <KebabContainer>
-            <KebabItem>이름 변경</KebabItem>
+          {isKebabOpen && <KebabContainer onClick={closeKebab}>
+            <KebabItem onClick={changeName(folder)}>이름 변경</KebabItem>
             <KebabItem>복제하기</KebabItem>
-            <KebabItem>삭제하기</KebabItem>
+            <KebabItem onClick={deleteFolderOrFile(folder)}>삭제하기</KebabItem>
           </KebabContainer>}
         </KebabWrapper>
       </FileContainer>
@@ -57,7 +57,7 @@ export function Folder({ folder, nestedLevel = 0}:
 
 export function File({ file, nestedLevel = 0 }: { file: TFileWithOptions, nestedLevel?: number }) {
   
-  const { onChange, onBlur, onKeyDown } = useContext(SidebarContext);
+  const { onChange, onBlur, onKeyDown, changeName, deleteFolderOrFile, setMainPlot  } = useContext(SidebarContext);
   const { isKebabOpen, openKebab, closeKebab } = useKebab();
 
   return (
@@ -72,11 +72,12 @@ export function File({ file, nestedLevel = 0 }: { file: TFileWithOptions, nested
       {file.isPinned && <Pin />}
       <KebabWrapper tabIndex={0} onBlur={closeKebab}>
         <Kebab onClick={openKebab} />
-        {isKebabOpen && <KebabContainer>
-          <KebabItem>이름 변경</KebabItem>
-          <KebabItem>메인플롯으로 지정</KebabItem>
+        {isKebabOpen && <KebabContainer onClick={closeKebab}>
+          <KebabItem onClick={changeName(file)}>이름 변경</KebabItem>
+          {!file.isPinned && <KebabItem onClick={setMainPlot(file)}>메인플롯으로 지정</KebabItem>}
           <KebabItem>복제하기</KebabItem>
-          <KebabItem>삭제하기</KebabItem>
+          {!file.isPinned && <KebabItem onClick={deleteFolderOrFile(file)}>삭제하기</KebabItem>}
+          {file.isPinned && <KebabItem>메인플롯 삭제 불가</KebabItem>}
         </KebabContainer>}
       </KebabWrapper>
     </FileContainer>

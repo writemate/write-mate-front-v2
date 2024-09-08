@@ -130,6 +130,7 @@ export const FileContainer = styled.div<{ $isFolder: boolean, $nestedLevel?:numb
 
 export const KebabContainer = styled.div`
   ${FlexColumnCenter};
+  cursor: default;
   position: fixed;
   z-index: 1;
   padding: 6px 10px;
