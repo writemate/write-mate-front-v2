@@ -45,9 +45,7 @@ export function Folder({ folder, nestedLevel = 0}:
           if (subFile.isFolder) {
             return <Folder key={i + 1} folder={subFile} nestedLevel={nestedLevel + 1}/>;
           }
-          else {
-            return <File key={i + 1} file={subFile} nestedLevel={nestedLevel + 1} />;
-          }
+          return <File key={i + 1} file={subFile} nestedLevel={nestedLevel + 1} />;
         })}
       </FileListContainer>
     </FolderContainer>
