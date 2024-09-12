@@ -56,7 +56,8 @@ const mockFolderList: TFolder = {
 };
 
 export const getPlotFolderListMock = (workId: string) => async ()=> {
-  return mockFolderList;
+  //deep copy
+  return JSON.parse(JSON.stringify(mockFolderList));
 }
 
 export const getChapterListMock = (workId: string) => async () => {
