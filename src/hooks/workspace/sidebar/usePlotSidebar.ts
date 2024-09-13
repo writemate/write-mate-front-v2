@@ -162,7 +162,8 @@ export default function usePlotSidebar() {
     mutate({ workId: workspace_id, folder: rootFolder });
   }
 
-  const changeOrderBeforeItem = (file: TFileWithOptions) => {
+  const changeOrderAfterItem = (file: TFileWithOptions) => {
+    console.log('changeOrderBeforeItem', rootFolder, draggingItem, file);
     if(rootFolder === null) return;
     if(draggingItem === null) return;
 
@@ -179,7 +180,7 @@ export default function usePlotSidebar() {
     parent.files.splice(index, 1);
     //add draggingItem before file
     const targetIndex = targetParent.files.indexOf(file);
-    targetParent.files.splice(targetIndex, 0, draggingItem);
+    targetParent.files.splice(targetIndex+1, 0, draggingItem);
     setRootFolder({...rootFolder});
     mutate({ workId: workspace_id, folder: rootFolder });
   }
@@ -199,7 +200,7 @@ export default function usePlotSidebar() {
     parent.files.splice(index, 1);
     //add draggingItem last of folder
     targetParent.files.push(draggingItem);
-    console.log(targetParent);
+    targetParent.isOpen = true;
     setRootFolder({...rootFolder});
     mutate({ workId: workspace_id, folder: rootFolder });
   }
@@ -223,7 +224,7 @@ export default function usePlotSidebar() {
     setMainPlot,
     draggingItem,
     setDraggingItem,
-    changeOrderBeforeItem,
+    changeOrderAfterItem,
     changeOrderLastOfFolder,
   };
 }

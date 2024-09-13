@@ -47,6 +47,7 @@ export const SidebarIconContainer = styled.div`
 
 export const SidebarContentsContainer = styled.div`
   width: 100%;
+  height: 100%;
   overflow: auto;
   &::-webkit-scrollbar {
     width: 6px;
@@ -69,6 +70,7 @@ export const FileListContainer = styled.div`
 
 export const FolderContainer = styled.div`
   width: 100%;
+  position: relative;
   &>div:nth-child(1){
     margin-bottom: 6px;
   }
@@ -103,7 +105,16 @@ export const FileName = styled(Link)`
   line-height: 24px;
 `;
 
-export const FileContainer = styled.div<{ $isFolder: boolean, $nestedLevel?:number, $isSelect?:boolean }>`
+export const DropLine = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 6px;
+  background-color: ${({ theme }) => theme.color.orange200};
+  bottom: 0;
+  left: 0;
+`;
+
+export const FileContainer = styled.div<{ $isFolder: boolean, $nestedLevel?:number, $isSelect?:boolean, $dragOver?:boolean }>`
   ${FlexRowLeftStart};
   ${clickable};
   align-items: flex-start;
@@ -115,7 +126,8 @@ export const FileContainer = styled.div<{ $isFolder: boolean, $nestedLevel?:numb
     return `${$nestedLevel * 12 + 16}px`;
   }};
   border-radius: 6px;
-  background-color: ${({ $isSelect,theme }) => $isSelect ? theme.color.orange100 : 'transparent'};
+  ${({ $isSelect,theme }) => $isSelect && `background-color: ${theme.color.orange100};`}
+  ${({ $dragOver,theme }) => $dragOver && `background-color: ${theme.color.gray75};`}
   color: ${({ $isSelect,theme }) => $isSelect ? theme.color.orange400 : "inherit"};
   ${Kebab}{
     opacity: 0;

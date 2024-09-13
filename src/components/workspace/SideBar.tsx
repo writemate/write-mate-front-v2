@@ -10,17 +10,23 @@ import Pin from "@/assets/workspace/sideBar/pin.svg";
 import SeletedFolder from "@/assets/workspace/sideBar/selectedFolder.svg";
 import { SidebarContext } from "@/stores/sidebarContext";
 import SeletedFile from "@/assets/workspace/sideBar/selectedFile.svg";
-import { FileListContainer, FolderContainer, FileContainer,FolderName, FileName, KebabWrapper, Kebab, KebabContainer, KebabItem } from "@/styles/workspace/SideBar.styles";
+import { FileListContainer, FolderContainer, FileContainer, FolderName,
+  FileName, KebabWrapper, Kebab, KebabContainer, KebabItem, DropLine } from "@/styles/workspace/SideBar.styles";
+import { useDrag } from "@/hooks/workspace/sidebar/useDrag";
 
 export function Folder({ folder, nestedLevel = 0}:
   { folder: TFolderWithOptions; nestedLevel?: number; }) {
 
   const { toggleFolder, openFolder, onChange, onBlur, onKeyDown, changeName, deleteFolderOrFile } = useContext(SidebarContext);
   const { isKebabOpen, openKebab, closeKebab } = useKebab();
+  const { isDragOver, onDragStart, onDragOver, onDragLeave, onDrop} = useDrag(folder);
   
   return (
     <FolderContainer>
-      <FileContainer onClick={openFolder(folder)} $isFolder={true} $nestedLevel={nestedLevel} $isSelect={folder.isSelect}>
+      <FileContainer
+        onClick={openFolder(folder)} $isFolder={true} $nestedLevel={nestedLevel} $isSelect={folder.isSelect} $dragOver={isDragOver}
+        onDragStart={onDragStart} onDragOver={onDragOver} onDragLeave={onDragLeave} onDrop={onDrop} draggable={true}
+      >
         {folder.isOpen && <OpendDropButton onClick={toggleFolder(folder)} />}
         {!folder.isOpen && <CloseDropButton onClick={toggleFolder(folder)} />}
         {folder.isSelect && <SeletedFolder />}
@@ -56,9 +62,13 @@ export function File({ file, nestedLevel = 0 }: { file: TFileWithOptions, nested
   
   const { workspace_id, onChange, onBlur, onKeyDown, changeName, deleteFolderOrFile, setMainPlot  } = useContext(SidebarContext);
   const { isKebabOpen, openKebab, closeKebab } = useKebab();
+  const { isDragOver, onDragStart, onDragOver, onDragLeave, onDrop} = useDrag(file);
 
   return (
-    <FileContainer $isFolder={false} $nestedLevel={nestedLevel} $isSelect={file.isSelect}>
+    <FileContainer 
+      $isFolder={false} $nestedLevel={nestedLevel} $isSelect={file.isSelect}
+      onDragStart={onDragStart} onDragOver={onDragOver} onDragLeave={onDragLeave} draggable={true} onDrop={onDrop}
+    >
       {file.isSelect && <SeletedFile />}
       {!file.isSelect && <FileIcon />}
       {!file.isEditing && <FileName href={`/${workspace_id}/plot/${file._id}`}>{file.file_name}</FileName>}
@@ -75,9 +85,9 @@ export function File({ file, nestedLevel = 0 }: { file: TFileWithOptions, nested
           {!file.isPinned && <KebabItem onClick={setMainPlot(file)}>메인플롯으로 지정</KebabItem>}
           <KebabItem>복제하기</KebabItem>
           {!file.isPinned && <KebabItem onClick={deleteFolderOrFile(file)}>삭제하기</KebabItem>}
-          {file.isPinned && <KebabItem>메인플롯 삭제 불가</KebabItem>}
         </KebabContainer>}
       </KebabWrapper>
+      {isDragOver&&<DropLine/>}
     </FileContainer>
   );
 }

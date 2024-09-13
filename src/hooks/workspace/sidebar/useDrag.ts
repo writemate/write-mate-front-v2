@@ -3,7 +3,7 @@ import { TFileWithOptions, TFolderWithOptions } from '@/utils/APIs/types';
 import { SidebarContext } from "@/stores/sidebarContext";
 
 export const useDrag = (data: TFileWithOptions | TFolderWithOptions) => {
-  const { draggingItem, setDraggingItem, changeOrderBeforeItem, changeOrderLastOfFolder } = useContext(SidebarContext);
+  const { setDraggingItem, changeOrderAfterItem, changeOrderLastOfFolder } = useContext(SidebarContext);
   const [isDragOver, setIsDragOver] = useState(false);
 
   const onDragStart = useCallback((e: React.DragEvent<HTMLDivElement>) => {
@@ -11,8 +11,8 @@ export const useDrag = (data: TFileWithOptions | TFolderWithOptions) => {
   }, [data]);
 
   const onDragOver = useCallback((e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
     setIsDragOver(true);
+    e.preventDefault();
   }, []);
 
   const onDragLeave = useCallback(() => {
@@ -21,18 +21,16 @@ export const useDrag = (data: TFileWithOptions | TFolderWithOptions) => {
 
   const onDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
-    if (!draggingItem) return;
     if(data.isFolder){
       changeOrderLastOfFolder(data);
     }else{
-      changeOrderBeforeItem(data);
+      changeOrderAfterItem(data);
     }
     setIsDragOver(false);
     setDraggingItem(null);
   };
 
   return {
-    draggingItem,
     isDragOver,
     onDragStart,
     onDragOver,
