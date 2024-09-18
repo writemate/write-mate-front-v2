@@ -21,7 +21,7 @@ export default function PlotSidebar() {
         </SidebarTitleContainer>
         {isLoading && <div>Loading...</div>}
         {error && <div>Error</div>}
-        <SidebarContentsContainer>
+        <SidebarContentsContainer onClick={clearSelect}>
           {rootFolder && rootFolder.files.map((file) => {
             if (file.isFolder) {
               return <Folder key={file.folder_name} folder={file}/>;
