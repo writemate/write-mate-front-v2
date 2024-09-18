@@ -45,12 +45,21 @@ export default function usePlotSidebar() {
     setRootFolder({...rootFolder});
   };
 
+  //폴더를 열면 나머지 폴더와 파일들의 선택을 해제하고 해당 폴더를 선택한다.
   const openFolder = (folder: TFolderWithOptions) => () => {
     if(rootFolder === null) return;
     //폴더를 열면 나머지 폴더와 파일들의 선택을 해제하고 해당 폴더를 선택한다.
     recursiveUnselect(rootFolder);
     folder.isOpen = true;
     folder.isSelect = true;
+    setRootFolder({...rootFolder});
+  };
+
+  //드래그 앤 드롭을 위한 폴더 열기 함수(선택은 하지 않음)
+  const openFolderForDrag = (folder: TFolderWithOptions) => {
+    if(rootFolder === null) return;
+    //폴더를 열면 나머지 폴더와 파일들의 선택을 해제하고 해당 폴더를 선택한다.
+    folder.isOpen = true;
     setRootFolder({...rootFolder});
   };
 
@@ -163,7 +172,6 @@ export default function usePlotSidebar() {
   }
 
   const changeOrderAfterItem = (file: TFileWithOptions) => {
-    console.log('changeOrderBeforeItem', rootFolder, draggingItem, file);
     if(rootFolder === null) return;
     if(draggingItem === null) return;
 
@@ -212,6 +220,7 @@ export default function usePlotSidebar() {
     isPending,
     error,
     openFolder,
+    openFolderForDrag,
     toggleFolder,
     clearSelect,
     createFolder,
