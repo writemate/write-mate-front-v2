@@ -125,7 +125,7 @@ export const BottomDropLine = styled(DropLine)`
   bottom: -6px;
 `;
 
-export const FileContainer = styled.div<{ $isFolder: boolean, $nestedLevel?:number, $isSelect?:boolean, $dragOver?:boolean }>`
+export const FileContainer = styled.div<{ $isFolder: boolean, $nestedLevel?:number, $isSelect?:boolean, $dragOver?:boolean, $isEditing?:boolean }>`
   ${FlexRowLeftStart};
   ${clickable};
   align-items: flex-start;
@@ -137,8 +137,9 @@ export const FileContainer = styled.div<{ $isFolder: boolean, $nestedLevel?:numb
     return `${$nestedLevel * 12 + 16}px`;
   }};
   border-radius: 6px;
-  ${({ $isSelect,theme }) => $isSelect && `background-color: ${theme.color.orange100};`}
+  ${({ $isSelect, $isEditing, theme }) => $isSelect && !$isEditing && `background-color: ${theme.color.orange100};`}
   ${({ $dragOver,theme }) => $dragOver && `background-color: ${theme.color.gray75};`}
+  border: 1px solid ${({ $isEditing,theme }) => $isEditing ? theme.color.orange400 : "transparent"};
   color: ${({ $isSelect,theme }) => $isSelect ? theme.color.orange400 : "inherit"};
   ${Kebab}{
     opacity: 0;
@@ -155,6 +156,16 @@ export const FileContainer = styled.div<{ $isFolder: boolean, $nestedLevel?:numb
   ${FileName}{
     color: ${({ $isSelect, theme }) => $isSelect ? theme.color.orange400 : "inherit"};
     font-weight: ${({ $isSelect }) => $isSelect ? 600 : 400};
+  }
+  & input{
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    line-height: 24px;
+    align-self: center;
+    margin-left: 6px;
+    font-weight: 400;
   }
 `;
 
