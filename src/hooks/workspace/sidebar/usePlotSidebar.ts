@@ -45,12 +45,21 @@ export default function usePlotSidebar() {
     setRootFolder({...rootFolder});
   };
 
+  //폴더를 열면 나머지 폴더와 파일들의 선택을 해제하고 해당 폴더를 선택한다.
   const openFolder = (folder: TFolderWithOptions) => () => {
     if(rootFolder === null) return;
     //폴더를 열면 나머지 폴더와 파일들의 선택을 해제하고 해당 폴더를 선택한다.
     recursiveUnselect(rootFolder);
     folder.isOpen = true;
     folder.isSelect = true;
+    setRootFolder({...rootFolder});
+  };
+
+  //드래그 앤 드롭을 위한 폴더 열기 함수(선택은 하지 않음)
+  const openFolderForDrag = (folder: TFolderWithOptions) => {
+    if(rootFolder === null) return;
+    //폴더를 열면 나머지 폴더와 파일들의 선택을 해제하고 해당 폴더를 선택한다.
+    folder.isOpen = true;
     setRootFolder({...rootFolder});
   };
 
@@ -162,8 +171,7 @@ export default function usePlotSidebar() {
     mutate({ workId: workspace_id, folder: rootFolder });
   }
 
-  const changeOrderAfterItem = (file: TFileWithOptions) => {
-    console.log('changeOrderBeforeItem', rootFolder, draggingItem, file);
+  const changeOrderItem = (getIndex:(index:number)=>number) => (file: TFileWithOptions|TFolderWithOptions) => {
     if(rootFolder === null) return;
     if(draggingItem === null) return;
 
@@ -180,10 +188,13 @@ export default function usePlotSidebar() {
     parent.files.splice(index, 1);
     //add draggingItem before file
     const targetIndex = targetParent.files.indexOf(file);
-    targetParent.files.splice(targetIndex+1, 0, draggingItem);
+    targetParent.files.splice(getIndex(targetIndex), 0, draggingItem);
     setRootFolder({...rootFolder});
     mutate({ workId: workspace_id, folder: rootFolder });
   }
+
+  const changeOrderAfterItem = changeOrderItem((index) => index + 1);
+  const changeOrderBeforeItem = changeOrderItem((index) => index);
 
   const changeOrderLastOfFolder = (folder: TFolderWithOptions) => {
     if(rootFolder === null) return;
@@ -212,6 +223,7 @@ export default function usePlotSidebar() {
     isPending,
     error,
     openFolder,
+    openFolderForDrag,
     toggleFolder,
     clearSelect,
     createFolder,
@@ -225,6 +237,7 @@ export default function usePlotSidebar() {
     draggingItem,
     setDraggingItem,
     changeOrderAfterItem,
+    changeOrderBeforeItem,
     changeOrderLastOfFolder,
   };
 }
