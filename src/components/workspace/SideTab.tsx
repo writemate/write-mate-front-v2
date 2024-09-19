@@ -6,11 +6,13 @@ import Info from '@/assets/workspace/sideTab/info.svg';
 import Plot from '@/assets/workspace/sideTab/plot.svg';
 import Script from '@/assets/workspace/sideTab/script.svg';
 import Character from '@/assets/workspace/sideTab/character.svg';
-import { usePathname  } from 'next/navigation';
+import { useParams, usePathname  } from 'next/navigation';
 import { useSidebar } from "@/hooks/workspace/useSidebar";
 
 export default function SideTab({ togglePlot, toggleScript, toggleCharacter, isPlotOpen, isScriptOpen, isCharacterOpen }: ReturnType<typeof useSidebar>) {
   const pathname = usePathname();
+  
+  const { workspace_id } = useParams<{ workspace_id: string }>();
 
   const sideTab = [
     { name: 'plot', icon: Plot, onClick: togglePlot, open: isPlotOpen },
@@ -23,7 +25,7 @@ export default function SideTab({ togglePlot, toggleScript, toggleCharacter, isP
         <LogoLink href="/dashboard">
             <Logo />
         </LogoLink>
-        <SideTabLink $inPage={pathname.endsWith('/info')} href="./info">
+        <SideTabLink $inPage={pathname.endsWith('/info')} href={`/${workspace_id}/info`}>
           <Info />
         </SideTabLink>
         {

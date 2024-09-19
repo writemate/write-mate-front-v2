@@ -109,11 +109,27 @@ export const MainContainer = styled.main<{ $background?: string, $flexdirection?
 
 export const Input = styled.input`
   padding: 10px;
-  border: 1px solid ${({ theme }) => theme.color.red400};
-  border-radius: 5px;
-  flex-grow: 0;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  padding: 13px 20px;
+  box-shadow: 0 0 12px 0 #0000001A;
+  width: 100%;
   &:focus {
     outline: none;
-    border: 1px solid ${({ theme }) => theme.color.red400};
+    border: 1px solid #F49661;
+  }
+`;
+
+export const TextArea = styled.textarea`
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  padding: 13px 20px;
+  box-shadow: 0 0 12px 0 #0000001A;
+  width: 100%;
+  resize: none;
+  &:focus {
+    outline: none;
+    border: 1px solid #F49661;
   }
 `;

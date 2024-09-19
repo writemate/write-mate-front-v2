@@ -29,3 +29,12 @@ export const MainContainer = styled.div`
   overflow-y: auto;
   padding: 28px;
 `;
+
+export const Title = styled.div`
+  ${FlexRowLeftStart}
+  width: 100%;
+  font-size: 28px;
+  line-height: 42px;
+  font-weight: 700;
+  color: ${({ theme }) => theme.color.gray900};
+`;

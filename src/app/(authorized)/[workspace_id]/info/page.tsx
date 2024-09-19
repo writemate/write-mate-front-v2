@@ -1,5 +1,5 @@
 'use client';
-import { Title } from '@/styles/workspace/Info.style';
+import { Title } from '@/styles/workspace';
 import Cover from '@/components/workspace/info/Cover';
 import Introduction from '@/components/workspace/info/Introduction';
 import ExpectedQuantity from '@/components/workspace/info/ExpectedQuantity';
