@@ -110,6 +110,7 @@ export const MainContainer = styled.main<{ $background?: string, $flexdirection?
 export const Input = styled.input`
   padding: 10px;
   border-radius: 12px;
+  font-size: 16px;
   border: 1px solid transparent;
   padding: 13px 20px;
   box-shadow: 0 0 12px 0 #0000001A;
@@ -122,6 +123,8 @@ export const Input = styled.input`
 
 export const TextArea = styled.textarea`
   padding: 10px;
+  font-size: 16px;
+  line-height: 24px;
   border-radius: 12px;
   border: 1px solid transparent;
   padding: 13px 20px;

@@ -25,6 +25,8 @@ export const MainContainer = styled.div`
   ${FlexColumnCenter}
   flex-grow: 1;
   height: 100%;
+  max-width: 1012px;
+  margin: 0 auto;
   calc(100% - 72px);
   overflow-y: auto;
   padding: 28px;

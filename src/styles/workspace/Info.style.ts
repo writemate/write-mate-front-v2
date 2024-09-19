@@ -24,9 +24,9 @@ export const CoverImage = styled.img`
   border-radius: 4.72px;
 `;
 
-export const Container = styled.div`
+export const Container = styled.div<{ $marginTop: number }>`
+  margin-top: ${({ $marginTop }) => $marginTop}px;
   ${FlexColumnLeftStart}
-  gap: 20px;
   width: 100%;
 `;
 
