@@ -29,8 +29,7 @@ export default function WorkspaceLayout({
   const [openIdeaBox, setOpenIdeaBox] = useState(false);
   const toggleIdeaBox = () => setOpenIdeaBox(!openIdeaBox);
 
-  const { workId } = useParams() as { workId: string };
-  console.log(workId);
+  const { workspace_id } = useParams() as { workspace_id: string };
   const pathName = usePathname();
 
   // 대제목? 받아오기
@@ -39,20 +38,17 @@ export default function WorkspaceLayout({
     error,
     data: work,
   } = useQuery({
-    queryKey: [workspaceQueryKeys.work, workId],
-    queryFn: () => getWork(workId),
+    queryKey: [workspaceQueryKeys.work, workspace_id],
+    queryFn: () => getWork(workspace_id),
     staleTime: 0,
   });
 
   const getCurrentTitle = (path: string) => {
     if (path.includes("/info")) return "작품 정보";
-    if (path.includes("/plot"))
-      return work === undefined ? "무제" : work?.work_name;
+    if (path.includes("/plot")) return work?.work_name;
     // todo: 라우팅 나오면 추가
     return false;
   };
-
-  console.log(work);
 
   return (
     <WorkspaceContainer>
