@@ -20,7 +20,6 @@ export const SidebarTitleContainer = styled.div`
   ${FlexRowSpaceBetween};
   width: 100%;
   padding: 12px 5px 12px 16px;
-  margin-bottom: 6px;
 `;
 
 export const SidebarTitle = styled.div`
@@ -46,8 +45,11 @@ export const SidebarIconContainer = styled.div`
 `;
 
 export const SidebarContentsContainer = styled.div`
+  padding-top: 6px;
   width: 100%;
+  height: 100%;
   overflow: auto;
+  position: relative;
   &::-webkit-scrollbar {
     width: 6px;
   }
@@ -69,6 +71,7 @@ export const FileListContainer = styled.div`
 
 export const FolderContainer = styled.div`
   width: 100%;
+  position: relative;
   &>div:nth-child(1){
     margin-bottom: 6px;
   }
@@ -103,7 +106,26 @@ export const FileName = styled(Link)`
   line-height: 24px;
 `;
 
-export const FileContainer = styled.div<{ $isFolder: boolean, $nestedLevel?:number, $isSelect?:boolean }>`
+export const DropLine = styled.div<{$nestedLevel?:number, $active?:boolean}>`
+  position: absolute;
+  left: 0;
+  width: calc(100% - ${({ $nestedLevel = 0 }) => `${$nestedLevel * 12}px`});
+  height: 6px;
+  background-color: ${({ theme }) => theme.color.orange200};
+  opacity: ${({ $active }) => $active ? 1 : 0};
+  margin-left: ${({ $nestedLevel = 0 }) => `${$nestedLevel * 12}px`};
+  z-index: 1;
+`;
+
+export const TopDropLine = styled(DropLine)`
+  top: -6px;
+`;
+
+export const BottomDropLine = styled(DropLine)`
+  bottom: -6px;
+`;
+
+export const FileContainer = styled.div<{ $isFolder: boolean, $nestedLevel?:number, $isSelect?:boolean, $dragOver?:boolean }>`
   ${FlexRowLeftStart};
   ${clickable};
   align-items: flex-start;
@@ -115,7 +137,8 @@ export const FileContainer = styled.div<{ $isFolder: boolean, $nestedLevel?:numb
     return `${$nestedLevel * 12 + 16}px`;
   }};
   border-radius: 6px;
-  background-color: ${({ $isSelect,theme }) => $isSelect ? theme.color.orange100 : 'transparent'};
+  ${({ $isSelect,theme }) => $isSelect && `background-color: ${theme.color.orange100};`}
+  ${({ $dragOver,theme }) => $dragOver && `background-color: ${theme.color.gray75};`}
   color: ${({ $isSelect,theme }) => $isSelect ? theme.color.orange400 : "inherit"};
   ${Kebab}{
     opacity: 0;

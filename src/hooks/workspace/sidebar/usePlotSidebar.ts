@@ -15,14 +15,10 @@ export default function usePlotSidebar() {
     queryKey: workspaceQueryKeys.plotSidebar(workspace_id),
     queryFn: getPlotFolderList(workspace_id),
   });
+  const [draggingItem, setDraggingItem] = useState<TFileWithOptions|TFolderWithOptions|null>(null);
 
   const { mutate, isPending } = useMutation({
-    mutationFn: updatePlotFolder,
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: workspaceQueryKeys.plotSidebar(workspace_id),
-      });
-    }
+    mutationFn: updatePlotFolder
   });
 
   useEffect(() => {
@@ -49,12 +45,21 @@ export default function usePlotSidebar() {
     setRootFolder({...rootFolder});
   };
 
+  //폴더를 열면 나머지 폴더와 파일들의 선택을 해제하고 해당 폴더를 선택한다.
   const openFolder = (folder: TFolderWithOptions) => () => {
     if(rootFolder === null) return;
     //폴더를 열면 나머지 폴더와 파일들의 선택을 해제하고 해당 폴더를 선택한다.
     recursiveUnselect(rootFolder);
     folder.isOpen = true;
     folder.isSelect = true;
+    setRootFolder({...rootFolder});
+  };
+
+  //드래그 앤 드롭을 위한 폴더 열기 함수(선택은 하지 않음)
+  const openFolderForDrag = (folder: TFolderWithOptions) => {
+    if(rootFolder === null) return;
+    //폴더를 열면 나머지 폴더와 파일들의 선택을 해제하고 해당 폴더를 선택한다.
+    folder.isOpen = true;
     setRootFolder({...rootFolder});
   };
 
@@ -83,6 +88,7 @@ export default function usePlotSidebar() {
       files: [],
     });
     setRootFolder({...rootFolder});
+    //이름 변경 완료 시 서버에 폴더 구조 반영 => 여기에서 mutate를 호출할 필요가 없다.
   };
 
   const createFile = () => {
@@ -100,6 +106,7 @@ export default function usePlotSidebar() {
       isPinned: false,
     });
     setRootFolder({...rootFolder});
+    //일단 폴더랑 똑같이 처리중이긴한데, 파일의 경우 서버에 파일 생성 요청을 보내야 하므로 추후 수정이 필요하다.
   };
 
   const onChange = (folderOrfile: TFolderWithOptions|TFileWithOptions) => (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -164,6 +171,51 @@ export default function usePlotSidebar() {
     mutate({ workId: workspace_id, folder: rootFolder });
   }
 
+  const changeOrderItem = (getIndex:(index:number)=>number) => (file: TFileWithOptions|TFolderWithOptions) => {
+    if(rootFolder === null) return;
+    if(draggingItem === null) return;
+
+    //remove draggingItem from rootFolder
+    const parent = recursiveFindParent(rootFolder, draggingItem);
+    if(parent === null) return;
+    
+    //add draggingItem before file
+    const targetParent = recursiveFindParent(rootFolder, file);
+    if(targetParent === null) return;
+
+    //remove draggingItem from rootFolder
+    const index = parent.files.indexOf(draggingItem);
+    parent.files.splice(index, 1);
+    //add draggingItem before file
+    const targetIndex = targetParent.files.indexOf(file);
+    targetParent.files.splice(getIndex(targetIndex), 0, draggingItem);
+    setRootFolder({...rootFolder});
+    mutate({ workId: workspace_id, folder: rootFolder });
+  }
+
+  const changeOrderAfterItem = changeOrderItem((index) => index + 1);
+  const changeOrderBeforeItem = changeOrderItem((index) => index);
+
+  const changeOrderLastOfFolder = (folder: TFolderWithOptions) => {
+    if(rootFolder === null) return;
+    if(draggingItem === null) return;
+
+    //remove draggingItem from rootFolder
+    const parent = recursiveFindParent(rootFolder, draggingItem);
+    if(parent === null) return;
+    //add draggingItem last of folder
+    const targetParent = folder;
+
+    //remove draggingItem from rootFolder
+    const index = parent.files.indexOf(draggingItem);
+    parent.files.splice(index, 1);
+    //add draggingItem last of folder
+    targetParent.files.push(draggingItem);
+    targetParent.isOpen = true;
+    setRootFolder({...rootFolder});
+    mutate({ workId: workspace_id, folder: rootFolder });
+  }
+
   return {
     workspace_id,
     rootFolder,
@@ -171,6 +223,7 @@ export default function usePlotSidebar() {
     isPending,
     error,
     openFolder,
+    openFolderForDrag,
     toggleFolder,
     clearSelect,
     createFolder,
@@ -181,5 +234,10 @@ export default function usePlotSidebar() {
     changeName,
     deleteFolderOrFile,
     setMainPlot,
-  };  
+    draggingItem,
+    setDraggingItem,
+    changeOrderAfterItem,
+    changeOrderBeforeItem,
+    changeOrderLastOfFolder,
+  };
 }
