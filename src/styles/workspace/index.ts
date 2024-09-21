@@ -1,6 +1,6 @@
-'use client';
-import { FlexColumnCenter, FlexRowLeftStart } from '@/styles';
-import { styled } from 'styled-components';
+"use client";
+import { FlexColumnCenter, FlexRowLeftStart } from "@/styles";
+import { styled } from "styled-components";
 
 export const WorkspaceContainer = styled.div`
   ${FlexRowLeftStart}
@@ -28,4 +28,9 @@ export const MainContainer = styled.div`
   calc(100% - 72px);
   overflow-y: auto;
   padding: 28px;
+`;
+
+export const TitleContainer = styled.h1`
+  width: 100%;
+  padding-top: 36px;
 `;
