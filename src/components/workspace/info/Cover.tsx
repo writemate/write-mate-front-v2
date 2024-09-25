@@ -1,11 +1,12 @@
 'use client';
-import { CoverContainer, CoverImage, Container, SubTitle, TextWithDropMenu, DropdownMenu } from "@/styles/workspace/Info.style";
+import { CoverContainer, Container, SubTitle, TextWithDropMenu, DropdownMenu } from "@/styles/workspace/Info.style";
+import CoverImageBox from '@/components/workspace/info/CoverImageBox';
 import { Input, TextArea } from "@/styles";
 
-export default function ScriptSidebar() {
+export default function Cover() {
     return (
         <CoverContainer>
-            <CoverImage src="https://artmugfile2.cafe24.com/image/goods_img1/2/24621.jpg?ver=1657860911"/>
+            <CoverImageBox src="https://artmugfile2.cafe24.com/image/goods_img1/2/24621.jpg?ver=1657860911"/>
             <Container>
                 <SubTitle>제목</SubTitle>
                 <TextWithDropMenu>

@@ -24,11 +24,58 @@ export const CoverContainer = styled.div`
   margin-top: 55px;
 `;
 
-export const CoverImage = styled.img`
-  width: 254px;
+export const BlurBackground = styled.div<{ $src: string }>`
+  background-image: url(${({ $src }) => $src});
+`;
+export const ChangeCover = styled.div``;
+
+export const CoverImageContainer = styled.div`
+  ${FlexRowCenter}
+  flex-shrink: 0;
+  width: 263px;
   height: 341px;
-  object-fit: cover;
   border-radius: 4.72px;
+  padding: 55px 44px;
+  position: relative;
+  overflow: hidden;
+  ${BlurBackground} {
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    border-radius: 4.72px;
+    z-index: 0;
+    object-fit: cover;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(10px);
+  }
+  ${ChangeCover} {
+    ${FlexRowCenter};
+    display: none;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 2;
+    background-color: #88888857;
+    color: #FFFFFF;
+    backdrop-filter: blur(10px);
+  }
+  &:hover {
+    ${ChangeCover} {
+      display: flex;
+    }
+  }
+`;
+
+export const CoverImage = styled.img<{ src: string }>`
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  border: 1px solid #FFFFFF57;
+  z-index: 1;
 `;
 
 export const Container = styled.div`
