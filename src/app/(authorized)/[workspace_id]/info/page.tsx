@@ -1,5 +1,6 @@
 'use client';
 import { Title } from '@/styles/workspace';
+import { Infos } from "@/styles/workspace/Info.style";
 import Cover from '@/components/workspace/info/Cover';
 import Introduction from '@/components/workspace/info/Introduction';
 import ExpectedQuantity from '@/components/workspace/info/ExpectedQuantity';
@@ -13,11 +14,13 @@ export default function Info({params: {workspace_id}}: {params: {workspace_id: s
       <>
         <Title>작품 정보</Title>
         <Cover/>
-        <Introduction/>
-        <ExpectedQuantity/>
-        <MainCharacter/>
-        <Keyword/>
-        <MainPlot/>
+        <Infos>
+          <Introduction/>
+          <ExpectedQuantity/>
+          <MainCharacter/>
+          <Keyword/>
+          <MainPlot/>
+        </Infos>
       </>
   );
 }

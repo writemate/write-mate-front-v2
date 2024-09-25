@@ -2,6 +2,13 @@
 import { styled } from 'styled-components';
 import { clickable, FlexColumnCenter, FlexColumnLeftStart, FlexRowCenter, FlexRowLeftStart, FlexRowSpaceBetween } from '@/styles';
 
+export const Infos = styled.div`
+  ${FlexColumnCenter}
+  gap: 60px;
+  width: 100%;
+  margin-top: 100px;
+`;
+
 export const SubTitle = styled.h2`
   font-size: 20px;
   font-weight: 700;
@@ -24,8 +31,7 @@ export const CoverImage = styled.img`
   border-radius: 4.72px;
 `;
 
-export const Container = styled.div<{ $marginTop: number }>`
-  margin-top: ${({ $marginTop }) => $marginTop}px;
+export const Container = styled.div`
   ${FlexColumnLeftStart}
   width: 100%;
 `;
