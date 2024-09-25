@@ -4,9 +4,9 @@ import { getWork } from "@/utils/APIs/workspace";
 import { useParams } from "next/navigation";
 
 export default function useWorkspaceHeader() {
-  const {workspace_id} = useParams<{ workspace_id: string }>();
+  const { workspace_id } = useParams<{ workspace_id: string }>();
   const { data, error, isLoading } = useQuery({
-    queryKey: workspaceQueryKeys.work(workspace_id),
+    queryKey: workspaceQueryKeys.workName(workspace_id),
     queryFn: getWork(workspace_id),
   });
 

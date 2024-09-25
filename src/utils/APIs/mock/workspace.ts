@@ -1,4 +1,4 @@
-import { TFolder, TPlot } from "../types";
+import { TFolder, TPlot, TWorkInfo } from "../types";
 import axiosInstance from "../axiosInstance";
 
 const mockFolderList: TFolder = {
@@ -67,4 +67,38 @@ export const getChapterListMock = (workId: string) => async () => {
 
 export const updatePlotFolderMock = async ({folder}:{workId: string, folder:TFolder}) => {
   mockFolderList.files = folder.files;
+}
+
+const mockInfo: TWorkInfo = {
+  cover: "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
+  title: "",
+  genre: "",
+  logline: "",
+  expected_quantity: -1,
+  grade: null,
+  introduction: "",
+  keyword: [],
+}
+
+export const getInfoMock = (workId: string) => async () => {
+  return JSON.parse(JSON.stringify(mockInfo));
+}
+
+const generateUpdateInfoMock = <T extends keyof TWorkInfo>(key:T) => (workId: string) => async (value: TWorkInfo[T]) => {
+  mockInfo[key] = value;
+}
+
+export const updateCoverImageMock = generateUpdateInfoMock("cover");
+export const updateTitleMock = generateUpdateInfoMock("title");
+export const updateGenreMock = generateUpdateInfoMock("genre");
+export const updateLoglineMock = generateUpdateInfoMock("logline");
+export const updateExpectedQuantityMock = generateUpdateInfoMock("expected_quantity");
+export const updateIntroductionMock = generateUpdateInfoMock("introduction");
+export const addKeywordMock = (workId: string) => async (keyword: string) => {
+  if(mockInfo.keyword.includes(keyword)) return;
+  mockInfo.keyword.push(keyword);
+}
+
+export const removeKeywordMock = (workId: string) => async (keyword: string) => {
+  mockInfo.keyword = mockInfo.keyword.filter((k) => k !== keyword);
 }
