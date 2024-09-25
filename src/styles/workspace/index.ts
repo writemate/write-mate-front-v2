@@ -25,11 +25,10 @@ export const MainContainer = styled.div`
   ${FlexColumnCenter}
   flex-grow: 1;
   height: 100%;
-  max-width: 1012px;
-  margin: 0 auto;
-  calc(100% - 72px);
+  width: 100%;
+  //최대 너비가 1012px이면서 최소 패딩이 28px이도록
+  padding: 0 max(28px, calc((100% - 1012px) / 2));
   overflow-y: auto;
-  padding: 28px;
 `;
 
 export const Title = styled.div`
