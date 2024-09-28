@@ -70,7 +70,7 @@ export const updatePlotFolderMock = async ({folder}:{workId: string, folder:TFol
 }
 
 const mockInfo: TWorkInfo = {
-  cover: "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
+  cover: "https://artmugfile2.cafe24.com/image/goods_img1/2/24621.jpg?ver=1657860911",
   title: "",
   genre: "",
   logline: "",
@@ -81,10 +81,12 @@ const mockInfo: TWorkInfo = {
 }
 
 export const getInfoMock = (workId: string) => async () => {
-  return JSON.parse(JSON.stringify(mockInfo));
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  return JSON.parse(JSON.stringify(mockInfo)) as TWorkInfo;
 }
 
 const generateUpdateInfoMock = <T extends keyof TWorkInfo>(key:T) => (workId: string) => async (value: TWorkInfo[T]) => {
+  console.log(key, value);
   mockInfo[key] = value;
 }
 
