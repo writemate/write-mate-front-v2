@@ -20,12 +20,16 @@ export function useInfo() {
     { onChange: onChangeGenre, isPending: isPendingGenre },
     { onChange: onChangeLogline, isPending: isPendingLogline },
     { onChange: onChangeIntroduction, isPending: isPendingIntroduction },
-    { onChange: onChangeAddKeyword, isPending: isPendingAddKeyword },
-    { onChange: onChangeRemoveKeyword, isPending: isPendingRemoveKeyword }
-  ] = [updateTitle, updateGenre, updateLogline, updateIntroduction, addKeyword, removeKeyword]
-    .map((fn) => useMutation({
+  ] = ([["title", updateTitle], ["genre", updateGenre], ["logline", updateLogline], ["introduction", updateIntroduction]] as const)
+    .map(([key,fn]) => useMutation({
         mutationFn: fn(workspace_id),
         onSuccess: () => queryClient.invalidateQueries({ queryKey: workspaceQueryKeys.info(workspace_id) }),
+        onMutate: (value: string) => {
+          queryClient.setQueryData(workspaceQueryKeys.info(workspace_id), (prev: any) => ({
+            ...prev,
+            [key]: value,
+          }));
+        }
     }))
     .map(({ mutate, isPending }) => ({ mutate: debounce(mutate, 500), isPending }))
     .map(({ mutate, isPending }) => ({ onChange: (e: React.ChangeEvent<HTMLInputElement|HTMLTextAreaElement>) => mutate(e.target.value), isPending }));
@@ -43,6 +47,13 @@ export function useInfo() {
   const { onChange: onChangeCoverImage, isPending: isPendingCoverImage } = [useMutation({
     mutationFn: updateCoverImage(workspace_id),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: workspaceQueryKeys.info(workspace_id) }),
+    onMutate: (file: File) => {
+        if (!file) return;
+        queryClient.setQueryData(workspaceQueryKeys.info(workspace_id), (prev: any) => ({
+          ...prev,
+          cover: URL.createObjectURL(file),
+        }));
+    }
   })].map(({ mutate, isPending }) => ({ mutate: debounce(mutate, 500), isPending }))
     .map(({ mutate, isPending }) => ({ onChange: (e: React.ChangeEvent<HTMLInputElement>) =>{
       const file = e.target.files?.[0];
@@ -50,7 +61,7 @@ export function useInfo() {
       mutate(file);
     } , isPending }))[0];
 
-  return { data, error, isLoading, onChangeCoverImage, isPendingCoverImage, onChangeTitle, isPendingTitle, onChangeGenre, isPendingGenre, onChangeLogline, isPendingLogline, onChangeIntroduction, isPendingIntroduction, onChangeExpectedQuantity, isPendingExpectedQuantity, onChangeAddKeyword, isPendingAddKeyword, onChangeRemoveKeyword, isPendingRemoveKeyword };
+  return { data, error, isLoading, onChangeCoverImage, isPendingCoverImage, onChangeTitle, isPendingTitle, onChangeGenre, isPendingGenre, onChangeLogline, isPendingLogline, onChangeIntroduction, isPendingIntroduction, onChangeExpectedQuantity, isPendingExpectedQuantity};
 }
 
 export const InfoContext = createContext({} as ReturnType<typeof useInfo>);
