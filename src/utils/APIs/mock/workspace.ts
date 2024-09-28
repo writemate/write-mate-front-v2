@@ -74,7 +74,7 @@ const mockInfo: TWorkInfo = {
   title: "",
   genre: "",
   logline: "",
-  expected_quantity: -1,
+  expectedQuantity: -1,
   grade: null,
   introduction: "",
   keyword: [],
@@ -93,7 +93,7 @@ const generateUpdateInfoMock = <T extends keyof TWorkInfo>(key:T) => (workId: st
 export const updateTitleMock = generateUpdateInfoMock("title");
 export const updateGenreMock = generateUpdateInfoMock("genre");
 export const updateLoglineMock = generateUpdateInfoMock("logline");
-export const updateExpectedQuantityMock = generateUpdateInfoMock("expected_quantity");
+export const updateExpectedQuantityMock = generateUpdateInfoMock("expectedQuantity");
 export const updateGradeMock = generateUpdateInfoMock("grade");
 export const updateIntroductionMock = generateUpdateInfoMock("introduction");
 export const addKeywordMock = (workId: string) => async (keyword: string) => {

@@ -8,8 +8,8 @@ import DropButtonIcon from '@/assets/icons/dropButton.svg';
  * setSelected를 통해 selected를 변경할 수 있어야함.
  * @returns 
  */
-export default function DropdownMenu({ placeholder, options, selected, setSelected }: { placeholder: string, options: string[], selected: string | null, setSelected: (option: string) => void }) {
-  const [isOpen, setIsOpen] = useState(true);
+export default function DropdownMenu<T extends string[]>({ placeholder, options, selected, setSelected }: { placeholder: string, options: T, selected: string | null, setSelected: (option: T[number]) => void }) {
+  const [isOpen, setIsOpen] = useState(false);
 
   const onBlur = () => {
     setIsOpen(false);

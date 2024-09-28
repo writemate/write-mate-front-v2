@@ -36,11 +36,23 @@ export function useInfo() {
   const { onChange: onChangeGenre, isPending: isPendingGenre } = [useMutation({
     mutationFn: updateGenre(workspace_id),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: workspaceQueryKeys.info(workspace_id) }),
+    onMutate: (value: string) => {
+      queryClient.setQueryData(workspaceQueryKeys.info(workspace_id), (prev: any) => ({
+        ...prev,
+        genre: value,
+      }));
+    }
   })].map(({ mutate, isPending }) => ({ onChange: (option: string) => mutate(option), isPending }))[0];
 
   const { onChange: onChangeGrade, isPending: isPendingGrade } = [useMutation({
     mutationFn: updateGrade(workspace_id),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: workspaceQueryKeys.info(workspace_id) }),
+    onMutate: (value: Parameters<ReturnType<typeof updateGrade>>[0]) => {
+      queryClient.setQueryData(workspaceQueryKeys.info(workspace_id), (prev: any) => ({
+        ...prev,
+        grade: value,
+      }));
+    }
   })].map(({ mutate, isPending }) => ({ onChange: (option: Parameters<ReturnType<typeof updateGrade>>[0]) => mutate(option), isPending }))[0];
 
   const { onChange: onChangeExpectedQuantity, isPending: isPendingExpectedQuantity } = [useMutation({

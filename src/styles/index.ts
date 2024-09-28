@@ -141,8 +141,9 @@ export const DropdownMenuWrapper = styled.div`
   position: relative;
   display: flex;
   flex-shrink: 0;
-  flex-grow: 0;
-  width: 117px;
+  flex-grow: 1;
+  min-width: 115px;
+  max-width: 131px;
 `;
 
 export const DropdownSelector = styled.div`
