@@ -136,3 +136,51 @@ export const TextArea = styled.textarea`
     border: 1px solid #F49661;
   }
 `;
+
+export const DropdownMenuWrapper = styled.div`
+  position: relative;
+  display: flex;
+  flex-shrink: 0;
+  flex-grow: 0;
+  width: 117px;
+`;
+
+export const DropdownSelector = styled.div`
+  ${FlexRowCenter};
+  ${clickable};
+  width: 100%;
+  padding: 12px;
+  border-radius: 24px;
+  height: 44px;
+  box-shadow: 0 0 12px 0 #0000001A;
+  background: white;
+  font-weight: 600;
+  gap: 12px;
+`;
+
+export const DropDownListContainer = styled.div`
+  ${FlexColumnCenter};
+  position: absolute;
+  top: calc(100% + 17px);
+  left: 0;
+  width: 100%;
+  border-radius: 8px;
+  padding: 6px 4px;
+  gap: 2px;
+  background: white;
+  box-shadow: 0 0 8px 0 #1E212B33;
+  z-index: 100;
+`;
+
+export const DropDownOption = styled.div`
+  ${FlexColumnCenter};
+  ${clickable};
+  padding: 10px;
+  border-radius: 4px;
+  border-bottom: 1px solid transparent;
+  width: 100%;
+  &:hover {
+    background: #F2F4F9;
+    border-bottom: 1px solid ${({ theme }) => theme.color.gray100};
+  }
+`;
