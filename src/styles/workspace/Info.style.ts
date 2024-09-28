@@ -24,10 +24,14 @@ export const CoverContainer = styled.div`
   margin-top: 55px;
 `;
 
-export const BlurBackground = styled.div<{ $src: string }>`
-  background-image: url(${({ $src }) => $src});
+export const BlurBackground = styled.div<{ $src: string|null }>`
+  ${({ $src }) => $src && `background-image: url(${$src});`}
+  ${({ $src }) => !$src && `background-color: #888888;`}
 `;
 export const ChangeCover = styled.div``;
+export const ChangeCoverInput = styled.input`
+  display: none;
+`;
 
 export const CoverImageContainer = styled.div`
   ${FlexRowCenter}
