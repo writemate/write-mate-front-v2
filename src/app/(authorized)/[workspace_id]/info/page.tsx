@@ -7,11 +7,13 @@ import ExpectedQuantity from '@/components/workspace/info/ExpectedQuantity';
 import MainCharacter from '@/components/workspace/info/MainCharacter';
 import Keyword from '@/components/workspace/info/Keyword';
 import MainPlot from '@/components/workspace/info/MainPlot';
+import { useInfo, InfoContext } from '@/hooks/workspace/info';
 
-export default function Info({params: {workspace_id}}: {params: {workspace_id: string}}) {
+export default function Info() {
+  const value = useInfo();
 
   return (
-      <>
+      <InfoContext.Provider value={value}>
         <Title>작품 정보</Title>
         <Cover/>
         <Infos>
@@ -21,6 +23,6 @@ export default function Info({params: {workspace_id}}: {params: {workspace_id: s
           <Keyword/>
           <MainPlot/>
         </Infos>
-      </>
+      </InfoContext.Provider>
   );
 }
