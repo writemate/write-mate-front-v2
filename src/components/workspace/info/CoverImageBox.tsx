@@ -5,7 +5,7 @@ import { InfoContext } from "@/hooks/workspace/info";
 
 export default function CoverImageBox() {
     const { data , isLoading, onChangeCoverImage } = useContext(InfoContext);
-    const src = data?.cover ? data.cover : null;
+    const src = data?.cover ?? null;
     const ref = useRef<HTMLInputElement>(null);
     const onClickChangeCover = () => {
         ref.current?.click();
