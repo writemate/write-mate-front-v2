@@ -90,7 +90,6 @@ const generateUpdateInfoMock = <T extends keyof TWorkInfo>(key:T) => (workId: st
   mockInfo[key] = value;
 }
 
-export const updateCoverImageMock = generateUpdateInfoMock("cover");
 export const updateTitleMock = generateUpdateInfoMock("title");
 export const updateGenreMock = generateUpdateInfoMock("genre");
 export const updateLoglineMock = generateUpdateInfoMock("logline");
@@ -103,4 +102,14 @@ export const addKeywordMock = (workId: string) => async (keyword: string) => {
 
 export const removeKeywordMock = (workId: string) => async (keyword: string) => {
   mockInfo.keyword = mockInfo.keyword.filter((k) => k !== keyword);
+}
+export const updateCoverImageMock = (workId: string) => async (file: File) => {
+  await new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      mockInfo.cover = e.target?.result as string;
+      resolve(null);
+    }
+    reader.readAsDataURL(file);
+  });
 }
