@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { workspaceQueryKeys } from "@/utils/APIs/queryKeys";
 import { getInfo, updateCoverImage, updateExpectedQuantity,
-  updateGenre, updateIntroduction, updateLogline, updateTitle,
+  updateGenre, updateIntroduction, updateLogline, updateTitle, updateGrade,
   addKeyword, removeKeyword } from "@/utils/APIs/workspace";
 import { debounce } from "@/utils";
 import { useParams } from "next/navigation";
@@ -17,10 +17,9 @@ export function useInfo() {
 
   const [
     { onChange: onChangeTitle, isPending: isPendingTitle },
-    { onChange: onChangeGenre, isPending: isPendingGenre },
     { onChange: onChangeLogline, isPending: isPendingLogline },
     { onChange: onChangeIntroduction, isPending: isPendingIntroduction },
-  ] = ([["title", updateTitle], ["genre", updateGenre], ["logline", updateLogline], ["introduction", updateIntroduction]] as const)
+  ] = ([["title", updateTitle], ["logline", updateLogline], ["introduction", updateIntroduction]] as const)
     .map(([key,fn]) => useMutation({
         mutationFn: fn(workspace_id),
         onSuccess: () => queryClient.invalidateQueries({ queryKey: workspaceQueryKeys.info(workspace_id) }),
@@ -34,6 +33,16 @@ export function useInfo() {
     .map(({ mutate, isPending }) => ({ mutate: debounce(mutate, 500), isPending }))
     .map(({ mutate, isPending }) => ({ onChange: (e: React.ChangeEvent<HTMLInputElement|HTMLTextAreaElement>) => mutate(e.target.value), isPending }));
   
+  const { onChange: onChangeGenre, isPending: isPendingGenre } = [useMutation({
+    mutationFn: updateGenre(workspace_id),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: workspaceQueryKeys.info(workspace_id) }),
+  })].map(({ mutate, isPending }) => ({ onChange: (option: string) => mutate(option), isPending }))[0];
+
+  const { onChange: onChangeGrade, isPending: isPendingGrade } = [useMutation({
+    mutationFn: updateGrade(workspace_id),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: workspaceQueryKeys.info(workspace_id) }),
+  })].map(({ mutate, isPending }) => ({ onChange: (option: Parameters<ReturnType<typeof updateGrade>>[0]) => mutate(option), isPending }))[0];
+
   const { onChange: onChangeExpectedQuantity, isPending: isPendingExpectedQuantity } = [useMutation({
     mutationFn: updateExpectedQuantity(workspace_id),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: workspaceQueryKeys.info(workspace_id) }),
@@ -61,7 +70,11 @@ export function useInfo() {
       mutate(file);
     } , isPending }))[0];
 
-  return { data, error, isLoading, onChangeCoverImage, isPendingCoverImage, onChangeTitle, isPendingTitle, onChangeGenre, isPendingGenre, onChangeLogline, isPendingLogline, onChangeIntroduction, isPendingIntroduction, onChangeExpectedQuantity, isPendingExpectedQuantity};
+  return { data, error, isLoading, onChangeGrade, isPendingGrade,
+    onChangeCoverImage, isPendingCoverImage, onChangeTitle, isPendingTitle,
+    onChangeGenre, isPendingGenre, onChangeLogline, isPendingLogline,
+    onChangeIntroduction, isPendingIntroduction,
+    onChangeExpectedQuantity, isPendingExpectedQuantity};
 }
 
 export const InfoContext = createContext({} as ReturnType<typeof useInfo>);

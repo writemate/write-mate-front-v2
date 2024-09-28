@@ -1,7 +1,8 @@
 import axiosInstance from "./axiosInstance";
 import { getChapterListMock, getPlotFolderListMock, updatePlotFolderMock,
   getInfoMock, removeKeywordMock, updateCoverImageMock, updateTitleMock,
-  updateGenreMock, updateLoglineMock, updateExpectedQuantityMock, updateIntroductionMock, addKeywordMock
+  updateGenreMock, updateLoglineMock, updateExpectedQuantityMock, updateIntroductionMock, addKeywordMock,
+  updateGradeMock
  } from "./mock/workspace";
 import { TWork } from "./types";
 
@@ -18,6 +19,7 @@ export const getInfo = getInfoMock;
 export const updateCoverImage = updateCoverImageMock;
 export const updateTitle = updateTitleMock;
 export const updateGenre = updateGenreMock;
+export const updateGrade = updateGradeMock;
 export const updateLogline = updateLoglineMock;
 export const updateExpectedQuantity = updateExpectedQuantityMock;
 export const updateIntroduction = updateIntroductionMock;

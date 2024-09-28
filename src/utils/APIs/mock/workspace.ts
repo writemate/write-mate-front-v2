@@ -94,6 +94,7 @@ export const updateTitleMock = generateUpdateInfoMock("title");
 export const updateGenreMock = generateUpdateInfoMock("genre");
 export const updateLoglineMock = generateUpdateInfoMock("logline");
 export const updateExpectedQuantityMock = generateUpdateInfoMock("expected_quantity");
+export const updateGradeMock = generateUpdateInfoMock("grade");
 export const updateIntroductionMock = generateUpdateInfoMock("introduction");
 export const addKeywordMock = (workId: string) => async (keyword: string) => {
   if(mockInfo.keyword.includes(keyword)) return;
