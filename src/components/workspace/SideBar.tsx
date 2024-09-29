@@ -24,7 +24,7 @@ export function Folder({ folder, nestedLevel = 0}:
   return (
     <FolderContainer>
       <FileContainer
-        onClick={openFolder(folder)} $isFolder={true} $nestedLevel={nestedLevel} $isSelect={folder.isSelect} $dragOver={isDragOverAfter}
+        onClick={openFolder(folder)} $isFolder={true} $nestedLevel={nestedLevel} $isSelect={folder.isSelect} $dragOver={isDragOverAfter} $isEditing={folder.isEditing}
         onDragStart={onDragStart} onDragOver={onDragOver} onDragLeave={onDragLeave} onDrop={onDrop} draggable={true}
       >
         <TopDropLine $nestedLevel={nestedLevel} $active={isDragOverBefore} />
@@ -67,7 +67,7 @@ export function File({ file, nestedLevel = 0 }: { file: TFileWithOptions, nested
 
   return (
     <FileContainer 
-      $isFolder={false} $nestedLevel={nestedLevel} $isSelect={file.isSelect}
+      $isFolder={false} $nestedLevel={nestedLevel} $isSelect={file.isSelect} $isEditing={file.isEditing}
       onDragStart={onDragStart} onDragOver={onDragOver} onDragLeave={onDragLeave} draggable={true} onDrop={onDrop}
     >
       <TopDropLine $nestedLevel={nestedLevel} $active={isDragOverBefore} />

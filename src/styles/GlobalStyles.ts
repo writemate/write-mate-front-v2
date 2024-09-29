@@ -13,6 +13,7 @@ export const GlobalStyles = createGlobalStyle`
     ${peelOffVarFunc(colorSystem.orange200)}:#FEDBC8;
     ${peelOffVarFunc(colorSystem.orange300)}:#FFC4A4;
     ${peelOffVarFunc(colorSystem.orange400)}:#F49661;
+    ${peelOffVarFunc(colorSystem.orange500)}:#F49661;
     ${peelOffVarFunc(colorSystem.red400)}:#C55858;
     ${peelOffVarFunc(colorSystem.red500)}:#a44c4c;
     ${peelOffVarFunc(colorSystem.gray25)}:#F8FAFE;

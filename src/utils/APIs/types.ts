@@ -24,6 +24,20 @@ export interface TFolderWithOptions extends TFolder {
 }
 
 /**
+ * 작품 정보 타입
+ */
+export type TWorkInfo = {
+  cover: string;
+  title: string;
+  genre: string;
+  logline: string;
+  expectedQuantity: number;
+  grade: null | "전체 이용가" | "12세 이용가" | "15세 이용가" | "19세 이용가";
+  introduction: string;
+  keyword: string[];
+};
+
+/**
  * 플롯 타입
  */
 export type TPlot = {

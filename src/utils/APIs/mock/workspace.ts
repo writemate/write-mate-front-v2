@@ -1,4 +1,4 @@
-import { TFolder, TPlot } from "../types";
+import { TFolder, TPlot, TWorkInfo } from "../types";
 import axiosInstance from "../axiosInstance";
 
 const mockFolderList: TFolder = {
@@ -67,4 +67,50 @@ export const getChapterListMock = (workId: string) => async () => {
 
 export const updatePlotFolderMock = async ({folder}:{workId: string, folder:TFolder}) => {
   mockFolderList.files = folder.files;
+}
+
+const mockInfo: TWorkInfo = {
+  cover: "https://artmugfile2.cafe24.com/image/goods_img1/2/24621.jpg?ver=1657860911",
+  title: "",
+  genre: "",
+  logline: "",
+  expectedQuantity: -1,
+  grade: null,
+  introduction: "",
+  keyword: [],
+}
+
+export const getInfoMock = (workId: string) => async () => {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  return JSON.parse(JSON.stringify(mockInfo)) as TWorkInfo;
+}
+
+const generateUpdateInfoMock = <T extends keyof TWorkInfo>(key:T) => (workId: string) => async (value: TWorkInfo[T]) => {
+  console.log(key, value);
+  mockInfo[key] = value;
+}
+
+export const updateTitleMock = generateUpdateInfoMock("title");
+export const updateGenreMock = generateUpdateInfoMock("genre");
+export const updateLoglineMock = generateUpdateInfoMock("logline");
+export const updateExpectedQuantityMock = generateUpdateInfoMock("expectedQuantity");
+export const updateGradeMock = generateUpdateInfoMock("grade");
+export const updateIntroductionMock = generateUpdateInfoMock("introduction");
+export const addKeywordMock = (workId: string) => async (keyword: string) => {
+  if(mockInfo.keyword.includes(keyword)) return;
+  mockInfo.keyword.push(keyword);
+}
+
+export const removeKeywordMock = (workId: string) => async (keyword: string) => {
+  mockInfo.keyword = mockInfo.keyword.filter((k) => k !== keyword);
+}
+export const updateCoverImageMock = (workId: string) => async (file: File) => {
+  await new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      mockInfo.cover = e.target?.result as string;
+      resolve(null);
+    }
+    reader.readAsDataURL(file);
+  });
 }
