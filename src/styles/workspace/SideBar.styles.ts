@@ -169,6 +169,18 @@ export const FileContainer = styled.div<{ $isFolder: boolean, $nestedLevel?:numb
   }
 `;
 
+export const KebabItem = styled.div`
+  ${FlexRowCenter};
+  ${clickable};
+  width: 100%;
+  padding: 10px;
+  border-radius: 4px;
+  border-bottom: 1px solid #F0F3F8;
+  &:hover{
+    background-color: #F2F4F9;
+  }
+`;
+
 export const KebabContainer = styled.div`
   ${FlexColumnCenter};
   cursor: default;
@@ -181,16 +193,7 @@ export const KebabContainer = styled.div`
   background-color: #ffffff;
   box-shadow: 0 0 8px 0 #1E212B33;
   transform: translate(10px, -15px);
-`;
-
-export const KebabItem = styled.div`
-  ${FlexRowCenter};
-  ${clickable};
-  width: 100%;
-  padding: 10px;
-  border-radius: 4px;
-  border-bottom: 1px solid #F0F3F8;
-  &:hover{
-    background-color: #F2F4F9;
+  ${KebabItem}:last-child{
+    border-bottom: none;
   }
 `;
