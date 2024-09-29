@@ -174,7 +174,7 @@ export const KebabContainer = styled.div`
   cursor: default;
   color: ${({ theme }) => theme.color.gray900};
   position: fixed;
-  z-index: 1;
+  z-index: 1000;
   padding: 6px 10px;
   gap: 2px;
   border-radius: 8px;
