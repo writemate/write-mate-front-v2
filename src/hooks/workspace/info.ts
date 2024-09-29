@@ -7,6 +7,22 @@ import { debounce } from "@/utils";
 import { useParams } from "next/navigation";
 import { createContext } from "react";
 
+function useUpdate<T,U>({updateFn, onMutate, onChange}:{
+  updateFn: (workspace_id: string) => (value: T) => Promise<void>,
+  onMutate: (value: T) => void,
+  onChange: (debouncedMutate: (value: T) => void) => (arg: U) => void
+}) {
+  const queryClient = useQueryClient();
+  const { workspace_id } = useParams<{ workspace_id: string }>();
+  const { mutate, isPending } = useMutation({
+    mutationFn: updateFn(workspace_id),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: workspaceQueryKeys.info(workspace_id) }),
+    onMutate,
+  });
+  const debouncedMutate = debounce(mutate, 500);
+  return { onChange: onChange(debouncedMutate), isPending };
+}
+
 export function useInfo() {
   const queryClient = useQueryClient();
   const { workspace_id } = useParams<{ workspace_id: string }>();
@@ -15,72 +31,85 @@ export function useInfo() {
     queryFn: getInfo(workspace_id),
   });
 
-  const [
-    { onChange: onChangeTitle, isPending: isPendingTitle },
-    { onChange: onChangeLogline, isPending: isPendingLogline },
-    { onChange: onChangeIntroduction, isPending: isPendingIntroduction },
-  ] = ([["title", updateTitle], ["logline", updateLogline], ["introduction", updateIntroduction]] as const)
-    .map(([key,fn]) => useMutation({
-        mutationFn: fn(workspace_id),
-        onSuccess: () => queryClient.invalidateQueries({ queryKey: workspaceQueryKeys.info(workspace_id) }),
-        onMutate: (value: string) => {
-          queryClient.setQueryData(workspaceQueryKeys.info(workspace_id), (prev: any) => ({
-            ...prev,
-            [key]: value,
-          }));
-        }
-    }))
-    .map(({ mutate, isPending }) => ({ mutate: debounce(mutate, 500), isPending }))
-    .map(({ mutate, isPending }) => ({ onChange: (e: React.ChangeEvent<HTMLInputElement|HTMLTextAreaElement>) => mutate(e.target.value), isPending }));
-  
-  const { onChange: onChangeGenre, isPending: isPendingGenre } = [useMutation({
-    mutationFn: updateGenre(workspace_id),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: workspaceQueryKeys.info(workspace_id) }),
-    onMutate: (value: string) => {
+  const { onChange: onChangeTitle, isPending: isPendingTitle } = useUpdate({
+    updateFn: updateTitle,
+    onMutate: (value) => {
+      queryClient.setQueryData(workspaceQueryKeys.info(workspace_id), (prev: any) => ({
+        ...prev,
+        title: value,
+      }));
+    },
+    onChange: (debouncedMutate) => (e: React.ChangeEvent<HTMLInputElement>) => debouncedMutate(e.target.value),
+  });
+
+  const { onChange: onChangeLogline, isPending: isPendingLogline } = useUpdate({
+    updateFn: updateLogline,
+    onMutate: (value) => {
+      queryClient.setQueryData(workspaceQueryKeys.info(workspace_id), (prev: any) => ({
+        ...prev,
+        logline: value,
+      }));
+    },
+    onChange: (debouncedMutate) => (e: React.ChangeEvent<HTMLTextAreaElement>) => debouncedMutate(e.target.value),
+  });
+
+  const { onChange: onChangeIntroduction, isPending: isPendingIntroduction } = useUpdate({
+    updateFn: updateIntroduction,
+    onMutate: (value) => {
+      queryClient.setQueryData(workspaceQueryKeys.info(workspace_id), (prev: any) => ({
+        ...prev,
+        introduction: value,
+      }));
+    },
+    onChange: (debouncedMutate) => (e: React.ChangeEvent<HTMLTextAreaElement>) => debouncedMutate(e.target.value),
+  });
+
+  const { onChange: onChangeGenre, isPending: isPendingGenre } = useUpdate({
+    updateFn: updateGenre,
+    onMutate: (value) => {
       queryClient.setQueryData(workspaceQueryKeys.info(workspace_id), (prev: any) => ({
         ...prev,
         genre: value,
       }));
-    }
-  })].map(({ mutate, isPending }) => ({ onChange: (option: string) => mutate(option), isPending }))[0];
+    },
+    onChange: (debouncedMutate) => (option: string) => debouncedMutate(option),
+  });
 
-  const { onChange: onChangeGrade, isPending: isPendingGrade } = [useMutation({
-    mutationFn: updateGrade(workspace_id),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: workspaceQueryKeys.info(workspace_id) }),
-    onMutate: (value: Parameters<ReturnType<typeof updateGrade>>[0]) => {
+  const { onChange: onChangeGrade, isPending: isPendingGrade } = useUpdate({
+    updateFn: updateGrade,
+    onMutate: (value) => {
       queryClient.setQueryData(workspaceQueryKeys.info(workspace_id), (prev: any) => ({
         ...prev,
         grade: value,
       }));
-    }
-  })].map(({ mutate, isPending }) => ({ onChange: (option: Parameters<ReturnType<typeof updateGrade>>[0]) => mutate(option), isPending }))[0];
+    },
+    onChange: (debouncedMutate) => (option: Parameters<ReturnType<typeof updateGrade>>[0]) => debouncedMutate(option),
+  });
 
-  const { onChange: onChangeExpectedQuantity, isPending: isPendingExpectedQuantity } = [useMutation({
-    mutationFn: updateExpectedQuantity(workspace_id),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: workspaceQueryKeys.info(workspace_id) }),
-  })].map(({ mutate, isPending }) => ({ mutate: debounce(mutate, 500), isPending }))
-    .map(({ mutate, isPending }) => ({ onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+  const { onChange: onChangeExpectedQuantity, isPending: isPendingExpectedQuantity } = useUpdate({
+    updateFn: updateExpectedQuantity,
+    onMutate: (value) => {},
+    onChange: (debouncedMutate) => (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
       if (isNaN(Number(value))) return;
-      mutate(Number(value));
-    }, isPending }))[0];
-
-  const { onChange: onChangeCoverImage, isPending: isPendingCoverImage } = [useMutation({
-    mutationFn: updateCoverImage(workspace_id),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: workspaceQueryKeys.info(workspace_id) }),
-    onMutate: (file: File) => {
-        if (!file) return;
-        queryClient.setQueryData(workspaceQueryKeys.info(workspace_id), (prev: any) => ({
-          ...prev,
-          cover: URL.createObjectURL(file),
-        }));
-    }
-  })].map(({ mutate, isPending }) => ({ mutate: debounce(mutate, 500), isPending }))
-    .map(({ mutate, isPending }) => ({ onChange: (e: React.ChangeEvent<HTMLInputElement>) =>{
+      debouncedMutate(Number(value));
+    },
+  });
+  
+  const { onChange: onChangeCoverImage, isPending: isPendingCoverImage } = useUpdate({
+    updateFn: updateCoverImage,
+    onMutate: (value) => {
+      queryClient.setQueryData(workspaceQueryKeys.info(workspace_id), (prev: any) => ({
+        ...prev,
+        cover: URL.createObjectURL(value),
+      }));
+    },
+    onChange: (debouncedMutate) => (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0];
       if (!file) return;
-      mutate(file);
-    } , isPending }))[0];
+      debouncedMutate(file);
+    },
+  });
 
   return { data, error, isLoading, onChangeGrade, isPendingGrade,
     onChangeCoverImage, isPendingCoverImage, onChangeTitle, isPendingTitle,
