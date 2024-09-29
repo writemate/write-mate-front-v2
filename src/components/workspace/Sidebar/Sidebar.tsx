@@ -1,15 +1,16 @@
 'use client';
-import usePlotSidebar from "@/hooks/workspace/sidebar/usePlotSidebar";
+import useSidebar from "@/hooks/workspace/sidebar/useSidebar";
 import { useRootDrag } from "@/hooks/workspace/sidebar/useDrag";
 import FolderIcon from "@/assets/workspace/sideBar/addFolder.svg";
 import FileIcon from "@/assets/workspace/sideBar/addFile.svg";
 import { SidebarContainer, SidebarTitleContainer, SidebarTitle, SidebarIconContainer, SidebarContentsContainer, DropLine } from "@/styles/workspace/SideBar.styles";
-import { Folder, File } from "@/components/workspace/SideBar";
+import Folder from "@/components/workspace/Sidebar/Folder";
+import File from "@/components/workspace/Sidebar/File";
 import { SidebarContext } from "@/stores/sidebarContext";
 
-export default function PlotSidebar() {
-  const hookValues = usePlotSidebar();
-  const {isLoading, error, rootFolder, createFolder, createFile, clearSelect } = hookValues;
+export default function Sidebar() {
+  const hookValues = useSidebar();
+  const { isLoading, error, rootFolder, createFolder, createFile, clearSelect } = hookValues;
   const { isDragOver, onDragOver, onDragLeave, onDrop } = useRootDrag(hookValues);
   return (
     <SidebarContext.Provider value={hookValues}>

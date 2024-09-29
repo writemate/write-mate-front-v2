@@ -1,7 +1,7 @@
 import { useState, useCallback, useContext, useRef } from 'react';
 import { TFileWithOptions, TFolderWithOptions } from '@/utils/APIs/types';
 import { SidebarContext } from "@/stores/sidebarContext";
-import usePlotSidebar from '@/hooks/workspace/sidebar/usePlotSidebar';
+import useSidebar from '@/hooks/workspace/sidebar/useSidebar';
 
 enum DragOverType {
   None,
@@ -16,7 +16,7 @@ const getDragOverType = (e: React.DragEvent<HTMLDivElement>) => {
   return DragOverType.After;
 }
 
-export const useRootDrag = ({ rootFolder, draggingItem, setDraggingItem, changeOrderLastOfFolder }: ReturnType<typeof usePlotSidebar>) => {
+export const useRootDrag = ({ rootFolder, draggingItem, setDraggingItem, changeOrderLastOfFolder }: ReturnType<typeof useSidebar>) => {
   const [isDragOver, setIsDragOver] = useState(false);
 
   const onDragOver = (e: React.DragEvent<HTMLDivElement>) => {
