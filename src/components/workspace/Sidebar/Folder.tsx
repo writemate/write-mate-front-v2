@@ -12,8 +12,8 @@ import { FileListContainer, FolderContainer, FileContainer, FolderName,
 import { useDrag } from "@/hooks/workspace/sidebar/useDrag";
 import File from "@/components/workspace/Sidebar/File";
 
-export default function Folder({ folder, nestedLevel = 0}:
-  { folder: TFolderWithOptions; nestedLevel?: number; }) {
+export default function Folder({ folder, nestedLevel = 0, type}:
+  { folder: TFolderWithOptions, nestedLevel?: number, type: "plot" | "script" }) {
 
   const { toggleFolder, openFolder, onChange, onBlur, onKeyDown, changeName, deleteFolderOrFile } = useContext(SidebarContext);
   const { isKebabOpen, openKebab, closeKebab } = useKebab();
@@ -48,9 +48,9 @@ export default function Folder({ folder, nestedLevel = 0}:
       <FileListContainer>
         {folder.isOpen&&folder.files.map((subFile, i) => {
           if (subFile.isFolder) {
-            return <Folder key={i + 1} folder={subFile} nestedLevel={nestedLevel + 1}/>;
+            return <Folder key={i + 1} folder={subFile} nestedLevel={nestedLevel + 1} type={type} />;
           }
-          return <File key={i + 1} file={subFile} nestedLevel={nestedLevel + 1} />;
+          return <File key={i + 1} file={subFile} nestedLevel={nestedLevel + 1} type={type} />;
         })}
       </FileListContainer>
     </FolderContainer>

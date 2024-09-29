@@ -9,7 +9,7 @@ import SeletedFile from "@/assets/workspace/sideBar/selectedFile.svg";
 import { FileContainer, FileName, KebabWrapper, Kebab, KebabContainer, KebabItem, TopDropLine, BottomDropLine } from "@/styles/workspace/SideBar.styles";
 import { useDrag } from "@/hooks/workspace/sidebar/useDrag";
 
-export default function File({ file, nestedLevel = 0 }: { file: TFileWithOptions, nestedLevel?: number }) {
+export default function File({ file, nestedLevel = 0, type }: { file: TFileWithOptions, nestedLevel?: number, type: "plot" | "script" }) {
   
   const { workspace_id, onChange, onBlur, onKeyDown, changeName, deleteFolderOrFile, setMainPlot  } = useContext(SidebarContext);
   const { isKebabOpen, openKebab, closeKebab } = useKebab();
@@ -23,7 +23,7 @@ export default function File({ file, nestedLevel = 0 }: { file: TFileWithOptions
       <TopDropLine $nestedLevel={nestedLevel} $active={isDragOverBefore} />
       {file.isSelect && <SeletedFile />}
       {!file.isSelect && <FileIcon />}
-      {!file.isEditing && <FileName href={`/${workspace_id}/plot/${file._id}`}>{file.file_name}</FileName>}
+      {!file.isEditing && <FileName href={`/${workspace_id}/${type}/${file._id}`}>{file.file_name}</FileName>}
       {file.isEditing &&
         <input type="text" value={file.file_name} 
           onChange={onChange(file)} onBlur={onBlur(file)} onKeyDown={onKeyDown(file)}
@@ -34,7 +34,7 @@ export default function File({ file, nestedLevel = 0 }: { file: TFileWithOptions
         <Kebab onClick={openKebab} />
         {isKebabOpen && <KebabContainer onClick={closeKebab}>
           <KebabItem onClick={changeName(file)}>이름 변경</KebabItem>
-          {!file.isPinned && <KebabItem onClick={setMainPlot(file)}>메인플롯으로 지정</KebabItem>}
+          {!file.isPinned && type==="plot" && <KebabItem onClick={setMainPlot(file)}>메인플롯으로 지정</KebabItem>}
           <KebabItem>복제하기</KebabItem>
           {!file.isPinned && <KebabItem onClick={deleteFolderOrFile(file)}>삭제하기</KebabItem>}
         </KebabContainer>}
