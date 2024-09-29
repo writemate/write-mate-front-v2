@@ -11,6 +11,7 @@ export default function AuthorizedLayout({ children }: { children: React.ReactNo
     if (isLogin===false) {
       router.push('/signup');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLogin]);
 
   return (

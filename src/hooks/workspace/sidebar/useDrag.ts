@@ -56,7 +56,7 @@ export const useDrag = (data: TFileWithOptions | TFolderWithOptions) => {
 
   const onDragStart = useCallback((e: React.DragEvent<HTMLDivElement>) => {
     setDraggingItem(data);
-  }, [data]);
+  }, [data, setDraggingItem]);
 
   const onDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
