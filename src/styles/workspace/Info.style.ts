@@ -56,16 +56,25 @@ export const CoverImageContainer = styled.div`
     filter: blur(10px);
   }
   ${ChangeCover} {
-    ${FlexRowCenter};
+    ${FlexRowCenter}
     display: none;
-    cursor: pointer;
     width: 100%;
     height: 100%;
     position: absolute;
+    border-radius: 4.72px;
     z-index: 2;
-    background-color: #88888857;
-    color: #FFFFFF;
-    backdrop-filter: blur(10px);
+    background-color: #00000080;
+    cursor: pointer;
+    &>span {
+      ${FlexRowCenter};
+      color: ${({ theme }) => theme.color.orange500};
+      border-radius: 100px;
+      padding: 12px 20px;
+      gap: 10px;
+      border: 1px solid ${({ theme }) => theme.color.orange500};
+      box-shadow: 1px 1px 4px 0 #0000001F;
+      background-color: #FFFFFF;
+    }
   }
   &:hover {
     ${ChangeCover} {
