@@ -20,7 +20,6 @@ export const workspaceQueryKeys = {
 
   sidebar: (id:string) => [...workspaceQueryKeys.all, 'sidebar',id] as const,
   plotSidebar: (id:string) => [...workspaceQueryKeys.sidebar(id), 'plot'] as const,
-  characterSidebar: (id:string) => [...workspaceQueryKeys.sidebar(id), 'character'] as const,
   scriptSidebar: (id:string) => [...workspaceQueryKeys.sidebar(id), 'event'] as const,
 
   info: (id:string) => [...workspaceQueryKeys.all, 'info', id] as const,
