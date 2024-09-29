@@ -25,6 +25,7 @@ export default function CurrentUsers() {
         return () => {
             observerRef.current?.disconnect();
         };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     
     return (

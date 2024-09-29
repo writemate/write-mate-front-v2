@@ -28,14 +28,15 @@ export default function usePlotSidebar() {
       if (plot_id) currentFileSelect(rootFolder, plot_id);
       setRootFolder(rootFolder);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   useEffect(() => {
-    if (rootFolder) {
-      if (plot_id) currentFileSelect(rootFolder, plot_id);
-      else recursiveUnselect(rootFolder);
-      setRootFolder({...rootFolder});
-    }
+    if (!rootFolder) return;
+    if (plot_id) currentFileSelect(rootFolder, plot_id);
+    else recursiveUnselect(rootFolder);
+    setRootFolder({...rootFolder});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [plot_id]);
 
   const toggleFolder = (folder: TFolderWithOptions) => (e: React.MouseEvent) => {

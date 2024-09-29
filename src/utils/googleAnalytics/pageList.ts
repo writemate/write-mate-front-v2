@@ -1,4 +1,4 @@
-export default [
+const pageList = [
     {
         path: /^\/$/,
         name: "메인",
@@ -25,3 +25,5 @@ export default [
     },
 
 ]
+
+export default pageList;
