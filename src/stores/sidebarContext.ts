@@ -1,5 +1,5 @@
 'use client';
-import { createContext, useContext, useState } from 'react';
-import usePlotSidebar from '@/hooks/workspace/sidebar/usePlotSidebar';
+import { createContext } from 'react';
+import useSidebar from '@/hooks/workspace/sidebar/useSidebar';
 
-export const SidebarContext = createContext({} as ReturnType<typeof usePlotSidebar>);
+export const SidebarContext = createContext({} as ReturnType<typeof useSidebar>);

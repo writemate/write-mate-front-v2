@@ -2,28 +2,21 @@
 import { WorkspaceContainer, HeaderAndMainContainer, SideBarAndMainContainer, MainContainer } from '@/styles/workspace';
 import Header from '@/components/workspace/Header';
 import SideTab from '@/components/workspace/SideTab';
-import PlotSidebar from '@/components/workspace/plot/PlotSidebar';
-import ScriptSidebar from '@/components/workspace/script/ScriptSidebar';
-import CharacterSidebar from '@/components/workspace/character/CharacterSidebar';
+import Sidebar from '@/components/workspace/Sidebar/Sidebar';
 import IdeaBox from '@/components/workspace/IdeaBox';
-import { useSidebar } from '@/hooks/workspace/useSidebar';
-import { useState } from 'react';
+import { useWorkspaceLayout } from '@/hooks/workspace/useWorkspaceLayout';
 
 export default function WorkspaceLayout({ children }: { children: React.ReactNode }) {
-  const sidebar = useSidebar();
-  const { isPlotOpen, isScriptOpen, isCharacterOpen } = sidebar;
-  const [openIdeaBox, setOpenIdeaBox] = useState(false);
-  const toggleIdeaBox = () => setOpenIdeaBox(!openIdeaBox);
+  const { isPlotOpen, isScriptOpen, openIdeaBox, toggleIdeaBox, ...sidetab } = useWorkspaceLayout();
 
   return (
     <WorkspaceContainer>
-      <SideTab {...sidebar} />
+      <SideTab {...sidetab} />
       <HeaderAndMainContainer>
         <Header toggleIdeaBox={toggleIdeaBox}/>
         <SideBarAndMainContainer>
-          {isPlotOpen && <PlotSidebar />}
-          {isScriptOpen && <ScriptSidebar />}
-          {isCharacterOpen && <CharacterSidebar />}
+          {isPlotOpen && <Sidebar type="plot"/>}
+          {isScriptOpen && <Sidebar type="script"/>}
           <MainContainer>
             {children}
           </MainContainer>

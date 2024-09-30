@@ -1,21 +1,22 @@
 'use client';
-import usePlotSidebar from "@/hooks/workspace/sidebar/usePlotSidebar";
+import useSidebar from "@/hooks/workspace/sidebar/useSidebar";
 import { useRootDrag } from "@/hooks/workspace/sidebar/useDrag";
 import FolderIcon from "@/assets/workspace/sideBar/addFolder.svg";
 import FileIcon from "@/assets/workspace/sideBar/addFile.svg";
 import { SidebarContainer, SidebarTitleContainer, SidebarTitle, SidebarIconContainer, SidebarContentsContainer, DropLine } from "@/styles/workspace/SideBar.styles";
-import { Folder, File } from "@/components/workspace/SideBar";
+import Folder from "@/components/workspace/Sidebar/Folder";
+import File from "@/components/workspace/Sidebar/File";
 import { SidebarContext } from "@/stores/sidebarContext";
 
-export default function PlotSidebar() {
-  const hookValues = usePlotSidebar();
-  const {isLoading, error, rootFolder, createFolder, createFile, clearSelect } = hookValues;
+export default function Sidebar({type}: {type: "plot" | "script"}) {
+  const hookValues = useSidebar(type);
+  const { isLoading, error, rootFolder, createFolder, createFile, clearSelect } = hookValues;
   const { isDragOver, onDragOver, onDragLeave, onDrop } = useRootDrag(hookValues);
   return (
     <SidebarContext.Provider value={hookValues}>
       <SidebarContainer onClick={clearSelect}>
         <SidebarTitleContainer>
-          <SidebarTitle>플롯</SidebarTitle>
+          <SidebarTitle>{type === "plot" ? "플롯" : "원고"}</SidebarTitle>
           <SidebarIconContainer>
             <FolderIcon onClick={createFolder} />
             <FileIcon onClick={createFile} />
@@ -26,9 +27,9 @@ export default function PlotSidebar() {
         <SidebarContentsContainer onClick={clearSelect} onDragOver={onDragOver} onDragLeave={onDragLeave} onDrop={onDrop}>
           {rootFolder && rootFolder.files.map((file) => {
             if (file.isFolder) {
-              return <Folder key={file.folder_name} folder={file}/>;
+              return <Folder key={file.folder_name} folder={file} type={type} />;
             }
-            return <File key={file.file_name} file={file} />;
+            return <File key={file.file_name} file={file} type={type} />;
           })}
           
           <DropLine $active={isDragOver} />
