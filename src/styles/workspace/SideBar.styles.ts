@@ -1,5 +1,5 @@
 'use client';
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
 import { clickable, FlexColumnCenter, FlexRowCenter, FlexRowLeftStart, FlexRowSpaceBetween } from '@/styles';
 import KebabIcon from "@/assets/workspace/sideBar/kebab.svg";
 import Link from 'next/link';
@@ -100,11 +100,7 @@ export const FolderName = styled.div`
   line-height: 24px;
 `;
 
-export const FileName = styled(Link)`
-  font-weight: 400;
-  margin-left: 6px;
-  line-height: 24px;
-`;
+export const FileName = FolderName;
 
 export const DropLine = styled.div<{$nestedLevel?:number, $active?:boolean}>`
   position: absolute;
@@ -112,7 +108,7 @@ export const DropLine = styled.div<{$nestedLevel?:number, $active?:boolean}>`
   width: calc(100% - ${({ $nestedLevel = 0 }) => `${$nestedLevel * 12}px`});
   height: 6px;
   background-color: ${({ theme }) => theme.color.orange200};
-  opacity: ${({ $active }) => $active ? 1 : 0};
+  display: ${({ $active }) => $active ? "block" : "none"};
   margin-left: ${({ $nestedLevel = 0 }) => `${$nestedLevel * 12}px`};
   z-index: 1;
 `;
@@ -125,17 +121,13 @@ export const BottomDropLine = styled(DropLine)`
   bottom: -6px;
 `;
 
-export const FileContainer = styled.div<{ $isFolder: boolean, $nestedLevel?:number, $isSelect?:boolean, $dragOver?:boolean, $isEditing?:boolean }>`
+const FileOrFolderContainer = css<{ $nestedLevel?:number, $isSelect?:boolean, $dragOver?:boolean, $isEditing?:boolean }>`
   ${FlexRowLeftStart};
   ${clickable};
   align-items: flex-start;
   position: relative;
   width: 100%;
   padding: 6px 10px 6px 0px;
-  padding-left: ${({ $isFolder, $nestedLevel = 0 }) => {
-    if($isFolder) return `${$nestedLevel * 12}px`;
-    return `${$nestedLevel * 12 + 16}px`;
-  }};
   border-radius: 6px;
   ${({ $isSelect, $isEditing, theme }) => $isSelect && !$isEditing && `background-color: ${theme.color.orange100};`}
   ${({ $dragOver,theme }) => $dragOver && `background-color: ${theme.color.gray75};`}
@@ -167,6 +159,16 @@ export const FileContainer = styled.div<{ $isFolder: boolean, $nestedLevel?:numb
     margin-left: 6px;
     font-weight: 400;
   }
+`;
+
+export const FolderFileContainer = styled.div<{ $nestedLevel?:number, $isSelect?:boolean, $dragOver?:boolean, $isEditing?:boolean }>`
+  ${FileOrFolderContainer};
+  padding-left: ${({ $nestedLevel = 0 }) => `${$nestedLevel * 12}px`};
+`;
+
+export const FileContainer = styled(Link)<{ $nestedLevel?:number, $isSelect?:boolean, $dragOver?:boolean, $isEditing?:boolean }>`
+  ${FileOrFolderContainer};
+  padding-left: ${({ $nestedLevel = 0 }) => `${$nestedLevel * 12 + 16}px`};
 `;
 
 export const KebabItem = styled.div`

@@ -17,13 +17,13 @@ export default function File({ file, nestedLevel = 0, type }: { file: TFileWithO
 
   return (
     <FileContainer 
-      $isFolder={false} $nestedLevel={nestedLevel} $isSelect={file.isSelect} $isEditing={file.isEditing}
-      onDragStart={onDragStart} onDragOver={onDragOver} onDragLeave={onDragLeave} draggable={true} onDrop={onDrop}
+      $nestedLevel={nestedLevel} $isSelect={file.isSelect} $isEditing={file.isEditing}
+      onDragStart={onDragStart} onDragOver={onDragOver} onDragLeave={onDragLeave} draggable={true} onDrop={onDrop} href={`/${workspace_id}/${type}/${file._id}`}
     >
       <TopDropLine $nestedLevel={nestedLevel} $active={isDragOverBefore} />
       {file.isSelect && <SeletedFile />}
       {!file.isSelect && <FileIcon />}
-      {!file.isEditing && <FileName href={`/${workspace_id}/${type}/${file._id}`}>{file.file_name}</FileName>}
+      {!file.isEditing && <FileName>{file.file_name}</FileName>}
       {file.isEditing &&
         <input type="text" value={file.file_name} 
           onChange={onChange(file)} onBlur={onBlur(file)} onKeyDown={onKeyDown(file)}

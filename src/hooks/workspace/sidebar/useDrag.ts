@@ -9,7 +9,7 @@ enum DragOverType {
   After,
 }
 
-const getDragOverType = (e: React.DragEvent<HTMLDivElement>) => {
+const getDragOverType = (e: React.DragEvent<HTMLDivElement|HTMLAnchorElement>) => {
   if(e.nativeEvent.offsetY < e.currentTarget.offsetHeight / 2){
     return DragOverType.Before;
   }
@@ -54,11 +54,11 @@ export const useDrag = (data: TFileWithOptions | TFolderWithOptions) => {
 
   const timer = useRef<NodeJS.Timeout|null>(null);
 
-  const onDragStart = useCallback((e: React.DragEvent<HTMLDivElement>) => {
+  const onDragStart = useCallback((e: React.DragEvent<HTMLDivElement|HTMLAnchorElement>) => {
     setDraggingItem(data);
   }, [data, setDraggingItem]);
 
-  const onDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+  const onDragOver = (e: React.DragEvent<HTMLDivElement|HTMLAnchorElement>) => {
     e.preventDefault();
     e.stopPropagation();
     if(draggingItem === null || draggingItem === data) return;
@@ -80,7 +80,7 @@ export const useDrag = (data: TFileWithOptions | TFolderWithOptions) => {
     timer.current = null;
   }
 
-  const onDrop = (e: React.DragEvent<HTMLDivElement>) => {
+  const onDrop = (e: React.DragEvent<HTMLDivElement|HTMLAnchorElement>) => {
     e.preventDefault();
     e.stopPropagation();
     if(isDragOverBefore){

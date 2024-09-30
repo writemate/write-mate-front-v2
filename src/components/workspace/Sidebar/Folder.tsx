@@ -7,7 +7,7 @@ import CloseDropButton from "@/assets/workspace/sideBar/closedDropButton.svg";
 import FolderIcon from "@/assets/workspace/sideBar/folder.svg";
 import SeletedFolder from "@/assets/workspace/sideBar/selectedFolder.svg";
 import { SidebarContext } from "@/stores/sidebarContext";
-import { FileListContainer, FolderContainer, FileContainer, FolderName,
+import { FileListContainer, FolderContainer, FolderFileContainer, FolderName,
   KebabWrapper, Kebab, KebabContainer, KebabItem, TopDropLine } from "@/styles/workspace/SideBar.styles";
 import { useDrag } from "@/hooks/workspace/sidebar/useDrag";
 import File from "@/components/workspace/Sidebar/File";
@@ -21,8 +21,8 @@ export default function Folder({ folder, nestedLevel = 0, type}:
   
   return (
     <FolderContainer>
-      <FileContainer
-        onClick={openFolder(folder)} $isFolder={true} $nestedLevel={nestedLevel} $isSelect={folder.isSelect} $dragOver={isDragOverAfter} $isEditing={folder.isEditing}
+      <FolderFileContainer
+        onClick={openFolder(folder)} $nestedLevel={nestedLevel} $isSelect={folder.isSelect} $dragOver={isDragOverAfter} $isEditing={folder.isEditing}
         onDragStart={onDragStart} onDragOver={onDragOver} onDragLeave={onDragLeave} onDrop={onDrop} draggable={true}
       >
         <TopDropLine $nestedLevel={nestedLevel} $active={isDragOverBefore} />
@@ -44,7 +44,7 @@ export default function Folder({ folder, nestedLevel = 0, type}:
             <KebabItem onClick={deleteFolderOrFile(folder)}>삭제하기</KebabItem>
           </KebabContainer>}
         </KebabWrapper>
-      </FileContainer>
+      </FolderFileContainer>
       <FileListContainer>
         {folder.isOpen&&folder.files.map((subFile, i) => {
           if (subFile.isFolder) {
