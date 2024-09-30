@@ -1,6 +1,6 @@
 'use client';
 
-export default function Character() {
+export default function CharacterList() {
     
     return (
       <>
