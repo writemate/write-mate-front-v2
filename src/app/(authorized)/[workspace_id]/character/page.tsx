@@ -2,8 +2,9 @@
 import { useTab } from '@/hooks/workspace/character/useTab';
 import { Title } from '@/styles/workspace';
 import { TabContainer, TabButton } from '@/styles/workspace/Character.style';
+import Character from '@/components/workspace/character/Character';
 
-export default function Info() {
+export default function CharacterPage() {
   const { selectCharacter, selectRelation, isCharacterOpen, isRelationOpen } = useTab();
 
   return (
@@ -13,6 +14,7 @@ export default function Info() {
           <TabButton onClick={selectCharacter} $isSelected={isCharacterOpen}>인물</TabButton>
           <TabButton onClick={selectRelation} $isSelected={isRelationOpen}>인물관계도</TabButton>
         </TabContainer>
+        {isCharacterOpen && <Character />}
       </>
   );
 }
