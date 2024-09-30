@@ -1,7 +1,7 @@
 import { TFolder, TPlot, TWorkInfo } from "../types";
 import axiosInstance from "../axiosInstance";
 
-const mockFolderList: TFolder = {
+const mockPlotFolderList: TFolder = {
   isFolder: true,
   folder_name: "플롯",
   files: [
@@ -57,7 +57,7 @@ const mockFolderList: TFolder = {
 
 export const getPlotFolderListMock = (workId: string) => async ()=> {
   //deep copy
-  return JSON.parse(JSON.stringify(mockFolderList));
+  return JSON.parse(JSON.stringify(mockPlotFolderList));
 }
 
 export const getChapterListMock = (workId: string) => async () => {
@@ -66,7 +66,78 @@ export const getChapterListMock = (workId: string) => async () => {
 }
 
 export const updatePlotFolderMock = async ({folder}:{workId: string, folder:TFolder}) => {
-  mockFolderList.files = folder.files;
+  mockPlotFolderList.files = folder.files;
+}
+
+export const createPlotMock = (workId: string) => async () => {
+  return Math.random().toString(36).substring(7);
+}
+
+const mockScriptFolderList: TFolder = {
+  isFolder: true,
+  folder_name: "원고",
+  files: [
+    {
+      isFolder: true,
+      folder_name: "폴라로이드 사진 속의 더위",
+      files: [
+        {
+          isFolder: false,
+          _id: "1",
+          file_name: "원치 않았던 고백",
+          isPinned: false,
+        },
+        {
+          isFolder: false,
+          _id: "2",
+          file_name: "원숭이도 고장날 때가 있다",
+          isPinned: false,
+        },{
+          isFolder: true,
+          folder_name: "폴리우레탄을 더듬다",
+          files: [
+            {
+              isFolder: false,
+              _id: "5",
+              file_name: "원고1",
+              isPinned: false,
+            },
+            {
+              isFolder: false,
+              _id: "6",
+              file_name: "원고2",
+              isPinned: false,
+            },
+          ]
+        }
+      ]
+    },
+    {
+      isFolder: false,
+      _id: "3",
+      file_name: "원하는 만큼, 고지식하게",
+      isPinned: false,
+    },
+    {
+      isFolder: false,
+      _id: "4",
+      file_name: "원더풀 고양이",
+      isPinned: false,
+    },
+  ]
+};
+
+export const getScriptFolderListMock = (workId: string) => async ()=> {
+  //deep copy
+  return JSON.parse(JSON.stringify(mockScriptFolderList));
+}
+
+export const updateScriptFolderMock = async ({folder}:{workId: string, folder:TFolder}) => {
+  mockScriptFolderList.files = folder.files;
+}
+
+export const createScriptMock = (workId: string) => async () => {
+  return Math.random().toString(36).substring(7);
 }
 
 const mockInfo: TWorkInfo = {
