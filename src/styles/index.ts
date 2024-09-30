@@ -117,7 +117,7 @@ export const Input = styled.input`
   width: 100%;
   &:focus {
     outline: none;
-    border: 1px solid #F49661;
+    border: 1px solid ${({ theme }) => theme.color.orange400};
   }
 `;
 
@@ -133,7 +133,7 @@ export const TextArea = styled.textarea`
   resize: none;
   &:focus {
     outline: none;
-    border: 1px solid #F49661;
+    border: 1px solid ${({ theme }) => theme.color.orange400};
   }
 `;
 
