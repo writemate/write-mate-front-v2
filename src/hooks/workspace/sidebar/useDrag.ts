@@ -1,5 +1,6 @@
 import { useState, useCallback, useContext, useRef } from 'react';
 import { TFileWithOptions, TFolderWithOptions } from '@/utils/APIs/types';
+import { recursiveFindParent } from '@/utils/controlFolders';
 import { SidebarContext } from "@/stores/sidebarContext";
 import useSidebar from '@/hooks/workspace/sidebar/useSidebar';
 
@@ -62,6 +63,7 @@ export const useDrag = (data: TFileWithOptions | TFolderWithOptions) => {
     e.preventDefault();
     e.stopPropagation();
     if(draggingItem === null || draggingItem === data) return;
+    if(draggingItem.isFolder && recursiveFindParent(draggingItem, data)) return;
     setDragOver(getDragOverType(e));
 
     //폴더에 1초 이상 마우스를 올려놓으면 폴더를 열어준다.
