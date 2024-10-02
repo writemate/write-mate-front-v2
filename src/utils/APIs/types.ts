@@ -38,6 +38,15 @@ export type TWorkInfo = {
 };
 
 /**
+ * 키워드 타입
+ */
+export type TKeyword = {
+  _id: string;
+  keyword_name: string;
+  color: string;
+};
+
+/**
  * 플롯 타입
  */
 export type TPlot = {
