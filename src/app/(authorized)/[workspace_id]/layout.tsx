@@ -17,7 +17,7 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
         <SideBarAndMainContainer>
           {isPlotOpen && <Sidebar type="plot"/>}
           {isScriptOpen && <Sidebar type="script"/>}
-          <MainContainer>
+          <MainContainer $isLeftOpen={isPlotOpen||isScriptOpen} $isRightOpen={openIdeaBox}>
             {children}
           </MainContainer>
           {openIdeaBox && <IdeaBox toggleIdeaBox={toggleIdeaBox} />}

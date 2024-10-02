@@ -16,19 +16,21 @@ export const HeaderAndMainContainer = styled.div`
 `;
 
 export const SideBarAndMainContainer = styled.div`
-  ${FlexRowLeftStart}
+  ${FlexRowLeftStart};
   width: 100%;
   height: calc(100% - 72px);
 `;
 
-export const MainContainer = styled.div`
+export const MainContainer = styled.div<{ $isLeftOpen: boolean; $isRightOpen: boolean }>`
   ${FlexColumnCenter}
   flex-grow: 1;
   height: 100%;
   width: 100%;
-  margin-top: 65px;
   //최대 너비가 1012px이면서 최소 패딩이 28px이도록
-  padding: 0 max(28px, calc((100% - 1012px) / 2));
+  //left open일때는 왼쪽에서 258px 빼고, right open일때는 오른쪽에서 309px 빼고
+  padding-top: 65px;
+  padding-left: max(28px, ${({ $isLeftOpen }) => ($isLeftOpen ? `calc((100% - 1012px) / 2 - 258px)` : 'calc((100% - 1012px) / 2)')});
+  padding-right: max(28px, ${({ $isRightOpen }) => ($isRightOpen ? `calc((100% - 1012px) / 2 - 309px)` : 'calc((100% - 1012px) / 2)')});
   overflow-y: auto;
 `;
 
