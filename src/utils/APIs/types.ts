@@ -43,7 +43,23 @@ export type TWorkInfo = {
 export type TKeyword = {
   _id: string;
   keyword_name: string;
-  color: string;
+  darkColor: string;
+  lightColor: string;
+};
+
+/**
+ * 인물 타입
+ */
+export type TCharacter = {
+  _id: string;
+  ch_name: string;
+  ch_image: string;
+  role: string;
+  birthday: string|null;
+  gender: string;
+  characteristic: Array<{title: string, content: string}>;
+  keyword: string[];
+  relatedEvent: string[];
 };
 
 /**
