@@ -1,17 +1,34 @@
 export const colorSystem = {
-  orange75: "var(--orange-75)",
-  orange100: "var(--orange-100)",
-  orange200: "var(--orange-200)",
-  orange300: "var(--orange-300)",
-  orange400: "var(--orange-400)",
-  orange500: "var(--orange-500)",
-  red400: "var(--red-400)",
-  red500: "var(--red-500)",
-  gray25: "var(--gray-25)",
-  gray75: "var(--gray-75)",
-  gray100: "var(--gray-100)",
-  gray200: "var(--gray-200)",
-  gray300: "var(--gray-300)",
-  gray900: "var(--gray-900)",
-  black: "var(--black)",
+  red200: "FFCECE",
+  red400: "#C55858",
+  red500: "#a44c4c",
+  red600: "#E04C4C",
+
+  orange75: "#FFF4EE",
+  orange100: "#FDEFE7",
+  orange200: "#FEDBC8",
+  orange300: "#FFC4A4",
+  orange400: "#F49661",
+  orange500: "#F49661",
+
+  darkYellow200: "#F8F4C9",
+  darkYellow600: "#A39B56",
+
+  green200: "#D8F1CE",
+  green500: "#6EA553",
+
+  blue200: "#CEDBFF",
+  blue500: "#4579FF",
+
+  purple200: "#E7D7F6",
+  purple500: "#9A61CF",
+
+  gray25: "#F8FAFE",
+  gray75: "#EFF1F8",
+  gray100: "#D7DDEA",
+  gray200: "#B1B5C4",
+  gray300: "#898D9D",
+  gray900: "#353535",
+
+  black: "#191919",
 };
