@@ -4,6 +4,8 @@ import { IconButton } from "./Chapter";
 import { FiTrash2 } from "react-icons/fi";
 import { LuUser2 } from "react-icons/lu";
 import { useState } from "react";
+import CharacterModal from "./CharacterModal";
+import useClickAway from "@/hooks/workspace/plot/useClickAway";
 
 interface EventProps {
   eventName: string;
@@ -19,40 +21,48 @@ export default function Event({
   const [modal, setModal] = useState(false);
 
   return (
-    <EventContainer>
-      <div
-        style={{ marginLeft: "31px", display: "flex", flexDirection: "column" }}
-      >
-        <div style={{ flexDirection: "row" }}>
-          <button
-            type="button"
-            style={{
-              width: "24px",
-              height: "24px",
-              border: "none",
-              borderRadius: "4px",
-              background: "white",
-              fontSize: "20px",
-              cursor: "pointer",
-              boxShadow: `1px 1px 4px rgba(50, 63, 77, 0.2)`,
-            }}
-          >
-            <LuUser2 />
-          </button>
-          <IconButton
-            style={{ fontSize: "14.88px", float: "right" }}
-            type="button"
-          >
-            <FiTrash2 />
-          </IconButton>
+    <>
+      <EventContainer>
+        <div
+          style={{
+            marginLeft: "31px",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <div style={{ flexDirection: "row" }}>
+            <button
+              type="button"
+              style={{
+                width: "24px",
+                height: "24px",
+                border: "none",
+                borderRadius: "4px",
+                background: "white",
+                fontSize: "20px",
+                cursor: "pointer",
+                boxShadow: `1px 1px 4px rgba(50, 63, 77, 0.2)`,
+              }}
+              onClick={() => setModal(!modal)}
+            >
+              <LuUser2 />
+            </button>
+            <IconButton
+              style={{ fontSize: "14.88px", float: "right" }}
+              type="button"
+            >
+              <FiTrash2 />
+            </IconButton>
+          </div>
+          <EventTitle value={eventName} placeholder="사건 제목을 적어주세요." />
+          <EventDescription
+            value={eventDescription}
+            placeholder="사건 내용을 적어주세요."
+          />
         </div>
-        <EventTitle value={eventName} placeholder="사건 제목을 적어주세요." />
-        <EventDescription
-          value={eventDescription}
-          placeholder="사건 내용을 적어주세요."
-        />
-      </div>
-    </EventContainer>
+      </EventContainer>
+      {modal && <CharacterModal onClose={() => setModal(false)} />}
+    </>
   );
 }
 
