@@ -83,7 +83,7 @@ export default function Chapter({
   );
 }
 
-const IconButton = styled.button`
+export const IconButton = styled.button`
   width: 32px;
   font-size: 18px;
   background: transparent;

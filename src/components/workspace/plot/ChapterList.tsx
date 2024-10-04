@@ -66,6 +66,8 @@ export default function ChapterList({ chapters, isOpenAll }: plotPageProps) {
           fontSize: "14px",
           fontWeight: "350",
           cursor: "pointer",
+          marginTop: "22px",
+          marginBottom: "168px",
         }}
       >
         챕터 추가하기
