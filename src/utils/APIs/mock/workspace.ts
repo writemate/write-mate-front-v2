@@ -208,6 +208,7 @@ const mockCharacterList: TCharacter[] = [{
   _id: "1",
   ch_name: "주인공",
   ch_image: "https://artmugfile2.cafe24.com/image/goods_img1/2/24621.jpg?ver=1657860911",
+  isMain: true,
   role: "주인공",
   birthday: null,
   gender: "",
@@ -217,11 +218,11 @@ const mockCharacterList: TCharacter[] = [{
 }];
 
 export const getCharacterKeywordListMock = (workspace_id:string) => async () => {
-  return JSON.parse(JSON.stringify(mockKeywordList));
+  return JSON.parse(JSON.stringify(mockKeywordList)) as TKeyword[];
 }
 
 export const getCharacterListMock = (workspace_id:string) => async () => {
-  return JSON.parse(JSON.stringify(mockCharacterList));
+  return JSON.parse(JSON.stringify(mockCharacterList)) as TCharacter[];
 }
 
 export const createCharacterKeywordMock = (workspace_id:string) => async ({keyword_name, lightColor, darkColor}:{keyword_name:string, lightColor:string, darkColor:string}) => {
@@ -238,6 +239,7 @@ export const createCharacterMock = (workspace_id:string) => async () => {
     _id: Math.random().toString(36).substring(7),
     ch_name: "새인물",
     ch_image: "",
+    isMain: false,
     role: "",
     birthday: null,
     gender: "",
