@@ -34,7 +34,7 @@ export const useCharacterList = () => {
 
   const [selectedKeywords, setSelectedKeywords] = useState<string[]>([]);
 
-  const selectKeyword = (keywordId: string) => {
+  const selectKeyword = (keywordId: string) => () => {
     setSelectedKeywords((prev) => [...prev, keywordId]);
   }
 

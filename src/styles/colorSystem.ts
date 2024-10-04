@@ -1,5 +1,5 @@
 export const colorSystem = {
-  red200: "FFCECE",
+  red200: "#FFCECE",
   red400: "#C55858",
   red500: "#a44c4c",
   red600: "#E04C4C",
@@ -28,6 +28,7 @@ export const colorSystem = {
   gray100: "#D7DDEA",
   gray200: "#B1B5C4",
   gray300: "#898D9D",
+  gray400: "#707179",
   gray900: "#353535",
 
   black: "#191919",
