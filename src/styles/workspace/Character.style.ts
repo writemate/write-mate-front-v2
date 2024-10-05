@@ -78,6 +78,6 @@ export const KeywordContainer = styled.div<{ $lightColor?: string, $darkColor?: 
   color: ${({ theme, $darkColor}) => $darkColor ?? theme.color.gray400};
   font-weight: 600;
   font-size: 14px;
-  line-height: 19px;
+  line-height: 21px;
   border: 1px solid ${({ theme, $darkColor}) => $darkColor ?? theme.color.gray400};
 `;

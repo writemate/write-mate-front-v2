@@ -3,7 +3,8 @@ import { useCharacterList } from "@/hooks/workspace/character/useCharacterList";
 import { CharacterListContainer, KeywordTitle, SubTitle, OpenManagement,
   KeywordListContainer, KeywordContainer
  } from "@/styles/workspace/Character.style";
-import KeywordCancel from "@/assets/workspace/keywordCancel.svg";
+import KeywordCancel from "@/assets/workspace/character/keywordCancel.svg";
+import AddButton from "@/assets/workspace/character/addButton.svg";
 
 export default function CharacterList() {
   const {
@@ -31,6 +32,7 @@ export default function CharacterList() {
             }} />}
           </KeywordContainer>
         ))}
+        <AddButton />
       </KeywordListContainer>
     </CharacterListContainer>
   );
