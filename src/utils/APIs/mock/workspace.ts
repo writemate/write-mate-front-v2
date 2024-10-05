@@ -215,7 +215,43 @@ const mockCharacterList: TCharacter[] = [{
   characteristic: [],
   keyword: ["1", "5", "9"],
   relatedEvent: [],
-}];
+},{
+  _id: "2",
+  ch_name: "ㄴㅇ라ㅣㅜㄴㅇ라ㅣㅜㄴㅇ라ㅣㅜㄴㅇ라ㅣㅜㄴㅇ라ㅣㅜㄴㅇ",
+  ch_image: "https://artmugfile2.cafe24.com/image/goods_img1/2/24621.jpg?ver=1657860911",
+  isMain: true,
+  role: "주인공ㄴㅇㄹㅎㅇㄹㄴㅇㄹ허ㅏㅣㅠㅜㄴㅇㄹㅎ허ㅏㅣㅜㄴㅇ",
+  birthday: null,
+  gender: "",
+  characteristic: [],
+  keyword: ["7", "2", "3", "4"],
+  relatedEvent: [],
+}
+,{
+  _id: "3",
+  ch_name: "ㄷㅅㄹㅎㅇㅍㅇㄹㅍ",
+  ch_image: "https://artmugfile2.cafe24.com/image/goods_img1/2/24621.jpg?ver=1657860911",
+  isMain: true,
+  role: "ㄴㅇㄹㄴㅇ륭ㅅ롯ㅇㄹ혹ㄴㅇㅎㄷㄱㅇㅎㅇㄹ퓨",
+  birthday: null,
+  gender: "",
+  characteristic: [],
+  keyword: ["9", "2", "1"],
+  relatedEvent: [],
+}
+,{
+  _id: "4",
+  ch_name: "ㅇ롱ㄹ혿ㄱ욯ㅇㄹ퓽류",
+  ch_image: "https://artmugfile2.cafe24.com/image/goods_img1/2/24621.jpg?ver=1657860911",
+  isMain: true,
+  role: "ㅎㄱㄴㅎㄱㅇㄹㅍㄷㄱㅎㄹㅇㅍㅇ퓨",
+  birthday: null,
+  gender: "",
+  characteristic: [],
+  keyword: ["3","6","7","14"],
+  relatedEvent: [],
+}
+];
 
 export const getCharacterKeywordListMock = (workspace_id:string) => async () => {
   return JSON.parse(JSON.stringify(mockKeywordList)) as TKeyword[];
