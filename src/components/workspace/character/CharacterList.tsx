@@ -15,6 +15,7 @@ export default function CharacterList() {
     keywordList, characterList, isKeywordsLoading, isCharactersLoading,
     addCharacter, addKeyword, isAddingCharacter, isAddingKeyword,
     selectKeyword, isSelectedKeyword, removeSelectedKeyword,
+    setMainCharacter, removeMainCharacter
   } = useCharacterList();
     
   return (
@@ -49,8 +50,8 @@ export default function CharacterList() {
                 <CharacterName>{character.ch_name}</CharacterName>
                 <CharacterRole>{character.role}</CharacterRole>
               </div>
-              {character.isMain && <StarActive />}
-              {!character.isMain && <StarInactive />}
+              {character.isMain && <StarActive onClick={removeMainCharacter(character._id)} />}
+              {!character.isMain && <StarInactive onClick={setMainCharacter(character._id)} />}
             </CharacterCardTitle>
             <CharacterDescription>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Asperiores ea aliquam doloribus delectus est ipsam dolorum magni, ducimus rem quas reiciendis pariatur beatae? Sapiente, obcaecati optio asperiores quia voluptatum harum.</CharacterDescription>
             <KeywordListContainerForCharacterCard>

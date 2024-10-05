@@ -6,7 +6,8 @@ import { getChapterListMock, getPlotFolderListMock, updatePlotFolderMock,
   getCharacterListMock, getCharacterKeywordListMock, createCharacterKeywordMock, createCharacterMock,
   updateCharacterNameMock, updateCharacterRoleMock, updateCharacterGenderMock,
   updateCharacterBirthdayMock, addCharacterKeywordMock, removeCharacterKeywordMock,
-  addCharacterCharacteristicMock, updateCharacterCharacteristicMock, removeCharacterCharacteristicMock
+  addCharacterCharacteristicMock, updateCharacterCharacteristicMock, removeCharacterCharacteristicMock,
+  setMainCharacterMock, removeMainCharacterMock
  } from "./mock/workspace";
 import { TWork } from "./types";
 
@@ -43,6 +44,8 @@ export const updateCharacterName = updateCharacterNameMock;
 export const updateCharacterRole = updateCharacterRoleMock;
 export const updateCharacterGender = updateCharacterGenderMock;
 export const updateCharacterBirthday = updateCharacterBirthdayMock;
+export const setMainCharacter = setMainCharacterMock;
+export const removeMainCharacter = removeMainCharacterMock;
 export const addCharacterKeyword = addCharacterKeywordMock;
 export const removeCharacterKeyword = removeCharacterKeywordMock;
 export const addCharacterCharacteristic = addCharacterCharacteristicMock;

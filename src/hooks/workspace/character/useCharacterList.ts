@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { workspaceQueryKeys } from "@/utils/APIs/queryKeys";
-import { getCharacterKeywordList, getCharacterList, createCharacter, createCharacterKeyword } from '@/utils/APIs/workspace';
+import { getCharacterKeywordList, getCharacterList, createCharacter, createCharacterKeyword, setMainCharacter, removeMainCharacter } from '@/utils/APIs/workspace';
 import { useParams } from 'next/navigation';
 
 export const useCharacterList = () => {
@@ -30,6 +30,40 @@ export const useCharacterList = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: workspaceQueryKeys.characterKeywordList(workspace_id) });
     },
+  });
+
+  const { mutate: setMainCharacterMutation } = useMutation({
+    mutationFn: setMainCharacter(workspace_id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: workspaceQueryKeys.characterList(workspace_id) });
+    },
+    onMutate: async (characterId: string) => {
+      queryClient.setQueryData(workspaceQueryKeys.characterList(workspace_id), (oldData: Awaited<ReturnType<ReturnType<typeof getCharacterList>>>) => {
+        return oldData.map((character) => {
+          if (character._id === characterId) {
+            return { ...character, isMain: true };
+          }
+          return character;
+        });
+      });
+    }
+  });
+
+  const { mutate: removeMainCharacterMutation } = useMutation({
+    mutationFn: removeMainCharacter(workspace_id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: workspaceQueryKeys.characterList(workspace_id) });
+    },
+    onMutate: async (characterId: string) => {
+      queryClient.setQueryData(workspaceQueryKeys.characterList(workspace_id), (oldData: Awaited<ReturnType<ReturnType<typeof getCharacterList>>>) => {
+        return oldData.map((character) => {
+          if (character._id === characterId) {
+            return { ...character, isMain: false };
+          }
+          return character;
+        });
+      });
+    }
   });
 
   const [selectedKeywords, setSelectedKeywords] = useState<string[]>([]);
@@ -66,5 +100,7 @@ export const useCharacterList = () => {
     selectKeyword,
     isSelectedKeyword,
     removeSelectedKeyword,
+    setMainCharacter: (characterId: string) => () => setMainCharacterMutation(characterId),
+    removeMainCharacter: (characterId: string) => () => removeMainCharacterMutation(characterId),
   };
 };

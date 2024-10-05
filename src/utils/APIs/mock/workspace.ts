@@ -296,6 +296,14 @@ export const updateCharacterRoleMock = generateUpdateCharacterMock("role");
 export const updateCharacterGenderMock = generateUpdateCharacterMock("gender");
 export const updateCharacterBirthdayMock = generateUpdateCharacterMock("birthday");
 
+export const setMainCharacterMock = (workspace_id:string) => async (character_id:string) => {
+  generateUpdateCharacterMock("isMain")(workspace_id)(character_id, true);
+}
+
+export const removeMainCharacterMock = (workspace_id:string) => async (character_id:string) => {
+  generateUpdateCharacterMock("isMain")(workspace_id)(character_id, false);
+}
+
 export const addCharacterKeywordMock = (workspace_id:string) => async (character_id:string, keyword_id:string) => {
   const character = mockCharacterList.find((c) => c._id === character_id);
   if(!character) return;
