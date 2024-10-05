@@ -1,6 +1,6 @@
 'use client';
 import { styled } from 'styled-components';
-import { clickable, FlexColumnCenter, FlexRowCenter, FlexRowLeftStart } from '..';
+import { clickable, FlexColumnCenter, FlexColumnLeftStart, FlexRowCenter, FlexRowLeftStart } from '..';
 
 export const TabContainer = styled.div`
   ${FlexRowLeftStart};
@@ -35,7 +35,7 @@ export const TabButton = styled.div<{ $isSelected: boolean }>`
   `}
 `;
 
-export const CharacterListContainer = styled.div`
+export const ContentsContainer = styled.div`
   ${FlexColumnCenter};
   width: 100%;
   margin-top: 36px;
@@ -66,6 +66,14 @@ export const KeywordListContainer = styled.div`
   margin-top: 20px;
   gap: 8px;
   flex-wrap: wrap;
+  font-size: 14px;
+  line-height: 21px;
+`;
+
+export const KeywordListContainerForCharacterCard = styled(KeywordListContainer)`
+  margin-top: 0;
+  font-size: 12px;
+  line-height: 18px;
 `;
 
 export const KeywordContainer = styled.div<{ $lightColor?: string, $darkColor?: string }>`
@@ -77,7 +85,71 @@ export const KeywordContainer = styled.div<{ $lightColor?: string, $darkColor?: 
   background-color: ${({ $lightColor="transparent" }) => $lightColor};
   color: ${({ theme, $darkColor}) => $darkColor ?? theme.color.gray400};
   font-weight: 600;
+  border: 1px solid ${({ theme, $darkColor}) => $darkColor ?? theme.color.gray400};
+`;
+
+
+export const CharacterListContainer = styled.div`
+  ${FlexRowLeftStart};
+  width: 100%;
+  margin-top: 36px;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+`;
+export const CharacterCard = styled.div`
+  ${FlexColumnLeftStart};
+  ${clickable};
+  width: 244px;
+  padding: 20px;
+  border-radius: 12px;
+  gap: 10px;
+  background-color: ${({ theme }) => theme.color.white};
+  box-shadow: 0px 0px 12px #00000033;
+`;
+export const CharacterCardTitle = styled.div`
+  ${FlexRowLeftStart};
+  width: 100%;
+  &>*:last-child {
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+`;
+export const CharacterImage = styled.div<{ $src: string }>`
+  background-image: url(${({ $src }) => $src});
+  background-size: cover;
+  width: 48px;
+  height: 48px;
+  border-radius: 100%;
+  background-color: ${({ theme }) => theme.color.gray200};
+  box-shadow: 2px 2px 8px #323F4D33;
+  border: 2px solid #fff;
+  flex-shrink: 0;
+  margin-right: 12px;
+`;
+export const CharacterName = styled.div`
+  font-size: 14px;
+  font-weight: 700;
+  width: 123px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;
+export const CharacterRole = styled.div`
+  font-size: 13px;
+  color: ${({ theme }) => theme.color.gray400};
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 123px;
+`;
+export const CharacterDescription = styled.div`
   font-size: 14px;
   line-height: 21px;
-  border: 1px solid ${({ theme, $darkColor}) => $darkColor ?? theme.color.gray400};
+  color: ${({ theme }) => theme.color.gray400};
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 `;

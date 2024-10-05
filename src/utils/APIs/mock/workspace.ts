@@ -207,7 +207,7 @@ const mockKeywordList: TKeyword[] = [
 const mockCharacterList: TCharacter[] = [{
   _id: "1",
   ch_name: "주인공",
-  ch_image: "https://artmugfile2.cafe24.com/image/goods_img1/2/24621.jpg?ver=1657860911",
+  ch_image: "",
   isMain: true,
   role: "주인공",
   birthday: null,
