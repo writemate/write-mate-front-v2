@@ -1,10 +1,9 @@
 'use client';
 import { useCharacterList } from "@/hooks/workspace/character/useCharacterList";
-import { ButtonWithHoverAnimation } from "@/styles";
 import { ContentsContainer, KeywordTitle, SubTitle, OpenManagement,
   KeywordListContainer, KeywordContainer, KeywordListContainerForCharacterCard,
   CharacterListContainer, CharacterCard, CharacterCardTitle, CharacterImage,
-  CharacterName, CharacterRole, CharacterDescription
+  CharacterName, CharacterRole, CharacterDescription, CreateCharacterButton
  } from "@/styles/workspace/Character.style";
 import KeywordCancel from "@/assets/workspace/character/keywordCancel.svg";
 import AddButton from "@/assets/workspace/character/addButton.svg";
@@ -55,8 +54,8 @@ export default function CharacterList() {
             </CharacterCardTitle>
             <CharacterDescription>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Asperiores ea aliquam doloribus delectus est ipsam dolorum magni, ducimus rem quas reiciendis pariatur beatae? Sapiente, obcaecati optio asperiores quia voluptatum harum.</CharacterDescription>
             <KeywordListContainerForCharacterCard>
-              {character.keyword.map((keyword, index) => {
-                const selectedKeyword = keywordList.find((k) => k._id === keyword)!;
+              {character.keyword.map((id, index) => {
+                const selectedKeyword = keywordList.find((k) => k._id === id)!;
                 const isSelected = isSelectedKeyword(selectedKeyword._id);
                 return selectedKeyword && (
                   <KeywordContainer key={index}
@@ -71,6 +70,10 @@ export default function CharacterList() {
           </CharacterCard>
         ))}
       </CharacterListContainer>
+      <CreateCharacterButton onClick={()=>addCharacter()} disabled={isAddingCharacter || isAddingKeyword}>
+        {isAddingCharacter&&"인물 생성중..."}
+        {!isAddingCharacter && "인물 생성하기"}
+      </CreateCharacterButton>
     </ContentsContainer>
   );
 }

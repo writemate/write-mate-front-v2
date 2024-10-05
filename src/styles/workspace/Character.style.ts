@@ -10,6 +10,7 @@ export const TabContainer = styled.div`
   height: 29px;
   gap: 48px;
   padding-left: 18px;
+  flex-shrink: 0;
 `;
 
 export const TabButton = styled.div<{ $isSelected: boolean }>`
@@ -38,6 +39,7 @@ export const TabButton = styled.div<{ $isSelected: boolean }>`
 export const ContentsContainer = styled.div`
   ${FlexColumnCenter};
   width: 100%;
+  flex-grow: 1;
   margin-top: 36px;
 `;
 
@@ -152,4 +154,21 @@ export const CharacterDescription = styled.div`
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+`;
+
+export const CreateCharacterButton = styled.button`
+  ${FlexRowCenter};
+  ${clickable};
+  padding: 12px 28px;
+  border-radius: 100px;
+  background-color: ${({ theme }) => theme.color.orange500};
+  color: #fff;
+  font-size: 16px;
+  font-weight: 800;
+  margin-top: auto;
+  border: none;
+  &:disabled {
+    background-color: ${({ theme }) => theme.color.gray200};
+    color: ${({ theme }) => theme.color.gray400};
+  }
 `;

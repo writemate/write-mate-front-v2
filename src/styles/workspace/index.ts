@@ -31,6 +31,7 @@ export const MainContainer = styled.div<{ $isLeftOpen: boolean; $isRightOpen: bo
   padding-top: 65px;
   padding-left: max(28px, ${({ $isLeftOpen }) => ($isLeftOpen ? `calc((100% - 1012px) / 2 - 258px)` : 'calc((100% - 1012px) / 2)')});
   padding-right: max(28px, ${({ $isRightOpen }) => ($isRightOpen ? `calc((100% - 1012px) / 2 - 309px)` : 'calc((100% - 1012px) / 2)')});
+  padding-bottom: 60px;
   overflow-y: auto;
 `;
 
