@@ -3,8 +3,10 @@ import { useCharacterList } from "@/hooks/workspace/character/useCharacterList";
 import { ContentsContainer, KeywordTitle, SubTitle, OpenManagement,
   KeywordListContainer, KeywordContainer, KeywordListContainerForCharacterCard,
   CharacterListContainer, CharacterCard, CharacterCardTitle, CharacterImage,
-  CharacterName, CharacterRole, CharacterDescription, CreateCharacterButton
+  CharacterName, CharacterRole, CharacterDescription, CreateCharacterButton,
+  MiniModal
  } from "@/styles/workspace/Character.style";
+import { Input } from "@/styles";
 import KeywordCancel from "@/assets/workspace/character/keywordCancel.svg";
 import AddButton from "@/assets/workspace/character/addButton.svg";
 import StarActive from "@/assets/workspace/character/starActive.svg";
@@ -13,9 +15,12 @@ import StarInactive from "@/assets/workspace/character/starInactive.svg";
 export default function CharacterList() {
   const {
     keywordList, characterList, isKeywordsLoading, isCharactersLoading,
-    addCharacter, addKeyword, isAddingCharacter, isAddingKeyword,
+    addCharacter, isAddingCharacter, isAddingKeyword,
     selectKeyword, isSelectedKeyword, removeSelectedKeyword,
-    setMainCharacter, removeMainCharacter
+    setMainCharacter, removeMainCharacter,miniModalOpen,
+    openMiniModal, miniKeywordInput, onChangeMiniKeywordInput,
+    onEnterPressAtMiniModal, onClickAddKeywordAtMiniModal, onBlurredMiniModal,
+    keywordListRef, addButtonRef, miniModalLeftPosition
   } = useCharacterList();
     
   return (
@@ -24,7 +29,7 @@ export default function CharacterList() {
         <SubTitle>키워드로 찾기</SubTitle>
         <OpenManagement>키워드 관리</OpenManagement>
       </KeywordTitle>
-      <KeywordListContainer>
+      <KeywordListContainer ref={keywordListRef}>
         {isKeywordsLoading && <div>키워드 로딩중...</div>}
         {keywordList && keywordList.map((keyword, index) => (
           <KeywordContainer key={index} onClick={selectKeyword(keyword._id)}
@@ -38,7 +43,17 @@ export default function CharacterList() {
             }} />}
           </KeywordContainer>
         ))}
-        <AddButton />
+        <div style={{ position: 'relative' }} ref={addButtonRef}>
+          <AddButton onClick={openMiniModal} />
+          {miniModalOpen && (
+          <MiniModal tabIndex={0} onBlur={onBlurredMiniModal} $left={miniModalLeftPosition}>
+            <Input value={miniKeywordInput} onChange={onChangeMiniKeywordInput}
+              onKeyDown={onEnterPressAtMiniModal} autoFocus placeholder="키워드 입력하기"
+            />
+            <button onMouseDown={onClickAddKeywordAtMiniModal}>추가</button>
+          </MiniModal>
+          )}
+        </div>
       </KeywordListContainer>
       <CharacterListContainer>
         {(isKeywordsLoading || isCharactersLoading) && <div>캐릭터 로딩중...</div>}

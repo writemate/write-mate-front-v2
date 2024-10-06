@@ -172,3 +172,33 @@ export const CreateCharacterButton = styled.button`
     color: ${({ theme }) => theme.color.gray400};
   }
 `;
+
+export const MiniModal = styled.div<{$left: number }>`
+  ${FlexRowCenter};
+  position: absolute;
+  top: 20px;
+  left: ${({ $left }) => $left}px;
+  width: 320px;
+  border-radius: 8px;
+  background-color: #fff;
+  z-index: 100;
+  padding: 9px;
+  box-shadow: 0px 0px 12px #00000033;
+  &>input {
+    padding-right: 43px;
+    box-shadow: none;
+    border: 1px solid ${({ theme }) => theme.color.gray75};
+  }
+  &>button {
+    ${clickable};
+    position: absolute;
+    right: 14px;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: ${({ theme }) => theme.color.gray75};
+    font-size: 13px;
+    font-weight: 400;
+    width: 43px;
+    border: none;
+  }
+`;

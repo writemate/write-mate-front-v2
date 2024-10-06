@@ -1,11 +1,22 @@
 'use client';
-import { useState } from 'react';
+import { useState, useRef, RefObject } from 'react';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { workspaceQueryKeys } from "@/utils/APIs/queryKeys";
 import { getCharacterKeywordList, getCharacterList, createCharacter, createCharacterKeyword, setMainCharacter, removeMainCharacter } from '@/utils/APIs/workspace';
 import { useParams } from 'next/navigation';
 
+//키워드 입력창(position:absolute)이 부모요소를 넘어가지 않도록 위치를 조정
+const getLeftPositionOfMiniModal = (keywordListRef: RefObject<HTMLDivElement>, addButtonRef: RefObject<HTMLDivElement>) => {
+  if (!keywordListRef.current || !addButtonRef.current) return 0;
+  const keywordListRect = keywordListRef.current.getBoundingClientRect();
+  const addButtonRect = addButtonRef.current.getBoundingClientRect();
+  if(addButtonRect.left+320+10<keywordListRect.right) return 10;
+  return keywordListRect.right - addButtonRect.left - 320;
+}
+
 export const useCharacterList = () => {
+  const keywordListRef = useRef<HTMLDivElement>(null);
+  const addButtonRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
   const { workspace_id } = useParams<{ workspace_id: string }>();
   const { data: keywordList, isLoading: isKeywordsLoading } = useQuery({
@@ -88,13 +99,47 @@ export const useCharacterList = () => {
 
   const realCharacterList = selectedKeywords.length === 0 ? characterList : selectedCharacter;
 
+  const [miniModalOpen, setMiniModalOpen] = useState(false);
+  const [miniKeywordInput, setMiniKeywordInput] = useState('');
+
+  const openMiniModal = () => {
+    setMiniModalOpen(true);
+  }
+
+  const onBlurredMiniModal = () => {
+    setMiniModalOpen(false);
+    setMiniKeywordInput('');
+  }
+
+  const onChangeMiniKeywordInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMiniKeywordInput(e.target.value);
+  }
+
+  const addKeywordWithRandomColor = () => {
+    if(miniKeywordInput === '') return;
+    addKeyword({ keyword_name: miniKeywordInput});
+    setMiniKeywordInput('');
+    setMiniModalOpen(false);
+  }
+
+  const onEnterPressAtMiniModal = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      addKeywordWithRandomColor();
+    }
+  }
+
+  const onClickAddKeywordAtMiniModal = () => {
+    addKeywordWithRandomColor();
+  }
+
+  const miniModalLeftPosition = getLeftPositionOfMiniModal(keywordListRef, addButtonRef);
+
   return {
     keywordList,
     characterList: realCharacterList,
     isKeywordsLoading,
     isCharactersLoading,
     addCharacter,
-    addKeyword,
     isAddingCharacter,
     isAddingKeyword,
     selectKeyword,
@@ -102,5 +147,15 @@ export const useCharacterList = () => {
     removeSelectedKeyword,
     setMainCharacter: (characterId: string) => () => setMainCharacterMutation(characterId),
     removeMainCharacter: (characterId: string) => () => removeMainCharacterMutation(characterId),
+    miniModalOpen,
+    openMiniModal,
+    miniKeywordInput,
+    onBlurredMiniModal,
+    onChangeMiniKeywordInput,
+    onEnterPressAtMiniModal,
+    onClickAddKeywordAtMiniModal,
+    keywordListRef,
+    addButtonRef,
+    miniModalLeftPosition
   };
 };

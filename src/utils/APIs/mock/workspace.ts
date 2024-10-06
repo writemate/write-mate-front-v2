@@ -261,7 +261,27 @@ export const getCharacterListMock = (workspace_id:string) => async () => {
   return JSON.parse(JSON.stringify(mockCharacterList)) as TCharacter[];
 }
 
-export const createCharacterKeywordMock = (workspace_id:string) => async ({keyword_name, lightColor, darkColor}:{keyword_name:string, lightColor:string, darkColor:string}) => {
+export const createCharacterKeywordMock = (workspace_id:string) => async ({keyword_name, lightColor, darkColor}:{keyword_name:string, lightColor?:string, darkColor?:string}) => {
+  const randomColorList = [[
+    colorSystem.red200,
+    colorSystem.orange200,
+    colorSystem.blue200,
+    colorSystem.green200,
+    colorSystem.purple200,
+    colorSystem.darkYellow200,
+  ],[
+    colorSystem.red500,
+    colorSystem.orange500,
+    colorSystem.blue500,
+    colorSystem.green500,
+    colorSystem.purple500,
+    colorSystem.darkYellow600,
+  ]];
+  
+  if(lightColor === undefined)
+    lightColor = randomColorList[0][Math.floor(Math.random() * randomColorList[0].length)];
+  if(darkColor === undefined)
+    darkColor = randomColorList[1][Math.floor(Math.random() * randomColorList[1].length)];
   mockKeywordList.push({
     _id: Math.random().toString(36).substring(7),
     keyword_name,
