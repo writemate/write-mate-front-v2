@@ -310,6 +310,12 @@ export const createCharacterMock = (workspace_id:string) => async () => {
   });
 }
 
+export const deleteCharacterMock = (workspace_id:string,character_id:string) => async () => {
+  const index = mockCharacterList.findIndex((c) => c._id === character_id);
+  if(index === -1) return;
+  mockCharacterList.splice(index, 1);
+}
+
 export const getCharacterMock = (workspace_id:string,character_id:string) => async ()=> {
   return JSON.parse(JSON.stringify(mockCharacterList.find((c) => c._id === character_id))) as TCharacter;
 }

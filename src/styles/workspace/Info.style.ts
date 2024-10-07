@@ -94,6 +94,8 @@ export const CoverImage = styled.img<{ src: string }>`
 
 export const CoverContentsContainer = styled.div`
   ${FlexColumnLeftStart};
+  height: 100%;
+  justify-content: flex-end;
   min-width: 263px;
   width: calc(100% - 263px - 36px);
   flex-grow: 1;

@@ -4,9 +4,10 @@ import { getCharacter, updateCharacterName, updateCharacterRole, updateCharacter
   updateCharacterBirthday, addCharacterKeyword, removeCharacterKeyword,
   updateCharacterCoverImage, addCharacterCharacteristic, updateCharacterCharacteristicTitle,
   removeCharacterCharacteristic, updateCharacterCharacteristicContent,
-  updateCharacterDescription} from "@/utils/APIs/workspace";
+  updateCharacterDescription, deleteCharacter
+} from "@/utils/APIs/workspace";
 import { debounce } from "@/utils";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { createContext } from "react";
 import { TCharacter } from "@/utils/APIs/types";
 
@@ -28,6 +29,7 @@ function useUpdate<T,U>({updateFn, onMutate, onChange}:{
 
 export function useCharacter() {
   const queryClient = useQueryClient();
+  const router = useRouter();
   const { workspace_id, character_id } = useParams<{ workspace_id: string, character_id: string }>();
   const { data, error, isLoading } = useQuery({
     queryKey: workspaceQueryKeys.characterDetail(workspace_id, character_id),
@@ -43,6 +45,14 @@ export function useCharacter() {
       }));
     },
     onChange: (debouncedMutate) => (e: React.ChangeEvent<HTMLInputElement>) => debouncedMutate(e.target.value),
+  });
+
+  const { mutate: deleteCharacterMutation, isPending: isPendingDeleteCharacter } = useMutation({
+    mutationFn: deleteCharacter(workspace_id, character_id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: workspaceQueryKeys.characterList(workspace_id) });
+      router.push(`/${workspace_id}/character`);
+    },
   });
 
   const { onChange: onChangeRole, isPending: isPendingRole } = useUpdate({
@@ -152,7 +162,8 @@ export function useCharacter() {
     isPendingCharacteristicTitle, isPendingCharacteristicContent, isPendingCoverImage,
     onChangeName, onChangeRole, onChangeGender, onChangeBirthday, onChangeDescription,
     mutateAddKeyword, mutateRemoveKeyword, mutateAddCharacteristic, mutateRemoveCharacteristic,
-    onChangeCharacteristicTitle, onChangeCharacteristicContent, onChangeCoverImage };
+    onChangeCharacteristicTitle, onChangeCharacteristicContent, onChangeCoverImage,
+    deleteCharacter: deleteCharacterMutation,};
 }
 
 export const CharacterContext = createContext({} as ReturnType<typeof useCharacter>);
