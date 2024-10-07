@@ -1,6 +1,7 @@
 'use client';
 import { styled } from 'styled-components';
 import { clickable, FlexColumnCenter, FlexColumnLeftStart, FlexRowCenter, FlexRowLeftStart } from '..';
+import Link from 'next/link';
 
 export const TabContainer = styled.div`
   ${FlexRowLeftStart};
@@ -99,7 +100,7 @@ export const CharacterListContainer = styled.div`
   flex-wrap: wrap;
   align-items: flex-start;
 `;
-export const CharacterCard = styled.div`
+export const CharacterCard = styled(Link)`
   ${FlexColumnLeftStart};
   ${clickable};
   width: 244px;

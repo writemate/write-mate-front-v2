@@ -365,11 +365,18 @@ export const addCharacterCharacteristicMock = (workspace_id:string, character_id
   character.characteristic.push({title: "", content: ""});
 }
 
-export const updateCharacterCharacteristicMock = (workspace_id:string, character_id:string) =>
-  async ({index,title,content}:{index:number, title:string, content:string}) => {
+export const updateCharacterCharacteristicTitleMock = (workspace_id:string, character_id:string) =>
+  async ({index,title}:{index:number, title:string}) => {
     const character = mockCharacterList.find((c) => c._id === character_id);
     if(!character) return;
-    character.characteristic[index] = {title, content};
+    character.characteristic[index].title = title;
+}
+
+export const updateCharacterCharacteristicContentMock = (workspace_id:string, character_id:string) =>
+  async ({index,content}:{index:number, content:string}) => {
+    const character = mockCharacterList.find((c) => c._id === character_id);
+    if(!character) return;
+    character.characteristic[index].content = content;
 }
 
 export const removeCharacterCharacteristicMock = (workspace_id:string, character_id:string) => async (index:number) => {

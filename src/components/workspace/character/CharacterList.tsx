@@ -14,7 +14,7 @@ import StarInactive from "@/assets/workspace/character/starInactive.svg";
 
 export default function CharacterList() {
   const {
-    keywordList, characterList, isKeywordsLoading, isCharactersLoading,
+    workspace_id, keywordList, characterList, isKeywordsLoading, isCharactersLoading,
     addCharacter, isAddingCharacter, isAddingKeyword,
     selectKeyword, isSelectedKeyword, removeSelectedKeyword,
     setMainCharacter, removeMainCharacter,miniModalOpen,
@@ -58,7 +58,7 @@ export default function CharacterList() {
       <CharacterListContainer>
         {(isKeywordsLoading || isCharactersLoading) && <div>캐릭터 로딩중...</div>}
         {characterList && keywordList && characterList.map((character, index) => (
-          <CharacterCard key={index+1}>
+          <CharacterCard key={index+1} href={`/${workspace_id}/character/${character._id}`}>
             <CharacterCardTitle>
               <CharacterImage $src={character.ch_image} />
               <div>
@@ -68,7 +68,7 @@ export default function CharacterList() {
               {character.isMain && <StarActive onClick={removeMainCharacter(character._id)} />}
               {!character.isMain && <StarInactive onClick={setMainCharacter(character._id)} />}
             </CharacterCardTitle>
-            <CharacterDescription>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Asperiores ea aliquam doloribus delectus est ipsam dolorum magni, ducimus rem quas reiciendis pariatur beatae? Sapiente, obcaecati optio asperiores quia voluptatum harum.</CharacterDescription>
+            <CharacterDescription>{character.description}</CharacterDescription>
             <KeywordListContainerForCharacterCard>
               {character.keyword.map((id, index) => {
                 const selectedKeyword = keywordList.find((k) => k._id === id)!;

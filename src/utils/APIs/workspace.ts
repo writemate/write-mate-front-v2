@@ -6,7 +6,8 @@ import { getChapterListMock, getPlotFolderListMock, updatePlotFolderMock,
   getCharacterListMock, getCharacterKeywordListMock, createCharacterKeywordMock, createCharacterMock,
   updateCharacterNameMock, updateCharacterRoleMock, updateCharacterGenderMock,
   updateCharacterBirthdayMock, addCharacterKeywordMock, removeCharacterKeywordMock,
-  addCharacterCharacteristicMock, updateCharacterCharacteristicMock, removeCharacterCharacteristicMock,
+  addCharacterCharacteristicMock, updateCharacterCharacteristicTitleMock,
+  updateCharacterCharacteristicContentMock, removeCharacterCharacteristicMock,
   setMainCharacterMock, removeMainCharacterMock, updateCharacterCoverImageMock,
   getCharacterMock, updateCharacterDescriptionMock
  } from "./mock/workspace";
@@ -54,5 +55,6 @@ export const addCharacterKeyword = addCharacterKeywordMock;
 export const removeCharacterKeyword = removeCharacterKeywordMock;
 export const updateCharacterCoverImage = updateCharacterCoverImageMock;
 export const addCharacterCharacteristic = addCharacterCharacteristicMock;
-export const updateCharacterCharacteristic = updateCharacterCharacteristicMock;
+export const updateCharacterCharacteristicTitle = updateCharacterCharacteristicTitleMock;
+export const updateCharacterCharacteristicContent = updateCharacterCharacteristicContentMock;
 export const removeCharacterCharacteristic = removeCharacterCharacteristicMock;

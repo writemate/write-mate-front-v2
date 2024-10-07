@@ -135,6 +135,7 @@ export const useCharacterList = () => {
   const miniModalLeftPosition = getLeftPositionOfMiniModal(keywordListRef, addButtonRef);
 
   return {
+    workspace_id,
     keywordList,
     characterList: realCharacterList,
     isKeywordsLoading,
