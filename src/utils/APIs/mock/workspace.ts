@@ -212,6 +212,7 @@ const mockCharacterList: TCharacter[] = [{
   role: "주인공",
   birthday: null,
   gender: "",
+  description: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Asperiores ea aliquam doloribus delectus est ipsam dolorum magni, ducimus rem quas reiciendis pariatur beatae? Sapiente, obcaecati optio asperiores quia voluptatum harum.",
   characteristic: [],
   keyword: ["1", "5", "9"],
   relatedEvent: [],
@@ -223,6 +224,7 @@ const mockCharacterList: TCharacter[] = [{
   role: "주인공ㄴㅇㄹㅎㅇㄹㄴㅇㄹ허ㅏㅣㅠㅜㄴㅇㄹㅎ허ㅏㅣㅜㄴㅇ",
   birthday: null,
   gender: "",
+  description: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Asperiores ea aliquam doloribus delectus est ipsam dolorum magni, ducimus rem quas reiciendis pariatur beatae? Sapiente, obcaecati optio asperiores quia voluptatum harum.",
   characteristic: [],
   keyword: ["7", "2", "3", "4"],
   relatedEvent: [],
@@ -235,6 +237,7 @@ const mockCharacterList: TCharacter[] = [{
   role: "ㄴㅇㄹㄴㅇ륭ㅅ롯ㅇㄹ혹ㄴㅇㅎㄷㄱㅇㅎㅇㄹ퓨",
   birthday: null,
   gender: "",
+  description: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Asperiores ea aliquam doloribus delectus est ipsam dolorum magni, ducimus rem quas reiciendis pariatur beatae? Sapiente, obcaecati optio asperiores quia voluptatum harum.",
   characteristic: [],
   keyword: ["9", "2", "1"],
   relatedEvent: [],
@@ -247,6 +250,7 @@ const mockCharacterList: TCharacter[] = [{
   role: "ㅎㄱㄴㅎㄱㅇㄹㅍㄷㄱㅎㄹㅇㅍㅇ퓨",
   birthday: null,
   gender: "",
+  description: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Asperiores ea aliquam doloribus delectus est ipsam dolorum magni, ducimus rem quas reiciendis pariatur beatae? Sapiente, obcaecati optio asperiores quia voluptatum harum.",
   characteristic: [],
   keyword: ["3","6","7","14"],
   relatedEvent: [],
@@ -299,13 +303,18 @@ export const createCharacterMock = (workspace_id:string) => async () => {
     role: "",
     birthday: null,
     gender: "",
+    description: "",
     characteristic: [],
     keyword: [],
     relatedEvent: []
   });
 }
 
-const generateUpdateCharacterMock = <T extends keyof TCharacter>(key:T) => (workspace_id:string) => async (character_id:string, value: TCharacter[T]) => {
+export const getCharacterMock = (workspace_id:string,character_id:string) => async ()=> {
+  return JSON.parse(JSON.stringify(mockCharacterList.find((c) => c._id === character_id))) as TCharacter;
+}
+
+const generateUpdateCharacterMock = <T extends keyof TCharacter>(key:T) => (workspace_id:string, character_id:string) => async (value: TCharacter[T]) => {
   const character = mockCharacterList.find((c) => c._id === character_id);
   if(!character) return;
   character[key] = value;
@@ -315,40 +324,55 @@ export const updateCharacterNameMock = generateUpdateCharacterMock("ch_name");
 export const updateCharacterRoleMock = generateUpdateCharacterMock("role");
 export const updateCharacterGenderMock = generateUpdateCharacterMock("gender");
 export const updateCharacterBirthdayMock = generateUpdateCharacterMock("birthday");
+export const updateCharacterDescriptionMock = generateUpdateCharacterMock("description");
 
 export const setMainCharacterMock = (workspace_id:string) => async (character_id:string) => {
-  generateUpdateCharacterMock("isMain")(workspace_id)(character_id, true);
+  generateUpdateCharacterMock("isMain")(workspace_id,character_id)(true);
 }
 
 export const removeMainCharacterMock = (workspace_id:string) => async (character_id:string) => {
-  generateUpdateCharacterMock("isMain")(workspace_id)(character_id, false);
+  generateUpdateCharacterMock("isMain")(workspace_id,character_id)(false);
 }
 
-export const addCharacterKeywordMock = (workspace_id:string) => async (character_id:string, keyword_id:string) => {
+export const updateCharacterCoverImageMock = (workspace_id:string,character_id:string)=> async(file: File) => {
+  const character = mockCharacterList.find((c) => c._id === character_id);
+  if(!character) return;
+  await new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      character.ch_image = e.target?.result as string;
+      resolve(null);
+    }
+    reader.readAsDataURL(file);
+  });
+}
+
+export const addCharacterKeywordMock = (workspace_id:string, character_id:string) => async (keyword_id:string) => {
   const character = mockCharacterList.find((c) => c._id === character_id);
   if(!character) return;
   character.keyword.push(keyword_id);
 }
 
-export const removeCharacterKeywordMock = (workspace_id:string) => async (character_id:string, keyword_id:string) => {
+export const removeCharacterKeywordMock = (workspace_id:string, character_id:string) => async (keyword_id:string) => {
   const character = mockCharacterList.find((c) => c._id === character_id);
   if(!character) return;
   character.keyword = character.keyword.filter((k) => k !== keyword_id);
 }
 
-export const addCharacterCharacteristicMock = (workspace_id:string) => async (character_id:string) => {
+export const addCharacterCharacteristicMock = (workspace_id:string, character_id:string) => async () => {
   const character = mockCharacterList.find((c) => c._id === character_id);
   if(!character) return;
   character.characteristic.push({title: "", content: ""});
 }
 
-export const updateCharacterCharacteristicMock = (workspace_id:string) => async (character_id:string, index:number, title:string, content:string) => {
-  const character = mockCharacterList.find((c) => c._id === character_id);
-  if(!character) return;
-  character.characteristic[index] = {title, content};
+export const updateCharacterCharacteristicMock = (workspace_id:string, character_id:string) =>
+  async ({index,title,content}:{index:number, title:string, content:string}) => {
+    const character = mockCharacterList.find((c) => c._id === character_id);
+    if(!character) return;
+    character.characteristic[index] = {title, content};
 }
 
-export const removeCharacterCharacteristicMock = (workspace_id:string) => async (character_id:string, index:number) => {
+export const removeCharacterCharacteristicMock = (workspace_id:string, character_id:string) => async (index:number) => {
   const character = mockCharacterList.find((c) => c._id === character_id);
   if(!character) return;
   character.characteristic.splice(index, 1);

@@ -54,6 +54,7 @@ export type TCharacter = {
   _id: string;
   ch_name: string;
   ch_image: string;
+  description: string;
   isMain: boolean;
   role: string;
   birthday: string|null;
