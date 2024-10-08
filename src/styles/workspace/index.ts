@@ -1,6 +1,6 @@
-'use client';
-import { FlexColumnCenter, FlexRowLeftStart } from '@/styles';
-import { styled } from 'styled-components';
+"use client";
+import { FlexColumnCenter, FlexRowLeftStart } from "@/styles";
+import { styled } from "styled-components";
 
 export const WorkspaceContainer = styled.div`
   ${FlexRowLeftStart}
@@ -26,6 +26,7 @@ export const MainContainer = styled.div`
   flex-grow: 1;
   height: 100%;
   width: 100%;
+  position: relative;
   //최대 너비가 1012px이면서 최소 패딩이 28px이도록
   padding: 0 max(28px, calc((100% - 1012px) / 2));
   overflow-y: auto;
