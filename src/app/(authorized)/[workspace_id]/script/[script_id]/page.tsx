@@ -8,6 +8,7 @@ import {
   Undo,
   Redo,
 } from "@/styles/workspace/Script.styles";
+import styled from "styled-components";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
@@ -113,6 +114,16 @@ const QuillEditor = ({ innerRef }: { innerRef: any }) => {
   );
 };
 
+export const MainContainer = styled.div`
+  flex-grow: 1;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  //최대 너비가 1012px이면서 최소 패딩이 28px이도록
+  padding: 0 max(28px, calc((100% - 1012px) / 2));
+  overflow-y: auto;
+`;
+
 export default function Script({
   params: { workspace_id },
 }: {
@@ -124,7 +135,9 @@ export default function Script({
   return (
     <>
       <CustomToolbar editorRef={editorRef} />
-      <QuillEditor innerRef={editorRef} />
+      <MainContainer>
+        <QuillEditor innerRef={editorRef} />
+      </MainContainer>
     </>
   );
 }
