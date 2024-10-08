@@ -13,6 +13,7 @@ import UndoIcon from "@/assets/workspace/script/undo.svg";
 
 export const ToolbarContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
   position: absolute;
   width: 100%;
   background: #ffffff;
