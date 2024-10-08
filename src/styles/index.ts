@@ -115,6 +115,7 @@ export const Input = styled.input`
   padding: 13px 20px;
   box-shadow: 0 0 12px 0 #0000001A;
   width: 100%;
+  color: ${({ theme }) => theme.color.gray900};
   &:focus {
     outline: none;
     border: 1px solid ${({ theme }) => theme.color.orange400};
@@ -131,6 +132,7 @@ export const TextArea = styled.textarea`
   box-shadow: 0 0 12px 0 #0000001A;
   width: 100%;
   resize: none;
+  color: ${({ theme }) => theme.color.gray900};
   &:focus {
     outline: none;
     border: 1px solid ${({ theme }) => theme.color.orange400};

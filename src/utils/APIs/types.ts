@@ -57,7 +57,7 @@ export type TCharacter = {
   description: string;
   isMain: boolean;
   role: string;
-  birthday: string|null;
+  birthday: string;
   gender: string;
   characteristic: Array<{title: string, content: string}>;
   keyword: string[];

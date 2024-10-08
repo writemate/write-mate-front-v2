@@ -96,7 +96,7 @@ export function useCharacter() {
         description: value,
       }));
     },
-    onChange: (debouncedMutate) => (e: React.ChangeEvent<HTMLInputElement>) => debouncedMutate(e.target.value),
+    onChange: (debouncedMutate) => (e: React.ChangeEvent<HTMLTextAreaElement>) => debouncedMutate(e.target.value),
   });
 
   const { mutate: mutateAddKeyword, isPending: isPendingAddKeyword } = useMutation({
@@ -109,15 +109,21 @@ export function useCharacter() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: workspaceQueryKeys.characterDetail(workspace_id, character_id) }),
   });
 
+  const onClickRemoveKeyword = (id: string) => mutateRemoveKeyword(id);
+
   const { mutate: mutateAddCharacteristic, isPending: isPendingAddCharacteristic } = useMutation({
     mutationFn: addCharacterCharacteristic(workspace_id, character_id),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: workspaceQueryKeys.characterDetail(workspace_id, character_id) }),
   });
 
+  const onClickAddCharacteristic = () => mutateAddCharacteristic();
+
   const { mutate: mutateRemoveCharacteristic, isPending: isPendingRemoveCharacteristic } = useMutation({
     mutationFn: removeCharacterCharacteristic(workspace_id, character_id),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: workspaceQueryKeys.characterDetail(workspace_id, character_id) }),
   });
+
+  const onClickRemoveCharacteristic = (index: number) => () => mutateRemoveCharacteristic(index);
 
   const { onChange: onChangeCharacteristicTitle, isPending: isPendingCharacteristicTitle } = useUpdate({
     updateFn: updateCharacterCharacteristicTitle,
@@ -161,7 +167,7 @@ export function useCharacter() {
     isPendingAddKeyword, isPendingRemoveKeyword, isPendingAddCharacteristic, isPendingRemoveCharacteristic,
     isPendingCharacteristicTitle, isPendingCharacteristicContent, isPendingCoverImage,
     onChangeName, onChangeRole, onChangeGender, onChangeBirthday, onChangeDescription,
-    mutateAddKeyword, mutateRemoveKeyword, mutateAddCharacteristic, mutateRemoveCharacteristic,
+    onClickRemoveKeyword, onClickAddCharacteristic, onClickRemoveCharacteristic,
     onChangeCharacteristicTitle, onChangeCharacteristicContent, onChangeCoverImage,
     deleteCharacter: deleteCharacterMutation,};
 }
