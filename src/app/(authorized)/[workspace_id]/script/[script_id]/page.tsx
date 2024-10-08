@@ -114,7 +114,7 @@ const QuillEditor = ({ innerRef }: { innerRef: any }) => {
   );
 };
 
-export const MainContainer = styled.div`
+const MainContainer = styled.div`
   flex-grow: 1;
   position: absolute;
   height: 100%;
