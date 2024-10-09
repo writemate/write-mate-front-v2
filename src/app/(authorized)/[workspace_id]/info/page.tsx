@@ -20,7 +20,6 @@ export default function Info() {
           <Introduction/>
           <ExpectedQuantity/>
           <MainCharacter/>
-          <Keyword/>
           <MainPlot/>
         </Infos>
       </InfoContext.Provider>

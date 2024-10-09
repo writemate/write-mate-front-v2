@@ -1,5 +1,3 @@
-import { all } from "axios"
-
 export const dashboardQueryKeys = {
   all: ['dashboard'] as const,
   workStudio:() => [...dashboardQueryKeys.all, 'workStudio'] as const,
@@ -25,4 +23,9 @@ export const workspaceQueryKeys = {
   info: (id:string) => [...workspaceQueryKeys.all, 'info', id] as const,
   mainCharacter: (id:string) => [...workspaceQueryKeys.info(id), 'mainCharacter'] as const,
   mainPlot: (id:string) => [...workspaceQueryKeys.info(id), 'mainPlot'] as const,
+
+  character: (id:string) => [...workspaceQueryKeys.all, 'character', id] as const,
+  characterList: (id:string) => [...workspaceQueryKeys.character(id), 'list'] as const,
+  characterKeywordList: (id:string) => [...workspaceQueryKeys.character(id), 'keyword'] as const,
+  characterDetail: (id:string, characterId:string) => [...workspaceQueryKeys.character(id), characterId] as const,
 }

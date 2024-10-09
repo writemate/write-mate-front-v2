@@ -17,11 +17,12 @@ export const SubTitle = styled.h2`
 `;
 
 export const CoverContainer = styled.div`
-  ${FlexRowLeftStart}
+  ${FlexRowLeftStart};
   align-items: flex-end;
   gap: 36px;
   width: 100%;
   margin-top: 55px;
+  flex-wrap: wrap;
 `;
 
 export const BlurBackground = styled.div<{ $src: string|null }>`
@@ -89,6 +90,15 @@ export const CoverImage = styled.img<{ src: string }>`
   border-radius: 8px;
   border: 1px solid #FFFFFF57;
   z-index: 1;
+`;
+
+export const CoverContentsContainer = styled.div`
+  ${FlexColumnLeftStart};
+  height: 100%;
+  justify-content: flex-end;
+  min-width: 263px;
+  width: calc(100% - 263px - 36px);
+  flex-grow: 1;
 `;
 
 export const Container = styled.div`

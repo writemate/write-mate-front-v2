@@ -1,6 +1,6 @@
 'use client';
 import { useContext } from 'react';
-import { CoverContainer, Container, SubTitle, TextWithDropMenu } from "@/styles/workspace/Info.style";
+import { CoverContainer, Container, SubTitle, TextWithDropMenu, CoverContentsContainer } from "@/styles/workspace/Info.style";
 import CoverImageBox from '@/components/workspace/info/CoverImageBox';
 import { Input, TextArea } from "@/styles";
 import { InfoContext } from "@/hooks/workspace/info";
@@ -13,7 +13,7 @@ export default function Cover() {
     return (
         <CoverContainer>
             <CoverImageBox/>
-            <Container>
+            <CoverContentsContainer>
                 <SubTitle>제목</SubTitle>
                 <TextWithDropMenu>
                     <Input type="text" placeholder="작품의 제목을 적어주세요." onChange={onChangeTitle} defaultValue={title} disabled={isLoading}/>
@@ -23,7 +23,7 @@ export default function Cover() {
                 </TextWithDropMenu>
                 <SubTitle style={{marginTop:46}}>로그라인</SubTitle>
                 <TextArea placeholder="내 작품을 한 줄로 요약한 내용을 적어주세요." onChange={onChangeLogline} defaultValue={logline} disabled={isLoading}/>
-            </Container>
+            </CoverContentsContainer>
         </CoverContainer>
     );
 }
