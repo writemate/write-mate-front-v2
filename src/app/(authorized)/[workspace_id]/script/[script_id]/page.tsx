@@ -105,6 +105,7 @@ const QuillEditor = ({ innerRef }: { innerRef: any }) => {
   return (
     <EditorContainer>
       <ReactQuill
+        ref={innerRef}
         value={value}
         onChange={handleChange}
         modules={modules}

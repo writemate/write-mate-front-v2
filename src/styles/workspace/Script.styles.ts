@@ -43,21 +43,20 @@ export const Redo = styled(RedoIcon)`
   ${clickable}
   margin-right: 10px;
 `;
+
 export const EditorContainer = styled.div`
-  margin-top: 200px; /* 원하는 빈 공간 크기로 설정 */
-  width: 100% !important;
+  margin-top: 200px;
+  padding: 14.2857% 12.0635% 12.0635% 12.0635%; /* A4 비율에 맞게 padding 조정  */
+
+  width: 100%;
+  min-height: calc(100% - 200px);
+
   background: #ffffff;
-  padding: 70px;
 
   .ql-container {
-    border: none !important;
-    min-height: 1269px;
-    display: flex;
-    justify-content: center;
+    // border: none !important;
   }
 
   .ql-editor {
-    width: 100%;
-    min-height: 200px;
   }
 `;
