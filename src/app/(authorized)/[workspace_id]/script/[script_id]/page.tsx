@@ -9,8 +9,8 @@ import {
   Redo,
 } from "@/styles/workspace/Script.styles";
 import styled from "styled-components";
-
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+import React from "react";
+import ReactQuill from "react-quill";
 
 const CustomToolbar = ({ editorRef }: { editorRef: any }) => {
   const handleUndo = () => {
@@ -105,11 +105,11 @@ const QuillEditor = ({ innerRef }: { innerRef: any }) => {
   return (
     <EditorContainer>
       <ReactQuill
-        ref={innerRef}
         value={value}
         onChange={handleChange}
         modules={modules}
         placeholder="내용을 입력하세요."
+        ref={innerRef}
       ></ReactQuill>
     </EditorContainer>
   );
