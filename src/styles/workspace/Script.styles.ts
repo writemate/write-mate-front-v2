@@ -53,7 +53,7 @@ export const EditorContainer = styled.div`
   background: #ffffff;
 
   .ql-container {
-    // border: none !important;
+    border: none !important;
   }
 
   .ql-editor {

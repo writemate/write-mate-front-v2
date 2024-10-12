@@ -1,6 +1,6 @@
 "use client";
 import ReactQuill from "react-quill";
-import { useState, useRef, use, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import "react-quill/dist/quill.snow.css";
 import {
   ToolbarContainer,
@@ -119,7 +119,7 @@ const QuillEditor = ({
 
     if (range) {
       const index = range.index;
-      const delta = editor?.getContents().ops as DeltaOperation[]; // DeltaOperation[]으로 명시적 타입 지정
+      const delta = editor.getContents().ops as DeltaOperation[]; // DeltaOperation[]으로 명시적 타입 지정
       let content = "";
 
       // 전체 Delta를 문자열로 변환 (삽입된 내용만 추출)
@@ -143,45 +143,50 @@ const QuillEditor = ({
 
   useEffect(() => {
     if (innerRef.current) {
-      const quill = innerRef.current.getEditor();
       const container = MainRef.current;
+      const quill = innerRef.current.getEditor();
       const editor = innerRef.current.getEditor().root;
 
-      // Listen for text change events
       quill.on("text-change", () => {
-        //현재 입력 위치: 원고 영역 전체 길이 / 원고 줄 수 * 현재 줄수
         const onelineheight = () => {
           const pElement = editor.querySelector(".ql-editor p");
           if (pElement) {
             const computedStyle = window.getComputedStyle(pElement);
-            return parseInt(computedStyle.height);
+            return parseFloat(computedStyle.height);
           }
           return 0;
         };
         const editorContainerPaddingTop = () => {
           if (containerRef.current) {
-            return parseInt(
+            return parseFloat(
               window.getComputedStyle(containerRef.current).paddingTop
             );
           }
           return 0;
         };
         const currentLine =
-          200 +
+          parseFloat("200") +
           editorContainerPaddingTop() +
-          12 +
-          onelineheight() * (getCursorLineNumber() + 1);
+          parseFloat("12") +
+          onelineheight() * getCursorLineNumber();
 
         const shouldScroll =
-          currentLine - container.scrollTop > container.clientHeight - 50;
+          currentLine - parseFloat(container.scrollTop) >
+          parseFloat(container.clientHeight) - onelineheight() * 3;
 
-        console.log(shouldScroll);
+        console.log(
+          shouldScroll,
+          currentLine,
+          container.scrollTop,
+          container.clientHeight,
+          onelineheight()
+        );
 
         if (shouldScroll) {
           // Scroll the MainContainer smoothly to the bottom
           container.scrollTo({
-            top: container.scrollHeight + 200,
-            behavior: "smooth",
+            top: currentLine - container.clientHeight + onelineheight() * 3,
+            behavior: "auto",
           });
         }
       });
