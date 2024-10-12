@@ -10,6 +10,12 @@ import {
   Redo,
 } from "@/styles/workspace/Script.styles";
 
+interface DeltaOperation {
+  insert?: string | Record<string, any>; // insert는 문자열 또는 객체일 수 있음
+  delete?: number;
+  retain?: number;
+}
+
 const CustomToolbar = ({ editorRef }: { editorRef: any }) => {
   const handleUndo = () => {
     if (editorRef.current) {
@@ -82,7 +88,14 @@ const CustomToolbar = ({ editorRef }: { editorRef: any }) => {
   );
 };
 
-const QuillEditor = ({ innerRef }: { innerRef: any }) => {
+const QuillEditor = ({
+  innerRef,
+  MainRef,
+}: {
+  innerRef: any;
+  MainRef: any;
+}) => {
+  const containerRef = useRef(null); // EditorContainer ref
   const [value, setValue] = useState("");
 
   const handleChange = (content: string) => {
@@ -99,16 +112,84 @@ const QuillEditor = ({ innerRef }: { innerRef: any }) => {
       userOnly: true,
     },
   };
+
+  const getCursorLineNumber = () => {
+    const editor = innerRef.current.getEditor(); // Quill 인스턴스에 접근
+    const range = editor.getSelection(); // 현재 선택 범위 또는 커서 위치 가져오기
+
+    if (range) {
+      const index = range.index;
+      const delta = editor?.getContents().ops as DeltaOperation[]; // DeltaOperation[]으로 명시적 타입 지정
+      let content = "";
+
+      // 전체 Delta를 문자열로 변환 (삽입된 내용만 추출)
+      delta.forEach((op: DeltaOperation) => {
+        if (op.insert && typeof op.insert === "string") {
+          content += op.insert;
+        }
+      });
+
+      // 커서 위치까지의 텍스트를 자르고, 줄바꿈(\n)의 개수를 카운트
+      const textBeforeCursor = content.slice(0, index);
+      const lineNumber = textBeforeCursor.split("\n").length;
+
+      console.log(`Current line number: ${lineNumber}`);
+      return lineNumber;
+    } else {
+      console.log("Cursor is not in the editor.");
+      return 0;
+    }
+  };
+
   useEffect(() => {
-    // 구현 기능 : Docs처럼 화면에 표시되는 부분을 넘어서는 입력을 받아들었을때,
-    // 즉, 현재 보이는 부분의 가장 아래에서 엔터를 눌렀을 때, 화면의 스크롤을 가장 아래로 부드럽게 내림.
     if (innerRef.current) {
       const quill = innerRef.current.getEditor();
+      const container = MainRef.current;
+      const editor = innerRef.current.getEditor().root;
+
+      // Listen for text change events
+      quill.on("text-change", () => {
+        //현재 입력 위치: 원고 영역 전체 길이 / 원고 줄 수 * 현재 줄수
+        const onelineheight = () => {
+          const pElement = editor.querySelector(".ql-editor p");
+          if (pElement) {
+            const computedStyle = window.getComputedStyle(pElement);
+            return parseInt(computedStyle.height);
+          }
+          return 0;
+        };
+        const editorContainerPaddingTop = () => {
+          if (containerRef.current) {
+            return parseInt(
+              window.getComputedStyle(containerRef.current).paddingTop
+            );
+          }
+          return 0;
+        };
+        const currentLine =
+          200 +
+          editorContainerPaddingTop() +
+          12 +
+          onelineheight() * (getCursorLineNumber() + 1);
+
+        const shouldScroll =
+          currentLine - container.scrollTop > container.clientHeight - 50;
+
+        console.log(shouldScroll);
+
+        if (shouldScroll) {
+          // Scroll the MainContainer smoothly to the bottom
+          container.scrollTo({
+            top: container.scrollHeight + 200,
+            behavior: "smooth",
+          });
+        }
+      });
     }
   }, []);
 
   return (
-    <EditorContainer>
+    <EditorContainer ref={containerRef}>
       <ReactQuill
         value={value}
         onChange={handleChange}
@@ -127,12 +208,13 @@ export default function Script({
 }) {
   console.log(workspace_id);
   const editorRef = useRef(null);
+  const mainRef = useRef(null);
 
   return (
     <>
       <CustomToolbar editorRef={editorRef} />
-      <MainContainer>
-        <QuillEditor innerRef={editorRef} />
+      <MainContainer ref={mainRef}>
+        <QuillEditor innerRef={editorRef} MainRef={mainRef} />
       </MainContainer>
     </>
   );
