@@ -46,11 +46,10 @@ export const Redo = styled(RedoIcon)`
 
 export const EditorContainer = styled.div`
   margin-top: 200px;
-  padding: 14.2857% 12.0635% 12.0635% 12.0635%; /* A4 비율에 맞게 padding 조정  */
-
+  padding: calc(14.2857% - 12px) calc(12.0635% - 15px) calc(12.0635% - 12px)
+    calc(12.0635% - 15px); /* A4 비율에 맞게 padding 조정  */
   width: 100%;
   min-height: calc(100% - 200px);
-
   background: #ffffff;
 
   .ql-container {
@@ -59,4 +58,13 @@ export const EditorContainer = styled.div`
 
   .ql-editor {
   }
+`;
+
+export const MainContainer = styled.div`
+  flex-grow: 1;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  padding: 0 max(28px, calc((100% - 1012px) / 2));
+  overflow-y: auto;
 `;

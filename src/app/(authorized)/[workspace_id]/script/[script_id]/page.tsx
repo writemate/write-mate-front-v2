@@ -1,29 +1,27 @@
 "use client";
-import dynamic from "next/dynamic";
-import { useState, useRef } from "react";
+import ReactQuill from "react-quill";
+import { useState, useRef, use, useEffect } from "react";
 import "react-quill/dist/quill.snow.css";
 import {
   ToolbarContainer,
   EditorContainer,
+  MainContainer,
   Undo,
   Redo,
 } from "@/styles/workspace/Script.styles";
-import styled from "styled-components";
-import React from "react";
-import ReactQuill from "react-quill";
 
 const CustomToolbar = ({ editorRef }: { editorRef: any }) => {
   const handleUndo = () => {
     if (editorRef.current) {
       const editor = editorRef.current.getEditor();
-      editor.history.undo(); // Undo 동작
+      editor.history.undo();
     }
   };
 
   const handleRedo = () => {
     if (editorRef.current) {
       const editor = editorRef.current.getEditor();
-      editor.history.redo(); // Redo 동작
+      editor.history.redo();
     }
   };
 
@@ -96,11 +94,18 @@ const QuillEditor = ({ innerRef }: { innerRef: any }) => {
       container: "#toolbar",
     },
     history: {
-      delay: 2000, // 2초마다 저장
-      maxStack: 500, // 최대 500개까지 히스토리 저장
-      userOnly: true, // 사용자가 변경한 내용만 저장
+      delay: 2000,
+      maxStack: 500,
+      userOnly: true,
     },
   };
+  useEffect(() => {
+    // 구현 기능 : Docs처럼 화면에 표시되는 부분을 넘어서는 입력을 받아들었을때,
+    // 즉, 현재 보이는 부분의 가장 아래에서 엔터를 눌렀을 때, 화면의 스크롤을 가장 아래로 부드럽게 내림.
+    if (innerRef.current) {
+      const quill = innerRef.current.getEditor();
+    }
+  }, []);
 
   return (
     <EditorContainer>
@@ -115,23 +120,13 @@ const QuillEditor = ({ innerRef }: { innerRef: any }) => {
   );
 };
 
-const MainContainer = styled.div`
-  flex-grow: 1;
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  //최대 너비가 1012px이면서 최소 패딩이 28px이도록
-  padding: 0 max(28px, calc((100% - 1012px) / 2));
-  overflow-y: auto;
-`;
-
 export default function Script({
   params: { workspace_id },
 }: {
   params: { workspace_id: string };
 }) {
   console.log(workspace_id);
-  const editorRef = useRef(null); // Quill 에디터를 참조할 ref
+  const editorRef = useRef(null);
 
   return (
     <>
