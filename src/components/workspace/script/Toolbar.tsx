@@ -29,9 +29,9 @@ export default function CustomToolbar({ editorRef }: { editorRef: any }) {
 
       {/* 헤더 크기 */}
       <span className="ql-formats">
-        <select className="ql-size">
+        <select className="ql-size" defaultValue={"16px"}>
           {fontSize.map((val) => (
-            <option value={val} selected={val === "16px"}>
+            <option key={val} value={val}>
               {val.replace(/[^0-9]/g, "")}
             </option>
           ))}
