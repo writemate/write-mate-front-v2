@@ -8,7 +8,7 @@ import { getCharacter, updateCharacterName, updateCharacterRole, updateCharacter
 } from "@/utils/APIs/workspace";
 import { debounce } from "@/utils";
 import { useParams, useRouter } from "next/navigation";
-import { createContext } from "react";
+import { createContext, useState, useEffect } from "react";
 import { TCharacter } from "@/utils/APIs/types";
 
 function useUpdate<T,U>({updateFn, onMutate, onChange}:{
@@ -111,6 +111,14 @@ export function useCharacter() {
 
   const onClickRemoveKeyword = (id: string) => mutateRemoveKeyword(id);
 
+  const [ characteristicList, setCharacteristicList ] = useState<TCharacter["characteristic"]>([]);
+
+  useEffect(() => {
+    if(data) {
+      setCharacteristicList(data.characteristic);
+    }
+  }, [data]);
+
   const { mutate: mutateAddCharacteristic, isPending: isPendingAddCharacteristic } = useMutation({
     mutationFn: addCharacterCharacteristic(workspace_id, character_id),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: workspaceQueryKeys.characterDetail(workspace_id, character_id) }),
@@ -125,27 +133,27 @@ export function useCharacter() {
 
   const onClickRemoveCharacteristic = (index: number) => () => mutateRemoveCharacteristic(index);
 
-  const { onChange: onChangeCharacteristicTitle, isPending: isPendingCharacteristicTitle } = useUpdate({
-    updateFn: updateCharacterCharacteristicTitle,
-    onMutate: ({ index, title }) => {
-      queryClient.setQueryData(workspaceQueryKeys.characterDetail(workspace_id, character_id), (prev: TCharacter) => ({
-        ...prev,
-        characteristic: prev.characteristic.map((c, i) => i === index ? { ...c, title } : c),
-      }));
-    },
-    onChange: (debouncedMutate) =>(index:number)=>(e: React.ChangeEvent<HTMLInputElement>) => debouncedMutate({index, title: e.target.value}),
+  const { mutate: characteristicTitleMutation, isPending: isPendingCharacteristicTitle } = useMutation({
+    mutationFn: updateCharacterCharacteristicTitle(workspace_id, character_id),
   });
 
-  const { onChange: onChangeCharacteristicContent, isPending: isPendingCharacteristicContent } = useUpdate({
-    updateFn: updateCharacterCharacteristicContent,
-    onMutate: ({ index, content }) => {
-      queryClient.setQueryData(workspaceQueryKeys.characterDetail(workspace_id, character_id), (prev: TCharacter) => ({
-        ...prev,
-        characteristic: prev.characteristic.map((c, i) => i === index ? { ...c, content } : c),
-      }));
-    },
-    onChange: (debouncedMutate) => (index:number)=>(e: React.ChangeEvent<HTMLInputElement>) => debouncedMutate({index, content: e.target.value}),
+  const debounceCharacteristicTitle = debounce(characteristicTitleMutation, 500);
+
+  const onChangeCharacteristicTitle = (index:number)=>(e: React.ChangeEvent<HTMLInputElement>) => {
+    setCharacteristicList((prev) => prev.map((c, i) => i === index ? { ...c, title: e.target.value } : c));
+    debounceCharacteristicTitle({index, title: e.target.value});
+  }
+
+  const { mutate: characteristicContentMutation, isPending: isPendingCharacteristicContent } = useMutation({
+    mutationFn: updateCharacterCharacteristicContent(workspace_id, character_id),
   });
+
+  const debounceCharacteristicContent = debounce(characteristicContentMutation, 500);
+
+  const onChangeCharacteristicContent = (index:number)=>(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setCharacteristicList((prev) => prev.map((c, i) => i === index ? { ...c, content: e.target.value } : c));
+    debounceCharacteristicContent({index, content: e.target.value});
+  }
   
   const { mutate: mutateCoverImage, isPending: isPendingCoverImage } = useMutation({
     mutationFn: updateCharacterCoverImage(workspace_id, character_id),
@@ -165,7 +173,7 @@ export function useCharacter() {
 
   return { data, error, isLoading, isPendingName, isPendingRole, isPendingGender, isPendingBirthday, isPendingDescription,
     isPendingAddKeyword, isPendingRemoveKeyword, isPendingAddCharacteristic, isPendingRemoveCharacteristic,
-    isPendingCharacteristicTitle, isPendingCharacteristicContent, isPendingCoverImage,
+    isPendingCharacteristicTitle, isPendingCharacteristicContent, isPendingCoverImage, characteristicList,
     onChangeName, onChangeRole, onChangeGender, onChangeBirthday, onChangeDescription,
     onClickRemoveKeyword, onClickAddCharacteristic, onClickRemoveCharacteristic,
     onChangeCharacteristicTitle, onChangeCharacteristicContent, onChangeCoverImage,

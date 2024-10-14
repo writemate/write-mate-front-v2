@@ -203,3 +203,57 @@ export const MiniModal = styled.div<{$left: number }>`
     border: none;
   }
 `;
+
+export const CharacteristicListContainer = styled.div`
+  ${FlexColumnLeftStart};
+  width: 100%;
+  gap: 12px;
+`;
+
+
+export const CharacteristicContainer = styled.div`
+  ${FlexRowLeftStart};
+  width: 100%;
+  flex-wrap: wrap;
+  padding: 26px 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.10);
+  gap: 6px;
+`
+export const CharacteristicTitle = styled.input`
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%;
+`
+export const CharacteristicContent = styled.textarea`
+  width: 100%;
+  border: none;
+  outline: none;
+  resize: none;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%;
+`
+
+export const CharacteristicAdd = styled.button`
+  display: flex;
+  padding: 10px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 0 auto;
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 350;
+  line-height: 21px; /* 150% */
+  letter-spacing: -0.16px;
+  color: ${({ theme }) => theme.color.orange400};
+`
