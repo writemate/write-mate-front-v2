@@ -34,7 +34,6 @@ export type TWorkInfo = {
   expectedQuantity: number;
   grade: null | "전체 이용가" | "12세 이용가" | "15세 이용가" | "19세 이용가";
   introduction: string;
-  keyword: string[];
 };
 
 /**

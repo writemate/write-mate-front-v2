@@ -4,7 +4,8 @@ import { getCharacter, updateCharacterName, updateCharacterRole, updateCharacter
   updateCharacterBirthday, addCharacterKeyword, removeCharacterKeyword,
   updateCharacterCoverImage, addCharacterCharacteristic, updateCharacterCharacteristicTitle,
   removeCharacterCharacteristic, updateCharacterCharacteristicContent,
-  updateCharacterDescription, deleteCharacter
+  updateCharacterDescription, deleteCharacter,
+  getCharacterKeywordList
 } from "@/utils/APIs/workspace";
 import { debounce } from "@/utils";
 import { useParams, useRouter } from "next/navigation";
@@ -34,6 +35,11 @@ export function useCharacter() {
   const { data, error, isLoading } = useQuery({
     queryKey: workspaceQueryKeys.characterDetail(workspace_id, character_id),
     queryFn: getCharacter(workspace_id, character_id),
+  });
+
+  const { data: keywordList, isLoading: isKeywordsLoading } = useQuery({
+    queryKey: workspaceQueryKeys.characterKeywordList(workspace_id),
+    queryFn: getCharacterKeywordList(workspace_id),
   });
 
   const { onChange: onChangeName, isPending: isPendingName } = useUpdate({
@@ -109,7 +115,7 @@ export function useCharacter() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: workspaceQueryKeys.characterDetail(workspace_id, character_id) }),
   });
 
-  const onClickRemoveKeyword = (id: string) => mutateRemoveKeyword(id);
+  const onClickRemoveKeyword = (id: string) => () => mutateRemoveKeyword(id);
 
   const [ characteristicList, setCharacteristicList ] = useState<TCharacter["characteristic"]>([]);
 
@@ -174,6 +180,7 @@ export function useCharacter() {
   return { data, error, isLoading, isPendingName, isPendingRole, isPendingGender, isPendingBirthday, isPendingDescription,
     isPendingAddKeyword, isPendingRemoveKeyword, isPendingAddCharacteristic, isPendingRemoveCharacteristic,
     isPendingCharacteristicTitle, isPendingCharacteristicContent, isPendingCoverImage, characteristicList,
+    keywordList, isKeywordsLoading,
     onChangeName, onChangeRole, onChangeGender, onChangeBirthday, onChangeDescription,
     onClickRemoveKeyword, onClickAddCharacteristic, onClickRemoveCharacteristic,
     onChangeCharacteristicTitle, onChangeCharacteristicContent, onChangeCoverImage,

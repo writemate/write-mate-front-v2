@@ -149,7 +149,6 @@ const mockInfo: TWorkInfo = {
   expectedQuantity: -1,
   grade: null,
   introduction: "",
-  keyword: [],
 }
 
 export const getInfoMock = (workId: string) => async () => {
@@ -168,14 +167,6 @@ export const updateLoglineMock = generateUpdateInfoMock("logline");
 export const updateExpectedQuantityMock = generateUpdateInfoMock("expectedQuantity");
 export const updateGradeMock = generateUpdateInfoMock("grade");
 export const updateIntroductionMock = generateUpdateInfoMock("introduction");
-export const addKeywordMock = (workId: string) => async (keyword: string) => {
-  if(mockInfo.keyword.includes(keyword)) return;
-  mockInfo.keyword.push(keyword);
-}
-
-export const removeKeywordMock = (workId: string) => async (keyword: string) => {
-  mockInfo.keyword = mockInfo.keyword.filter((k) => k !== keyword);
-}
 export const updateCoverImageMock = (workId: string) => async (file: File) => {
   await new Promise((resolve) => {
     const reader = new FileReader();
@@ -308,6 +299,12 @@ export const createCharacterMock = (workspace_id:string) => async () => {
     keyword: [],
     relatedEvent: []
   });
+}
+
+export const deleteCharacterKeywordMock = (workspace_id:string) => async (keyword_id:string) => {
+  const index = mockKeywordList.findIndex((k) => k._id === keyword_id);
+  if(index === -1) return;
+  mockKeywordList.splice(index, 1);
 }
 
 export const deleteCharacterMock = (workspace_id:string,character_id:string) => async () => {

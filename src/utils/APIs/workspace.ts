@@ -1,7 +1,7 @@
 import axiosInstance from "./axiosInstance";
 import { getChapterListMock, getPlotFolderListMock, updatePlotFolderMock,
-  getInfoMock, removeKeywordMock, updateCoverImageMock, updateTitleMock,
-  updateGenreMock, updateLoglineMock, updateExpectedQuantityMock, updateIntroductionMock, addKeywordMock,
+  getInfoMock, updateCoverImageMock, updateTitleMock,
+  updateGenreMock, updateLoglineMock, updateExpectedQuantityMock, updateIntroductionMock,
   updateGradeMock, createPlotMock, getScriptFolderListMock, updateScriptFolderMock, createScriptMock,
   getCharacterListMock, getCharacterKeywordListMock, createCharacterKeywordMock, createCharacterMock,
   updateCharacterNameMock, updateCharacterRoleMock, updateCharacterGenderMock,
@@ -9,7 +9,8 @@ import { getChapterListMock, getPlotFolderListMock, updatePlotFolderMock,
   addCharacterCharacteristicMock, updateCharacterCharacteristicTitleMock,
   updateCharacterCharacteristicContentMock, removeCharacterCharacteristicMock,
   setMainCharacterMock, removeMainCharacterMock, updateCharacterCoverImageMock,
-  getCharacterMock, updateCharacterDescriptionMock, deleteCharacterMock
+  getCharacterMock, updateCharacterDescriptionMock, deleteCharacterMock,
+  deleteCharacterKeywordMock,
  } from "./mock/workspace";
 import { TWork } from "./types";
 
@@ -35,8 +36,6 @@ export const updateGrade = updateGradeMock;
 export const updateLogline = updateLoglineMock;
 export const updateExpectedQuantity = updateExpectedQuantityMock;
 export const updateIntroduction = updateIntroductionMock;
-export const addKeyword = addKeywordMock;
-export const removeKeyword = removeKeywordMock;
 
 export const getCharacterList = getCharacterListMock;
 export const getCharacterKeywordList = getCharacterKeywordListMock;
@@ -51,6 +50,7 @@ export const updateCharacterRole = updateCharacterRoleMock;
 export const updateCharacterGender = updateCharacterGenderMock;
 export const updateCharacterBirthday = updateCharacterBirthdayMock;
 export const updateCharacterDescription = updateCharacterDescriptionMock;
+export const deleteCharacterKeyword = deleteCharacterKeywordMock;
 export const addCharacterKeyword = addCharacterKeywordMock;
 export const removeCharacterKeyword = removeCharacterKeywordMock;
 export const updateCharacterCoverImage = updateCharacterCoverImageMock;

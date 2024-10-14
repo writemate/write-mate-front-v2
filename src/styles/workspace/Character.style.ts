@@ -242,6 +242,7 @@ export const CharacteristicContent = styled.textarea`
 `
 
 export const CharacteristicAdd = styled.button`
+  ${clickable};
   display: flex;
   padding: 10px;
   flex-direction: column;
