@@ -3,12 +3,14 @@ import ReactQuill from "react-quill";
 import { useState, useRef, useEffect } from "react";
 import { EditorContainer } from "@/styles/workspace/Script.styles";
 import "react-quill/dist/quill.snow.css";
+import { fontSize } from "./Toolbar";
 
 interface DeltaOperation {
   insert?: string | Record<string, any>; // insert는 문자열 또는 객체일 수 있음
   delete?: number;
   retain?: number;
 }
+
 export default function QuillEditor({
   innerRef,
   MainRef,
@@ -18,10 +20,15 @@ export default function QuillEditor({
 }) {
   const containerRef = useRef(null); // EditorContainer ref
   const [value, setValue] = useState("");
-
   const handleChange = (content: string) => {
     setValue(content);
   };
+
+  const fontSizeStyle = ReactQuill.Quill.import(
+    "attributors/style/size"
+  ) as any;
+  fontSizeStyle.whitelist = fontSize;
+  ReactQuill.Quill.register(fontSizeStyle, true);
 
   const modules = {
     toolbar: {

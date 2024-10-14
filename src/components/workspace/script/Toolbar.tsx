@@ -2,6 +2,7 @@
 import { ToolbarContainer, Undo, Redo } from "@/styles/workspace/Script.styles";
 import "react-quill/dist/quill.snow.css";
 
+export const fontSize = ["14px", "16px", "18px", "24px", "28px", "32px"];
 export default function CustomToolbar({ editorRef }: { editorRef: any }) {
   const handleUndo = () => {
     if (editorRef.current) {
@@ -16,7 +17,6 @@ export default function CustomToolbar({ editorRef }: { editorRef: any }) {
       editor.history.redo();
     }
   };
-
   return (
     <ToolbarContainer id="toolbar">
       {/* 되돌리기, 다시하기 */}
@@ -26,14 +26,18 @@ export default function CustomToolbar({ editorRef }: { editorRef: any }) {
 
       {/* 폰트 */}
       <select className="ql-font"></select>
+
       {/* 헤더 크기 */}
-      <select className="ql-header">
-        <option value="1">제목 1</option>
-        <option value="2">제목 2</option>
-        <option value="3">제목 3</option>
-        <option value="">본문</option>
-        <option value="5">옵션</option>
-      </select>
+      <span className="ql-formats">
+        <select className="ql-size">
+          {fontSize.map((val) => (
+            <option value={val} selected={val === "16px"}>
+              {val.replace(/[^0-9]/g, "")}
+            </option>
+          ))}
+        </select>
+      </span>
+
       <div className="ql-line"> </div>
 
       {/* 글꼴 스타일 */}
