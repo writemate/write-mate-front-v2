@@ -37,25 +37,29 @@ export const updateLogline = updateLoglineMock;
 export const updateExpectedQuantity = updateExpectedQuantityMock;
 export const updateIntroduction = updateIntroductionMock;
 
+//캐릭터 리스트 페이지에서 쓰임
 export const getCharacterList = getCharacterListMock;
-export const getCharacterKeywordList = getCharacterKeywordListMock;
-export const createCharacterKeyword = createCharacterKeywordMock;
 export const createCharacter = createCharacterMock;
 export const setMainCharacter = setMainCharacterMock;
-export const removeMainCharacter = removeMainCharacterMock;
+export const removeMainCharacter = removeMainCharacterMock; //unsetMainCharacter라고 이름 바꿔야할듯
 
+export const getCharacterKeywordList = getCharacterKeywordListMock;
+export const createCharacterKeyword = createCharacterKeywordMock;
+export const deleteCharacterKeyword = deleteCharacterKeywordMock;
+export const addCharacterKeyword = addCharacterKeywordMock;
+export const removeCharacterKeyword = removeCharacterKeywordMock;
+
+//캐릭터 상세 페이지에서 쓰임
 export const getCharacter = getCharacterMock;
+export const deleteCharacter = deleteCharacterMock;
 export const updateCharacterName = updateCharacterNameMock;
 export const updateCharacterRole = updateCharacterRoleMock;
 export const updateCharacterGender = updateCharacterGenderMock;
 export const updateCharacterBirthday = updateCharacterBirthdayMock;
 export const updateCharacterDescription = updateCharacterDescriptionMock;
-export const deleteCharacterKeyword = deleteCharacterKeywordMock;
-export const addCharacterKeyword = addCharacterKeywordMock;
-export const removeCharacterKeyword = removeCharacterKeywordMock;
 export const updateCharacterCoverImage = updateCharacterCoverImageMock;
+
 export const addCharacterCharacteristic = addCharacterCharacteristicMock;
 export const updateCharacterCharacteristicTitle = updateCharacterCharacteristicTitleMock;
 export const updateCharacterCharacteristicContent = updateCharacterCharacteristicContentMock;
 export const removeCharacterCharacteristic = removeCharacterCharacteristicMock;
-export const deleteCharacter = deleteCharacterMock;
