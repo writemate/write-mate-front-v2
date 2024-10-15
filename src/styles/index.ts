@@ -187,3 +187,19 @@ export const DropDownOption = styled.div`
     border-bottom: 1px solid ${({ theme }) => theme.color.gray100};
   }
 `;
+
+export const ModalContainer = styled.div`
+  ${FlexRowCenter};
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 28px;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  &>* {
+    width: 100%;
+    height: 100%;
+  }
+`;

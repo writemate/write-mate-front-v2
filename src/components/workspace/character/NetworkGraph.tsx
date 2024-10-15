@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import { TRelation, TWorkCharacter } from '@/utils/APIs/types';
 import { useQueryClient } from '@tanstack/react-query';
+import Modal from '@/components/Modal';
+import EditRelation from '@/components/workspace/character/EditRelation';
 
 export type Node = {
   id: string;
@@ -179,12 +181,12 @@ const NetworkGraph: React.FC<Props> = ({ relations }) => {
         (relation) => (relation.end_ch == sourceId && relation.start_ch == targetId) || (relation.end_ch == targetId && relation.start_ch == sourceId)
       );
 
-      setClickedCharacter1(
-        (queryClient.getQueryData(['getCharactersInWorkSpace']) as any).find((character: TWorkCharacter) => character._id == relation?.start_ch)
-      );
-      setClickedCharacter2(
-        (queryClient.getQueryData(['getCharactersInWorkSpace']) as any).find((character: TWorkCharacter) => character._id == relation?.end_ch)
-      );
+      // setClickedCharacter1(
+      //   (queryClient.getQueryData(['getCharactersInWorkSpace']) as any).find((character: TWorkCharacter) => character._id == relation?.start_ch)
+      // );
+      // setClickedCharacter2(
+      //   (queryClient.getQueryData(['getCharactersInWorkSpace']) as any).find((character: TWorkCharacter) => character._id == relation?.end_ch)
+      // );
 
       return relation;
     };
@@ -539,18 +541,18 @@ const NetworkGraph: React.FC<Props> = ({ relations }) => {
       <svg ref={ref} className={isLoading ? 'invisible' : ''}>
         <rect width="100%" height="100%" fill="#EFF1F7" className={isLoading ? 'invisible' : ''}></rect>
       </svg>
-      {/* {modalOpen && (
-        <Modal setIsOpen={setModalOpen}>
-          <RelationPage
-            workId={workId!}
+      {modalOpen && (
+        <Modal setIsOpen={setModalOpen} maxWidth={972} maxHeight={560}>
+          <EditRelation
+            workId={""}
             isNewMode={false}
             setModalOpen={setModalOpen}
             character1={clickedCharacter1}
             character2={clickedCharacter2}
             relation={relation}
-          ></RelationPage>
+          ></EditRelation>
         </Modal>
-      )} */}
+      )}
     </div>
   );
 };
