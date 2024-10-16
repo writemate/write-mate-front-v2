@@ -38,6 +38,33 @@ export type TWorkInfo = {
 };
 
 /**
+ * 키워드 타입
+ */
+export type TKeyword = {
+  _id: string;
+  keyword_name: string;
+  darkColor: string;
+  lightColor: string;
+};
+
+/**
+ * 인물 타입
+ */
+export type TCharacter = {
+  _id: string;
+  ch_name: string;
+  ch_image: string;
+  description: string;
+  isMain: boolean;
+  role: string;
+  birthday: string;
+  gender: string;
+  characteristic: Array<{title: string, content: string}>;
+  keyword: string[];
+  relatedEvent: string[];
+};
+
+/**
  * 플롯 타입
  */
 export type TPlot = {
