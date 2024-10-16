@@ -11,6 +11,15 @@ import {
 import RedoIcon from "@/assets/workspace/script/redo.svg";
 import UndoIcon from "@/assets/workspace/script/undo.svg";
 
+export const TextCountContainer = styled.div`
+  position: absolute;
+  font-size: 14px;
+  color: #a0a0a0;
+  margin-left: 10px;
+  bottom: 10px;
+  right: 10px;
+`;
+
 export const ToolbarContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
