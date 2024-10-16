@@ -35,7 +35,7 @@ export default function WorkspaceLayout({
     data: work,
   } = useQuery({
     queryKey: workspaceQueryKeys.workName(workspace_id),
-    queryFn: () => getWork(workspace_id),
+    queryFn: getWork(workspace_id),
     staleTime: 0,
   });
 
