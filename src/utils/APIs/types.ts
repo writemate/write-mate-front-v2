@@ -213,10 +213,6 @@ export type TRelation = {
   arrow_text_left: string;
   start_ch: string;
   end_ch: string;
-  start_ch_image: string;
-  end_ch_image: string;
-  start_ch_name: string;
-  end_ch_name: string;
 };
 
 /* 스냅샷 관련 타입 */

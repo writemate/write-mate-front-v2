@@ -1,9 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
-import { TRelation, TWorkCharacter } from '@/utils/APIs/types';
-import { useQueryClient } from '@tanstack/react-query';
+import { TCharacter, TRelation, TWorkCharacter } from '@/utils/APIs/types';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import Modal from '@/components/Modal';
 import EditRelation from '@/components/workspace/character/EditRelation';
+import { useParams } from 'next/navigation';
+import { workspaceQueryKeys } from '@/utils/APIs/queryKeys';
+import { getCharacterList, getCharacterRelation } from '@/utils/APIs/workspace';
 
 export type Node = {
   id: string;
@@ -20,10 +23,6 @@ export type Link = {
   target: string;
   name?: string; // or label, or any other field name
   virtual?: boolean;
-};
-
-export type Props = {
-  relations?: TRelation[];
 };
 
 function findConnectedComponents(nodes: Node[], links: Link[]): Node[][] {
@@ -76,22 +75,14 @@ function connectDisconnectedSubgraphs(nodes: Node[], links: Link[]): Link[] {
   return [...links, ...newLinks];
 }
 
-const transformToNodesAndLinks = (data: TRelation[]): { nodes: Node[]; links: Link[] } => {
-  const nodes: Node[] = [];
+const transformToNodesAndLinks = (data: TRelation[],characterList: TCharacter[]): { nodes: Node[]; links: Link[] } => {
+  const nodeIdSet = new Set<string>();
   const links: Link[] = [];
 
   data.forEach((item) => {
     // Nodes
-    nodes.push({
-      id: item.start_ch,
-      image: item.start_ch_image,
-      name: item.start_ch_name,
-    });
-    nodes.push({
-      id: item.end_ch,
-      image: item.end_ch_image,
-      name: item.end_ch_name,
-    });
+    nodeIdSet.add(item.start_ch);
+    nodeIdSet.add(item.end_ch);
 
     // Links
     if (item.arrow_right) {
@@ -111,11 +102,18 @@ const transformToNodesAndLinks = (data: TRelation[]): { nodes: Node[]; links: Li
   });
 
   // Removing duplicate nodes based on 'id' using a Set
-  const uniqueNodes: Node[] = Array.from(new Set(nodes.map((n) => n.id))).map((id) => nodes.find((n) => n.id === id)!);
+  const nodes: Node[] = Array.from(nodeIdSet).map((id) => {
+    const character = characterList.find((character) => character._id === id);
+    return {
+      id,
+      name: character?.ch_name ?? '삭제되었거나 존재하지 않는 사용자입니다',
+      image: character?.ch_image,
+    };
+  });
 
   return {
-    nodes: uniqueNodes,
-    links: links,
+    nodes,
+    links
   };
 };
 
@@ -124,14 +122,23 @@ const radius = 50;
 const imgWidth = radius * 4; // 원의 2배 크기로 설정
 const imgHeight = radius * 4; // 원의 2배 크기로 설정
 
-const NetworkGraph: React.FC<Props> = ({ relations }) => {
+const NetworkGraph = () => {
   const ref = useRef<SVGSVGElement | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const queryClient = useQueryClient();
+  const { workspace_id } = useParams<{ workspace_id: string}>();
+  const { data: relations, error, isLoading:isLoading2 } = useQuery({
+    queryKey: workspaceQueryKeys.characterRelation(workspace_id),
+    queryFn: getCharacterRelation(workspace_id),
+  });
+  const { data: characterList } = useQuery({
+    queryKey: workspaceQueryKeys.characterList(workspace_id),
+    queryFn: getCharacterList(workspace_id),
+  });
 
-  const [clickedCharacter1, setClickedCharacter1] = useState<TWorkCharacter | undefined>(undefined);
-  const [clickedCharacter2, setClickedCharacter2] = useState<TWorkCharacter | undefined>(undefined);
+  const [clickedCharacter1, setClickedCharacter1] = useState<TCharacter | undefined>(undefined);
+  const [clickedCharacter2, setClickedCharacter2] = useState<TCharacter | undefined>(undefined);
   const [relation, setRelation] = useState<TRelation | undefined>(undefined);
 
   useEffect(() => {
@@ -155,7 +162,8 @@ const NetworkGraph: React.FC<Props> = ({ relations }) => {
 
   useEffect(() => {
     setIsLoading(true);
-    const { nodes, links } = transformToNodesAndLinks(relations!);
+    if(!relations || !characterList) return;
+    const { nodes, links } = transformToNodesAndLinks(relations, characterList);
 
     const svg = d3.select(ref.current!);
 
@@ -181,12 +189,12 @@ const NetworkGraph: React.FC<Props> = ({ relations }) => {
         (relation) => (relation.end_ch == sourceId && relation.start_ch == targetId) || (relation.end_ch == targetId && relation.start_ch == sourceId)
       );
 
-      // setClickedCharacter1(
-      //   (queryClient.getQueryData(['getCharactersInWorkSpace']) as any).find((character: TWorkCharacter) => character._id == relation?.start_ch)
-      // );
-      // setClickedCharacter2(
-      //   (queryClient.getQueryData(['getCharactersInWorkSpace']) as any).find((character: TWorkCharacter) => character._id == relation?.end_ch)
-      // );
+      setClickedCharacter1(
+        characterList.find((character) => character._id == relation?.start_ch)
+      );
+      setClickedCharacter2(
+        characterList.find((character) => character._id == relation?.end_ch)
+      );
 
       return relation;
     };

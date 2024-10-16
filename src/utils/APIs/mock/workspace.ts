@@ -1,4 +1,4 @@
-import { TCharacter, TFolder, TKeyword, TPlot, TWorkInfo } from "../types";
+import { TCharacter, TFolder, TKeyword, TPlot, TWorkInfo, TRelation } from "../types";
 import axiosInstance from "../axiosInstance";
 import { colorSystem } from "@/styles/colorSystem";
 
@@ -386,4 +386,90 @@ export const removeCharacterCharacteristicMock = (workspace_id:string, character
   const character = mockCharacterList.find((c) => c._id === character_id);
   if(!character) return;
   character.characteristic.splice(index, 1);
+}
+
+const CharacterRelationMock: TRelation[] = [
+  {
+    _id: "1",
+    arrow_right: true,
+    arrow_left: true,
+    arrow_text_right: "좋아함",
+    arrow_text_left: "싫어함",
+    start_ch: "1",
+    end_ch: "2",
+  },
+  {
+    _id: "2",
+    arrow_right: true,
+    arrow_left: true,
+    arrow_text_right: "좋아함",
+    arrow_text_left: "싫어함",
+    start_ch: "1",
+    end_ch: "3",
+  },
+  {
+    _id: "3",
+    arrow_right: true,
+    arrow_left: true,
+    arrow_text_right: "좋아함",
+    arrow_text_left: "싫어함",
+    start_ch: "1",
+    end_ch: "4",
+  },
+  {
+    _id: "4",
+    arrow_right: true,
+    arrow_left: true,
+    arrow_text_right: "좋아함",
+    arrow_text_left: "싫어함",
+    start_ch: "2",
+    end_ch: "3",
+  },
+  {
+    _id: "5",
+    arrow_right: true,
+    arrow_left: true,
+    arrow_text_right: "좋아함",
+    arrow_text_left: "싫어함",
+    start_ch: "2",
+    end_ch: "4",
+  },
+  {
+    _id: "6",
+    arrow_right: true,
+    arrow_left: true,
+    arrow_text_right: "좋아함",
+    arrow_text_left: "싫어함",
+    start_ch: "3",
+    end_ch: "4",
+  },
+];
+
+export const getCharacterRelationMock = (workspace_id:string) => async () => {
+  return JSON.parse(JSON.stringify(CharacterRelationMock)) as TRelation[];
+}
+
+export const createCharacterRelationMock = (workspace_id:string) => async ({arrow_text_right, arrow_text_left, start_ch, end_ch}:{arrow_text_right:string, arrow_text_left:string, start_ch:string, end_ch:string}) => {
+  CharacterRelationMock.push({
+    _id: Math.random().toString(36).substring(7),
+    arrow_right: true,
+    arrow_left: true,
+    arrow_text_right,
+    arrow_text_left,
+    start_ch,
+    end_ch,
+  });
+}
+
+export const deleteCharacterRelationMock = (workspace_id:string) => async (relation_id:string) => {
+  const index = CharacterRelationMock.findIndex((r) => r._id === relation_id);
+  if(index === -1) return;
+  CharacterRelationMock.splice(index, 1);
+}
+
+export const updateCharacterRelationMock = (workspace_id:string) => async ({relation_id, arrow_text_right, arrow_text_left}:{relation_id:string, arrow_text_right:string, arrow_text_left:string}) => {
+  const relation = CharacterRelationMock.find((r) => r._id === relation_id);
+  if(!relation) return;
+  relation.arrow_text_right = arrow_text_right;
+  relation.arrow_text_left = arrow_text_left;
 }
