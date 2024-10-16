@@ -14,14 +14,12 @@ import UndoIcon from "@/assets/workspace/script/undo.svg";
 export const ToolbarContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  position: absolute;
   width: 100%;
   background: #ffffff;
   border-right: none !important;
   border-left: none !important;
   border-top: none !important;
   border-bottom: 1px solid #d7dce7 !important;
-  z-index: 100;
 
   .ql-line {
     border: 0.5px solid #e8eef7 !important;
@@ -56,11 +54,10 @@ export const Redo = styled(RedoIcon)`
 `;
 
 export const EditorContainer = styled.div`
-  margin-top: 200px;
   padding: calc(14.2857% - 12px) calc(12.0635% - 15px) calc(12.0635% - 12px)
     calc(12.0635% - 15px); /* A4 비율에 맞게 padding 조정  */
   width: 100%;
-  min-height: calc(100% - 200px);
+  min-height: 100%;
   background: #ffffff;
 
   .ql-container {
@@ -82,9 +79,18 @@ export const EditorContainer = styled.div`
 
 export const MainContainer = styled.div`
   flex-grow: 1;
-  position: absolute;
   height: 100%;
   width: 100%;
-  padding: 0 max(28px, calc((100% - 1012px) / 2));
+  padding: 20px max(28px, calc((100% - 1012px) / 2)) 0;
   overflow-y: auto;
+`;
+
+export const EditorWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
 `;
