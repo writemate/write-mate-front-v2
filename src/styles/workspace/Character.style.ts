@@ -174,6 +174,13 @@ export const CreateCharacterButton = styled.button`
   }
 `;
 
+export const CreateRelationButton = styled(CreateCharacterButton)`
+  position: absolute;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+`;
+
 export const MiniModal = styled.div<{$left: number }>`
   ${FlexRowCenter};
   position: absolute;

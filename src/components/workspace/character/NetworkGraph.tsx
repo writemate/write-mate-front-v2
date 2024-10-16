@@ -7,6 +7,7 @@ import EditRelation from '@/components/workspace/character/EditRelation';
 import { useParams } from 'next/navigation';
 import { workspaceQueryKeys } from '@/utils/APIs/queryKeys';
 import { getCharacterList, getCharacterRelation } from '@/utils/APIs/workspace';
+import { CreateRelationButton } from '@/styles/workspace/Character.style';
 
 export type Node = {
   id: string;
@@ -122,10 +123,18 @@ const radius = 50;
 const imgWidth = radius * 4; // 원의 2배 크기로 설정
 const imgHeight = radius * 4; // 원의 2배 크기로 설정
 
+type Props<T extends boolean> = {
+  isNewMode: T,
+  characterList?: T extends true ? TCharacter[] : undefined,
+  character1?: T extends true ? undefined : TCharacter,
+  character2?: T extends true ? undefined : TCharacter,
+  relation?: T extends true ? undefined : TRelation,
+}
+
 const NetworkGraph = () => {
   const ref = useRef<SVGSVGElement | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [modalOpen, setModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState<null|Props<true>|Props<false>>(null);
   const queryClient = useQueryClient();
   const { workspace_id } = useParams<{ workspace_id: string}>();
   const { data: relations, error, isLoading:isLoading2 } = useQuery({
@@ -184,19 +193,16 @@ const NetworkGraph = () => {
     };
 
     // source와 target을 기반으로 relation을 찾는 함수
-    const findRelation = (sourceId: string, targetId: string, name1: string, name2: string) => {
-      const relation = relations?.find(
+    const findRelation = (sourceId: string, targetId: string) => {
+      const relation = relations!.find(
         (relation) => (relation.end_ch == sourceId && relation.start_ch == targetId) || (relation.end_ch == targetId && relation.start_ch == sourceId)
-      );
+      )!;
 
-      setClickedCharacter1(
-        characterList.find((character) => character._id == relation?.start_ch)
-      );
-      setClickedCharacter2(
-        characterList.find((character) => character._id == relation?.end_ch)
-      );
-
-      return relation;
+      return {
+        character1: characterList.find((character) => character._id == relation?.start_ch)!,
+        character2: characterList.find((character) => character._id == relation?.end_ch)!,
+        relation,
+      }
     };
 
     // 동일한 노드 쌍을 가진 모든 링크의 텍스트를 선택하는 함수
@@ -308,9 +314,10 @@ const NetworkGraph = () => {
         selectConnectedTexts(d.source.id, d.target.id).attr('stroke', null);
       })
       .on('click', (event, d: any) => {
-        setRelation(findRelation(d.source.id, d.target.id, d.target.name, d.source.name));
-
-        setModalOpen(true);
+        setModalContent({
+          isNewMode: false,
+          ...findRelation(d.source.id, d.target.id),
+        });
       });
 
     // const node = graphGroup.append('g').selectAll('circle').data(nodes).enter().append('circle').attr('r', radius).attr('fill', '#C55858');
@@ -539,8 +546,15 @@ const NetworkGraph = () => {
     };
   }, [relations]);
 
+  const onClickCreateModalOpen = () => {
+    setModalContent({
+      isNewMode: true,
+      characterList,
+    });
+  }
+
   return (
-    <div style={{width: '100%', height: '100%', marginTop: '40px', overflow: 'hidden'}}>
+    <div style={{width: '100%', height: '100%', marginTop: '40px', overflow: 'hidden', position: 'relative'}}>
       {isLoading && (
         <div className="flex h-full w-full flex-row items-center justify-center overflow-hidden transition-all">
           <div className="animate-pulse text-2xl font-bold text-[#C55858]">로딩중...</div>
@@ -549,16 +563,14 @@ const NetworkGraph = () => {
       <svg ref={ref} className={isLoading ? 'invisible' : ''}>
         <rect width="100%" height="100%" fill="#EFF1F7" className={isLoading ? 'invisible' : ''}></rect>
       </svg>
-      {modalOpen && (
-        <Modal setIsOpen={setModalOpen} maxWidth={972} maxHeight={560}>
+      <CreateRelationButton onClick={onClickCreateModalOpen}>
+        관계 추가하기
+      </CreateRelationButton>
+      {modalContent && (
+        <Modal closeModal={()=>setModalContent(null)} maxWidth={972} maxHeight={560}>
           <EditRelation
-            workId={""}
-            isNewMode={false}
-            setModalOpen={setModalOpen}
-            character1={clickedCharacter1}
-            character2={clickedCharacter2}
-            relation={relation}
-          ></EditRelation>
+            {...modalContent}
+          />
         </Modal>
       )}
     </div>
