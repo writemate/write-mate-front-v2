@@ -74,6 +74,19 @@ export default function QuillEditor({
   };
 
   useEffect(() => {
+    const handleMouseDown = (event: any) => {
+      const quillEditor = innerRef.current.getEditor().root;
+      if (quillEditor && quillEditor.contains(event.target)) {
+        // Quill 에디터 내부를 클릭한 경우, 기본 동작 유지
+        return;
+      } else {
+        // Quill 에디터 외부를 클릭한 경우, 선택 해제 방지
+        event.preventDefault();
+      }
+    };
+
+    document.addEventListener("mousedown", handleMouseDown);
+
     if (innerRef.current) {
       const container = MainRef.current;
       const quill = innerRef.current.getEditor();
@@ -123,6 +136,11 @@ export default function QuillEditor({
         }
       });
     }
+
+    // 컴포넌트 언마운트 시 이벤트 리스너 제거
+    return () => {
+      document.removeEventListener("mousedown", handleMouseDown);
+    };
   }, []);
 
   return (
