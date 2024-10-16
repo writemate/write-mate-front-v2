@@ -1,106 +1,59 @@
 import useClickAway from "@/hooks/workspace/plot/useClickAway";
-import { useEffect, useState } from "react";
+import { colorSystem } from "@/styles/colorSystem";
+import { TPlotEventCharacter } from "@/utils/APIs/types";
+import { useState } from "react";
+import styled from "styled-components";
 import Circulation from "@/assets/workspace/characterModal/circulation.svg";
 import Check from "@/assets/workspace/characterModal/check.svg";
-import { useCharacterList } from "@/hooks/workspace/character/useCharacterList";
-import {
-  AutoBtn,
-  CharacterCheckBtn,
-  CharacterDefaultBtn,
-  ModalContainer,
-  SelectBtnWrapper,
-} from "@/styles/workspace/plot/CharacterModal.styles";
-import {
-  CharacterListType,
-  mockCharacterList,
-  PlotCharacterType,
-} from "@/utils/APIs/mock/plot";
-import useModalCharacter from "@/hooks/workspace/plot/useModalCharacter";
 
 interface CharacterModalProps {
-  eventId: string;
   onClose: () => void;
-  character: PlotCharacterType[];
+  character: TPlotEventCharacter[];
 }
 
 export default function CharacterModal({
-  eventId,
   onClose,
   character,
 }: CharacterModalProps) {
   const ref = useClickAway(() => {
     onClose();
   });
-
-  const [selectCharacters, setSelectCharacters] =
-    useState<PlotCharacterType[]>(character);
-
-  const { addCharacterMutate, deleteCharacterMutate } =
-    useModalCharacter(eventId);
-
-  // 전체 캐릭터 리스트 가져오기
-  //const { characterList } = useCharacterList();
-  const characterList = mockCharacterList;
-
-  const [remainingCharacters, setRemainingCharacters] =
-    useState<CharacterListType[]>(characterList);
-
-  useEffect(() => {
-    // selectCharacters가 변경될 때마다 업데이트
-    setRemainingCharacters(
-      characterList.filter(
-        (character) =>
-          !selectCharacters.some((selected) => selected.id === character.id)
-      )
-    );
-  }, [selectCharacters, characterList]);
+  const [characters, setCharacter] = useState(character);
 
   // 자동연동
   const handleAutoChatacter = () => {};
 
+  // 전체 캐릭터 리스트 가져오기
+
+  // 토스트알림
+
   // 캐릭터 선택
-  const handleAddCharacter = (character: CharacterListType) => {
-    // 타입 다르니까 맞춰서 넣어주기..
-    const newCharacter: PlotCharacterType = {
-      id: character.id,
-      ch_image: character.ch_image,
-      ch_name: character.ch_name,
-    };
-    setSelectCharacters((prev) => [...prev, newCharacter]);
-    addCharacterMutate.mutate(character.id);
-  };
+  const handleAddCharacter = () => {};
 
   // 캐릭터 선택 취소
-  const handleDeleteCharacter = (character: PlotCharacterType) => {
-    setSelectCharacters((prev) => prev.filter((ch) => ch.id !== character.id));
-    deleteCharacterMutate.mutate(character.id);
-  };
+  const handleDeleteCharacter = () => {};
 
   return (
     <ModalContainer ref={ref}>
-      <SelectBtnWrapper>
+      <div>
         <AutoBtn onClick={handleAutoChatacter}>
           <Circulation style={{ marginRight: "6px" }} />
           자동 연동
         </AutoBtn>
-        {selectCharacters.map((selectCharacter) => (
+        {characters.map((character) => (
           <CharacterCheckBtn
-            type="button"
-            onClick={() => handleDeleteCharacter(selectCharacter)}
-            key={selectCharacter.id}
+            onClick={handleDeleteCharacter}
+            key={character._id}
           >
             <Check style={{ marginRight: "6px" }} />
-            {selectCharacter.ch_name}
+            {character.ch_name}
           </CharacterCheckBtn>
         ))}
-      </SelectBtnWrapper>
+      </div>
+
       <div>
-        {remainingCharacters?.map((character) => (
-          <CharacterDefaultBtn
-            type="button"
-            onClick={() => handleAddCharacter(character)}
-            key={character.id}
-          >
+        {characters.map((character) => (
+          <CharacterDefaultBtn onClick={handleAddCharacter} key={character._id}>
             {character.ch_name}
           </CharacterDefaultBtn>
         ))}
@@ -108,3 +61,63 @@ export default function CharacterModal({
     </ModalContainer>
   );
 }
+
+const AutoBtn = styled.button`
+  display: inline-block;
+  padding: 12px 20px 12px 16px;
+  margin: 0 18px 20px 0;
+
+  height: 44px;
+  border: none;
+
+  /* Orange/Orange 500 */
+  background: ${colorSystem.orange400};
+  color: white;
+  border-radius: 100px;
+
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+`;
+
+const CharacterDefaultBtn = styled.button`
+  box-sizing: border-box;
+  margin: 0 8px 8px 0;
+  cursor: pointer;
+
+  display: inline-block;
+  padding: 12px 20px;
+
+  height: 44px;
+
+  font-weight: 700;
+  font-size: 16px;
+  color: ${colorSystem.gray300};
+
+  background: rgba(255, 255, 255, 0.002);
+  border: 1px solid ${colorSystem.gray300};
+  border-radius: 100px;
+`;
+
+const CharacterCheckBtn = styled(CharacterDefaultBtn)`
+  color: ${colorSystem.orange400};
+  border-color: ${colorSystem.orange400};
+`;
+
+const ModalContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 30px;
+  gap: 10px;
+
+  position: absolute;
+  width: 564px;
+
+  left: calc(50% - 564px / 2 - 108px);
+  top: calc(50% - 168px / 2 - 108px);
+
+  background: #ffffff;
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+`;

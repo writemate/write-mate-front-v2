@@ -1,16 +1,16 @@
 import useDragAndDrop from "@/hooks/workspace/plot/useDragAndDrop";
+import { TPlotEvent } from "@/utils/APIs/types";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import Event from "./Event";
 import { useMutation } from "@tanstack/react-query";
-import { PlotEventType } from "@/utils/APIs/mock/plot";
 
 interface EventListProps {
-  pevent: PlotEventType[];
+  pevent: TPlotEvent[];
 }
 
 export const EventList = ({ pevent }: EventListProps) => {
   const { items: eventList, handleDragAndDrop } =
-    useDragAndDrop<PlotEventType>(pevent);
+    useDragAndDrop<TPlotEvent>(pevent);
 
   // [사건]
   // 사건 추가
@@ -20,13 +20,9 @@ export const EventList = ({ pevent }: EventListProps) => {
     <DragDropContext onDragEnd={handleDragAndDrop}>
       <Droppable droppableId="eventList">
         {(provided) => (
-          <div
-            style={{ width: "100%" }}
-            {...provided.droppableProps}
-            ref={provided.innerRef}
-          >
+          <div {...provided.droppableProps} ref={provided.innerRef}>
             {eventList.map((event, index) => (
-              <Draggable key={event.id} draggableId={event.id} index={index}>
+              <Draggable key={event._id} draggableId={event._id} index={index}>
                 {(provided) => (
                   <div
                     ref={provided.innerRef}
@@ -34,8 +30,7 @@ export const EventList = ({ pevent }: EventListProps) => {
                     {...provided.dragHandleProps}
                   >
                     <Event
-                      eventId={event.id}
-                      eventCharacter={event.character_list}
+                      eventCharacter={event.pevent_character}
                       eventName={event.event_name}
                       eventDescription={event.event_description}
                     />
