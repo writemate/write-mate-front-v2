@@ -33,6 +33,17 @@ export const ToolbarContainer = styled.div`
     box-shadow: 0px 4px 8px rgba(30, 33, 43, 0.2) !important;
     border-radius: 0px 0px 8px 8px !important;
   }
+
+   {
+    /* 폰트 */
+  }
+  .ql-font span[data-value="nanum-gothic"]::before {
+    font-family: "NanumGothic";
+  }
+
+  .ql-font span[data-value="nanum-myeongjo"]::before {
+    font-family: "NanumMyeongjo";
+  }
 `;
 
 export const Undo = styled(UndoIcon)`
@@ -57,6 +68,15 @@ export const EditorContainer = styled.div`
   }
 
   .ql-editor {
+    font-size: 11pt;
+
+    p {
+      font-family: "NanumGothic" !important;
+    }
+  }
+
+  .ql-font-nanum-myeongjo {
+    font-family: "NanumMyeongjo";
   }
 `;
 

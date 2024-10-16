@@ -2,7 +2,24 @@
 import { ToolbarContainer, Undo, Redo } from "@/styles/workspace/Script.styles";
 import "react-quill/dist/quill.snow.css";
 
-export const fontSize = ["14px", "16px", "18px", "24px", "28px", "32px"];
+export const fontSize = [
+  "9pt",
+  "10pt",
+  "11pt",
+  "12pt",
+  "14pt",
+  "16pt",
+  "18pt",
+  "20pt",
+  "24pt",
+  "30pt",
+  "36pt",
+  "48pt",
+  "60pt",
+  "72pt",
+];
+export const font = ["nanum-gothic", "nanum-myeongjo"];
+
 export default function CustomToolbar({ editorRef }: { editorRef: any }) {
   const handleUndo = () => {
     if (editorRef.current) {
@@ -25,18 +42,19 @@ export default function CustomToolbar({ editorRef }: { editorRef: any }) {
       <div className="ql-line"> </div>
 
       {/* 폰트 */}
-      <select className="ql-font"></select>
+      <select className="ql-font" defaultValue={"nanum-gothic"}>
+        <option value="nanum-gothic">나눔 고딕</option>
+        <option value="nanum-myeongjo">나눔 명조</option>
+      </select>
 
       {/* 헤더 크기 */}
-      <span className="ql-formats">
-        <select className="ql-size" defaultValue={"16px"}>
-          {fontSize.map((val) => (
-            <option key={val} value={val}>
-              {val.replace(/[^0-9]/g, "")}
-            </option>
-          ))}
-        </select>
-      </span>
+      <select className="ql-size" defaultValue={"11pt"}>
+        {fontSize.map((val) => (
+          <option key={val} value={val}>
+            {val.replace(/[^0-9]/g, "")}
+          </option>
+        ))}
+      </select>
 
       <div className="ql-line"> </div>
 

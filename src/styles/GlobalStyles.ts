@@ -1,9 +1,9 @@
-import { createGlobalStyle } from 'styled-components';
-import { colorSystem } from './colorSystem';
+import { createGlobalStyle } from "styled-components";
+import { colorSystem } from "./colorSystem";
 
 const peelOffVarFunc = (color: string) => {
-  return color.replace('var(', '').replace(')', '');
-}
+  return color.replace("var(", "").replace(")", "");
+};
 
 export const GlobalStyles = createGlobalStyle`
   :root {
@@ -53,4 +53,6 @@ export const GlobalStyles = createGlobalStyle`
     text-decoration: none;
     color: inherit
   }
+
+  
 `;

@@ -3,7 +3,7 @@ import ReactQuill from "react-quill";
 import { useState, useRef, useEffect } from "react";
 import { EditorContainer } from "@/styles/workspace/Script.styles";
 import "react-quill/dist/quill.snow.css";
-import { fontSize } from "./Toolbar";
+import { fontSize, font } from "./Toolbar";
 
 interface DeltaOperation {
   insert?: string | Record<string, any>; // insert는 문자열 또는 객체일 수 있음
@@ -23,6 +23,10 @@ export default function QuillEditor({
   const handleChange = (content: string) => {
     setValue(content);
   };
+
+  const Font = ReactQuill.Quill.import("formats/font") as any;
+  Font.whitelist = font;
+  ReactQuill.Quill.register(Font, true);
 
   const fontSizeStyle = ReactQuill.Quill.import(
     "attributors/style/size"
