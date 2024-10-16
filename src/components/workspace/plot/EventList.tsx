@@ -14,7 +14,7 @@ export const EventList = ({ pevent }: EventListProps) => {
 
   // [사건]
   // 사건 추가
-  const createEvent = useMutation();
+  //const createEvent = useMutation();
 
   return (
     <DragDropContext onDragEnd={handleDragAndDrop}>
