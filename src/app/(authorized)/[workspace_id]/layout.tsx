@@ -1,10 +1,16 @@
-'use client';
-import { WorkspaceContainer, HeaderAndMainContainer, SideBarAndMainContainer, MainContainer } from '@/styles/workspace';
-import Header from '@/components/workspace/Header';
-import SideTab from '@/components/workspace/SideTab';
-import Sidebar from '@/components/workspace/Sidebar/Sidebar';
-import IdeaBox from '@/components/workspace/IdeaBox';
-import { useWorkspaceLayout } from '@/hooks/workspace/useWorkspaceLayout';
+"use client";
+import {
+  WorkspaceContainer,
+  HeaderAndMainContainer,
+  SideBarAndMainContainer,
+  MainContainer,
+  TitleContainer,
+} from "@/styles/workspace";
+import Header from "@/components/workspace/Header";
+import SideTab from "@/components/workspace/SideTab";
+import Sidebar from "@/components/workspace/Sidebar/Sidebar";
+import IdeaBox from "@/components/workspace/IdeaBox";
+import { useWorkspaceLayout } from "@/hooks/workspace/useWorkspaceLayout";
 import { useState } from "react";
 import { useParams, usePathname } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
@@ -16,7 +22,8 @@ export default function WorkspaceLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { isPlotOpen, isScriptOpen, openIdeaBox, toggleIdeaBox, ...sidetab } = useWorkspaceLayout();
+  const { isPlotOpen, isScriptOpen, openIdeaBox, toggleIdeaBox, ...sidetab } =
+    useWorkspaceLayout();
 
   const { workspace_id } = useParams() as { workspace_id: string };
   const pathName = usePathname();
@@ -39,7 +46,7 @@ export default function WorkspaceLayout({
     return false;
   };
 
-const currentTitle =getCurrentTitle(pathName);
+  const currentTitle = getCurrentTitle(pathName);
 
   return (
     <WorkspaceContainer>
@@ -47,10 +54,13 @@ const currentTitle =getCurrentTitle(pathName);
       <HeaderAndMainContainer>
         <Header toggleIdeaBox={toggleIdeaBox} />
         <SideBarAndMainContainer>
-          {isPlotOpen && <Sidebar type="plot"/>}
-          {isScriptOpen && <Sidebar type="script"/>}
-          <MainContainer $isLeftOpen={isPlotOpen||isScriptOpen} $isRightOpen={openIdeaBox}>
-            {currentTitle&&<TitleContainer>{currentTitle}</TitleContainer>}
+          {isPlotOpen && <Sidebar type="plot" />}
+          {isScriptOpen && <Sidebar type="script" />}
+          <MainContainer
+            $isLeftOpen={isPlotOpen || isScriptOpen}
+            $isRightOpen={openIdeaBox}
+          >
+            {currentTitle && <TitleContainer>{currentTitle}</TitleContainer>}
             {children}
           </MainContainer>
           {openIdeaBox && <IdeaBox toggleIdeaBox={toggleIdeaBox} />}
