@@ -21,7 +21,9 @@ export default function CharacterModal({
   const [characters, setCharacter] = useState(character);
 
   // 자동연동
-  const handleGetChatacter = () => {};
+  const handleAutoChatacter = () => {};
+
+  // 전체 캐릭터 리스트 가져오기
 
   // 토스트알림
 
@@ -34,7 +36,7 @@ export default function CharacterModal({
   return (
     <ModalContainer ref={ref}>
       <div>
-        <AutoBtn onClick={handleGetChatacter}>
+        <AutoBtn onClick={handleAutoChatacter}>
           <Circulation style={{ marginRight: "6px" }} />
           자동 연동
         </AutoBtn>
