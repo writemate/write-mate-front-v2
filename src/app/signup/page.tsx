@@ -12,6 +12,7 @@ export default function Signup() {
     if (isLogin) {
       router.push('/dashboard');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLogin]);
 
   return (

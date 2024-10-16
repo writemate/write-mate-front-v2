@@ -109,11 +109,81 @@ export const MainContainer = styled.main<{ $background?: string, $flexdirection?
 
 export const Input = styled.input`
   padding: 10px;
-  border: 1px solid ${({ theme }) => theme.color.red400};
-  border-radius: 5px;
-  flex-grow: 0;
+  border-radius: 12px;
+  font-size: 16px;
+  border: 1px solid transparent;
+  padding: 13px 20px;
+  box-shadow: 0 0 12px 0 #0000001A;
+  width: 100%;
+  color: ${({ theme }) => theme.color.gray900};
   &:focus {
     outline: none;
-    border: 1px solid ${({ theme }) => theme.color.red400};
+    border: 1px solid ${({ theme }) => theme.color.orange400};
+  }
+`;
+
+export const TextArea = styled.textarea`
+  padding: 10px;
+  font-size: 16px;
+  line-height: 24px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  padding: 13px 20px;
+  box-shadow: 0 0 12px 0 #0000001A;
+  width: 100%;
+  resize: none;
+  color: ${({ theme }) => theme.color.gray900};
+  &:focus {
+    outline: none;
+    border: 1px solid ${({ theme }) => theme.color.orange400};
+  }
+`;
+
+export const DropdownMenuWrapper = styled.div`
+  position: relative;
+  display: flex;
+  flex-shrink: 0;
+  flex-grow: 1;
+  min-width: 115px;
+  max-width: 131px;
+`;
+
+export const DropdownSelector = styled.div`
+  ${FlexRowCenter};
+  ${clickable};
+  width: 100%;
+  padding: 12px;
+  border-radius: 24px;
+  height: 44px;
+  box-shadow: 0 0 12px 0 #0000001A;
+  background: white;
+  font-weight: 600;
+  gap: 12px;
+`;
+
+export const DropDownListContainer = styled.div`
+  ${FlexColumnCenter};
+  position: absolute;
+  top: calc(100% + 17px);
+  left: 0;
+  width: 100%;
+  border-radius: 8px;
+  padding: 6px 4px;
+  gap: 2px;
+  background: white;
+  box-shadow: 0 0 8px 0 #1E212B33;
+  z-index: 100;
+`;
+
+export const DropDownOption = styled.div`
+  ${FlexColumnCenter};
+  ${clickable};
+  padding: 10px;
+  border-radius: 4px;
+  border-bottom: 1px solid transparent;
+  width: 100%;
+  &:hover {
+    background: #F2F4F9;
+    border-bottom: 1px solid ${({ theme }) => theme.color.gray100};
   }
 `;

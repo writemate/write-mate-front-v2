@@ -4,7 +4,8 @@ import { useLogin } from '@/stores/useLogin';
 
 function useInitLogin() {
   const checkLogin = useLogin((state) => state.checkLogin);
-  useEffect(() => checkLogin(), []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(checkLogin,[]);
 }
 
 export default useInitLogin;

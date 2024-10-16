@@ -2,24 +2,39 @@
 import { useState, useEffect } from 'react';
 import { workspaceQueryKeys } from "@/utils/APIs/queryKeys";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getPlotFolderList, updatePlotFolder } from "@/utils/APIs/workspace";
+import { createPlot, getPlotFolderList, updatePlotFolder, createScript, getScriptFolderList, updateScriptFolder } from "@/utils/APIs/workspace";
 import { useParams } from "next/navigation";
 import { TFileWithOptions, TFolderWithOptions } from '@/utils/APIs/types';
 import { recursiveFolderAddOptions, recursiveUnselect, currentFileSelect, getSelectedFolder, recursiveFileUnpin, recursiveFindParent } from '@/utils/controlFolders';
 
-export default function usePlotSidebar() {
-  const queryClient = useQueryClient();
+const getAPIFunctionsAndQueryKey = (type: "plot" | "script") => {
+  if(type === "plot") return {
+    getFolderList: getPlotFolderList,
+    updateFolder: updatePlotFolder,
+    create: createPlot,
+    queryKey: workspaceQueryKeys.plotSidebar,
+  };
+  return {
+    getFolderList: getScriptFolderList,
+    updateFolder: updateScriptFolder,
+    create: createScript,
+    queryKey: workspaceQueryKeys.scriptSidebar,
+  };
+}
+
+export default function usePlotSidebar(type: "plot" | "script") {
+  const { getFolderList, updateFolder, create, queryKey } = getAPIFunctionsAndQueryKey(type);
   const { workspace_id, plot_id } = useParams<{ workspace_id: string, plot_id?: string }>();
   const [rootFolder, setRootFolder] = useState<TFolderWithOptions|null>(null);
   const { data, error, isLoading } = useQuery({
-    queryKey: workspaceQueryKeys.plotSidebar(workspace_id),
-    queryFn: getPlotFolderList(workspace_id),
+    queryKey: queryKey(workspace_id),
+    queryFn: getFolderList(workspace_id),
   });
   const [draggingItem, setDraggingItem] = useState<TFileWithOptions|TFolderWithOptions|null>(null);
 
-  const { mutate, isPending } = useMutation({
-    mutationFn: updatePlotFolder
-  });
+  const { mutate } = useMutation({ mutationFn: updateFolder });
+
+  const { mutateAsync: addItem, isPending } = useMutation({mutationFn: create(workspace_id)});
 
   useEffect(() => {
     if (data) {
@@ -28,14 +43,15 @@ export default function usePlotSidebar() {
       if (plot_id) currentFileSelect(rootFolder, plot_id);
       setRootFolder(rootFolder);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   useEffect(() => {
-    if (rootFolder) {
-      if (plot_id) currentFileSelect(rootFolder, plot_id);
-      else recursiveUnselect(rootFolder);
-      setRootFolder({...rootFolder});
-    }
+    if (!rootFolder) return;
+    if (plot_id) currentFileSelect(rootFolder, plot_id);
+    else recursiveUnselect(rootFolder);
+    setRootFolder({...rootFolder});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [plot_id]);
 
   const toggleFolder = (folder: TFolderWithOptions) => (e: React.MouseEvent) => {
@@ -91,20 +107,21 @@ export default function usePlotSidebar() {
     //이름 변경 완료 시 서버에 폴더 구조 반영 => 여기에서 mutate를 호출할 필요가 없다.
   };
 
-  const createFile = () => {
+  const createFile = async () => {
     if(rootFolder === null) return;
     const selectedFolder = getSelectedFolder(rootFolder);
     if (!selectedFolder) return;
     //파일을 생성하면 나머지 폴더와 파일들의 선택을 해제하고 새로 생성한 파일을 선택한다.
     recursiveUnselect(rootFolder);
-    selectedFolder.files.push({
-      _id: "",
+    const newFile: TFileWithOptions = {
+      _id: await addItem(),
       isFolder: false,
       file_name: "새 파일",
       isSelect: true,
       isEditing: true,
       isPinned: false,
-    });
+    };
+    selectedFolder.files.push(newFile);
     setRootFolder({...rootFolder});
     //일단 폴더랑 똑같이 처리중이긴한데, 파일의 경우 서버에 파일 생성 요청을 보내야 하므로 추후 수정이 필요하다.
   };

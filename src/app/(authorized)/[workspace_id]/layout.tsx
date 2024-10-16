@@ -1,18 +1,10 @@
-"use client";
-import {
-  WorkspaceContainer,
-  HeaderAndMainContainer,
-  SideBarAndMainContainer,
-  MainContainer,
-  TitleContainer,
-} from "@/styles/workspace";
-import Header from "@/components/workspace/Header";
-import SideTab from "@/components/workspace/SideTab";
-import PlotSidebar from "@/components/workspace/plot/PlotSidebar";
-import ScriptSidebar from "@/components/workspace/script/ScriptSidebar";
-import CharacterSidebar from "@/components/workspace/character/CharacterSidebar";
-import IdeaBox from "@/components/workspace/IdeaBox";
-import { useSidebar } from "@/hooks/workspace/useSidebar";
+'use client';
+import { WorkspaceContainer, HeaderAndMainContainer, SideBarAndMainContainer, MainContainer } from '@/styles/workspace';
+import Header from '@/components/workspace/Header';
+import SideTab from '@/components/workspace/SideTab';
+import Sidebar from '@/components/workspace/Sidebar/Sidebar';
+import IdeaBox from '@/components/workspace/IdeaBox';
+import { useWorkspaceLayout } from '@/hooks/workspace/useWorkspaceLayout';
 import { useState } from "react";
 import { useParams, usePathname } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
@@ -24,10 +16,7 @@ export default function WorkspaceLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const sidebar = useSidebar();
-  const { isPlotOpen, isScriptOpen, isCharacterOpen } = sidebar;
-  const [openIdeaBox, setOpenIdeaBox] = useState(false);
-  const toggleIdeaBox = () => setOpenIdeaBox(!openIdeaBox);
+  const { isPlotOpen, isScriptOpen, openIdeaBox, toggleIdeaBox, ...sidetab } = useWorkspaceLayout();
 
   const { workspace_id } = useParams() as { workspace_id: string };
   const pathName = usePathname();
@@ -50,17 +39,18 @@ export default function WorkspaceLayout({
     return false;
   };
 
+const currentTitle =getCurrentTitle(pathName);
+
   return (
     <WorkspaceContainer>
-      <SideTab {...sidebar} />
+      <SideTab {...sidetab} />
       <HeaderAndMainContainer>
         <Header toggleIdeaBox={toggleIdeaBox} />
         <SideBarAndMainContainer>
-          {isPlotOpen && <PlotSidebar />}
-          {isScriptOpen && <ScriptSidebar />}
-          {isCharacterOpen && <CharacterSidebar />}
-          <MainContainer>
-            <TitleContainer>{getCurrentTitle(pathName)}</TitleContainer>
+          {isPlotOpen && <Sidebar type="plot"/>}
+          {isScriptOpen && <Sidebar type="script"/>}
+          <MainContainer $isLeftOpen={isPlotOpen||isScriptOpen} $isRightOpen={openIdeaBox}>
+            {currentTitle&&<TitleContainer>{currentTitle}</TitleContainer>}
             {children}
           </MainContainer>
           {openIdeaBox && <IdeaBox toggleIdeaBox={toggleIdeaBox} />}

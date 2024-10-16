@@ -8,7 +8,7 @@ enum IdeaBoxType {
 }
 
 export const useIdeaBox = () => {
-  const [sidebarType, setSidebarType] = useState<IdeaBoxType| null>(null);
+  const [sidebarType, setSidebarType] = useState<IdeaBoxType>(IdeaBoxType.memo);
 
   const select = (type: IdeaBoxType) => () => setSidebarType(type);
 

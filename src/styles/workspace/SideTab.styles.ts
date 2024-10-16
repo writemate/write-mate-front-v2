@@ -19,26 +19,26 @@ export const LogoLink = styled(Link)`
   margin-bottom: 42px;
 `;
 
-const SideTabSVG = css<{ $inPage?: boolean, $isOpened?: boolean }>`
+const SideTabSVG = css<{ $isActivated?: boolean }>`
   ${clickable}
   display: flex;
   width: fit-content;
   justify-content: center;
   align-items: center;
   border-radius: 5px;
-  background-color: ${({ $isOpened, theme }) => $isOpened ? theme.color.orange200 : 'transparent'};
+  background-color: ${({ $isActivated, theme }) => $isActivated ? theme.color.orange200 : 'transparent'};
   &:hover {
     background-color: ${({ theme }) => theme.color.orange200};
   }
   & *{
-    stroke: ${({ $isOpened,theme }) => $isOpened ? theme.color.orange400 : '#353535'};
+    stroke: ${({ $isActivated,theme }) => $isActivated ? theme.color.orange400 : '#353535'};
   }
 `;
 
-export const SideTabButton = styled.div<{ $inPage?: boolean, $isOpened?: boolean }>`
+export const SideTabButton = styled.div<{ $isActivated?: boolean }>`
   ${SideTabSVG}
 `;
 
-export const SideTabLink = styled(Link)<{ $inPage?: boolean, $isOpened?: boolean }>`
+export const SideTabLink = styled(Link)<{ $isActivated?: boolean }>`
   ${SideTabSVG}
 `;

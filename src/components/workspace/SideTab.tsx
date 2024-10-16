@@ -6,33 +6,29 @@ import Info from '@/assets/workspace/sideTab/info.svg';
 import Plot from '@/assets/workspace/sideTab/plot.svg';
 import Script from '@/assets/workspace/sideTab/script.svg';
 import Character from '@/assets/workspace/sideTab/character.svg';
-import { usePathname  } from 'next/navigation';
-import { useSidebar } from "@/hooks/workspace/useSidebar";
+import { useWorkspaceLayout } from "@/hooks/workspace/useWorkspaceLayout";
+import { useParams  } from 'next/navigation';
 
-export default function SideTab({ togglePlot, toggleScript, toggleCharacter, isPlotOpen, isScriptOpen, isCharacterOpen }: ReturnType<typeof useSidebar>) {
-  const pathname = usePathname();
-
-  const sideTab = [
-    { name: 'plot', icon: Plot, onClick: togglePlot, open: isPlotOpen },
-    { name: 'script', icon: Script, onClick: toggleScript, open: isScriptOpen },
-    { name: 'character', icon: Character, onClick: toggleCharacter, open: isCharacterOpen },
-  ]
+export default function SideTab({ togglePlot, toggleScript, isInfoActive, isPlotActive, isScriptActive, isCharacterActive }: Omit<ReturnType<typeof useWorkspaceLayout>, "isPlotOpen"|"isScriptOpen"|"openIdeaBox" | "toggleIdeaBox">) {
+  const { workspace_id } = useParams<{ workspace_id: string }>();
 
   return (
       <SideTabContainer>
         <LogoLink href="/dashboard">
             <Logo />
         </LogoLink>
-        <SideTabLink $inPage={pathname.endsWith('/info')} href="./info">
+        <SideTabLink href={`/${workspace_id}/info`} $isActivated={isInfoActive}>
           <Info />
         </SideTabLink>
-        {
-          sideTab.map((tab, index) => (
-            <SideTabButton key={index} $inPage={pathname.endsWith(`/${tab.name}`)} $isOpened={tab.open} onClick={tab.onClick}>
-              <tab.icon />
-            </SideTabButton>
-          ))
-        }
+        <SideTabButton onClick={togglePlot} $isActivated={isPlotActive}>
+          <Plot />
+        </SideTabButton>
+        <SideTabButton onClick={toggleScript} $isActivated={isScriptActive}>
+          <Script />
+        </SideTabButton>
+        <SideTabLink href={`/${workspace_id}/character`} $isActivated={isCharacterActive}>
+          <Character />
+        </SideTabLink>
         <Footer />
       </SideTabContainer>
   );

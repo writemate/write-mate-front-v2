@@ -1,7 +1,8 @@
 import { useState, useCallback, useContext, useRef } from 'react';
 import { TFileWithOptions, TFolderWithOptions } from '@/utils/APIs/types';
+import { recursiveFindParent } from '@/utils/controlFolders';
 import { SidebarContext } from "@/stores/sidebarContext";
-import usePlotSidebar from '@/hooks/workspace/sidebar/usePlotSidebar';
+import useSidebar from '@/hooks/workspace/sidebar/useSidebar';
 
 enum DragOverType {
   None,
@@ -9,14 +10,14 @@ enum DragOverType {
   After,
 }
 
-const getDragOverType = (e: React.DragEvent<HTMLDivElement>) => {
+const getDragOverType = (e: React.DragEvent<HTMLDivElement|HTMLAnchorElement>) => {
   if(e.nativeEvent.offsetY < e.currentTarget.offsetHeight / 2){
     return DragOverType.Before;
   }
   return DragOverType.After;
 }
 
-export const useRootDrag = ({ rootFolder, draggingItem, setDraggingItem, changeOrderLastOfFolder }: ReturnType<typeof usePlotSidebar>) => {
+export const useRootDrag = ({ rootFolder, draggingItem, setDraggingItem, changeOrderLastOfFolder }: ReturnType<typeof useSidebar>) => {
   const [isDragOver, setIsDragOver] = useState(false);
 
   const onDragOver = (e: React.DragEvent<HTMLDivElement>) => {
@@ -54,14 +55,15 @@ export const useDrag = (data: TFileWithOptions | TFolderWithOptions) => {
 
   const timer = useRef<NodeJS.Timeout|null>(null);
 
-  const onDragStart = useCallback((e: React.DragEvent<HTMLDivElement>) => {
+  const onDragStart = useCallback((e: React.DragEvent<HTMLDivElement|HTMLAnchorElement>) => {
     setDraggingItem(data);
-  }, [data]);
+  }, [data, setDraggingItem]);
 
-  const onDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+  const onDragOver = (e: React.DragEvent<HTMLDivElement|HTMLAnchorElement>) => {
     e.preventDefault();
     e.stopPropagation();
     if(draggingItem === null || draggingItem === data) return;
+    if(draggingItem.isFolder && recursiveFindParent(draggingItem, data)) return;
     setDragOver(getDragOverType(e));
 
     //폴더에 1초 이상 마우스를 올려놓으면 폴더를 열어준다.
@@ -80,7 +82,7 @@ export const useDrag = (data: TFileWithOptions | TFolderWithOptions) => {
     timer.current = null;
   }
 
-  const onDrop = (e: React.DragEvent<HTMLDivElement>) => {
+  const onDrop = (e: React.DragEvent<HTMLDivElement|HTMLAnchorElement>) => {
     e.preventDefault();
     e.stopPropagation();
     if(isDragOverBefore){

@@ -1,5 +1,5 @@
-import { all } from "axios";
 
+import { all } from "axios";
 export const dashboardQueryKeys = {
   all: ["dashboard"] as const,
   workStudio: () => [...dashboardQueryKeys.all, "workStudio"] as const,
@@ -15,15 +15,19 @@ export const userQueryKeys = {
 };
 
 export const workspaceQueryKeys = {
-  all: ["workspace"] as const,
-  work: (id: string) => [...workspaceQueryKeys.all, "work", id] as const,
-  sidebar: (id: string) => [...workspaceQueryKeys.all, "sidebar", id] as const,
-  plotSidebar: (id: string) =>
-    [...workspaceQueryKeys.sidebar(id), "plot"] as const,
-  characterSidebar: (id: string) =>
-    [...workspaceQueryKeys.sidebar(id), "character"] as const,
-  scriptSidebar: (id: string) =>
-    [...workspaceQueryKeys.sidebar(id), "event"] as const,
-};
+  all: ['workspace'] as const,
+  workName: (id:string) => [...workspaceQueryKeys.all, id] as const,
 
-export const plotQueryKeys = {};
+  sidebar: (id:string) => [...workspaceQueryKeys.all, 'sidebar',id] as const,
+  plotSidebar: (id:string) => [...workspaceQueryKeys.sidebar(id), 'plot'] as const,
+  scriptSidebar: (id:string) => [...workspaceQueryKeys.sidebar(id), 'event'] as const,
+
+  info: (id:string) => [...workspaceQueryKeys.all, 'info', id] as const,
+  mainCharacter: (id:string) => [...workspaceQueryKeys.info(id), 'mainCharacter'] as const,
+  mainPlot: (id:string) => [...workspaceQueryKeys.info(id), 'mainPlot'] as const,
+
+  character: (id:string) => [...workspaceQueryKeys.all, 'character', id] as const,
+  characterList: (id:string) => [...workspaceQueryKeys.character(id), 'list'] as const,
+  characterKeywordList: (id:string) => [...workspaceQueryKeys.character(id), 'keyword'] as const,
+  characterDetail: (id:string, characterId:string) => [...workspaceQueryKeys.character(id), characterId] as const,
+}

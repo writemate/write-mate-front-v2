@@ -16,6 +16,7 @@ export default function useCountUp() {
         clearInterval(counter);
       }
     }, frameRate);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [end]);
 
 
