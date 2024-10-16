@@ -5,6 +5,11 @@ import ToggleBtn from "@/components/workspace/plot/ToggleBtn";
 import { mockPlotList } from "@/utils/APIs/mock/plot";
 import { useState } from "react";
 
+/**
+접는 로직 다시보기
+
+ */
+
 export default function Plot({
   params: { workspace_id },
 }: {
@@ -33,7 +38,11 @@ export default function Plot({
       {/* <ToggleBtn isOpen={isOpen} handleChange={handleChange} />
       {isOpen && <div>open</div>} */}
 
-      <ChapterList chapters={plot.chapters} isOpenAll={isOpen} />
+      <ChapterList
+        chapters={plot.chapters}
+        isOpenAll={isOpen}
+        plotId={workspace_id}
+      />
     </>
   );
 }

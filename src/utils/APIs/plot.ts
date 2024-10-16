@@ -1,15 +1,17 @@
 import { TPlot } from "./types";
 import axiosInstance from "./axiosInstance";
 import { DOMAIN } from "./domain";
-import { responseGetPlotType } from "./mock/plot";
+import { ChapterType, responseGetPlotType } from "./mock/plot";
 
 /**
  * 모든 플롯 가져오기
  * @param workId
  * @returns chapter[]
  */
-export const getPlots = async (workId: string): Promise<TPlot[]> => {
-  const response = await axiosInstance.get<TPlot[]>(DOMAIN.GET_PLOT(workId));
+export const getPlots = async (workId: string): Promise<ChapterType[]> => {
+  const response = await axiosInstance.get<ChapterType[]>(
+    DOMAIN.GET_PLOT(workId)
+  );
 
   return response.data;
 };
@@ -20,11 +22,11 @@ export const getPlots = async (workId: string): Promise<TPlot[]> => {
  * @param order
  * @returns chapter
  */
-export const createPlot = async (
+export const createChapter = async (
   plotId: string,
   order: number
-): Promise<TPlot> => {
-  const response = await axiosInstance.post<TPlot>(
+): Promise<ChapterType> => {
+  const response = await axiosInstance.post<ChapterType>(
     DOMAIN.CREATE_CHAPTER(plotId),
     {
       order: order,

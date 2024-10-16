@@ -3,9 +3,8 @@ import styled from "styled-components";
 import { IconButton } from "./Chapter";
 import { FiTrash2 } from "react-icons/fi";
 import { LuUser2 } from "react-icons/lu";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CharacterModal from "./CharacterModal";
-import useClickAway from "@/hooks/workspace/plot/useClickAway";
 
 interface EventProps {
   eventName: string;
@@ -19,6 +18,10 @@ export default function Event({
   eventCharacter,
 }: EventProps) {
   const [modal, setModal] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  // 사건 삭제
+  //const deleteEvent = useMutation();
 
   return (
     <>
@@ -33,6 +36,7 @@ export default function Event({
           <div style={{ flexDirection: "row" }}>
             <button
               type="button"
+              ref={buttonRef}
               style={{
                 width: "24px",
                 height: "24px",
@@ -61,7 +65,12 @@ export default function Event({
           />
         </div>
       </EventContainer>
-      {modal && <CharacterModal onClose={() => setModal(false)} />}
+      {modal && (
+        <CharacterModal
+          character={eventCharacter}
+          onClose={() => setModal(false)}
+        />
+      )}
     </>
   );
 }

@@ -8,6 +8,8 @@ import { MdContentCopy } from "react-icons/md";
 import { FiTrash2 } from "react-icons/fi";
 import { FaPlus } from "react-icons/fa";
 import { useEffect, useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { deleteChapter } from "@/utils/APIs/plot";
 
 interface ChapterProps {
   chapterName: string;
@@ -32,9 +34,10 @@ export default function Chapter({
     setIsOpenAlone(isOpen);
   }, [isOpen]);
 
-  const handleOpen = () => {
-    setIsOpenAlone(!isOpenAlone);
-  };
+  // 챕터 삭제
+  /* const { mutate: mutateDelete } = useMutation({
+    mutationFn: deleteChapter,
+  });*/
 
   return (
     <ChapterContainer isOpenAlone={isOpenAlone}>

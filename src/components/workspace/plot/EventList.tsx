@@ -2,6 +2,7 @@ import useDragAndDrop from "@/hooks/workspace/plot/useDragAndDrop";
 import { TPlotEvent } from "@/utils/APIs/types";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import Event from "./Event";
+import { useMutation } from "@tanstack/react-query";
 
 interface EventListProps {
   pevent: TPlotEvent[];
@@ -10,6 +11,10 @@ interface EventListProps {
 export const EventList = ({ pevent }: EventListProps) => {
   const { items: eventList, handleDragAndDrop } =
     useDragAndDrop<TPlotEvent>(pevent);
+
+  // [사건]
+  // 사건 추가
+  const createEvent = useMutation();
 
   return (
     <DragDropContext onDragEnd={handleDragAndDrop}>
