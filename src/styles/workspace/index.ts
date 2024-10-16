@@ -44,3 +44,8 @@ export const Title = styled.div`
   font-weight: 700;
   color: ${({ theme }) => theme.color.gray900};
 `;
+
+export const TitleContainer = styled.h1`
+  width: 100%;
+  padding-top: 36px;
+`;
