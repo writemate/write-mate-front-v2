@@ -67,6 +67,7 @@ export const EditorContainer = styled.div`
     calc(12.0635% - 15px); /* A4 비율에 맞게 padding 조정  */
   width: 100%;
   min-height: 100%;
+
   background: #ffffff;
 
   .ql-container {
@@ -87,6 +88,13 @@ export const EditorContainer = styled.div`
 
   .ql-font-nanum-myeongjo {
     font-family: "NanumMyeongjo";
+  }
+
+  .ql-clipboard {
+    position: fixed !important;
+    left: 50% !important;
+    top: 50% !important;
+    display: none;
   }
 `;
 
