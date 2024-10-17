@@ -1,6 +1,13 @@
 import { TRelation, TCharacter } from '@/utils/APIs/types';
 import DropdownCharacter from '@/components/workspace/character/DropdownCharacter';
 import { useEditRelation } from '@/hooks/workspace/character/useEditRelation';
+import { EditRelationContainer, RelationTitle, RelationContentsContainer, RelationCharacterContainer, RelationCharacterImage,
+  RelationCharacterName, RelationCharacterDescription, RelationArrowContainer, RelationFooter,CancelButton, SaveButton,
+} from '@/styles/workspace/Character.style';
+import { Button } from '@/styles';
+import RelationToLeft from '@/assets/workspace/character/relationToLeft.svg';
+import RelationToRight from '@/assets/workspace/character/relationToRight.svg';
+import RelationStick from '@/assets/workspace/character/relationStick.svg';
 
 export type EditRelationProps<T extends boolean> ={
   isNewMode: T,
@@ -21,31 +28,45 @@ export default function EditRelation<T extends boolean>({
     onClickCreate, onClickUpdate, onClickDelete, closeModal } = useEditRelation(otherProps);
   
 
+  const isSavalble = !!selectedCharacter1 && !!selectedCharacter2 && !!inputRelationLeft && !!inputRelationRight;
+
   return (
-    <div style={{ backgroundColor:"#FFF", width:"100%",height:"100%" }}>
-      <div>관계수정</div>
+    <EditRelationContainer>
+      <RelationTitle>관계 {isNewMode ? "생성" : "수정"}</RelationTitle>
       <hr/>
-      <div>
-        <img src={selectedCharacter1?.ch_image} width="100px" height="100px"/>
-        {!isNewMode && <div>{selectedCharacter1?.ch_name}</div>}
-        {isNewMode && <DropdownCharacter placeholder="인물 선택" options={characterList!} selected={selectedCharacter1?.ch_name} setSelected={selectCharacter1}/>}
-        <div>{selectedCharacter1?.description}</div>
-      </div>
-      <div>
-        <input type="text" value={inputRelationLeft} onChange={onRelationLeftChange} placeholder="관계를 작성해 주세요."/>
-        <input type="text" value={inputRelationRight} onChange={onRelationRightChange} placeholder="관계를 작성해 주세요."/>
-      </div>
-      <div>
-        <img src={selectedCharacter2?.ch_image} width="100px" height="100px"/>
-        {!isNewMode && <div>{selectedCharacter2?.ch_name}</div>}
-        {isNewMode && <DropdownCharacter placeholder="인물 선택" options={characterList!} selected={selectedCharacter2?.ch_name} setSelected={selectCharacter2}/>}
-        <div>{selectedCharacter2?.description}</div>
-      </div>
+      <RelationContentsContainer>
+        <RelationCharacterContainer>
+          <RelationCharacterImage $src={selectedCharacter1?.ch_image}/>
+          {!isNewMode && <RelationCharacterName>{selectedCharacter1?.ch_name}</RelationCharacterName>}
+          {isNewMode && <DropdownCharacter placeholder="인물 선택" options={characterList!} selected={selectedCharacter1?.ch_name} setSelected={selectCharacter1}/>}
+          <RelationCharacterDescription>{selectedCharacter1?.description}</RelationCharacterDescription>
+        </RelationCharacterContainer>
+        <RelationArrowContainer>
+          <div>
+            <RelationStick/>
+            <input type="text" value={inputRelationLeft} onChange={onRelationLeftChange} placeholder="관계를 작성해 주세요."/>
+            <RelationToRight/>
+          </div>
+          <div>
+            <RelationToLeft/>
+            <input type="text" value={inputRelationRight} onChange={onRelationRightChange} placeholder="관계를 작성해 주세요."/>
+            <RelationStick/>
+          </div>
+        </RelationArrowContainer>
+        <RelationCharacterContainer>
+          <RelationCharacterImage $src={selectedCharacter2?.ch_image}/>
+          {!isNewMode && <RelationCharacterName>{selectedCharacter2?.ch_name}</RelationCharacterName>}
+          {isNewMode && <DropdownCharacter placeholder="인물 선택" options={characterList!} selected={selectedCharacter2?.ch_name} setSelected={selectCharacter2}/>}
+          <RelationCharacterDescription>{selectedCharacter2?.description}</RelationCharacterDescription>
+        </RelationCharacterContainer>
+      </RelationContentsContainer>
       <hr/>
-      {!isNewMode && <div onClick={onClickDelete}>삭제</div>}
-      <div onClick={closeModal}>취소</div>
-      {!isNewMode && <div onClick={onClickUpdate}>수정</div>}
-      {isNewMode && <div onClick={onClickCreate}>생성</div>}
-    </div>
+      <RelationFooter>
+        {!isNewMode && <Button onClick={onClickDelete} $background='#F22828' $color="#fff">삭제</Button>}
+        <CancelButton onClick={closeModal}>취소</CancelButton>
+        {!isNewMode && <SaveButton onClick={onClickUpdate} $isSavalble={isSavalble}>수정</SaveButton>}
+        {isNewMode && <SaveButton onClick={onClickCreate} $isSavalble={isSavalble}>생성</SaveButton>}
+      </RelationFooter>
+    </EditRelationContainer>
   );
 };

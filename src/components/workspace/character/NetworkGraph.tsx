@@ -575,7 +575,7 @@ const NetworkGraph = () => {
         관계 추가하기
       </CreateRelationButton>
       {modalContent && (
-        <Modal closeModal={()=>setModalContent(null)} maxWidth={972} maxHeight={560}>
+        <Modal closeModal={()=>setModalContent(null)} maxWidth={972} maxHeight="100%">
           <EditRelation
             {...modalContent}
           />
