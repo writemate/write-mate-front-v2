@@ -8,6 +8,7 @@ import { useParams } from 'next/navigation';
 import { workspaceQueryKeys } from '@/utils/APIs/queryKeys';
 import { getCharacterList, getCharacterRelation } from '@/utils/APIs/workspace';
 import { CreateRelationButton } from '@/styles/workspace/Character.style';
+import { EditRelationProps } from '@/components/workspace/character/EditRelation';
 
 export type Node = {
   id: string;
@@ -123,18 +124,10 @@ const radius = 50;
 const imgWidth = radius * 4; // 원의 2배 크기로 설정
 const imgHeight = radius * 4; // 원의 2배 크기로 설정
 
-type Props<T extends boolean> = {
-  isNewMode: T,
-  characterList?: T extends true ? TCharacter[] : undefined,
-  character1?: T extends true ? undefined : TCharacter,
-  character2?: T extends true ? undefined : TCharacter,
-  relation?: T extends true ? undefined : TRelation,
-}
-
 const NetworkGraph = () => {
   const ref = useRef<SVGSVGElement | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [modalContent, setModalContent] = useState<null|Props<true>|Props<false>>(null);
+  const [modalContent, setModalContent] = useState<null|EditRelationProps<true>|EditRelationProps<false>>(null);
   const queryClient = useQueryClient();
   const { workspace_id } = useParams<{ workspace_id: string}>();
   const { data: relations, error, isLoading:isLoading2 } = useQuery({
