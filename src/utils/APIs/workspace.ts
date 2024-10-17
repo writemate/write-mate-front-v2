@@ -1,7 +1,7 @@
 import axiosInstance from "./axiosInstance";
 import { getChapterListMock, getPlotFolderListMock, updatePlotFolderMock,
-  getInfoMock, removeKeywordMock, updateCoverImageMock, updateTitleMock,
-  updateGenreMock, updateLoglineMock, updateExpectedQuantityMock, updateIntroductionMock, addKeywordMock,
+  getInfoMock, updateCoverImageMock, updateTitleMock,
+  updateGenreMock, updateLoglineMock, updateExpectedQuantityMock, updateIntroductionMock,
   updateGradeMock, createPlotMock, getScriptFolderListMock, updateScriptFolderMock, createScriptMock,
   getCharacterListMock, getCharacterKeywordListMock, createCharacterKeywordMock, createCharacterMock,
   updateCharacterNameMock, updateCharacterRoleMock, updateCharacterGenderMock,
@@ -9,7 +9,8 @@ import { getChapterListMock, getPlotFolderListMock, updatePlotFolderMock,
   addCharacterCharacteristicMock, updateCharacterCharacteristicTitleMock,
   updateCharacterCharacteristicContentMock, removeCharacterCharacteristicMock,
   setMainCharacterMock, removeMainCharacterMock, updateCharacterCoverImageMock,
-  getCharacterMock, updateCharacterDescriptionMock, deleteCharacterMock
+  getCharacterMock, updateCharacterDescriptionMock, deleteCharacterMock,
+  deleteCharacterKeywordMock, getCharacterRelationMock, createCharacterRelationMock, deleteCharacterRelationMock, updateCharacterRelationMock
  } from "./mock/workspace";
 import { TWork } from "./types";
 import { DOMAIN } from "./domain";
@@ -36,27 +37,35 @@ export const updateGrade = updateGradeMock;
 export const updateLogline = updateLoglineMock;
 export const updateExpectedQuantity = updateExpectedQuantityMock;
 export const updateIntroduction = updateIntroductionMock;
-export const addKeyword = addKeywordMock;
-export const removeKeyword = removeKeywordMock;
 
+//캐릭터 리스트 페이지에서 쓰임
 export const getCharacterList = getCharacterListMock;
-export const getCharacterKeywordList = getCharacterKeywordListMock;
-export const createCharacterKeyword = createCharacterKeywordMock;
 export const createCharacter = createCharacterMock;
 export const setMainCharacter = setMainCharacterMock;
-export const removeMainCharacter = removeMainCharacterMock;
+export const removeMainCharacter = removeMainCharacterMock; //unsetMainCharacter라고 이름 바꿔야할듯
 
+export const getCharacterKeywordList = getCharacterKeywordListMock;
+export const createCharacterKeyword = createCharacterKeywordMock;
+export const deleteCharacterKeyword = deleteCharacterKeywordMock;
+export const addCharacterKeyword = addCharacterKeywordMock;
+export const removeCharacterKeyword = removeCharacterKeywordMock;
+
+//캐릭터 상세 페이지에서 쓰임
 export const getCharacter = getCharacterMock;
+export const deleteCharacter = deleteCharacterMock;
 export const updateCharacterName = updateCharacterNameMock;
 export const updateCharacterRole = updateCharacterRoleMock;
 export const updateCharacterGender = updateCharacterGenderMock;
 export const updateCharacterBirthday = updateCharacterBirthdayMock;
 export const updateCharacterDescription = updateCharacterDescriptionMock;
-export const addCharacterKeyword = addCharacterKeywordMock;
-export const removeCharacterKeyword = removeCharacterKeywordMock;
 export const updateCharacterCoverImage = updateCharacterCoverImageMock;
+
 export const addCharacterCharacteristic = addCharacterCharacteristicMock;
 export const updateCharacterCharacteristicTitle = updateCharacterCharacteristicTitleMock;
 export const updateCharacterCharacteristicContent = updateCharacterCharacteristicContentMock;
 export const removeCharacterCharacteristic = removeCharacterCharacteristicMock;
-export const deleteCharacter = deleteCharacterMock;
+
+export const getCharacterRelation = getCharacterRelationMock;
+export const createCharacterRelation = createCharacterRelationMock;
+export const deleteCharacterRelation = deleteCharacterRelationMock;
+export const updateCharacterRelation = updateCharacterRelationMock;

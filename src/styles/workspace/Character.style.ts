@@ -1,6 +1,6 @@
 'use client';
 import { styled } from 'styled-components';
-import { clickable, FlexColumnCenter, FlexColumnLeftStart, FlexRowCenter, FlexRowLeftStart } from '..';
+import { Button, clickable, FlexColumnCenter, FlexColumnLeftStart, FlexRowCenter, FlexRowLeftStart } from '..';
 import Link from 'next/link';
 
 export const TabContainer = styled.div`
@@ -174,6 +174,13 @@ export const CreateCharacterButton = styled.button`
   }
 `;
 
+export const CreateRelationButton = styled(CreateCharacterButton)`
+  position: absolute;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+`;
+
 export const MiniModal = styled.div<{$left: number }>`
   ${FlexRowCenter};
   position: absolute;
@@ -203,3 +210,166 @@ export const MiniModal = styled.div<{$left: number }>`
     border: none;
   }
 `;
+
+export const CharacteristicListContainer = styled.div`
+  ${FlexColumnLeftStart};
+  width: 100%;
+  gap: 12px;
+`;
+
+
+export const CharacteristicContainer = styled.div`
+  ${FlexRowLeftStart};
+  width: 100%;
+  flex-wrap: wrap;
+  padding: 26px 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.10);
+  gap: 6px;
+`
+export const CharacteristicTitle = styled.input`
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%;
+`
+export const CharacteristicContent = styled.textarea`
+  width: 100%;
+  border: none;
+  outline: none;
+  resize: none;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%;
+`
+
+export const CharacteristicAdd = styled.button`
+  ${clickable};
+  display: flex;
+  padding: 10px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 0 auto;
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 350;
+  line-height: 21px; /* 150% */
+  letter-spacing: -0.16px;
+  color: ${({ theme }) => theme.color.orange400};
+`
+
+export const EditRelationContainer = styled.div`
+  ${FlexColumnCenter};
+  width: 100%;
+  height: 100%;
+  background-color: #FFF;
+  padding: 30px;
+  border-radius: 12px;
+  gap: 16px;
+  &>hr{
+    width: 100%;
+    background: #BBB;
+    height: 1px;
+    border: none;
+    flex-shrink: 0;
+  }
+`
+
+export const RelationTitle = styled.div`
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 100%; /* 36px */
+  margin-right: auto;
+`;
+
+export const RelationContentsContainer = styled.div`
+  ${FlexRowCenter};
+  width: 100%;
+  gap: 40px;
+  padding: 48px 0 26px;
+  margin: 0 auto;
+  max-width: 760px;
+`;
+
+export  const RelationCharacterContainer = styled.div`
+  ${FlexColumnCenter};
+  gap: 14px;
+  flex-grow: 0;
+`;
+
+export const RelationCharacterImage = styled.div<{ $src?: string }>`
+  width: 150px;
+  height: 180px;
+  border-radius: 8px;
+  box-shadow: 2px 2px 12px 0px rgba(19, 19, 19, 0.12);
+  background: url(${({ $src }) => $src}) lightgray 50% / cover no-repeat;
+`
+export const RelationCharacterName = styled.div`
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 100%;
+  color: ${({ theme }) => theme.color.red400};
+`
+
+export const RelationCharacterDescription = styled.div`
+  width: 150px;
+  padding: 4px;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 140%;
+  color: ${({ theme }) => theme.color.gray400};
+`;
+
+export const RelationArrowContainer = styled.div`
+  ${FlexColumnCenter};
+  gap: 29px;
+  flex-grow: 1;
+  width: 100%;
+  &>div{
+    ${FlexRowCenter};
+    width: 100%;
+    &>*:not(input){
+      flex-shrink: 0;
+    }
+    &>input{
+      width: 100%;
+      padding: 7px 15px;
+      text-align: center;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 100%;
+      border: ${({ theme }) => theme.color.orange400} 1px solid;
+      border-radius: 100px;
+      outline: none;
+      background-color: #FFF;
+      flex-grow: 1;
+    }
+  }
+`
+
+export const RelationFooter = styled.div`
+  ${FlexRowCenter};
+  width: 100%;
+  gap: 12px;
+`
+
+export const CancelButton = styled(Button).attrs(props=>({$border: true}))`
+  margin-left: auto;
+`;
+
+export const SaveButton = styled(styled(Button)<{ $isSavalble: boolean }>``).attrs(props=>({
+  $background: props.$isSavalble ? props.theme.color.gray900 : '#CDCDCD',
+  $color: "#fff",
+}))``;

@@ -79,6 +79,17 @@ export const ButtonCss = css`
   font-weight: 600;
 `;
 
+export const Button = styled.button<{ $background?: string, $color?: string, $border?: boolean }>`
+  ${ButtonCss}; 
+  background-color: ${props => props.$background || 'white'};
+  color: ${props => props.$color || 'black'};
+  border: ${props => props.$border ? '1px solid black' : 'none'};
+  border-radius: 100px;
+  padding: 8px;
+  font-size: 16px;
+  min-width: 76px;
+`;
+
 export const ButtonWithHoverAnimation = styled.button`
   ${ButtonCss};
   ${MainColorBackground};
@@ -185,5 +196,20 @@ export const DropDownOption = styled.div`
   &:hover {
     background: #F2F4F9;
     border-bottom: 1px solid ${({ theme }) => theme.color.gray100};
+  }
+`;
+
+export const ModalContainer = styled.div`
+  ${FlexRowCenter};
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 28px;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  &>* {
+    width: 100%;
   }
 `;
