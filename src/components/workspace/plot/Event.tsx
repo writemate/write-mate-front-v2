@@ -1,10 +1,11 @@
 import { TPlotEventCharacter } from "@/utils/APIs/types";
 import styled from "styled-components";
 import { IconButton } from "./Chapter";
-import { FiTrash2 } from "react-icons/fi";
-import { LuUser2 } from "react-icons/lu";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import CharacterModal from "./CharacterModal";
+import DeleteIcon from "@/assets/workspace/plot/delete.svg";
+import ChooseCharacter from "@/assets/workspace/plot/choosecharacter.svg";
+import { colorSystem } from "@/styles/colorSystem";
 
 interface EventProps {
   eventName: string;
@@ -28,7 +29,6 @@ export default function Event({
       <EventContainer>
         <div
           style={{
-            marginLeft: "31px",
             display: "flex",
             flexDirection: "column",
             width: "100%",
@@ -42,21 +42,22 @@ export default function Event({
                 width: "24px",
                 height: "24px",
                 border: "none",
-                borderRadius: "4px",
-                background: "white",
-                fontSize: "20px",
+                background: "transparent",
                 cursor: "pointer",
-                boxShadow: `1px 1px 4px rgba(50, 63, 77, 0.2)`,
               }}
               onClick={() => setModal(!modal)}
             >
-              <LuUser2 />
+              <ChooseCharacter />
             </button>
             <IconButton
-              style={{ fontSize: "14.88px", float: "right" }}
+              style={{
+                fontSize: "14.88px",
+                float: "right",
+                marginRight: "20px",
+              }}
               type="button"
             >
-              <FiTrash2 />
+              <DeleteIcon />
             </IconButton>
           </div>
           <EventTitle value={eventName} placeholder="사건 제목을 적어주세요." />
@@ -81,20 +82,14 @@ const EventContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 0px;
+  padding: 20px 0 20px 31px;
 
   height: 139px;
-  margin: 0 40px 12px 20px;
+  margin-bottom: 12px;
 
-  background: #f8fafe;
+  background: ${colorSystem.gray25};
   border: 1px solid #d7ddea;
   border-radius: 8px;
-
-  /* Inside auto layout */
-  flex: none;
-  order: 0;
-  align-self: stretch;
-  flex-grow: 0;
 `;
 
 const EventTitle = styled.input`

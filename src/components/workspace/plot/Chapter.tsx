@@ -3,13 +3,14 @@ import { ChapterContainer } from "@/styles/workspace/plot/Chapter.styles";
 import { TPlotEvent } from "@/utils/APIs/types";
 import styled from "styled-components";
 import { EventList } from "./EventList";
-import { TbTriangleInverted } from "react-icons/tb";
-import { MdContentCopy } from "react-icons/md";
-import { FiTrash2 } from "react-icons/fi";
-import { FaPlus } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { deleteChapter } from "@/utils/APIs/plot";
+import DeleteIcon from "@/assets/workspace/plot/delete.svg";
+import ToggleIcon from "@/assets/workspace/plot/toggle.svg";
+import CopyIcon from "@/assets/workspace/plot/copy.svg";
+import Add from "@/assets/workspace/plot/add.svg";
+import ToggleFold from "@/assets/workspace/plot/toggleFold.svg";
 
 interface ChapterProps {
   chapterName: string;
@@ -41,8 +42,10 @@ export default function Chapter({
 
   return (
     <ChapterContainer isOpenAlone={isOpenAlone}>
-      <div style={{ marginLeft: "40px", marginTop: "16px" }}>
-        <div style={{ marginRight: "20px" }}>
+      <div
+        style={{ marginLeft: "40px", marginTop: "16px", marginRight: "20px" }}
+      >
+        <div style={{ width: "100%" }}>
           <TitleInput
             value={chapterName}
             placeholder="챕터 제목을 적어주세요."
@@ -51,16 +54,14 @@ export default function Chapter({
             type="button"
             onClick={() => setIsOpenAlone(!isOpenAlone)}
           >
-            {isOpenAlone && <TbTriangleInverted />}
-            {!isOpenAlone && (
-              <TbTriangleInverted style={{ transform: "rotate(-90deg)" }} />
-            )}
+            {isOpenAlone && <ToggleIcon style={{ marginBottom: "10%" }} />}
+            {!isOpenAlone && <ToggleFold style={{ marginBottom: "11%" }} />}
           </IconButton>
           <IconButton type="button">
-            <MdContentCopy />
+            <CopyIcon />
           </IconButton>
           <IconButton type="button">
-            <FiTrash2 />
+            <DeleteIcon />
           </IconButton>
         </div>
         <ContentTextArea
@@ -77,7 +78,7 @@ export default function Chapter({
           >
             <EventList pevent={pevent} />
             <AddButton>
-              <FaPlus color="white" />
+              <Add />
             </AddButton>
           </div>
         )}
@@ -112,7 +113,7 @@ const AddButton = styled.button`
 const TitleInput = styled.input`
   height: 36px;
   text-overflow: clip;
-  width: 85%;
+  width: 89%;
   border: none;
 
   font-weight: 700;
