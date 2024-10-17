@@ -12,13 +12,14 @@ import { useParams, useRouter } from "next/navigation";
 import { createContext, useState, useEffect } from "react";
 import { TCharacter } from "@/utils/APIs/types";
 
-function useUpdate<T,U>({updateFn, onMutate, onChange}:{
+function useUpdate<T,U>({updateFn, onMutate, onChange, character_id}:{
   updateFn: (workspace_id: string, chraacter_id:string) => (value: T) => Promise<void>,
   onMutate: (value: T) => void,
   onChange: (debouncedMutate: (value: T) => void) => U,
+  character_id: string,
 }) {
   const queryClient = useQueryClient();
-  const { workspace_id, character_id } = useParams<{ workspace_id: string, character_id: string }>();
+  const { workspace_id } = useParams<{ workspace_id: string}>();
   const { mutate, isPending } = useMutation({
     mutationFn: updateFn(workspace_id, character_id),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: workspaceQueryKeys.characterDetail(workspace_id, character_id) }),
@@ -28,10 +29,12 @@ function useUpdate<T,U>({updateFn, onMutate, onChange}:{
   return { onChange: onChange(debouncedMutate), isPending };
 }
 
-export function useCharacter() {
+export function useCharacter(characterId?: string) {
   const queryClient = useQueryClient();
   const router = useRouter();
-  const { workspace_id, character_id } = useParams<{ workspace_id: string, character_id: string }>();
+  const params = useParams<{ workspace_id: string, character_id: string }>();
+  const workspace_id = params.workspace_id;
+  const character_id = characterId ?? params.character_id;
   const { data, error, isLoading } = useQuery({
     queryKey: workspaceQueryKeys.characterDetail(workspace_id, character_id),
     queryFn: getCharacter(workspace_id, character_id),
@@ -50,7 +53,11 @@ export function useCharacter() {
         ch_name: value,
       }));
     },
-    onChange: (debouncedMutate) => (e: React.ChangeEvent<HTMLInputElement>) => debouncedMutate(e.target.value),
+    onChange: (debouncedMutate) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      console.log(e.target.value);
+      debouncedMutate(e.target.value);
+    },
+    character_id,
   });
 
   const { mutate: deleteCharacterMutation, isPending: isPendingDeleteCharacter } = useMutation({
@@ -70,6 +77,7 @@ export function useCharacter() {
       }));
     },
     onChange: (debouncedMutate) => (e: React.ChangeEvent<HTMLInputElement>) => debouncedMutate(e.target.value),
+    character_id,
   });
 
   const { onChange: onChangeBirthday, isPending: isPendingBirthday } = useUpdate({
@@ -81,6 +89,7 @@ export function useCharacter() {
       }));
     },
     onChange: (debouncedMutate) => (e: React.ChangeEvent<HTMLInputElement>) => debouncedMutate(e.target.value),
+    character_id,
   });
 
   const { onChange: onChangeGender, isPending: isPendingGender } = useUpdate({
@@ -92,6 +101,7 @@ export function useCharacter() {
       }));
     },
     onChange: (debouncedMutate) => (e: React.ChangeEvent<HTMLInputElement>) => debouncedMutate(e.target.value),
+    character_id,
   });
 
   const { onChange: onChangeDescription, isPending: isPendingDescription } = useUpdate({
@@ -103,6 +113,7 @@ export function useCharacter() {
       }));
     },
     onChange: (debouncedMutate) => (e: React.ChangeEvent<HTMLTextAreaElement>) => debouncedMutate(e.target.value),
+    character_id,
   });
 
   const { mutate: mutateAddKeyword, isPending: isPendingAddKeyword } = useMutation({

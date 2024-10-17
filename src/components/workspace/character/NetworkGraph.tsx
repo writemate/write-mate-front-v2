@@ -9,6 +9,7 @@ import { workspaceQueryKeys } from '@/utils/APIs/queryKeys';
 import { getCharacterList, getCharacterRelation } from '@/utils/APIs/workspace';
 import { CreateRelationButton } from '@/styles/workspace/Character.style';
 import { EditRelationProps } from '@/components/workspace/character/EditRelation';
+import CharacterDetail from '@/components/workspace/character/CharacterDetail';
 
 export type Node = {
   id: string;
@@ -128,6 +129,7 @@ const NetworkGraph = () => {
   const ref = useRef<SVGSVGElement | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [modalContent, setModalContent] = useState<null|EditRelationProps<true>|EditRelationProps<false>>(null);
+  const [characterModal, setcharacterModal] = useState<null|string>(null);
   const queryClient = useQueryClient();
   const { workspace_id } = useParams<{ workspace_id: string}>();
   const { data: relations, error, isLoading:isLoading2 } = useQuery({
@@ -315,7 +317,7 @@ const NetworkGraph = () => {
 
     // const node = graphGroup.append('g').selectAll('circle').data(nodes).enter().append('circle').attr('r', radius).attr('fill', '#C55858');
 
-    const nodeGroup = graphGroup.append('g').selectAll('g.node').data(nodes).enter().append('g').attr('class', 'node');
+    const nodeGroup = graphGroup.append('g').selectAll('g.node').data(nodes).enter().append('g').attr('class', 'node').attr('cursor', 'pointer');
 
     nodeGroup.append('circle').attr('r', radius).attr('fill', 'transparent');
 
@@ -372,6 +374,19 @@ const NetworkGraph = () => {
       .attr('stroke', 'black')
       .attr('stroke-width', 1)
       .text((d: any) => d.name);
+
+    nodeGroup.on('mouseenter', function (event, d) {
+      //테두리 추가
+      nodeGroup.filter((n) => n.id === d.id).append('circle').attr('r', radius + 5).attr('fill', 'transparent').attr('stroke', 'black').attr('stroke-width', 2);
+    })
+    .on('mouseleave', function (event, d) {
+      //테두리 삭제
+      const temp = nodeGroup.filter((n) => n.id === d.id).selectAll('circle');
+      temp.filter((_, i) => i === temp.size() - 1).remove();
+    })
+    .on('click', (event, d) => {
+      setcharacterModal(d.id);
+    });
 
     const computeLinkOffset = (sourceId: string, targetId: string) => {
       const duplicates = links.filter(
@@ -537,7 +552,7 @@ const NetworkGraph = () => {
     return () => {
       svg.selectAll('*').remove(); // 모든 자식 요소를 삭제
     };
-  }, [relations]);
+  }, [relations, characterList]);
 
   const onClickCreateModalOpen = () => {
     setModalContent({
@@ -566,6 +581,16 @@ const NetworkGraph = () => {
           />
         </Modal>
       )}
+      {characterModal && 
+        <Modal closeModal={()=>{
+          setcharacterModal(null);
+          queryClient.invalidateQueries({queryKey: workspaceQueryKeys.characterList(workspace_id)});
+        }} maxWidth={972} maxHeight={560}>
+          <div style={{width: '100%', height: '100%', background:"#fff", borderRadius:"8px", padding:"36px", overflowY:"auto"}}>
+            <CharacterDetail characterId={characterModal} />
+          </div>
+        </Modal>
+      }
     </div>
   );
 };
