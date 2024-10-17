@@ -1,8 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { workspaceQueryKeys } from "@/utils/APIs/queryKeys";
 import { getInfo, updateCoverImage, updateExpectedQuantity,
-  updateGenre, updateIntroduction, updateLogline, updateTitle, updateGrade,
-  addKeyword, removeKeyword } from "@/utils/APIs/workspace";
+  updateGenre, updateIntroduction, updateLogline, updateTitle, updateGrade, } from "@/utils/APIs/workspace";
 import { debounce } from "@/utils";
 import { useParams } from "next/navigation";
 import { createContext } from "react";
