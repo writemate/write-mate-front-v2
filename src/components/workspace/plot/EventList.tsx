@@ -20,7 +20,11 @@ export const EventList = ({ pevent }: EventListProps) => {
     <DragDropContext onDragEnd={handleDragAndDrop}>
       <Droppable droppableId="eventList">
         {(provided) => (
-          <div {...provided.droppableProps} ref={provided.innerRef}>
+          <div
+            style={{ width: "100%" }}
+            {...provided.droppableProps}
+            ref={provided.innerRef}
+          >
             {eventList.map((event, index) => (
               <Draggable key={event._id} draggableId={event._id} index={index}>
                 {(provided) => (
