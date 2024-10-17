@@ -94,6 +94,7 @@ export default function QuillEditor({
 
       quill.on("text-change", () => {
         const onelineheight = () => {
+          console.log(quill.editor.delta);
           const pElement = editor.querySelector(".ql-editor p");
           if (pElement) {
             const computedStyle = window.getComputedStyle(pElement);
@@ -110,7 +111,7 @@ export default function QuillEditor({
           return 0;
         };
         const currentLine =
-          parseFloat("200") +
+          parseFloat("50") +
           editorContainerPaddingTop() +
           parseFloat("12") +
           onelineheight() * getCursorLineNumber();

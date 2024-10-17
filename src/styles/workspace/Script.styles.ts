@@ -73,12 +73,9 @@ export const EditorContainer = styled.div`
     border: none !important;
   }
 
-  .ql-editor {
+  .ql-editor * {
     font-size: 11pt;
-
-    p {
-      font-family: "NanumGothic" !important;
-    }
+    font-family: "NanumGothic";
   }
 
   .ql-font-nanum-myeongjo {
