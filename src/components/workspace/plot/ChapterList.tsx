@@ -89,7 +89,11 @@ export default function ChapterList({
       <DragDropContext onDragEnd={handleDragAndDrop}>
         <Droppable droppableId="chapterList">
           {(provided) => (
-            <div {...provided.droppableProps} ref={provided.innerRef}>
+            <div
+              style={{ width: "100%" }}
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
               {chapterList.map((chapter, index) =>
                 chapter ? (
                   <Draggable

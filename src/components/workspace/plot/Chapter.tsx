@@ -110,31 +110,26 @@ const AddButton = styled.button`
 `;
 
 const TitleInput = styled.input`
-  width: 823px;
   height: 36px;
   text-overflow: clip;
+  width: 85%;
   border: none;
 
   font-weight: 700;
   font-size: 24px;
   line-height: 150%;
   display: inline-block;
-  align-items: center;
 
   margin-bottom: 8px;
 
-  color: #353535;
-
-  flex: none;
-  order: 1;
-  flex-grow: 0;
-  z-index: 1;
+  color: ${colorSystem.gray900};
 `;
 
 const ContentTextArea = styled.textarea`
   border: none;
-  width: 952px;
   height: 24px;
+  resize: none;
+  width: 95%;
 
   font-weight: 600;
   font-size: 16px;
@@ -143,10 +138,5 @@ const ContentTextArea = styled.textarea`
   display: flex;
   align-items: center;
 
-  color: #353535;
-
-  flex: none;
-  order: 1;
-  align-self: stretch;
-  flex-grow: 0;
+  color: ${colorSystem.gray900};
 `;

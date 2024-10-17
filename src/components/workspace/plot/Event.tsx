@@ -31,6 +31,7 @@ export default function Event({
             marginLeft: "31px",
             display: "flex",
             flexDirection: "column",
+            width: "100%",
           }}
         >
           <div style={{ flexDirection: "row" }}>
@@ -82,7 +83,6 @@ const EventContainer = styled.div`
   align-items: center;
   padding: 0px;
 
-  width: 952px;
   height: 139px;
   margin: 0 40px 12px 20px;
 
@@ -98,8 +98,8 @@ const EventContainer = styled.div`
 `;
 
 const EventTitle = styled.input`
-  width: 911px;
   height: 30px;
+  width: 95%;
   font-family: "Pretendard";
   font-style: normal;
   font-weight: 700;
@@ -121,9 +121,10 @@ const EventTitle = styled.input`
 `;
 
 const EventDescription = styled.textarea`
-  width: 886px;
   height: 24px;
+  width: 95%;
   background: transparent;
+  resize: none;
 
   border: none;
 
