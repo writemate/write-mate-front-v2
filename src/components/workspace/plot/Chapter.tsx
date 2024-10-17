@@ -1,7 +1,13 @@
-import { colorSystem } from "@/styles/colorSystem";
-import { ChapterContainer } from "@/styles/workspace/plot/Chapter.styles";
+import {
+  AddButton,
+  ChapterContainer,
+  ChapterMargin,
+  ContentTextArea,
+  IconButton,
+  OpenContainer,
+  TitleInput,
+} from "@/styles/workspace/plot/Chapter.styles";
 import { TPlotEvent } from "@/utils/APIs/types";
-import styled from "styled-components";
 import { EventList } from "./EventList";
 import { useEffect, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
@@ -42,10 +48,8 @@ export default function Chapter({
 
   return (
     <ChapterContainer isOpenAlone={isOpenAlone}>
-      <div
-        style={{ marginLeft: "40px", marginTop: "16px", marginRight: "20px" }}
-      >
-        <div style={{ width: "100%" }}>
+      <ChapterMargin>
+        <div>
           <TitleInput
             value={chapterName}
             placeholder="챕터 제목을 적어주세요."
@@ -69,75 +73,14 @@ export default function Chapter({
           placeholder="챕터 내용을 적어주세요."
         />
         {isOpenAlone && (
-          <div
-            style={{
-              display: "grid",
-              justifyItems: "center",
-              margin: "20px 0px",
-            }}
-          >
+          <OpenContainer>
             <EventList pevent={pevent} />
             <AddButton>
               <Add />
             </AddButton>
-          </div>
+          </OpenContainer>
         )}
-      </div>
+      </ChapterMargin>
     </ChapterContainer>
   );
 }
-
-export const IconButton = styled.button`
-  width: 32px;
-  font-size: 18px;
-  background: transparent;
-  border: none;
-  color: ${colorSystem.gray300};
-  cursor: pointer;
-`;
-
-const AddButton = styled.button`
-  cursor: pointer;
-  padding: 4.46538px;
-  width: 23.82px;
-  height: 23.82px;
-  border: none;
-  margin-top: 8px;
-
-  background: ${colorSystem.orange400};
-  box-shadow: 0px 0.992308px 2.97692px rgba(0, 0, 0, 0.1),
-    0px 0.992308px 1.98462px -0.992308px rgba(0, 0, 0, 0.1);
-  border-radius: 50%;
-`;
-
-const TitleInput = styled.input`
-  height: 36px;
-  text-overflow: clip;
-  width: 89%;
-  border: none;
-
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 150%;
-  display: inline-block;
-
-  margin-bottom: 8px;
-
-  color: ${colorSystem.gray900};
-`;
-
-const ContentTextArea = styled.textarea`
-  border: none;
-  height: 24px;
-  resize: none;
-  width: 95%;
-
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 150%;
-
-  display: flex;
-  align-items: center;
-
-  color: ${colorSystem.gray900};
-`;
