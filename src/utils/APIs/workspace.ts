@@ -13,9 +13,10 @@ import { getChapterListMock, getPlotFolderListMock, updatePlotFolderMock,
   deleteCharacterKeywordMock, getCharacterRelationMock, createCharacterRelationMock, deleteCharacterRelationMock, updateCharacterRelationMock
  } from "./mock/workspace";
 import { TWork } from "./types";
+import { DOMAIN } from "./domain";
 
-export const getWork = (workId: string) => async () => {
-  const response = await axiosInstance.get<TWork>(`/api/works/${workId}`);
+export const getWork = (workId: string) => async (): Promise<TWork> => {
+  const response = await axiosInstance.get<TWork>(DOMAIN.GET_WORK(workId));
   return response.data;
 };
 
