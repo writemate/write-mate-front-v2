@@ -72,7 +72,39 @@ export default function QuillEditor({
       return 0;
     }
   };
+  // 커서의 위치와 현재 줄의 높이를 계산하는 함수
+  const getCursorMetrics = () => {
+    const quill = innerRef.current.getEditor();
+    const range = quill.getSelection();
+    if (range) {
+      // 현재 커서 위치의 범위를 기준으로 bounds를 계산합니다.
+      const bounds = quill.getBounds(range.index);
 
+      // 커서 위치가 editor 컨테이너의 top으로부터 얼마나 떨어져 있는지
+      const distanceFromTop = bounds.top;
+
+      // 커서가 위치한 줄의 p 태그의 높이 가져오기
+      const editorContainer = document.querySelector(
+        ".ql-editor"
+      ) as HTMLElement;
+      const lineElement = editorContainer.querySelector(
+        `p[data-line-index="${range.index}"]`
+      ) as HTMLElement;
+
+      // lineElement가 존재하는지 확인 후 높이 계산
+      const lineHeight = lineElement ? lineElement.scrollHeight : bounds.height;
+
+      console.log("커서가 top으로부터 떨어진 거리:", distanceFromTop);
+      console.log("현재 위치한 줄의 높이:", lineHeight);
+
+      return { distanceFromTop, lineHeight };
+    } else {
+      console.log("현재 선택된 범위가 없습니다.");
+      return null;
+    }
+  };
+
+  // Quill에서 내용이 변경될 때마다 커서 정보를
   useEffect(() => {
     const handleMouseDown = (event: any) => {
       const quillEditor = innerRef.current.getEditor().root;
@@ -91,10 +123,11 @@ export default function QuillEditor({
       const container = MainRef.current;
       const quill = innerRef.current.getEditor();
       const editor = innerRef.current.getEditor().root;
-
+      quill.on("text-change", getCursorMetrics);
+      quill.on("selection-change", getCursorMetrics);
       quill.on("text-change", () => {
         const onelineheight = () => {
-          console.log(quill.editor.delta);
+          //console.log(quill.editor.delta);
           const pElement = editor.querySelector(".ql-editor p");
           if (pElement) {
             const computedStyle = window.getComputedStyle(pElement);
