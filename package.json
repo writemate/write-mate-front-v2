@@ -15,6 +15,7 @@
     "firebase": "^10.12.5",
     "next": "^14.2.14",
     "quill": "^2.0.2",
+    "quill-paste-smart": "^2.0.0",
     "react": "^18",
     "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18",
