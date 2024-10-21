@@ -1,9 +1,10 @@
 "use client";
 import ReactQuill from "react-quill";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, Dispatch, SetStateAction } from "react";
 import { EditorContainer } from "@/styles/workspace/Script.styles";
 import "react-quill/dist/quill.snow.css";
 import { fontSize, font } from "./Toolbar";
+import { parse } from "path";
 
 export default function QuillEditor({
   innerRef,
@@ -41,26 +42,23 @@ export default function QuillEditor({
 
   const getCursorMetrics = () => {
     const quill = innerRef.current.getEditor();
-    const range = quill.getSelection();
-    const distanceFromTop = 0;
-    const lineHeight = 0;
+    var distanceFromTop = 0;
+    var lineHeight = 0;
 
-    if (range) {
+    const hasFocus = quill.hasFocus();
+    if (hasFocus) {
+      const range = quill.getSelection();
       const bounds = quill.getBounds(range.index);
-      const distanceFromTop = bounds.top;
       const editorContainer = document.querySelector(
         ".ql-editor"
       ) as HTMLElement;
       const lineElement = editorContainer.querySelector(
         `p.span[data-line-index="${range.index}"]`
       ) as HTMLElement;
-      const lineHeight = lineElement ? lineElement.offsetHeight : bounds.height;
-
-      console.log("커서가 top으로부터 떨어진 거리:", distanceFromTop);
-      console.log("현재 위치한 줄의 높이:", lineHeight);
-      return { distanceFromTop, lineHeight };
+      distanceFromTop = bounds.top;
+      lineHeight = lineElement ? lineElement.offsetHeight : bounds.height;
     }
-    return { distanceFromTop, lineHeight };
+    return { distanceFromTop, lineHeight, hasFocus };
   };
 
   const editorContainerPaddingTop = () => {
@@ -72,26 +70,40 @@ export default function QuillEditor({
     return 0;
   };
 
-  const controlScroll = () => {
+  const handleAutoScroll = () => {
+    // 1. 자동 스크롤 구현 (완료)
+    // 자동 스크롤이 일어나는 조건 : 커서가 활성화되어 있고, 현재 라인이 화면 밑에 가려져 있을 때
+    // 얼마나 스크롤 되는가? : 현재 라인을 가장 밑줄로 올리는 만큼 스크롤
+
+    // 2. 문제 1 : paste 이벤트 발생 자동 스크롤의 조건이 달성되지 않았으나 스크롤이 일어남
+    // 문제의 원인 : paste 이벤트 발생 시, 커서가 활성화되어 있지 않아도 quill editor 내부적으로 커서가 활성화되어 있음?
+
     const container = MainRef.current;
     const CursorMetrics = getCursorMetrics();
+
     const currentLine =
       parseFloat("50") +
       editorContainerPaddingTop() +
       parseFloat("12") +
-      CursorMetrics.distanceFromTop;
+      CursorMetrics.distanceFromTop +
+      CursorMetrics.lineHeight;
 
-    const shouldScroll =
-      currentLine - parseFloat(container.scrollTop) >
-      parseFloat(container.clientHeight) - 200;
+    const autoScrollStartThreshold =
+      parseFloat(container.scrollTop) +
+      parseFloat(container.clientHeight) -
+      editorContainerPaddingTop() * 0.7;
 
-    if (shouldScroll) {
-      container.scrollTo({
-        top: currentLine - container.clientHeight + 200,
-        behavior: "auto",
-      });
+    const isOverflow = currentLine >= autoScrollStartThreshold;
+
+    const targetAutoScrollTop =
+      currentLine + editorContainerPaddingTop() * 0.7 - container.clientHeight;
+
+    console.log(editorContainerPaddingTop(), isOverflow, targetAutoScrollTop);
+    if (isOverflow) {
+      container.scrollTo(0, targetAutoScrollTop);
     }
   };
+
   const handleMouseDown = (event: any) => {
     const quillEditor = innerRef.current.getEditor().root;
     if (quillEditor && quillEditor.contains(event.target)) {
@@ -106,7 +118,13 @@ export default function QuillEditor({
 
     if (innerRef.current) {
       const quill = innerRef.current.getEditor();
-      quill.on("text-change", controlScroll);
+      quill.on("editor-change", (eventName: string, ...args: any[]) => {
+        if (eventName === "text-change") {
+        } else if (eventName === "selection-change") {
+          console.log("selection-change");
+          handleAutoScroll();
+        }
+      });
     }
 
     return () => {
@@ -121,7 +139,7 @@ export default function QuillEditor({
         onChange={handleChange}
         modules={modules}
         theme="snow"
-        scrollingContainer="html"
+        scrollingContainer={MainRef.current ?? undefined}
         placeholder="내용을 입력하세요."
         ref={innerRef}
       ></ReactQuill>

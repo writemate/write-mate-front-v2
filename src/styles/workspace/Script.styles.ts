@@ -91,10 +91,7 @@ export const EditorContainer = styled.div`
   }
 
   .ql-clipboard {
-    position: fixed !important;
-    left: 50% !important;
-    top: 50% !important;
-    display: none;
+    position: fixed;
   }
 `;
 
