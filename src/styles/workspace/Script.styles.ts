@@ -91,7 +91,7 @@ export const EditorContainer = styled.div`
   }
 
   .ql-clipboard {
-    position: fixed;
+    display: none;
   }
 `;
 
