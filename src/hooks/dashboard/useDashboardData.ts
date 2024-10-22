@@ -6,7 +6,7 @@ export default function useDashboardData() {
   const queryClient = useQueryClient();
   const { data, error, isLoading } = useQuery({
     queryKey: dashboardQueryKeys.workStudio(),
-    queryFn: getWorkStudio,
+    queryFn: getWorkStudio(),
   });
 
   const { mutate, isPending: isAdding } = useMutation({
