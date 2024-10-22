@@ -1,10 +1,9 @@
 "use client";
 import ReactQuill from "react-quill";
-import { useState, useRef, useEffect, Dispatch, SetStateAction } from "react";
+import { useState, useRef, useEffect, Dispatch, SetStateAction, useCallback } from "react";
 import { EditorContainer } from "@/styles/workspace/Script.styles";
 import "react-quill/dist/quill.snow.css";
 import { fontSize, font } from "./Toolbar";
-import { parse } from "path";
 
 export default function QuillEditor({
   innerRef,
@@ -113,24 +112,47 @@ export default function QuillEditor({
     }
   };
 
+  
   useEffect(() => {
     document.addEventListener("mousedown", handleMouseDown);
-
-    if (innerRef.current) {
-      const quill = innerRef.current.getEditor();
-      quill.on("editor-change", (eventName: string, ...args: any[]) => {
-        if (eventName === "text-change") {
-        } else if (eventName === "selection-change") {
-          console.log("selection-change");
-          handleAutoScroll();
-        }
-      });
-    }
-
     return () => {
       document.removeEventListener("mousedown", handleMouseDown);
     };
   }, []);
+  
+  const [cursorPositionAfterPaste, setCursorPositionAfterPaste] = useState<number | null>(null);
+  const isPasted = cursorPositionAfterPaste !== null;
+
+  const handleEditorChange = useCallback((quill:any)=>(eventName: string, ...args: any[]) => {
+    if (eventName === "selection-change") {
+      if(isPasted){
+        quill.setSelection(cursorPositionAfterPaste);
+        setCursorPositionAfterPaste(null);
+      }
+      handleAutoScroll();
+      return;
+    }
+    if (eventName === "text-change") {
+      console.log(args[0]);
+      if(args[0].ops.length !== 2) return;
+      const retain = args[0].ops[0].retain;
+      if(retain === undefined) return;
+      const insert = args[0].ops[1].insert;
+      if(insert === undefined) return;
+      if(insert.length < 2) return;
+      setCursorPositionAfterPaste(retain + insert.length);
+    }
+  }, [cursorPositionAfterPaste]);
+
+  useEffect(() => {
+    if (!innerRef.current) return;
+    const quill = innerRef.current.getEditor();
+    const handler = handleEditorChange(quill);
+    quill.on("editor-change", handler);
+    return () => {
+      quill.off("editor-change", handler);
+    };
+  }, [innerRef.current, handleEditorChange]);
 
   return (
     <EditorContainer ref={containerRef}>
