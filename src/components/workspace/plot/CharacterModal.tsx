@@ -1,5 +1,4 @@
 import useClickAway from "@/hooks/workspace/plot/useClickAway";
-import { TCharacter } from "@/utils/APIs/types";
 import { useState } from "react";
 import Circulation from "@/assets/workspace/characterModal/circulation.svg";
 import Check from "@/assets/workspace/characterModal/check.svg";
@@ -10,10 +9,12 @@ import {
   CharacterDefaultBtn,
   ModalContainer,
 } from "@/styles/workspace/plot/CharacterModal.styles";
+import showToastMessage from "@/hooks/workspace/plot/showToastMessage";
+import { mockCharacterList, PlotCharacterType } from "@/utils/APIs/mock/plot";
 
 interface CharacterModalProps {
   onClose: () => void;
-  character: TCharacter[];
+  character: PlotCharacterType[];
 }
 
 export default function CharacterModal({
@@ -23,23 +24,34 @@ export default function CharacterModal({
   const ref = useClickAway(() => {
     onClose();
   });
+
   const [selectCharacters, setSelectCharacter] =
-    useState<TCharacter[]>(character);
+    useState<PlotCharacterType[]>(character);
 
   // 자동연동
   const handleAutoChatacter = () => {};
 
   // 전체 캐릭터 리스트 가져오기
-  const { characterList } = useCharacterList();
-  console.log(characterList);
+  //const { characterList } = useCharacterList();
+  const characterList = mockCharacterList;
+  console.log(selectCharacters, characterList);
 
-  // 토스트알림
+  const remainingCharacters = characterList.filter(
+    (character) =>
+      !selectCharacters.some((selected) => selected.id === character.id)
+  );
 
   // 캐릭터 선택
-  const handleAddCharacter = () => {};
+  const handleAddCharacter = () => {
+    console.log("select");
+    showToastMessage("인물이 추가되었습니다.", "success");
+  };
 
   // 캐릭터 선택 취소
-  const handleDeleteCharacter = () => {};
+  const handleDeleteCharacter = () => {
+    console.log("delete");
+    showToastMessage("인물이 삭제되었습니다", "success");
+  };
 
   return (
     <ModalContainer ref={ref}>
@@ -48,37 +60,27 @@ export default function CharacterModal({
           <Circulation style={{ marginRight: "6px" }} />
           자동 연동
         </AutoBtn>
-        {characterList?.map((character) => {
-          return selectCharacters.map((selectCharacter) => {
-            return (
-              character._id === selectCharacter._id && (
-                <CharacterCheckBtn
-                  onClick={handleDeleteCharacter}
-                  key={character._id}
-                >
-                  <Check style={{ marginRight: "6px" }} />
-                  {character.ch_name}
-                </CharacterCheckBtn>
-              )
-            );
-          });
-        })}
+        {selectCharacters.map((selectCharacter) => (
+          <CharacterCheckBtn
+            type="button"
+            onClick={handleDeleteCharacter}
+            key={selectCharacter.id}
+          >
+            <Check style={{ marginRight: "6px" }} />
+            {selectCharacter.ch_name}
+          </CharacterCheckBtn>
+        ))}
       </div>
       <div>
-        {characterList?.map((character) => {
-          return selectCharacters.map((selectCharacter) => {
-            return (
-              character._id !== selectCharacter._id && (
-                <CharacterDefaultBtn
-                  onClick={handleAddCharacter}
-                  key={character._id}
-                >
-                  {character.ch_name}
-                </CharacterDefaultBtn>
-              )
-            );
-          });
-        })}
+        {remainingCharacters?.map((character) => (
+          <CharacterDefaultBtn
+            type="button"
+            onClick={handleAddCharacter}
+            key={character.id}
+          >
+            {character.ch_name}
+          </CharacterDefaultBtn>
+        ))}
       </div>
     </ModalContainer>
   );

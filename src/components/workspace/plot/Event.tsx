@@ -1,4 +1,3 @@
-import { TCharacter, TPlotEventCharacter } from "@/utils/APIs/types";
 import { useRef, useState } from "react";
 import CharacterModal from "./CharacterModal";
 import DeleteIcon from "@/assets/workspace/plot/delete.svg";
@@ -11,11 +10,12 @@ import {
   EventDescription,
   EventTitle,
 } from "@/styles/workspace/plot/Event.styles";
+import { PlotCharacterType } from "@/utils/APIs/mock/plot";
 
 interface EventProps {
   eventName: string;
   eventDescription: string;
-  eventCharacter: TCharacter[];
+  eventCharacter: PlotCharacterType[];
 }
 
 export default function Event({
