@@ -18,8 +18,8 @@ export default function Dashboard() {
         <div>
           <h2>작업실</h2>
           {data.map((work,i) => (
-            <Link key={i+1} href={`/${work._id}/info`} passHref>
-              <div>{work.work_name}</div>
+            <Link key={i+1} href={`/${work.id}/info`} passHref>
+              <div>{work.title}</div>
             </Link>
           ))}
           {isAdding && <p>작업실 추가 중...</p>}

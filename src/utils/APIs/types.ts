@@ -151,11 +151,10 @@ export type TUser = {
  * 설정집 타입
  */
 export type TWork = {
-  _id: string;
-  work_name: string;
-  category: string;
-  work_image: string;
-  last_modify_date: string; // ISO 날짜 문자열로 정의
+  id: string;
+  title: string;
+  cover: string;
+  updatedAt: string; // ISO 날짜 문자열로 정의
 };
 
 /**
