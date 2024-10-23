@@ -168,11 +168,11 @@ export type CreateWorkRes = {
 /**
  * 설정집 카테고리
  */
-export const category = {
+export const workspaceCategory = {
   before: 'before',
   ongoing: 'ongoing',
   completed: 'completed',
-};
+} as const;
 
 /**
  * 설정집 인물 타입
@@ -189,7 +189,7 @@ export type TWorkCharacter = {
   created_at: string;
 };
 
-export type TWorkCategory = (typeof category)[keyof typeof category];
+export type TWorkCategory = (typeof workspaceCategory)[keyof typeof workspaceCategory];
 
 export type TSynopsis = {
   _id: string;

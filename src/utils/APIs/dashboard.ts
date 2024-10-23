@@ -1,8 +1,9 @@
 import axiosInstance from "./axiosInstance";
 import { DOMAIN } from "./domain";
 import { TWork } from "./types";
+import { workspaceCategory } from "./types";
 
-export const getWorkStudio = (category: "before" | "ongoing" | "delete" = "before") => async () => {
+export const getWorkStudio = (category: typeof workspaceCategory[keyof typeof workspaceCategory] = "before") => async () => {
   const response = await axiosInstance.get<TWork[]>(DOMAIN.GET_WORKLIST(category));
   return response.data;
 };
