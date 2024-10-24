@@ -1,4 +1,3 @@
-
 import { all } from "axios";
 export const dashboardQueryKeys = {
   all: ["dashboard"] as const,
@@ -30,9 +29,15 @@ export const workspaceQueryKeys = {
   mainPlot: (id: string) =>
     [...workspaceQueryKeys.info(id), "mainPlot"] as const,
 
-  character: (id:string) => [...workspaceQueryKeys.all, 'character', id] as const,
-  characterList: (id:string) => [...workspaceQueryKeys.character(id), 'list'] as const,
-  characterKeywordList: (id:string) => [...workspaceQueryKeys.character(id), 'keyword'] as const,
-  characterDetail: (id:string, characterId:string) => [...workspaceQueryKeys.character(id), characterId] as const,
+  character: (id: string) =>
+    [...workspaceQueryKeys.all, "character", id] as const,
+  characterList: (id: string) =>
+    [...workspaceQueryKeys.character(id), "list"] as const,
+  characterKeywordList: (id: string) =>
+    [...workspaceQueryKeys.character(id), "keyword"] as const,
+  characterDetail: (id: string, characterId: string) =>
+    [...workspaceQueryKeys.character(id), characterId] as const,
   characterRelation: (id:string) => [...workspaceQueryKeys.character(id), 'relation'] as const,
-}
+
+  characterModal: (id: string) => [...workspaceQueryKeys.all, id] as const,
+};
