@@ -54,7 +54,14 @@ export default function CharacterModal({
 
   return (
     <ModalContainer ref={ref}>
-      <div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-start",
+          flexDirection: "row",
+          flexWrap: "wrap",
+        }}
+      >
         <AutoBtn onClick={handleAutoChatacter}>
           <Circulation style={{ marginRight: "6px" }} />
           자동 연동

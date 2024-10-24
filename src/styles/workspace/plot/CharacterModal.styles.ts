@@ -2,7 +2,7 @@ import { colorSystem } from "@/styles/colorSystem";
 import styled from "styled-components";
 
 export const AutoBtn = styled.button`
-  display: inline-block;
+  display: flex;
   padding: 12px 20px 12px 16px;
   margin: 0 18px 20px 0;
 
@@ -40,6 +40,7 @@ export const CharacterDefaultBtn = styled.button`
 
 export const CharacterCheckBtn = styled(CharacterDefaultBtn)`
   color: ${colorSystem.orange400};
+  background-color: ${colorSystem.orange75};
   border-color: ${colorSystem.orange400};
 `;
 
