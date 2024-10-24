@@ -49,12 +49,13 @@ export const ModalContainer = styled.div`
   align-items: flex-start;
   padding: 30px;
   gap: 10px;
+  z-index: 1;
 
   position: absolute;
   width: 564px;
 
-  left: calc(50% - 564px / 2 - 108px);
-  top: calc(50% - 168px / 2 - 108px);
+  left: 40px;
+  top: 90px;
 
   background: #ffffff;
   box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.25);

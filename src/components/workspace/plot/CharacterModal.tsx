@@ -1,5 +1,5 @@
 import useClickAway from "@/hooks/workspace/plot/useClickAway";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Circulation from "@/assets/workspace/characterModal/circulation.svg";
 import Check from "@/assets/workspace/characterModal/check.svg";
 import { useCharacterList } from "@/hooks/workspace/character/useCharacterList";
@@ -34,7 +34,6 @@ export default function CharacterModal({
   // 전체 캐릭터 리스트 가져오기
   //const { characterList } = useCharacterList();
   const characterList = mockCharacterList;
-  console.log(selectCharacters, characterList);
 
   const remainingCharacters = characterList.filter(
     (character) =>

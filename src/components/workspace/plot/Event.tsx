@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CharacterModal from "./CharacterModal";
 import DeleteIcon from "@/assets/workspace/plot/delete.svg";
 import ChooseCharacter from "@/assets/workspace/plot/choosecharacter.svg";
@@ -30,7 +30,7 @@ export default function Event({
   //const deleteEvent = useMutation();
 
   return (
-    <>
+    <div style={{ position: "relative" }}>
       <EventContainer>
         <EventColumnContainer>
           <div>
@@ -58,6 +58,6 @@ export default function Event({
           onClose={() => setModal(false)}
         />
       )}
-    </>
+    </div>
   );
 }
