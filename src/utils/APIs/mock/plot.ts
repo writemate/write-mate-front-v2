@@ -2,16 +2,20 @@ export interface responseGetPlotType {
   id: string;
   plot_name: string;
   chapters: PlotChapterType[];
-  is_starred: boolean;
-  is_folded: boolean;
 }
 
 export type PlotChapterType = {
   id: string;
+  autor: string;
   chapter_name: string;
   chapter_description: string;
+  work_id: string;
+  is_starred: boolean;
   order: number;
-  pevent: PlotEventType[];
+  pevent_list: PlotEventType[];
+  createdAt: string;
+  updatedAt: string;
+  is_folded: boolean;
 };
 
 export type PlotEventType = {
@@ -106,10 +110,13 @@ export const mockPlotList: responseGetPlotType = {
   chapters: [
     {
       id: "12",
+      autor: "skfsfjkd",
+      is_starred: false,
       chapter_name: "사랑",
       chapter_description: "사랑해라",
+      work_id: "gkgkgk",
       order: 0,
-      pevent: [
+      pevent_list: [
         {
           id: "1",
           event_description: "ㅋㅋ",
@@ -168,13 +175,19 @@ export const mockPlotList: responseGetPlotType = {
           character_list: [],
         },
       ],
+      createdAt: "string;",
+      updatedAt: "string;",
+      is_folded: false,
     },
     {
       id: "13",
       chapter_name: "사랑ss",
+      is_starred: false,
+      autor: "skfsfjkd",
+      work_id: "gkgkgk",
       chapter_description: "사랑해라",
       order: 0,
-      pevent: [
+      pevent_list: [
         {
           id: "1",
           event_description: "ㅋㅋ",
@@ -188,8 +201,9 @@ export const mockPlotList: responseGetPlotType = {
           character_list: [],
         },
       ],
+      createdAt: "string;",
+      updatedAt: "string;",
+      is_folded: true,
     },
   ],
-  is_starred: true,
-  is_folded: true,
 };

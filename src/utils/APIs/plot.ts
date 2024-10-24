@@ -1,15 +1,21 @@
 import { TPlot } from "./types";
 import axiosInstance from "./axiosInstance";
 import { DOMAIN } from "./domain";
-import { ChapterType, responseGetPlotType } from "./mock/plot";
+import {
+  PlotChapterType,
+  PlotCharacterType,
+  responseGetPlotType,
+} from "./mock/plot";
 
 /**
  * 모든 플롯 가져오기
  * @param workId
  * @returns chapter[]
  */
-export const getPlots = async (workId: string): Promise<ChapterType[]> => {
-  const response = await axiosInstance.get<ChapterType[]>(
+export const getPlots = async (
+  workId: string
+): Promise<responseGetPlotType> => {
+  const response = await axiosInstance.get<responseGetPlotType>(
     DOMAIN.GET_PLOT(workId)
   );
 
@@ -25,8 +31,8 @@ export const getPlots = async (workId: string): Promise<ChapterType[]> => {
 export const createChapter = async (
   plotId: string,
   order: number
-): Promise<ChapterType> => {
-  const response = await axiosInstance.post<ChapterType>(
+): Promise<PlotChapterType> => {
+  const response = await axiosInstance.post<PlotChapterType>(
     DOMAIN.CREATE_CHAPTER(plotId),
     {
       order: order,
@@ -133,14 +139,39 @@ export const updateEvent = async (
   eventName?: string,
   eventDescription?: string,
   order?: number
-): Promise<TPlot> => {
-  const response = await axiosInstance.patch<TPlot>(
+): Promise<PlotCharacterType> => {
+  const response = await axiosInstance.patch<PlotCharacterType>(
     DOMAIN.UPDATE_EVENT(peventId),
     {
       evnet_name: eventName,
       event_description: eventDescription,
       order: order,
     }
+  );
+
+  return response.data;
+};
+
+/**
+ * 사건에 인물 수동 할당하기
+ */
+export const addCharacter = async (peventId: string, characterId: string) => {
+  const response = await axiosInstance.patch<TPlot>(
+    DOMAIN.UPDATE_EVENT_CHARACTER(peventId, characterId)
+  );
+
+  return response.data;
+};
+
+/**
+ * 사건에 인물 할당 해제하기
+ */
+export const deleteCharacter = async (
+  peventId: string,
+  characterId: string
+) => {
+  const response = await axiosInstance.delete<void>(
+    DOMAIN.UPDATE_EVENT_CHARACTER(peventId, characterId)
   );
 
   return response.data;
