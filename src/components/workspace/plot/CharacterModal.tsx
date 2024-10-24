@@ -8,6 +8,7 @@ import {
   CharacterCheckBtn,
   CharacterDefaultBtn,
   ModalContainer,
+  SelectBtnWrapper,
 } from "@/styles/workspace/plot/CharacterModal.styles";
 import showToastMessage from "@/hooks/workspace/plot/showToastMessage";
 import { mockCharacterList, PlotCharacterType } from "@/utils/APIs/mock/plot";
@@ -54,14 +55,7 @@ export default function CharacterModal({
 
   return (
     <ModalContainer ref={ref}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "flex-start",
-          flexDirection: "row",
-          flexWrap: "wrap",
-        }}
-      >
+      <SelectBtnWrapper>
         <AutoBtn onClick={handleAutoChatacter}>
           <Circulation style={{ marginRight: "6px" }} />
           자동 연동
@@ -76,7 +70,7 @@ export default function CharacterModal({
             {selectCharacter.ch_name}
           </CharacterCheckBtn>
         ))}
-      </div>
+      </SelectBtnWrapper>
       <div>
         {remainingCharacters?.map((character) => (
           <CharacterDefaultBtn

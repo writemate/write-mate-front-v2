@@ -1,6 +1,13 @@
 import { colorSystem } from "@/styles/colorSystem";
 import styled from "styled-components";
 
+export const SelectBtnWrapper = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+`;
+
 export const AutoBtn = styled.button`
   display: flex;
   padding: 12px 20px 12px 16px;
