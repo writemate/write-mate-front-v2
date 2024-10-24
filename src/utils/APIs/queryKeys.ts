@@ -37,6 +37,7 @@ export const workspaceQueryKeys = {
     [...workspaceQueryKeys.character(id), "keyword"] as const,
   characterDetail: (id: string, characterId: string) =>
     [...workspaceQueryKeys.character(id), characterId] as const,
+  characterRelation: (id:string) => [...workspaceQueryKeys.character(id), 'relation'] as const,
 
   characterModal: (id: string) => [...workspaceQueryKeys.all, id] as const,
 };

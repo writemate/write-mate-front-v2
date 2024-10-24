@@ -1,8 +1,8 @@
-'use client';
-import { MainContainer } from '@/styles';
-import { useLogin } from '@/stores/useLogin';
-import useDashboardData from '@/hooks/dashboard/useDashboardData';
-import Link from 'next/link';
+"use client";
+import { MainContainer } from "@/styles";
+import { useLogin } from "@/stores/useLogin";
+import useDashboardData from "@/hooks/dashboard/useDashboardData";
+import Link from "next/link";
 
 export default function Dashboard() {
   const user = useLogin((state) => state.user)!;
@@ -17,17 +17,13 @@ export default function Dashboard() {
       {data && (
         <div>
           <h2>작업실</h2>
-          {data.map((work,i) => (
-            <Link key={i+1} href={`/${work._id}/info`} passHref>
+          {data.map((work, i) => (
+            <Link key={i + 1} href={`/${work._id}/info`} passHref>
               <div>{work.work_name}</div>
             </Link>
           ))}
           {isAdding && <p>작업실 추가 중...</p>}
-          {!isAdding && (
-            <button onClick={() => mutate()}>
-              작업실 추가
-            </button>
-          )}
+          {!isAdding && <button onClick={() => mutate()}>작업실 추가</button>}
         </div>
       )}
     </MainContainer>

@@ -4,20 +4,22 @@ import { getCharacter, updateCharacterName, updateCharacterRole, updateCharacter
   updateCharacterBirthday, addCharacterKeyword, removeCharacterKeyword,
   updateCharacterCoverImage, addCharacterCharacteristic, updateCharacterCharacteristicTitle,
   removeCharacterCharacteristic, updateCharacterCharacteristicContent,
-  updateCharacterDescription, deleteCharacter
+  updateCharacterDescription, deleteCharacter,
+  getCharacterKeywordList
 } from "@/utils/APIs/workspace";
 import { debounce } from "@/utils";
 import { useParams, useRouter } from "next/navigation";
-import { createContext } from "react";
+import { createContext, useState, useEffect } from "react";
 import { TCharacter } from "@/utils/APIs/types";
 
-function useUpdate<T,U>({updateFn, onMutate, onChange}:{
+function useUpdate<T,U>({updateFn, onMutate, onChange, character_id}:{
   updateFn: (workspace_id: string, chraacter_id:string) => (value: T) => Promise<void>,
   onMutate: (value: T) => void,
   onChange: (debouncedMutate: (value: T) => void) => U,
+  character_id: string,
 }) {
   const queryClient = useQueryClient();
-  const { workspace_id, character_id } = useParams<{ workspace_id: string, character_id: string }>();
+  const { workspace_id } = useParams<{ workspace_id: string}>();
   const { mutate, isPending } = useMutation({
     mutationFn: updateFn(workspace_id, character_id),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: workspaceQueryKeys.characterDetail(workspace_id, character_id) }),
@@ -27,13 +29,20 @@ function useUpdate<T,U>({updateFn, onMutate, onChange}:{
   return { onChange: onChange(debouncedMutate), isPending };
 }
 
-export function useCharacter() {
+export function useCharacter(characterId?: string) {
   const queryClient = useQueryClient();
   const router = useRouter();
-  const { workspace_id, character_id } = useParams<{ workspace_id: string, character_id: string }>();
+  const params = useParams<{ workspace_id: string, character_id: string }>();
+  const workspace_id = params.workspace_id;
+  const character_id = characterId ?? params.character_id;
   const { data, error, isLoading } = useQuery({
     queryKey: workspaceQueryKeys.characterDetail(workspace_id, character_id),
     queryFn: getCharacter(workspace_id, character_id),
+  });
+
+  const { data: keywordList, isLoading: isKeywordsLoading } = useQuery({
+    queryKey: workspaceQueryKeys.characterKeywordList(workspace_id),
+    queryFn: getCharacterKeywordList(workspace_id),
   });
 
   const { onChange: onChangeName, isPending: isPendingName } = useUpdate({
@@ -44,7 +53,11 @@ export function useCharacter() {
         ch_name: value,
       }));
     },
-    onChange: (debouncedMutate) => (e: React.ChangeEvent<HTMLInputElement>) => debouncedMutate(e.target.value),
+    onChange: (debouncedMutate) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      console.log(e.target.value);
+      debouncedMutate(e.target.value);
+    },
+    character_id,
   });
 
   const { mutate: deleteCharacterMutation, isPending: isPendingDeleteCharacter } = useMutation({
@@ -64,6 +77,7 @@ export function useCharacter() {
       }));
     },
     onChange: (debouncedMutate) => (e: React.ChangeEvent<HTMLInputElement>) => debouncedMutate(e.target.value),
+    character_id,
   });
 
   const { onChange: onChangeBirthday, isPending: isPendingBirthday } = useUpdate({
@@ -75,6 +89,7 @@ export function useCharacter() {
       }));
     },
     onChange: (debouncedMutate) => (e: React.ChangeEvent<HTMLInputElement>) => debouncedMutate(e.target.value),
+    character_id,
   });
 
   const { onChange: onChangeGender, isPending: isPendingGender } = useUpdate({
@@ -86,6 +101,7 @@ export function useCharacter() {
       }));
     },
     onChange: (debouncedMutate) => (e: React.ChangeEvent<HTMLInputElement>) => debouncedMutate(e.target.value),
+    character_id,
   });
 
   const { onChange: onChangeDescription, isPending: isPendingDescription } = useUpdate({
@@ -97,6 +113,7 @@ export function useCharacter() {
       }));
     },
     onChange: (debouncedMutate) => (e: React.ChangeEvent<HTMLTextAreaElement>) => debouncedMutate(e.target.value),
+    character_id,
   });
 
   const { mutate: mutateAddKeyword, isPending: isPendingAddKeyword } = useMutation({
@@ -109,7 +126,15 @@ export function useCharacter() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: workspaceQueryKeys.characterDetail(workspace_id, character_id) }),
   });
 
-  const onClickRemoveKeyword = (id: string) => mutateRemoveKeyword(id);
+  const onClickRemoveKeyword = (id: string) => () => mutateRemoveKeyword(id);
+
+  const [ characteristicList, setCharacteristicList ] = useState<TCharacter["characteristic"]>([]);
+
+  useEffect(() => {
+    if(data) {
+      setCharacteristicList(data.characteristic);
+    }
+  }, [data]);
 
   const { mutate: mutateAddCharacteristic, isPending: isPendingAddCharacteristic } = useMutation({
     mutationFn: addCharacterCharacteristic(workspace_id, character_id),
@@ -125,27 +150,27 @@ export function useCharacter() {
 
   const onClickRemoveCharacteristic = (index: number) => () => mutateRemoveCharacteristic(index);
 
-  const { onChange: onChangeCharacteristicTitle, isPending: isPendingCharacteristicTitle } = useUpdate({
-    updateFn: updateCharacterCharacteristicTitle,
-    onMutate: ({ index, title }) => {
-      queryClient.setQueryData(workspaceQueryKeys.characterDetail(workspace_id, character_id), (prev: TCharacter) => ({
-        ...prev,
-        characteristic: prev.characteristic.map((c, i) => i === index ? { ...c, title } : c),
-      }));
-    },
-    onChange: (debouncedMutate) =>(index:number)=>(e: React.ChangeEvent<HTMLInputElement>) => debouncedMutate({index, title: e.target.value}),
+  const { mutate: characteristicTitleMutation, isPending: isPendingCharacteristicTitle } = useMutation({
+    mutationFn: updateCharacterCharacteristicTitle(workspace_id, character_id),
   });
 
-  const { onChange: onChangeCharacteristicContent, isPending: isPendingCharacteristicContent } = useUpdate({
-    updateFn: updateCharacterCharacteristicContent,
-    onMutate: ({ index, content }) => {
-      queryClient.setQueryData(workspaceQueryKeys.characterDetail(workspace_id, character_id), (prev: TCharacter) => ({
-        ...prev,
-        characteristic: prev.characteristic.map((c, i) => i === index ? { ...c, content } : c),
-      }));
-    },
-    onChange: (debouncedMutate) => (index:number)=>(e: React.ChangeEvent<HTMLInputElement>) => debouncedMutate({index, content: e.target.value}),
+  const debounceCharacteristicTitle = debounce(characteristicTitleMutation, 500);
+
+  const onChangeCharacteristicTitle = (index:number)=>(e: React.ChangeEvent<HTMLInputElement>) => {
+    setCharacteristicList((prev) => prev.map((c, i) => i === index ? { ...c, title: e.target.value } : c));
+    debounceCharacteristicTitle({index, title: e.target.value});
+  }
+
+  const { mutate: characteristicContentMutation, isPending: isPendingCharacteristicContent } = useMutation({
+    mutationFn: updateCharacterCharacteristicContent(workspace_id, character_id),
   });
+
+  const debounceCharacteristicContent = debounce(characteristicContentMutation, 500);
+
+  const onChangeCharacteristicContent = (index:number)=>(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setCharacteristicList((prev) => prev.map((c, i) => i === index ? { ...c, content: e.target.value } : c));
+    debounceCharacteristicContent({index, content: e.target.value});
+  }
   
   const { mutate: mutateCoverImage, isPending: isPendingCoverImage } = useMutation({
     mutationFn: updateCharacterCoverImage(workspace_id, character_id),
@@ -165,7 +190,8 @@ export function useCharacter() {
 
   return { data, error, isLoading, isPendingName, isPendingRole, isPendingGender, isPendingBirthday, isPendingDescription,
     isPendingAddKeyword, isPendingRemoveKeyword, isPendingAddCharacteristic, isPendingRemoveCharacteristic,
-    isPendingCharacteristicTitle, isPendingCharacteristicContent, isPendingCoverImage,
+    isPendingCharacteristicTitle, isPendingCharacteristicContent, isPendingCoverImage, characteristicList,
+    keywordList, isKeywordsLoading,
     onChangeName, onChangeRole, onChangeGender, onChangeBirthday, onChangeDescription,
     onClickRemoveKeyword, onClickAddCharacteristic, onClickRemoveCharacteristic,
     onChangeCharacteristicTitle, onChangeCharacteristicContent, onChangeCoverImage,
