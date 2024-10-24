@@ -44,6 +44,9 @@ const SideTabSVG = css<{ $isActivated?: boolean }>`
     stroke: ${({ $isActivated, theme }) =>
       $isActivated ? theme.color.orange400 : "#353535"};
   }
+
+  color: ${({ $isActivated, theme }) =>
+    $isActivated ? theme.color.orange400 : "#353535"};
 `;
 export const SideTabLink = styled(Link)<{ $isActivated?: boolean }>`
   ${SideTabSVG}

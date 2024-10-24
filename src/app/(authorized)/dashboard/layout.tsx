@@ -3,18 +3,8 @@ import {
   DashboardContainer,
   HeaderAndMainContainer,
   MainContainer,
-  SideTabContainer,
-  LogoLink,
-  SideTabLink,
-  SideTabMenu,
 } from "@/styles/dashboard/index";
-import Logo from "@/assets/dashboard/sideTab/logo.svg";
-import ActiveArtStudio from "@/assets/dashboard/sideTab/active/artStudio.svg";
-import ActiveIdeaLocker from "@/assets/dashboard/sideTab/active/ideaLocker.svg";
-import ActiveRecycleBin from "@/assets/dashboard/sideTab/active/recycleBin.svg";
-import InactiveArtStudio from "@/assets/dashboard/sideTab/inactive/artStudio.svg";
-import InactiveIdeaLocker from "@/assets/dashboard/sideTab/inactive/ideaLocker.svg";
-import InactiveRecycleBin from "@/assets/dashboard/sideTab/inactive/recycleBin.svg";
+import SideTab from "@/components/dashboard/SideTab";
 import { useState } from "react";
 
 export default function WorkspaceLayout({
@@ -22,47 +12,20 @@ export default function WorkspaceLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [isArtStudioActive, setArtStudioActive] = useState(false);
-  const [isIdeaLockerActive, setIdeaLockerActive] = useState(false);
-  const [isRecycleBinActive, setRecycleBinActive] = useState(false);
-
-  const toggleArtStudio = () => setArtStudioActive((prev) => !prev);
-  const toggleIdeaLocker = () => setIdeaLockerActive((prev) => !prev);
-  const toggleRecycleBin = () => setRecycleBinActive((prev) => !prev);
+  const [isArtStudioActive, setIsArtStudioActive] = useState(true); // 기본 값으로 artStudio 설정
+  const [isIdeaLockerActive, setIsIdeaLockerActive] = useState(false);
+  const [isRecycleBinActive, setIsRecycleBinActive] = useState(false);
 
   return (
     <DashboardContainer>
-      <SideTabContainer>
-        <LogoLink href="/dashboard">
-          <Logo />
-        </LogoLink>
-        <SideTabMenu>
-          <SideTabLink
-            onClick={toggleArtStudio}
-            href="/dashboard/artStudio"
-            $isActivated={isArtStudioActive}
-          >
-            {isArtStudioActive ? <ActiveArtStudio /> : <InactiveArtStudio />}
-            작품 스튜디오
-          </SideTabLink>
-          <SideTabLink
-            onClick={toggleIdeaLocker}
-            href="/dashboard/ideaLocker"
-            $isActivated={isIdeaLockerActive}
-          >
-            {isIdeaLockerActive ? <ActiveIdeaLocker /> : <InactiveIdeaLocker />}
-            아이디어 보관함
-          </SideTabLink>
-          <SideTabLink
-            onClick={toggleRecycleBin}
-            href="/dashboard/recycleBin"
-            $isActivated={isRecycleBinActive}
-          >
-            {isRecycleBinActive ? <ActiveRecycleBin /> : <InactiveRecycleBin />}
-            휴지통
-          </SideTabLink>
-        </SideTabMenu>
-      </SideTabContainer>
+      <SideTab
+        isArtStudioActive={isArtStudioActive}
+        isIdeaLockerActive={isIdeaLockerActive}
+        isRecycleBinActive={isRecycleBinActive}
+        setIsArtStudioActive={setIsArtStudioActive}
+        setIsIdeaLockerActive={setIsIdeaLockerActive}
+        setIsRecycleBinActive={setIsRecycleBinActive}
+      />
       <HeaderAndMainContainer>
         <MainContainer>{children}</MainContainer>
       </HeaderAndMainContainer>
