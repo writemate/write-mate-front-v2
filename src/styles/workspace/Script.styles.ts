@@ -11,17 +11,24 @@ import {
 import RedoIcon from "@/assets/workspace/script/redo.svg";
 import UndoIcon from "@/assets/workspace/script/undo.svg";
 
+export const TextCountContainer = styled.div`
+  position: absolute;
+  font-size: 14px;
+  color: #a0a0a0;
+  margin-left: 10px;
+  bottom: 10px;
+  right: 10px;
+`;
+
 export const ToolbarContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  position: absolute;
   width: 100%;
   background: #ffffff;
   border-right: none !important;
   border-left: none !important;
   border-top: none !important;
   border-bottom: 1px solid #d7dce7 !important;
-  z-index: 100;
 
   .ql-line {
     border: 0.5px solid #e8eef7 !important;
@@ -56,11 +63,11 @@ export const Redo = styled(RedoIcon)`
 `;
 
 export const EditorContainer = styled.div`
-  margin-top: 200px;
   padding: calc(14.2857% - 12px) calc(12.0635% - 15px) calc(12.0635% - 12px)
     calc(12.0635% - 15px); /* A4 비율에 맞게 padding 조정  */
   width: 100%;
-  min-height: calc(100% - 200px);
+  min-height: 100%;
+
   background: #ffffff;
 
   .ql-container {
@@ -68,23 +75,40 @@ export const EditorContainer = styled.div`
   }
 
   .ql-editor {
-    font-size: 11pt;
-
-    p {
-      font-family: "NanumGothic" !important;
+    p,
+    ol,
+    ul,
+    pre,
+    blockquote {
+      font-size: 11pt;
+      line-height: 1.6;
+      font-family: "NanumGothic";
     }
   }
 
   .ql-font-nanum-myeongjo {
     font-family: "NanumMyeongjo";
   }
+
+  .ql-clipboard {
+    display: none;
+  }
 `;
 
 export const MainContainer = styled.div`
   flex-grow: 1;
-  position: absolute;
   height: 100%;
   width: 100%;
-  padding: 0 max(28px, calc((100% - 1012px) / 2));
+  padding: 20px max(28px, calc((100% - 1012px) / 2)) 0;
   overflow-y: auto;
+`;
+
+export const EditorWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
 `;
