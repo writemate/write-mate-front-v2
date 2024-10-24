@@ -4,7 +4,8 @@ import {
   LogoLink,
   SideTabLink,
   SideTabMenu,
-} from "@/styles/dashboard/index";
+  AddWorkspaceButton,
+} from "@/styles/dashboard/SideTab";
 import Logo from "@/assets/dashboard/sideTab/logo.svg";
 import ActiveArtStudio from "@/assets/dashboard/sideTab/active/artStudio.svg";
 import ActiveIdeaLocker from "@/assets/dashboard/sideTab/active/ideaLocker.svg";
@@ -13,6 +14,7 @@ import InactiveArtStudio from "@/assets/dashboard/sideTab/inactive/artStudio.svg
 import InactiveIdeaLocker from "@/assets/dashboard/sideTab/inactive/ideaLocker.svg";
 import InactiveRecycleBin from "@/assets/dashboard/sideTab/inactive/recycleBin.svg";
 import { useState } from "react";
+import useDashboardData from "@/hooks/dashboard/useDashboardData";
 
 export default function SideTab({
   isArtStudioActive,
@@ -37,18 +39,21 @@ export default function SideTab({
     setIsIdeaLockerActive(false);
     setIsRecycleBinActive(false);
   };
+
+  const { data, mutate, error, isLoading, isAdding } = useDashboardData();
+
   return (
     <SideTabContainer>
-      <LogoLink href="/dashboard">
-        <Logo />
-      </LogoLink>
       <SideTabMenu>
+        <LogoLink href="/dashboard">
+          <Logo />
+        </LogoLink>
         <SideTabLink
           onClick={() => {
             toggleIcon("artStudio");
             setIsArtStudioActive(true);
           }}
-          href="/dashboard/artStudio"
+          href="/dashboard"
           $isActivated={isArtStudioActive}
         >
           {activeIcon === "artStudio" ? (
@@ -91,6 +96,12 @@ export default function SideTab({
           휴지통
         </SideTabLink>
       </SideTabMenu>
+      {isAdding && <p>작업실 추가 중...</p>}
+      {!isAdding && (
+        <AddWorkspaceButton onClick={() => mutate()}>
+          새 작품 집필하기
+        </AddWorkspaceButton>
+      )}
     </SideTabContainer>
   );
 }
