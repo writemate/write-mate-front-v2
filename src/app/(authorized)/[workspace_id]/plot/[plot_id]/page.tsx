@@ -27,23 +27,12 @@ export default function Plot({
   //   queryFn: () => getPlots(workspace_id),
   // });
 
-  const [isOpen, setIsOpen] = useState(plot.is_folded);
-
-  const handleChange = () => {
-    setIsOpen(!isOpen);
-    console.log(isOpen);
-  };
-
   return (
     <>
       {/* <ToggleBtn isOpen={isOpen} handleChange={handleChange} />
       {isOpen && <div>open</div>} */}
       <ToastContainer />
-      <ChapterList
-        chapters={plot.chapters}
-        isOpenAll={isOpen}
-        plotId={workspace_id}
-      />
+      <ChapterList chapters={plot.chapters} plotId={workspace_id} />
     </>
   );
 }

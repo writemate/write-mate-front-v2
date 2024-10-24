@@ -13,19 +13,14 @@ import showToastMessage from "@/hooks/workspace/plot/showToastMessage";
 
 interface plotPageProps {
   chapters: PlotChapterType[];
-  isOpenAll: boolean;
   plotId: string;
 }
 
-export default function ChapterList({
-  chapters,
-  isOpenAll,
-  plotId,
-}: plotPageProps) {
+export default function ChapterList({ chapters, plotId }: plotPageProps) {
   const { items: chapterList, handleDragAndDrop } =
     useDragAndDrop<PlotChapterType>(chapters);
 
-  const [isOpen, setIsOpen] = useState<boolean>(isOpenAll);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const [chapter, setChapter] = useState<PlotChapterType[]>(chapters);
 
