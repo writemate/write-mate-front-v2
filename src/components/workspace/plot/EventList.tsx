@@ -34,6 +34,7 @@ export const EventList = ({ pevent }: EventListProps) => {
                     {...provided.dragHandleProps}
                   >
                     <Event
+                      eventId={event.id}
                       eventCharacter={event.character_list}
                       eventName={event.event_name}
                       eventDescription={event.event_description}

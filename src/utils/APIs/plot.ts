@@ -155,8 +155,11 @@ export const updateEvent = async (
 /**
  * 사건에 인물 수동 할당하기
  */
-export const addCharacter = async (peventId: string, characterId: string) => {
-  const response = await axiosInstance.patch<TPlot>(
+export const addCharacter = async (
+  peventId: string,
+  characterId: string
+): Promise<PlotCharacterType> => {
+  const response = await axiosInstance.patch<PlotCharacterType>(
     DOMAIN.UPDATE_EVENT_CHARACTER(peventId, characterId)
   );
 
@@ -169,7 +172,7 @@ export const addCharacter = async (peventId: string, characterId: string) => {
 export const deleteCharacter = async (
   peventId: string,
   characterId: string
-) => {
+): Promise<void> => {
   const response = await axiosInstance.delete<void>(
     DOMAIN.UPDATE_EVENT_CHARACTER(peventId, characterId)
   );

@@ -1,7 +1,7 @@
-import { Flip, Slide, ToastOptions, Zoom, toast } from "react-toastify";
+import { Flip, ToastOptions, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const showToastMessage = (message: any, type: string) => {
+const showToastMessage = (message: string, type: string) => {
   // 1-1. 해당 함수의 매개변수로 message와 type을 지정한다.
 
   const config: ToastOptions = {

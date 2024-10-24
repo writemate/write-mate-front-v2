@@ -13,12 +13,14 @@ import {
 import { PlotCharacterType } from "@/utils/APIs/mock/plot";
 
 interface EventProps {
+  eventId: string;
   eventName: string;
   eventDescription: string;
   eventCharacter: PlotCharacterType[];
 }
 
 export default function Event({
+  eventId,
   eventName,
   eventDescription,
   eventCharacter,
@@ -54,6 +56,7 @@ export default function Event({
       </EventContainer>
       {modal && (
         <CharacterModal
+          eventId={eventId}
           character={eventCharacter}
           onClose={() => setModal(false)}
         />

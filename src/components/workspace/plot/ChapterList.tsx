@@ -9,6 +9,7 @@ import ToggleBtn from "./ToggleBtn";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createChapter } from "@/utils/APIs/plot";
 import { AddChapterButton } from "@/styles/workspace/plot/ChapterList.styles";
+import showToastMessage from "@/hooks/workspace/plot/showToastMessage";
 
 interface plotPageProps {
   chapters: PlotChapterType[];
@@ -95,6 +96,7 @@ export default function ChapterList({
 
   return (
     <>
+      <button onClick={() => showToastMessage("hi", "success")}>hi</button>
       <ToggleBtn isOpen={isOpen} handleChange={() => setIsOpen(!isOpen)} />
 
       <DragDropContext onDragEnd={handleDragAndDrop}>

@@ -10,19 +10,22 @@ import {
   ModalContainer,
   SelectBtnWrapper,
 } from "@/styles/workspace/plot/CharacterModal.styles";
-import showToastMessage from "@/hooks/workspace/plot/showToastMessage";
 import {
   CharacterListType,
   mockCharacterList,
   PlotCharacterType,
 } from "@/utils/APIs/mock/plot";
+import useModalCharacter from "@/hooks/workspace/plot/useModalCharacter";
+import showToastMessage from "@/hooks/workspace/plot/showToastMessage";
 
 interface CharacterModalProps {
+  eventId: string;
   onClose: () => void;
   character: PlotCharacterType[];
 }
 
 export default function CharacterModal({
+  eventId,
   onClose,
   character,
 }: CharacterModalProps) {
@@ -33,6 +36,9 @@ export default function CharacterModal({
   const [selectCharacters, setSelectCharacters] =
     useState<PlotCharacterType[]>(character);
 
+  const { addCharacterMutate, deleteCharacterMutate } =
+    useModalCharacter(eventId);
+
   // 전체 캐릭터 리스트 가져오기
   //const { characterList } = useCharacterList();
   const characterList = mockCharacterList;
@@ -41,7 +47,7 @@ export default function CharacterModal({
     useState<CharacterListType[]>(characterList);
 
   useEffect(() => {
-    // selectCharacters가 변경될 때마다 remainingCharacters를 업데이트
+    // selectCharacters가 변경될 때마다 업데이트
     setRemainingCharacters(
       characterList.filter(
         (character) =>
@@ -62,14 +68,14 @@ export default function CharacterModal({
       ch_name: character.ch_name,
     };
     setSelectCharacters((prev) => [...prev, newCharacter]);
-
-    showToastMessage("인물이 추가되었습니다.", "success");
+    addCharacterMutate.mutate(character.id);
+    showToastMessage("인물이 삭제되었습니다", "success");
   };
 
   // 캐릭터 선택 취소
   const handleDeleteCharacter = (character: PlotCharacterType) => {
     setSelectCharacters((prev) => prev.filter((ch) => ch.id !== character.id));
-    showToastMessage("인물이 삭제되었습니다", "success");
+    deleteCharacterMutate.mutate(character.id);
   };
 
   return (
