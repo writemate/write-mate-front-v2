@@ -1,5 +1,4 @@
-import { TPlotEventCharacter } from "@/utils/APIs/types";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CharacterModal from "./CharacterModal";
 import DeleteIcon from "@/assets/workspace/plot/delete.svg";
 import ChooseCharacter from "@/assets/workspace/plot/choosecharacter.svg";
@@ -11,14 +10,17 @@ import {
   EventDescription,
   EventTitle,
 } from "@/styles/workspace/plot/Event.styles";
+import { PlotCharacterType } from "@/utils/APIs/mock/plot";
 
 interface EventProps {
+  eventId: string;
   eventName: string;
   eventDescription: string;
-  eventCharacter: TPlotEventCharacter[];
+  eventCharacter: PlotCharacterType[];
 }
 
 export default function Event({
+  eventId,
   eventName,
   eventDescription,
   eventCharacter,
@@ -30,7 +32,7 @@ export default function Event({
   //const deleteEvent = useMutation();
 
   return (
-    <>
+    <div style={{ position: "relative" }}>
       <EventContainer>
         <EventColumnContainer>
           <div>
@@ -54,10 +56,11 @@ export default function Event({
       </EventContainer>
       {modal && (
         <CharacterModal
+          eventId={eventId}
           character={eventCharacter}
           onClose={() => setModal(false)}
         />
       )}
-    </>
+    </div>
   );
 }

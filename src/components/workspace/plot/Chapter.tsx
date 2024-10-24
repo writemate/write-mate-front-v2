@@ -7,7 +7,6 @@ import {
   OpenContainer,
   TitleInput,
 } from "@/styles/workspace/plot/Chapter.styles";
-import { TPlotEvent } from "@/utils/APIs/types";
 import { EventList } from "./EventList";
 import { useEffect, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
@@ -17,11 +16,12 @@ import ToggleIcon from "@/assets/workspace/plot/toggle.svg";
 import CopyIcon from "@/assets/workspace/plot/copy.svg";
 import Add from "@/assets/workspace/plot/add.svg";
 import ToggleFold from "@/assets/workspace/plot/toggleFold.svg";
+import { PlotEventType } from "@/utils/APIs/mock/plot";
 
 interface ChapterProps {
   chapterName: string;
   chapterDescription: string;
-  pevent: TPlotEvent[];
+  pevent: PlotEventType[];
   isOpen: boolean;
 }
 

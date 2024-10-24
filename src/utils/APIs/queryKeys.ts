@@ -1,4 +1,3 @@
-
 import { all } from "axios";
 export const dashboardQueryKeys = {
   all: ["dashboard"] as const,
@@ -15,20 +14,30 @@ export const userQueryKeys = {
 };
 
 export const workspaceQueryKeys = {
-  all: ['workspace'] as const,
-  workName: (id:string) => [...workspaceQueryKeys.all, id] as const,
+  all: ["workspace"] as const,
+  workName: (id: string) => [...workspaceQueryKeys.all, id] as const,
 
-  sidebar: (id:string) => [...workspaceQueryKeys.all, 'sidebar',id] as const,
-  plotSidebar: (id:string) => [...workspaceQueryKeys.sidebar(id), 'plot'] as const,
-  scriptSidebar: (id:string) => [...workspaceQueryKeys.sidebar(id), 'event'] as const,
+  sidebar: (id: string) => [...workspaceQueryKeys.all, "sidebar", id] as const,
+  plotSidebar: (id: string) =>
+    [...workspaceQueryKeys.sidebar(id), "plot"] as const,
+  scriptSidebar: (id: string) =>
+    [...workspaceQueryKeys.sidebar(id), "event"] as const,
 
-  info: (id:string) => [...workspaceQueryKeys.all, 'info', id] as const,
-  mainCharacter: (id:string) => [...workspaceQueryKeys.info(id), 'mainCharacter'] as const,
-  mainPlot: (id:string) => [...workspaceQueryKeys.info(id), 'mainPlot'] as const,
+  info: (id: string) => [...workspaceQueryKeys.all, "info", id] as const,
+  mainCharacter: (id: string) =>
+    [...workspaceQueryKeys.info(id), "mainCharacter"] as const,
+  mainPlot: (id: string) =>
+    [...workspaceQueryKeys.info(id), "mainPlot"] as const,
 
-  character: (id:string) => [...workspaceQueryKeys.all, 'character', id] as const,
-  characterList: (id:string) => [...workspaceQueryKeys.character(id), 'list'] as const,
-  characterKeywordList: (id:string) => [...workspaceQueryKeys.character(id), 'keyword'] as const,
-  characterDetail: (id:string, characterId:string) => [...workspaceQueryKeys.character(id), characterId] as const,
+  character: (id: string) =>
+    [...workspaceQueryKeys.all, "character", id] as const,
+  characterList: (id: string) =>
+    [...workspaceQueryKeys.character(id), "list"] as const,
+  characterKeywordList: (id: string) =>
+    [...workspaceQueryKeys.character(id), "keyword"] as const,
+  characterDetail: (id: string, characterId: string) =>
+    [...workspaceQueryKeys.character(id), characterId] as const,
   characterRelation: (id:string) => [...workspaceQueryKeys.character(id), 'relation'] as const,
-}
+
+  characterModal: (id: string) => [...workspaceQueryKeys.all, id] as const,
+};
