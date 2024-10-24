@@ -1,4 +1,3 @@
-import axiosInstance from "@/utils/APIs/axiosInstance";
 import { addCharacter, deleteCharacter } from "@/utils/APIs/plot";
 import { workspaceQueryKeys } from "@/utils/APIs/queryKeys";
 import { useMutation, useQueryClient } from "@tanstack/react-query";

@@ -16,7 +16,6 @@ import {
   PlotCharacterType,
 } from "@/utils/APIs/mock/plot";
 import useModalCharacter from "@/hooks/workspace/plot/useModalCharacter";
-import showToastMessage from "@/hooks/workspace/plot/showToastMessage";
 
 interface CharacterModalProps {
   eventId: string;
@@ -69,7 +68,6 @@ export default function CharacterModal({
     };
     setSelectCharacters((prev) => [...prev, newCharacter]);
     addCharacterMutate.mutate(character.id);
-    showToastMessage("인물이 삭제되었습니다", "success");
   };
 
   // 캐릭터 선택 취소

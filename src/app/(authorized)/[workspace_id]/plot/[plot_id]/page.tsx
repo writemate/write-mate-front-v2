@@ -4,6 +4,7 @@ import ChapterList from "@/components/workspace/plot/ChapterList";
 import ToggleBtn from "@/components/workspace/plot/ToggleBtn";
 import { mockPlotList } from "@/utils/APIs/mock/plot";
 import { useState } from "react";
+import { ToastContainer } from "react-toastify";
 
 /**
 접는 로직 다시보기
@@ -37,7 +38,7 @@ export default function Plot({
     <>
       {/* <ToggleBtn isOpen={isOpen} handleChange={handleChange} />
       {isOpen && <div>open</div>} */}
-
+      <ToastContainer />
       <ChapterList
         chapters={plot.chapters}
         isOpenAll={isOpen}
