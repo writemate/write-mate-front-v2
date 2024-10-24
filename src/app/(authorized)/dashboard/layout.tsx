@@ -2,12 +2,11 @@
 import {
   DashboardContainer,
   HeaderAndMainContainer,
-  HeaderContainer,
   MainContainer,
 } from "@/styles/dashboard/index";
 import SideTab from "@/components/dashboard/SideTab";
+import Header from "@/components/dashboard/Header";
 import { useState } from "react";
-import Header from "@/components/home/Header";
 
 export default function WorkspaceLayout({
   children,
@@ -29,7 +28,7 @@ export default function WorkspaceLayout({
         setIsRecycleBinActive={setIsRecycleBinActive}
       />
       <HeaderAndMainContainer>
-        <HeaderContainer></HeaderContainer>
+        <Header />
         <MainContainer>{children}</MainContainer>
       </HeaderAndMainContainer>
     </DashboardContainer>

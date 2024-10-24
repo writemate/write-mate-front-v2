@@ -1,5 +1,6 @@
 "use client";
 import { FlexRowLeftStart, clickable, FlexColumnCenter } from "@/styles";
+import exp from "constants";
 import { styled, css } from "styled-components";
 
 export const DashboardContainer = styled.div`
@@ -24,14 +25,6 @@ export const SideBarAndMainContainer = styled.div`
   ${FlexRowLeftStart};
   width: 100%;
   height: calc(100% - 72px);
-`;
-
-export const HeaderContainer = styled.div`
-  ${FlexRowLeftStart}
-  width: 100%;
-  height: 44px;
-  padding: 17px 25px;
-  px;
 `;
 
 export const MainContainer = styled.div`
