@@ -22,10 +22,8 @@ export type PlotEventType = {
   id: string;
   event_description: string;
   event_name: string;
-  plot_id: string;
+
   order: number;
-  author: string;
-  work_id: string;
   createdAt: string;
   updatedAt: string;
   character_list: PlotCharacterType[];
@@ -121,10 +119,8 @@ export const mockPlotList: responseGetPlotType = {
           id: "1",
           event_description: "ㅋㅋ",
           event_name: "string;",
-          plot_id: "string;",
+
           order: 0,
-          author: "string;",
-          work_id: "string;",
           createdAt: "string",
           updatedAt: "string",
           character_list: [
@@ -154,10 +150,7 @@ export const mockPlotList: responseGetPlotType = {
           id: "3",
           event_description: "gg",
           event_name: "string;",
-          plot_id: "string;",
           order: 1,
-          author: "string;",
-          work_id: "string;",
           createdAt: "string",
           updatedAt: "string",
           character_list: [],
@@ -166,10 +159,7 @@ export const mockPlotList: responseGetPlotType = {
           id: "2",
           event_description: "kk",
           event_name: "string;",
-          plot_id: "string;",
           order: 2,
-          author: "string;",
-          work_id: "string;",
           createdAt: "string",
           updatedAt: "string",
           character_list: [],
@@ -192,10 +182,7 @@ export const mockPlotList: responseGetPlotType = {
           id: "1",
           event_description: "ㅋㅋ",
           event_name: "string;",
-          plot_id: "string;",
           order: 0,
-          author: "string;",
-          work_id: "string;",
           createdAt: "string",
           updatedAt: "string",
           character_list: [],
