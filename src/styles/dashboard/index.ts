@@ -12,6 +12,23 @@ export const DashboardContainer = styled.div`
   background-color: #fdefe7;
 `;
 
+export const SideTabAndFooterContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+`;
+
+export const FooterContainer = styled.div`
+  ${clickable}
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: 8px;
+  padding: 11px;
+  color: #939393;
+`;
+
 export const HeaderAndMainContainer = styled.div`
   ${FlexColumnCenter}
   flex-grow: 1;
