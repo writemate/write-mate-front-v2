@@ -2,13 +2,14 @@
 import {
   DashboardContainer,
   HeaderAndMainContainer,
-  HeaderContainer,
   MainContainer,
+  SideTabAndFooterContainer,
+  FooterContainer,
 } from "@/styles/dashboard/index";
 import SideTab from "@/components/dashboard/SideTab";
+import Header from "@/components/dashboard/Header";
 import { useState } from "react";
-import Header from "@/components/home/Header";
-
+import Footer from "@/assets/dashboard/footer.svg";
 export default function WorkspaceLayout({
   children,
 }: {
@@ -20,16 +21,22 @@ export default function WorkspaceLayout({
 
   return (
     <DashboardContainer>
-      <SideTab
-        isArtStudioActive={isArtStudioActive}
-        isIdeaLockerActive={isIdeaLockerActive}
-        isRecycleBinActive={isRecycleBinActive}
-        setIsArtStudioActive={setIsArtStudioActive}
-        setIsIdeaLockerActive={setIsIdeaLockerActive}
-        setIsRecycleBinActive={setIsRecycleBinActive}
-      />
+      <SideTabAndFooterContainer>
+        <SideTab
+          isArtStudioActive={isArtStudioActive}
+          isIdeaLockerActive={isIdeaLockerActive}
+          isRecycleBinActive={isRecycleBinActive}
+          setIsArtStudioActive={setIsArtStudioActive}
+          setIsIdeaLockerActive={setIsIdeaLockerActive}
+          setIsRecycleBinActive={setIsRecycleBinActive}
+        />
+        <FooterContainer>
+          <Footer /> 로그아웃
+        </FooterContainer>
+      </SideTabAndFooterContainer>
+
       <HeaderAndMainContainer>
-        <HeaderContainer></HeaderContainer>
+        <Header />
         <MainContainer>{children}</MainContainer>
       </HeaderAndMainContainer>
     </DashboardContainer>

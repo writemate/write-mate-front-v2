@@ -1,5 +1,6 @@
 "use client";
 import { FlexRowLeftStart, clickable, FlexColumnCenter } from "@/styles";
+import exp from "constants";
 import { styled, css } from "styled-components";
 
 export const DashboardContainer = styled.div`
@@ -9,6 +10,23 @@ export const DashboardContainer = styled.div`
   width: 100%;
   height: 100%;
   background-color: #fdefe7;
+`;
+
+export const SideTabAndFooterContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+`;
+
+export const FooterContainer = styled.div`
+  ${clickable}
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: 8px;
+  padding: 11px;
+  color: #939393;
 `;
 
 export const HeaderAndMainContainer = styled.div`
@@ -24,14 +42,6 @@ export const SideBarAndMainContainer = styled.div`
   ${FlexRowLeftStart};
   width: 100%;
   height: calc(100% - 72px);
-`;
-
-export const HeaderContainer = styled.div`
-  ${FlexRowLeftStart}
-  width: 100%;
-  height: 44px;
-  padding: 17px 25px;
-  px;
 `;
 
 export const MainContainer = styled.div`
