@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 enum IdeaBoxType {
   memo,
-  event,
+  character,
 }
 
 export const useIdeaBox = () => {
@@ -12,10 +12,10 @@ export const useIdeaBox = () => {
   const select = (type: IdeaBoxType) => () => setSidebarType(type);
 
   const selectMemo = select(IdeaBoxType.memo);
-  const selectEvent = select(IdeaBoxType.event);
+  const selectCharacter = select(IdeaBoxType.character);
 
   const isMemoSelected = sidebarType === IdeaBoxType.memo;
-  const isEventSelected = sidebarType === IdeaBoxType.event;
+  const isCharacterSelected = sidebarType === IdeaBoxType.character;
 
-  return { selectMemo, selectEvent, isMemoSelected, isEventSelected };
+  return { selectMemo, selectCharacter, isMemoSelected, isCharacterSelected };
 };
