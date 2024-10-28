@@ -1,3 +1,24 @@
+/**
+ * 유저 타입
+ */
+export type TUser = {
+  id:string;
+  uid:string;
+  user_name:string;
+  user_image:string;
+  status:string;
+  email:string;
+};
+
+/**
+ * 메모 타입
+ */
+export type TMemo = {
+  id: string;
+  memo_name: string;
+  memo_description: string;
+};
+
 export interface TFile {
   _id: string;
   isFolder: false;
@@ -106,14 +127,6 @@ export type TPlotEventCharacter = {
   id: string;
 };
 
-/**
- * 스토리지 메모 타입
- */
-export type TStorageMemo = {
-  _id: string;
-  memo_name: string;
-  memo_description: string;
-};
 
 /**
  * 스토리지 캐릭터 타입
@@ -128,23 +141,6 @@ export type TStorageCharacter = {
   work_id?: string;
   author?: string;
   is_starred?: boolean;
-};
-
-/**
- * 스토리지 이벤트 타입
- */
-export type TStorageEvent = {
-  _id: string;
-  event_name: string;
-  event_description: string;
-};
-
-/**
- * 유저 타입
- */
-export type TUser = {
-  member_name: string;
-  member_image: string;
 };
 
 /**
