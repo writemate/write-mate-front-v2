@@ -32,3 +32,9 @@ export const workspaceQueryKeys = {
   characterDetail: (id:string, characterId:string) => [...workspaceQueryKeys.character(id), characterId] as const,
   characterRelation: (id:string) => [...workspaceQueryKeys.character(id), 'relation'] as const,
 }
+
+export const memoQueryKeys = {
+  all: ['memo'] as const,
+  memoList: () => [...memoQueryKeys.all, 'memoList'] as const,
+  memoCharacterList: () => [...memoQueryKeys.all, 'memoCharacterList'] as const,
+}

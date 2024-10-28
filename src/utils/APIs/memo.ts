@@ -2,7 +2,7 @@ import axiosInstance from "./axiosInstance";
 import { DOMAIN } from "./domain";
 import { TMemo } from "./types";
 
-export const getMemos = async () => {
+export const getMemoList = async () => {
   const response = await axiosInstance.get<TMemo[]>(DOMAIN.GET_MEMO_LIST);
   return response.data;
 };
@@ -21,4 +21,9 @@ export const updaetMemoName = (id: string) => async (memo_name: string) => {
 
 export const updateMemoDescription = (id: string) => async (memo_description: string) => {
   await axiosInstance.put(DOMAIN.UPDATE_MEMO_DESCRIPTION(id), { memo_description });
+}
+
+export const getMemoCharacterList = async () => {
+  const response = await axiosInstance.get<TMemo>(DOMAIN.GET_MEMO_CHARACTER_LIST);
+  return response.data;
 }
