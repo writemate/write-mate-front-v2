@@ -3,6 +3,8 @@ import { styled } from 'styled-components';
 import { clickable, FlexColumnCenter, FlexColumnLeftStart, FlexRowCenter, FlexRowSpaceBetween } from '@/styles';
 import Close from '@/assets/icons/close.svg';
 import Copy from '@/assets/icons/copy.svg';
+import Add from "@/assets/icons/addButton.svg";
+import TextareaAutosize from 'react-textarea-autosize';
 
 export const IdeaBoxContainer = styled.div`
   ${FlexColumnCenter}
@@ -88,35 +90,37 @@ export const MemoHeader = styled.div`
 `;
 
 
-export const MemoContent = styled.div`
+export const MemoContent = styled(TextareaAutosize)`
   width: 100%;
-  word-break: break-all;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
   line-height: 150%;
   color: ${({ theme }) => theme.color.gray300};
+  border: none;
+  outline: none;
+  resize: none;
+  &::placeholder {
+    color: ${({ theme }) => theme.color.gray200};
+  }
 `;
 
-export const MemoTitle = styled.div`
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
-  align-self: stretch;
-  overflow: hidden;
+export const MemoTitle = styled.input`
+  width: 100%;
   color: ${({ theme }) => theme.color.gray900};
-  text-overflow: ellipsis;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
   line-height: 150%; 
+  border: none;
+  outline: none;
 `;
 
 export const CopyButton = styled(Copy)`
+  ${clickable}
+`;
+
+export const AddButton = styled(Add)`
+  margin-top: 20px;
   ${clickable}
 `;

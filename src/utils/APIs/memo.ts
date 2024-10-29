@@ -11,16 +11,16 @@ export const createMemo = async () => {
   await axiosInstance.post(DOMAIN.CREATE_MEMO);
 };
 
-export const deleteMemo = (id: string) => async () => {
+export const deleteMemo = async (id: string) => {
   await axiosInstance.delete(DOMAIN.DELETE_MEMO(id));
 };
 
-export const updaetMemoName = (id: string) => async (memo_name: string) => {
-  await axiosInstance.put(DOMAIN.UPDATE_MEMO_NAME(id), { memo_name });
+export const updaetMemoName = async ({id, memo_name}:{id: string, memo_name: string}) => {
+  await axiosInstance.patch(DOMAIN.UPDATE_MEMO_NAME(id), { memo_name });
 };
 
-export const updateMemoDescription = (id: string) => async (memo_description: string) => {
-  await axiosInstance.put(DOMAIN.UPDATE_MEMO_DESCRIPTION(id), { memo_description });
+export const updateMemoDescription = async ({id, memo_description}: {id: string, memo_description: string}) => {
+  await axiosInstance.patch(DOMAIN.UPDATE_MEMO_DESCRIPTION(id), { memo_description });
 }
 
 export const getMemoCharacterList = async () => {

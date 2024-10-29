@@ -8,7 +8,7 @@ import { ContentsContainer, KeywordTitle, SubTitle, OpenManagement,
  } from "@/styles/workspace/Character.style";
 import { Input } from "@/styles";
 import KeywordCancel from "@/assets/workspace/character/keywordCancel.svg";
-import AddButton from "@/assets/workspace/character/addButton.svg";
+import AddButton from "@/assets/icons/addButton.svg";
 import StarActive from "@/assets/workspace/character/starActive.svg";
 import StarInactive from "@/assets/workspace/character/starInactive.svg";
 
