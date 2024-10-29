@@ -1,6 +1,9 @@
 import { workspaceCategory } from "./types";
 
 export const DOMAIN = {
+  GET_USER: "/api/users",
+  CREATE_USER: "/api/users",
+
   GET_WORKLIST: (category: typeof workspaceCategory[keyof typeof workspaceCategory]) => `/api/works?category=${category}`,
   CREATE_WORK: "/api/works",
   GET_WORK: (workId: string) => `/api/works/${workId}`,
