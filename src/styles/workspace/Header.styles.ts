@@ -2,6 +2,10 @@
 import { styled } from 'styled-components';
 import { clickable, FlexRowCenter, FlexRowLeftStart } from '..';
 import { GtagForClick } from '@/utils/GtagForClick';
+import Guide from "@/assets/icons/guide.svg";
+import IdeaBox from "@/assets/icons/ideaBox.svg";
+import Download from "@/assets/icons/download.svg";
+import Profile from "@/assets/icons/profile.svg";
 
 export const HeaderContainer = styled.header`
   ${FlexRowLeftStart};
@@ -31,7 +35,7 @@ export const VersionControlButton = styled.div`
   margin-left: auto;
   font-size: 16px;
   color: var(--cod-gray);
-  background-color: #ffffff;
+  background: radial-gradient(29.27% 111.5% at 68.06% 54.17%, rgba(200, 200, 200, 0.20) 0%, rgba(198, 198, 198, 0.00) 100%), var(--white, #FFF);
   border: none;
   padding: 8px 12px 8px 24px;
   gap: 8px;
@@ -46,3 +50,41 @@ export const RightContainer = styled.div`
   gap: 12px;
 `;
 
+export const GuideButton = styled(Guide)`
+  ${clickable}
+  &:not(:hover) {
+    &>rect {
+      display: none;
+    }
+  }
+`;
+
+export const IdeaBoxButton = styled(IdeaBox)`
+  ${clickable}
+  &:not(:hover) {
+    &>rect {
+      display: none;
+    }
+  }
+`;
+
+export const DownloadButton = styled(Download)`
+  ${clickable}
+  &:not(:hover) {
+    &>rect {
+      display: none;
+    }
+  }
+`;
+
+export const ProfileButton = styled(Profile)`
+  ${clickable}
+  &:hover {
+    & rect {
+      fill: ${({ theme }) => theme.color.orange500};
+    }
+    & path {
+      stroke: #ffffff;
+    }
+  }
+`;
