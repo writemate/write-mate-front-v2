@@ -1,7 +1,8 @@
 'use client';
 import { styled } from 'styled-components';
-import { clickable, FlexColumnCenter, FlexRowCenter, FlexRowSpaceBetween } from '@/styles';
+import { clickable, FlexColumnCenter, FlexColumnLeftStart, FlexRowCenter, FlexRowSpaceBetween } from '@/styles';
 import Close from '@/assets/icons/close.svg';
+import Copy from '@/assets/icons/copy.svg';
 
 export const IdeaBoxContainer = styled.div`
   ${FlexColumnCenter}
@@ -72,17 +73,50 @@ export const IdeaBoxContent = styled.div`
 
 
 export const MemoCard = styled.div`
-
+  ${FlexColumnLeftStart};
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 2px 2px 12px 0px rgba(19, 19, 19, 0.06);
+  margin-bottom: 6px;
+  padding: 8px;
 `;
 
-export const MemoContent = styled.div`
+export const MemoHeader = styled.div`
+  ${FlexRowSpaceBetween};
+  width: 100%;
+`;
 
+
+export const MemoContent = styled.div`
+  width: 100%;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  color: ${({ theme }) => theme.color.gray300};
 `;
 
 export const MemoTitle = styled.div`
-
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  align-self: stretch;
+  overflow: hidden;
+  color: ${({ theme }) => theme.color.gray900};
+  text-overflow: ellipsis;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%; 
 `;
 
-export const CopyButton = styled.div`
-
+export const CopyButton = styled(Copy)`
+  ${clickable}
 `;
