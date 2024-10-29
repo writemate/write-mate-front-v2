@@ -69,3 +69,20 @@ export const IdeaBoxContent = styled.div`
   overflow-y: auto;
   overflow-x: hidden;
 `;
+
+
+export const MemoCard = styled.div`
+
+`;
+
+export const MemoContent = styled.div`
+
+`;
+
+export const MemoTitle = styled.div`
+
+`;
+
+export const CopyButton = styled.div`
+
+`;

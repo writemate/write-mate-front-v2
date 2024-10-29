@@ -2,6 +2,7 @@
 import { IdeaBoxContainer, IdeaBoxHeader, IdeaBoxTitle, IdeaBoxCloseButton,
   SelectIdeaTypeContainer, SelectIdeaTypeButton, IdeaBoxContent } from "@/styles/workspace/IdeaBox.styles";
 import { useIdeaBox } from '@/hooks/workspace/useIdeaBox';
+import Memo from './Memo';
 
 export default function IdeaBox({toggleIdeaBox}: {toggleIdeaBox: () => void}) {
   const { selectMemo, selectCharacter, isMemoSelected, isCharacterSelected } = useIdeaBox();
@@ -17,7 +18,7 @@ export default function IdeaBox({toggleIdeaBox}: {toggleIdeaBox: () => void}) {
           <SelectIdeaTypeButton $isSelected={isCharacterSelected} onClick={selectCharacter}>캐릭터</SelectIdeaTypeButton>
         </SelectIdeaTypeContainer>
         <IdeaBoxContent>
-          {isMemoSelected && <div>메모</div>}
+          {isMemoSelected && <Memo/>}
           {isCharacterSelected && <div>캐릭터</div>}
         </IdeaBoxContent>
       </IdeaBoxContainer>
