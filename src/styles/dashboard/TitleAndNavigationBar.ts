@@ -6,6 +6,7 @@ import {
   Button,
 } from "@/styles";
 import { styled, css } from "styled-components";
+import { HighlghtCssForHoberAfter } from ".";
 
 export const TitleAndNavigationBar = styled.div`
   ${FlexColumnCenter}
@@ -43,17 +44,9 @@ export const NavigationButton = styled(Button)<{ $isActivated?: boolean }>`
   background-color: transparent;
 
   &:hover::after {
-    content: "";
-    position: absolute;
-    top: 10%;
-    left: 10%;
-    right: 10%;
-    bottom: 10%;
-    background-color: ${({ theme }) => theme.color.orange100};
-    opacity: 0.5; /* 요소 전체 투명도 */
-
-    border-radius: inherit; // 요소의 둥근 모서리가 적용되도록 설정
-    z-index: -1;
+    ${HighlghtCssForHoberAfter}
+    width: 90%;
+    height: 50%;
   }
 
   &::before {

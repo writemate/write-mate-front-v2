@@ -2,6 +2,7 @@
 import { clickable } from "@/styles";
 import { styled, css } from "styled-components";
 import Link from "next/link";
+import { HighlghtCssForHoberAfter } from ".";
 
 export const SideTabContainer = styled.div`
   display: flex;
@@ -31,11 +32,17 @@ const SideTabSVG = css<{ $isActivated?: boolean }>`
   align-items: center;
   gap: 10px;
   & * {
-    stroke: ${({ $isActivated, theme }) =>
+    color: ${({ $isActivated, theme }) =>
       $isActivated ? theme.color.orange400 : theme.color.gray400};
   }
   &:hover {
     transform: scale(1.05); /* 살짝 확대 효과 */
+  }
+  &:hover::after {
+    ${HighlghtCssForHoberAfter}
+    left: -3%;
+    width: 103%;
+    height: 100%;
   }
   color: ${({ $isActivated, theme }) =>
     $isActivated ? theme.color.orange400 : theme.color.gray400};

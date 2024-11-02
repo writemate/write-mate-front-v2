@@ -7,6 +7,8 @@ import {
 } from "@/styles";
 import Link from "next/link";
 import { styled, css } from "styled-components";
+import { HighlghtCssForHoberAfter } from ".";
+import exp from "constants";
 // MainContainer
 export const TitleAndWorkListContainer = styled.div`
   ${FlexColumnCenter}
@@ -32,7 +34,6 @@ export const WorkButtonList = styled.div`
 
 export const WorkButton = styled(Link)`
   position: relative;
-  z-index: 0;
 
   border: none;
   display: flex;
@@ -50,7 +51,6 @@ export const WorkButton = styled(Link)`
 
   &:hover {
     outline: 1px solid ${({ theme }) => theme.color.orange300};
-    transform: scale(1.03); /* 살짝 확대 효과 */
   }
 `;
 
@@ -98,7 +98,10 @@ export const WorkButtonDate = styled.div`
   line-height: 100%; /* 10px */
 `;
 
-export const WorkButtonKebab = styled.button`
+export const WorkButtonKebab = styled.div<{
+  $isOpen: boolean;
+  $isActivated?: boolean;
+}>`
   ${clickable}
   position: absolute;
   bottom: 14px;
@@ -108,11 +111,69 @@ export const WorkButtonKebab = styled.button`
   background: none;
 
   border-radius: 3px;
-  z-index: 1;
-
   pointer-events: auto; /* 버튼이 Link 위에 클릭되도록 설정 */
 
+  &:hover::before {
+    ${HighlghtCssForHoberAfter}
+    width: 110%;
+    height: 110%;
+    top: -5%;
+    left: -5%;
+    border-radius: inherit;
+  }
+
+  background: ${({ $isOpen }) =>
+    $isOpen ? "var(--writemate-gray-100, #f5f5f5)" : "none"};
+`;
+
+export const KebabDropdownContainer = styled.div`
+  position: relative;
+  top: 0px;
+  left: 160px;
+  display: flex;
+  width: 132px;
+  padding: 6px 4px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 8px;
+  background: var(--white, #fff);
+  box-shadow: 0px 0px 8px 0px rgba(30, 33, 43, 0.2);
+
+  z-index: 10000;
+`;
+
+export const KebabDropdownButton = styled(Button)<{
+  $isActivated?: boolean;
+  $isMajor?: boolean;
+  $isLast?: boolean;
+}>`
+  ${clickable}
+  display: flex;
+  width: 113px;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+  border-radius: 4px;
+  border-bottom: 1px solid
+    ${({ theme, $isLast }) => ($isLast ? "none" : theme.color.gray75)};
+
+  color: ${({ theme, $isMajor }) =>
+    $isMajor ? theme.color.red600 : theme.color.black};
+  text-align: center;
+
+  /* Writemate_MVP2/B6_R_13 */
+  font-family: Pretendard;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 135%; /* 17.55px */
+
   &:hover {
-    background-color: ${({ theme }) => theme.color.gray100};
+    background: ${({ theme, $isMajor }) =>
+      $isMajor ? theme.color.red200 : theme.color.gray75};
   }
 `;
