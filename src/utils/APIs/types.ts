@@ -1,15 +1,36 @@
+/**
+ * 유저 타입
+ */
+export type TUser = {
+  id: string;
+  uid: string;
+  user_name: string;
+  user_image: string;
+  status: string;
+  email: string;
+};
+
+/**
+ * 메모 타입
+ */
+export type TMemo = {
+  id: string;
+  memo_name: string;
+  memo_description: string;
+};
+
 export interface TFile {
   _id: string;
   isFolder: false;
   file_name: string;
   isPinned: boolean;
-};
+}
 
 export interface TFolder {
   isFolder: true;
   folder_name: string;
-  files: Array<TFile|TFolder>;
-};
+  files: Array<TFile | TFolder>;
+}
 
 export interface TFileWithOptions extends TFile {
   isSelect: boolean;
@@ -20,7 +41,7 @@ export interface TFolderWithOptions extends TFolder {
   isOpen: boolean;
   isSelect: boolean;
   isEditing: boolean;
-  files: Array<TFileWithOptions|TFolderWithOptions>;
+  files: Array<TFileWithOptions | TFolderWithOptions>;
 }
 
 /**
@@ -58,7 +79,7 @@ export type TCharacter = {
   role: string;
   birthday: string;
   gender: string;
-  characteristic: Array<{title: string, content: string}>;
+  characteristic: Array<{ title: string; content: string }>;
   keyword: string[];
   relatedEvent: string[];
 };
@@ -107,15 +128,6 @@ export type TPlotEventCharacter = {
 };
 
 /**
- * 스토리지 메모 타입
- */
-export type TStorageMemo = {
-  _id: string;
-  memo_name: string;
-  memo_description: string;
-};
-
-/**
  * 스토리지 캐릭터 타입
  */
 export type TStorageCharacter = {
@@ -131,31 +143,13 @@ export type TStorageCharacter = {
 };
 
 /**
- * 스토리지 이벤트 타입
- */
-export type TStorageEvent = {
-  _id: string;
-  event_name: string;
-  event_description: string;
-};
-
-/**
- * 유저 타입
- */
-export type TUser = {
-  member_name: string;
-  member_image: string;
-};
-
-/**
  * 설정집 타입
  */
 export type TWork = {
-  _id: string;
-  work_name: string;
-  category: string;
-  work_image: string;
-  last_modify_date: string; // ISO 날짜 문자열로 정의
+  id: string;
+  title: string;
+  cover: string;
+  updatedAt: string; // ISO 날짜 문자열로 정의
 };
 
 /**
@@ -169,11 +163,11 @@ export type CreateWorkRes = {
 /**
  * 설정집 카테고리
  */
-export const category = {
-  before: 'before',
-  ongoing: 'ongoing',
-  completed: 'completed',
-};
+export const workspaceCategory = {
+  before: "before",
+  ongoing: "ongoing",
+  completed: "completed",
+} as const;
 
 /**
  * 설정집 인물 타입
@@ -190,7 +184,8 @@ export type TWorkCharacter = {
   created_at: string;
 };
 
-export type TWorkCategory = (typeof category)[keyof typeof category];
+export type TWorkCategory =
+  (typeof workspaceCategory)[keyof typeof workspaceCategory];
 
 export type TSynopsis = {
   _id: string;
