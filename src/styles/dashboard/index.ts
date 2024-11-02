@@ -48,3 +48,23 @@ export const HeaderAndMainContainer = styled.div`
   padding: 17px 20px;
   z-index: 0;
 `;
+
+export const HeaderContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding-left: 20px;
+  margin-bottom: 60px;
+`;
+
+export const HighlghtCssForHoberAfter = css<{ $isActivated?: boolean }>`
+  content: "";
+  position: absolute;
+  background-color: ${({ $isActivated, theme }) =>
+    $isActivated ? theme.color.orange200 : theme.color.gray100};
+  opacity: 0.2;
+  border-radius: 9999px;
+  width: 100%;
+  height: 100%;
+`;
