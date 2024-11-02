@@ -2,7 +2,6 @@
 import {
   DashboardContainer,
   HeaderAndMainContainer,
-  MainContainer,
   SideTabAndFooterContainer,
   FooterContainer,
 } from "@/styles/dashboard/index";
@@ -34,10 +33,9 @@ export default function WorkspaceLayout({
           <Footer /> 로그아웃
         </FooterContainer>
       </SideTabAndFooterContainer>
-
       <HeaderAndMainContainer>
         <Header />
-        <MainContainer>{children}</MainContainer>
+        {children}
       </HeaderAndMainContainer>
     </DashboardContainer>
   );

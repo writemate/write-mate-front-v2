@@ -1,17 +1,46 @@
 import axiosInstance from "./axiosInstance";
-import { getChapterListMock, getPlotFolderListMock, updatePlotFolderMock,
-  getInfoMock, updateCoverImageMock, updateTitleMock,
-  updateGenreMock, updateLoglineMock, updateExpectedQuantityMock, updateIntroductionMock,
-  updateGradeMock, createPlotMock, getScriptFolderListMock, updateScriptFolderMock, createScriptMock,
-  getCharacterListMock, getCharacterKeywordListMock, createCharacterKeywordMock, createCharacterMock,
-  updateCharacterNameMock, updateCharacterRoleMock, updateCharacterGenderMock,
-  updateCharacterBirthdayMock, addCharacterKeywordMock, removeCharacterKeywordMock,
-  addCharacterCharacteristicMock, updateCharacterCharacteristicTitleMock,
-  updateCharacterCharacteristicContentMock, removeCharacterCharacteristicMock,
-  setMainCharacterMock, removeMainCharacterMock, updateCharacterCoverImageMock,
-  getCharacterMock, updateCharacterDescriptionMock, deleteCharacterMock,
-  deleteCharacterKeywordMock, getCharacterRelationMock, createCharacterRelationMock, deleteCharacterRelationMock, updateCharacterRelationMock
- } from "./mock/workspace";
+import {
+  getChapterListMock,
+  getPlotFolderListMock,
+  updatePlotFolderMock,
+  getInfoMock,
+  updateCoverImageMock,
+  updateTitleMock,
+  updateGenreMock,
+  updateLoglineMock,
+  updateExpectedQuantityMock,
+  updateIntroductionMock,
+  updateGradeMock,
+  createPlotMock,
+  getScriptFolderListMock,
+  updateScriptFolderMock,
+  createScriptMock,
+  getCharacterListMock,
+  getCharacterKeywordListMock,
+  createCharacterKeywordMock,
+  createCharacterMock,
+  updateCharacterNameMock,
+  updateCharacterRoleMock,
+  updateCharacterGenderMock,
+  updateCharacterBirthdayMock,
+  addCharacterKeywordMock,
+  removeCharacterKeywordMock,
+  addCharacterCharacteristicMock,
+  updateCharacterCharacteristicTitleMock,
+  updateCharacterCharacteristicContentMock,
+  removeCharacterCharacteristicMock,
+  setMainCharacterMock,
+  removeMainCharacterMock,
+  updateCharacterCoverImageMock,
+  getCharacterMock,
+  updateCharacterDescriptionMock,
+  deleteCharacterMock,
+  deleteCharacterKeywordMock,
+  getCharacterRelationMock,
+  createCharacterRelationMock,
+  deleteCharacterRelationMock,
+  updateCharacterRelationMock,
+} from "./mock/workspace";
 import { TWork } from "./types";
 import { DOMAIN } from "./domain";
 
@@ -61,8 +90,10 @@ export const updateCharacterDescription = updateCharacterDescriptionMock;
 export const updateCharacterCoverImage = updateCharacterCoverImageMock;
 
 export const addCharacterCharacteristic = addCharacterCharacteristicMock;
-export const updateCharacterCharacteristicTitle = updateCharacterCharacteristicTitleMock;
-export const updateCharacterCharacteristicContent = updateCharacterCharacteristicContentMock;
+export const updateCharacterCharacteristicTitle =
+  updateCharacterCharacteristicTitleMock;
+export const updateCharacterCharacteristicContent =
+  updateCharacterCharacteristicContentMock;
 export const removeCharacterCharacteristic = removeCharacterCharacteristicMock;
 
 export const getCharacterRelation = getCharacterRelationMock;

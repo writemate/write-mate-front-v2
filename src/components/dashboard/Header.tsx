@@ -16,18 +16,42 @@ import Separator from "@/assets/dashboard/header/separator.svg";
 export default function Header({}: {}) {
   return (
     <HeaderContainer>
-      <HeaderLeftButton>
-        <Event />
+      <HeaderLeftButton
+        onClick={(event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          console.log("이벤트 공지");
+        }}
+      >
+        <Event /> <p>이벤트 공지</p>
       </HeaderLeftButton>
       <HeaderRightButtonList>
-        <HeaderRightButton>
+        <HeaderRightButton
+          onClick={(event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            console.log("도움말");
+          }}
+        >
           <Help />
         </HeaderRightButton>
-        <HeaderRightButton>
+        <HeaderRightButton
+          onClick={(event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            console.log("채팅");
+          }}
+        >
           <Chat />
         </HeaderRightButton>
         <Separator />
-        <HearderProfileButton>
+        <HearderProfileButton
+          onClick={(event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            console.log("마이페이지");
+          }}
+        >
           <Profile />
         </HearderProfileButton>
       </HeaderRightButtonList>
