@@ -11,7 +11,7 @@ export const SideTabContainer = styled.div`
   background-color: #ffffff;
   filter: drop-shadow(-2px 2px 5px rgba(0, 0, 0, 0.08));
   border-radius: 12px 0px 0px 12px;
-  padding: 34px;
+  padding: 31px;
 `;
 export const SideTabMenu = styled.div`
   display: flex;
@@ -20,29 +20,32 @@ export const SideTabMenu = styled.div`
   margin-bottom: 240px;
 `;
 export const LogoLink = styled(Link)`
-  margin-bottom: 42px;
+  margin-bottom: 88px;
 `;
 
 const SideTabSVG = css<{ $isActivated?: boolean }>`
   ${clickable}
   display: flex;
-  width: fit-content;
+  width: 100%;
   justify-content: flex-start;
   align-items: center;
   gap: 10px;
   & * {
     stroke: ${({ $isActivated, theme }) =>
-      $isActivated ? theme.color.orange400 : "#353535"};
+      $isActivated ? theme.color.orange400 : theme.color.gray400};
   }
-
+  &:hover {
+    transform: scale(1.05); /* 살짝 확대 효과 */
+  }
   color: ${({ $isActivated, theme }) =>
-    $isActivated ? theme.color.orange400 : "#353535"};
+    $isActivated ? theme.color.orange400 : theme.color.gray400};
   font-weight: ${({ $isActivated }) => ($isActivated ? "bold" : "normal")};
 `;
 
 export const SideTabLink = styled(Link)<{ $isActivated?: boolean }>`
   ${SideTabSVG}
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  padding: 5px;
 `;
 
 export const AddWorkspaceButton = styled.button`

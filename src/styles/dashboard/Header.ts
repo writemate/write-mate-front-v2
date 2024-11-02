@@ -8,8 +8,8 @@ export const HeaderContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 17px 25px;
-  px;
+  padding-left: 20px;
+  margin-bottom: 60px;
 `;
 
 export const HeaderLeftButton = styled.button`
@@ -17,15 +17,31 @@ export const HeaderLeftButton = styled.button`
   display: flex;
   height: 44px;
   padding: 11.5px 12px;
-  justify-content: center;
   align-items: center;
   flex-shrink: 0;
+  gap: 8px;
+
   border-radius: 9999px;
   background: var(--writemate-red-400, #c55858);
   box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1),
     0px 1px 2px -1px rgba(0, 0, 0, 0.1);
 
   border: none;
+
+  &:hover {
+    transform: scale(1.05); /* 살짝 확대 효과 */
+  }
+
+  p {
+    color: var(--www-write-mate-net-nero, var(--white, #fff));
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 350;
+    line-height: 21px; /* 
+    letter-spacing: -0.16px;
+  };
+
+  
 `;
 
 export const HeaderRightButtonList = styled.div`
@@ -54,6 +70,11 @@ export const HeaderRightButton = styled.button`
 
   filter: drop-shadow(1px 1px 4px rgba(0, 0, 0, 0.12));
   border: none;
+
+  &:hover {
+    transform: scale(1.05); /* 살짝 확대 효과 */
+    outline: 1px solid ${({ theme }) => theme.color.orange300};
+  }
 `;
 
 export const HearderProfileButton = styled.button`
@@ -74,4 +95,9 @@ export const HearderProfileButton = styled.button`
   /* icon Shadow */
   box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.12);
   border: none;
+
+  &:hover {
+    transform: scale(1.05); /* 살짝 확대 효과 */
+    outline: 1px solid ${({ theme }) => theme.color.orange300};
+  }
 `;
