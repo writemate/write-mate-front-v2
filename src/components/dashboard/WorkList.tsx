@@ -9,10 +9,10 @@ import {
   WorkButtonKebab,
 } from "@/styles/dashboard/WorkList";
 import KebabMenu from "@/assets/icons/KebabMenu.svg";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import KebabDropdownMenu from "./KebabDropdownMenu";
 
-export default function WorkList({ isInProgress }: { isInProgress: boolean }) {
+export default function WorkList({ isInProgress }: { isInProgress: string }) {
   const { data, mutate, error, isLoading, isAdding } = useDashboardData();
   const [isKebabMenuOpenWork, setIsKebabMenuOpenWork] = useState("");
 
@@ -46,7 +46,7 @@ export default function WorkList({ isInProgress }: { isInProgress: boolean }) {
                 <KebabMenu />
               </WorkButtonKebab>
               <KebabDropdownMenu
-                isInProgress={isInProgress}
+                isInProgress={isInProgress == "진행 중" ? true : false}
                 work={work}
                 isKebabMenuOpenWork={isKebabMenuOpenWork}
                 setIsKebabMenuOpenWork={setIsKebabMenuOpenWork}
@@ -54,7 +54,7 @@ export default function WorkList({ isInProgress }: { isInProgress: boolean }) {
             </WorkButton>
           ))}
         </WorkButtonList>
-      )}{" "}
+      )}
     </>
   );
 }

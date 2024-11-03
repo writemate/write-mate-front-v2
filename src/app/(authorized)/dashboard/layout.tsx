@@ -14,20 +14,14 @@ export default function WorkspaceLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [isArtStudioActive, setIsArtStudioActive] = useState(true); // 기본 값으로 artStudio 설정
-  const [isIdeaLockerActive, setIsIdeaLockerActive] = useState(false);
-  const [isRecycleBinActive, setIsRecycleBinActive] = useState(false);
+  const [activeContent, setactiveContent] = useState("artStudio"); // 기본 값으로 artStudio 설정
 
   return (
     <DashboardContainer>
       <SideTabAndFooterContainer>
         <SideTab
-          isArtStudioActive={isArtStudioActive}
-          isIdeaLockerActive={isIdeaLockerActive}
-          isRecycleBinActive={isRecycleBinActive}
-          setIsArtStudioActive={setIsArtStudioActive}
-          setIsIdeaLockerActive={setIsIdeaLockerActive}
-          setIsRecycleBinActive={setIsRecycleBinActive}
+          activeContent={activeContent}
+          setActiveContent={setactiveContent}
         />
         <FooterContainer>
           <Footer /> 로그아웃
