@@ -2,8 +2,8 @@
 import {
   KebabDropdownContainer,
   KebabDropdownButton,
-} from "@/styles/dashboard/DropdownMenu";
-import { useEffect, useRef, useState } from "react";
+} from "@/styles/dashboard/KebabDropdownMenu";
+import { useEffect, useRef } from "react";
 
 export default function KebabDropdownMenu({
   isInProgress,
@@ -53,14 +53,25 @@ export default function KebabDropdownMenu({
           >
             이미지 변경
           </KebabDropdownButton>
-          <KebabDropdownButton
-            onClick={(event) => {
-              event.preventDefault();
-              handleMenuItemClick("완결로 이동");
-            }}
-          >
-            완결로 이동
-          </KebabDropdownButton>
+          {isInProgress ? (
+            <KebabDropdownButton
+              onClick={(event) => {
+                event.preventDefault();
+                handleMenuItemClick("완결로 변경");
+              }}
+            >
+              완결로 변경
+            </KebabDropdownButton>
+          ) : (
+            <KebabDropdownButton
+              onClick={(event) => {
+                event.preventDefault();
+                handleMenuItemClick("집필 중으로 변경");
+              }}
+            >
+              집필 중으로 변경
+            </KebabDropdownButton>
+          )}
           <KebabDropdownButton
             $isMajor={true}
             $isLast={true}
