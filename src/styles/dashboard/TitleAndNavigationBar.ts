@@ -46,7 +46,8 @@ export const NavigationButton = styled(Button)<{ $isActivated?: boolean }>`
   &:hover::after {
     ${HighlghtCssForHoberAfter}
     width: 90%;
-    height: 50%;
+    height: 70%;
+    z-index: -1;
   }
 
   &::before {

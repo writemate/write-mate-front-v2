@@ -8,36 +8,23 @@ import {
 } from "@/styles/dashboard/SideTab";
 import Logo from "@/assets/dashboard/sideTab/logo.svg";
 import ActiveArtStudio from "@/assets/dashboard/sideTab/active/artStudio.svg";
-import ActiveIdeaLocker from "@/assets/dashboard/sideTab/active/ideaLocker.svg";
-import ActiveRecycleBin from "@/assets/dashboard/sideTab/active/recycleBin.svg";
+import ActiveIdeaBox from "@/assets/dashboard/sideTab/active/ideaBox.svg";
+import ActiveTrash from "@/assets/dashboard/sideTab/active/trash.svg";
 import InactiveArtStudio from "@/assets/dashboard/sideTab/inactive/artStudio.svg";
-import InactiveIdeaLocker from "@/assets/dashboard/sideTab/inactive/ideaLocker.svg";
-import InactiveRecycleBin from "@/assets/dashboard/sideTab/inactive/recycleBin.svg";
+import InactiveIdeaBox from "@/assets/dashboard/sideTab/inactive/ideaBox.svg";
+import InactiveTrash from "@/assets/dashboard/sideTab/inactive/trash.svg";
 import { useState } from "react";
 import useDashboardData from "@/hooks/dashboard/useDashboardData";
 
 export default function SideTab({
-  isArtStudioActive,
-  setIsArtStudioActive,
-  isIdeaLockerActive,
-  setIsIdeaLockerActive,
-  isRecycleBinActive,
-  setIsRecycleBinActive,
+  activeContent,
+  setActiveContent,
 }: {
-  isArtStudioActive: boolean;
-  setIsArtStudioActive: Function;
-  isIdeaLockerActive: boolean;
-  setIsIdeaLockerActive: Function;
-  isRecycleBinActive: boolean;
-  setIsRecycleBinActive: Function;
+  activeContent: string;
+  setActiveContent: (activeContent: string) => void;
 }) {
-  const [activeIcon, setActiveIcon] = useState("artStudio"); // 기본 값으로 artStudio 설정
-
   const toggleIcon = (iconName: string) => {
-    setActiveIcon(iconName);
-    setIsArtStudioActive(false);
-    setIsIdeaLockerActive(false);
-    setIsRecycleBinActive(false);
+    setActiveContent(iconName);
   };
 
   const { data, mutate, error, isLoading, isAdding } = useDashboardData();
@@ -51,12 +38,11 @@ export default function SideTab({
         <SideTabLink
           onClick={() => {
             toggleIcon("artStudio");
-            setIsArtStudioActive(true);
           }}
           href="/dashboard"
-          $isActivated={isArtStudioActive}
+          $isActivated={activeContent === "artStudio"}
         >
-          {activeIcon === "artStudio" ? (
+          {activeContent === "artStudio" ? (
             <ActiveArtStudio />
           ) : (
             <InactiveArtStudio />
@@ -65,34 +51,28 @@ export default function SideTab({
         </SideTabLink>
         <SideTabLink
           onClick={() => {
-            toggleIcon("ideaLocker");
-            setIsIdeaLockerActive(true);
+            toggleIcon("ideaBox");
           }}
           style={{ cursor: "pointer" }}
-          href="/dashboard/ideaLocker"
-          $isActivated={isIdeaLockerActive}
+          href="/dashboard/ideaBox"
+          $isActivated={activeContent === "ideaBox"}
         >
-          {activeIcon === "ideaLocker" ? (
-            <ActiveIdeaLocker />
+          {activeContent === "ideaBox" ? (
+            <ActiveIdeaBox />
           ) : (
-            <InactiveIdeaLocker />
+            <InactiveIdeaBox />
           )}
           아이디어 보관함
         </SideTabLink>
         <SideTabLink
           onClick={() => {
-            toggleIcon("recycleBin");
-            setIsRecycleBinActive(true);
+            toggleIcon("trash");
           }}
           style={{ cursor: "pointer" }}
-          href="/dashboard/recycleBin"
-          $isActivated={isRecycleBinActive}
+          href="/dashboard/trash"
+          $isActivated={activeContent === "trash"}
         >
-          {activeIcon === "recycleBin" ? (
-            <ActiveRecycleBin />
-          ) : (
-            <InactiveRecycleBin />
-          )}
+          {activeContent === "trash" ? <ActiveTrash /> : <InactiveTrash />}
           휴지통
         </SideTabLink>
       </SideTabMenu>

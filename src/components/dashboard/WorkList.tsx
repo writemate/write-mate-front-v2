@@ -7,33 +7,15 @@ import {
   WorkButtonTitle,
   WorkButtonDate,
   WorkButtonKebab,
-  KebabDropdownContainer,
-  KebabDropdownButton,
 } from "@/styles/dashboard/WorkList";
 import KebabMenu from "@/assets/icons/KebabMenu.svg";
-import { useEffect, useRef, useState } from "react";
-import { event } from "@/utils/gtag";
+import { useState } from "react";
+import KebabDropdownMenu from "./KebabDropdownMenu";
 
-export default function WorkList({ isInProgress }: { isInProgress: boolean }) {
+export default function WorkList({ isInProgress }: { isInProgress: string }) {
   const { data, mutate, error, isLoading, isAdding } = useDashboardData();
   const [isKebabMenuOpenWork, setIsKebabMenuOpenWork] = useState("");
-  const menuRef = useRef<HTMLDivElement | null>(null);
 
-  const handleMenuItemClick = (action: string) => {
-    console.log(`${action} 선택됨`);
-  };
-  const handleClickOutside = (event: MouseEvent) => {
-    if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-      setIsKebabMenuOpenWork("");
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
   return (
     <>
       {isLoading && <div>로딩중...</div>}
@@ -63,48 +45,16 @@ export default function WorkList({ isInProgress }: { isInProgress: boolean }) {
               >
                 <KebabMenu />
               </WorkButtonKebab>
-              {isKebabMenuOpenWork === work.id && (
-                <KebabDropdownContainer ref={menuRef}>
-                  <KebabDropdownButton
-                    onClick={(event) => {
-                      event.preventDefault();
-                      handleMenuItemClick("작품명 변경");
-                    }}
-                  >
-                    작품명 변경
-                  </KebabDropdownButton>
-                  <KebabDropdownButton
-                    onClick={(event) => {
-                      event.preventDefault();
-                      handleMenuItemClick("이미지 변경");
-                    }}
-                  >
-                    이미지 변경
-                  </KebabDropdownButton>
-                  <KebabDropdownButton
-                    onClick={(event) => {
-                      event.preventDefault();
-                      handleMenuItemClick("완결로 이동");
-                    }}
-                  >
-                    완결로 이동
-                  </KebabDropdownButton>
-                  <KebabDropdownButton
-                    $isMajor={true}
-                    $isLast={true}
-                    onClick={(event) => {
-                      event.preventDefault();
-                      handleMenuItemClick("작품 삭제");
-                    }}
-                  >
-                    작품 삭제
-                  </KebabDropdownButton>{" "}
-                </KebabDropdownContainer>
-              )}
+              <KebabDropdownMenu
+                isInProgress={isInProgress == "진행 중" ? true : false}
+                work={work}
+                isKebabMenuOpenWork={isKebabMenuOpenWork}
+                setIsKebabMenuOpenWork={setIsKebabMenuOpenWork}
+              />
             </WorkButton>
           ))}
         </WorkButtonList>
-      )}{" "}
+      )}
     </>
   );
 }
