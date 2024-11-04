@@ -29,6 +29,13 @@ export const workspaceQueryKeys = {
   mainPlot: (id: string) =>
     [...workspaceQueryKeys.info(id), "mainPlot"] as const,
 
+  chapterList: (id: string) =>
+    [...workspaceQueryKeys.all, "chapter", id] as const,
+  chapter: (id: string) => [...workspaceQueryKeys.all, "chapter", id] as const,
+
+  eventList: () => [...workspaceQueryKeys.all, "event"] as const,
+  event: (id: string) => [...workspaceQueryKeys.all, "event", id] as const,
+
   character: (id: string) =>
     [...workspaceQueryKeys.all, "character", id] as const,
   characterList: (id: string) =>
@@ -37,7 +44,8 @@ export const workspaceQueryKeys = {
     [...workspaceQueryKeys.character(id), "keyword"] as const,
   characterDetail: (id: string, characterId: string) =>
     [...workspaceQueryKeys.character(id), characterId] as const,
-  characterRelation: (id:string) => [...workspaceQueryKeys.character(id), 'relation'] as const,
+  characterRelation: (id: string) =>
+    [...workspaceQueryKeys.character(id), "relation"] as const,
 
   characterModal: (id: string) => [...workspaceQueryKeys.all, id] as const,
 };

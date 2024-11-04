@@ -9,6 +9,7 @@ import ToggleBtn from "./ToggleBtn";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createChapter } from "@/utils/APIs/plot";
 import { AddChapterButton } from "@/styles/workspace/plot/ChapterList.styles";
+import { workspaceQueryKeys } from "@/utils/APIs/queryKeys";
 
 interface plotPageProps {
   chapters: PlotChapterType[];
@@ -45,11 +46,9 @@ export default function ChapterList({ chapters, plotId }: plotPageProps) {
     );
   };
 
-  useEffect(() => {}, [chapter]);
-
   const queryClient = useQueryClient();
 
-  // 챕터 추가 - 되는지모르겟노 그냥 뇌가 멈춤 ㅋ
+  // 챕터 추가
   const { mutate: mutateCreate } = useMutation<PlotChapterType, Error, number>({
     mutationFn: (order: number) => createChapter(plotId, order),
     onMutate: async () => {
@@ -65,9 +64,9 @@ export default function ChapterList({ chapters, plotId }: plotPageProps) {
         id: Date.now().toString(), // 임시 id 설정
         autor: "",
         work_id: "",
-        chapter_name: ``,
+        chapter_name: "",
         chapter_description: "",
-        order: chapter.length,
+        order: chapterList.length,
         is_starred: false,
         pevent_list: [],
         createdAt: Date.now().toString(),
@@ -79,16 +78,16 @@ export default function ChapterList({ chapters, plotId }: plotPageProps) {
 
       return { previousChapters };
     },
-    onError: (err, context) => {},
     onSuccess: () => {
       // 성공 시 데이터를 최신 상태로 동기화
-      queryClient.invalidateQueries({ queryKey: ["chapters", plotId] });
+      queryClient.invalidateQueries({
+        queryKey: workspaceQueryKeys.chapterList(plotId),
+      });
     },
   });
 
   // 버튼 클릭 시 챕터 추가
   const handleAddChatper = () => {
-    // 일단 모킹인데 UI가 안바뀜 어캐함
     const optimisticChapter: PlotChapterType = {
       id: Date.now().toString(), // 임시 id 설정
       autor: "",
@@ -103,7 +102,6 @@ export default function ChapterList({ chapters, plotId }: plotPageProps) {
       is_folded: true,
     };
     setChapterList((prevChapters) => [...prevChapters, optimisticChapter]);
-    console.log(chapter);
 
     //mutateCreate(chapter.length);
   };
