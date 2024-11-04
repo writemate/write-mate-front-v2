@@ -9,6 +9,7 @@ import ToggleBtn from "./ToggleBtn";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createChapter } from "@/utils/APIs/plot";
 import { AddChapterButton } from "@/styles/workspace/plot/ChapterList.styles";
+import { workspaceQueryKeys } from "@/utils/APIs/queryKeys";
 
 interface plotPageProps {
   chapters: PlotChapterType[];
@@ -16,18 +17,38 @@ interface plotPageProps {
 }
 
 export default function ChapterList({ chapters, plotId }: plotPageProps) {
-  const { items: chapterList, handleDragAndDrop } =
+  const { items: chapter, handleDragAndDrop } =
     useDragAndDrop<PlotChapterType>(chapters);
 
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [chapterList, setChapterList] = useState<PlotChapterType[]>(
+    chapter.map((chapter) => ({ ...chapter }))
+  );
 
-  const [chapter, setChapter] = useState<PlotChapterType[]>(chapters);
+  const areAllChaptersFolded = chapterList.every(
+    (chapter) => chapter.is_folded
+  );
 
-  useEffect(() => {}, [chapter]);
+  const toggleAllChapters = () => {
+    const newFoldedState = !areAllChaptersFolded;
+    setChapterList((prevChapters) =>
+      prevChapters.map((chapter) => ({
+        ...chapter,
+        is_folded: newFoldedState,
+      }))
+    );
+  };
+
+  const handleLocalFold = (id: string, isFolded: boolean) => {
+    setChapterList((prevChapters) =>
+      prevChapters.map((chapter) =>
+        chapter.id === id ? { ...chapter, is_folded: isFolded } : chapter
+      )
+    );
+  };
 
   const queryClient = useQueryClient();
 
-  // 챕터 추가 - 되는지모르겟노 그냥 뇌가 멈춤 ㅋ
+  // 챕터 추가
   const { mutate: mutateCreate } = useMutation<PlotChapterType, Error, number>({
     mutationFn: (order: number) => createChapter(plotId, order),
     onMutate: async () => {
@@ -43,9 +64,9 @@ export default function ChapterList({ chapters, plotId }: plotPageProps) {
         id: Date.now().toString(), // 임시 id 설정
         autor: "",
         work_id: "",
-        chapter_name: ``,
+        chapter_name: "",
         chapter_description: "",
-        order: chapter.length,
+        order: chapterList.length,
         is_starred: false,
         pevent_list: [],
         createdAt: Date.now().toString(),
@@ -53,20 +74,20 @@ export default function ChapterList({ chapters, plotId }: plotPageProps) {
         is_folded: true,
       };
 
-      setChapter((prevChapters) => [...prevChapters, optimisticChapter]);
+      setChapterList((prevChapters) => [...prevChapters, optimisticChapter]);
 
       return { previousChapters };
     },
-    onError: (err, context) => {},
     onSuccess: () => {
       // 성공 시 데이터를 최신 상태로 동기화
-      queryClient.invalidateQueries({ queryKey: ["chapters", plotId] });
+      queryClient.invalidateQueries({
+        queryKey: workspaceQueryKeys.chapterList(plotId),
+      });
     },
   });
 
   // 버튼 클릭 시 챕터 추가
   const handleAddChatper = () => {
-    // 일단 모킹인데 UI가 안바뀜 어캐함
     const optimisticChapter: PlotChapterType = {
       id: Date.now().toString(), // 임시 id 설정
       autor: "",
@@ -80,8 +101,7 @@ export default function ChapterList({ chapters, plotId }: plotPageProps) {
       updatedAt: Date.now().toString(),
       is_folded: true,
     };
-    setChapter((prevChapters) => [...prevChapters, optimisticChapter]);
-    console.log(chapter);
+    setChapterList((prevChapters) => [...prevChapters, optimisticChapter]);
 
     //mutateCreate(chapter.length);
   };
@@ -90,7 +110,10 @@ export default function ChapterList({ chapters, plotId }: plotPageProps) {
 
   return (
     <>
-      <ToggleBtn isOpen={isOpen} handleChange={() => setIsOpen(!isOpen)} />
+      <ToggleBtn
+        isOpen={areAllChaptersFolded}
+        handleChange={toggleAllChapters}
+      />
 
       <DragDropContext onDragEnd={handleDragAndDrop}>
         <Droppable droppableId="chapterList">
@@ -114,10 +137,12 @@ export default function ChapterList({ chapters, plotId }: plotPageProps) {
                         {...provided.dragHandleProps}
                       >
                         <Chapter
+                          chapterId={chapter.id}
                           chapterName={chapter.chapter_name}
                           chapterDescription={chapter.chapter_description}
                           pevent={chapter.pevent_list}
-                          isOpen={isOpen}
+                          isFolded={chapter.is_folded}
+                          onLocalFold={handleLocalFold}
                         />
                       </div>
                     )}
@@ -136,5 +161,3 @@ export default function ChapterList({ chapters, plotId }: plotPageProps) {
     </>
   );
 }
-
-//tq
