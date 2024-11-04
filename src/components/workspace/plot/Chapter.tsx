@@ -19,32 +19,39 @@ import { PlotEventType } from "@/utils/APIs/mock/plot";
 import AutoResizeInput from "./AutoResizeInput";
 
 interface ChapterProps {
+  chapterId: string;
   chapterName: string;
   chapterDescription: string;
   pevent: PlotEventType[];
-  isOpen: boolean;
+  isFolded: boolean;
+  onLocalFold: (id: string, isFolded: boolean) => void;
 }
 
 export default function Chapter({
+  chapterId,
   chapterName,
   chapterDescription,
   pevent,
-  isOpen,
+  isFolded,
+  onLocalFold,
 }: ChapterProps) {
-  /**
-   * todo: input 늘어나면 줄바꿈
-   *
-   */
-  const [isOpenAlone, setIsOpenAlone] = useState(isOpen);
   const [content, setContent] = useState<string>(chapterDescription);
 
   const handleContentChange = (value: string) => {
     setContent(value);
   };
 
+  const [localIsFolded, setLocalIsFolded] = useState(isFolded);
+
   useEffect(() => {
-    setIsOpenAlone(isOpen);
-  }, [isOpen]);
+    setLocalIsFolded(isFolded);
+  }, [isFolded]);
+
+  const toggleChapter = () => {
+    const newFoldedState = !localIsFolded;
+    setLocalIsFolded(newFoldedState);
+    onLocalFold(chapterId, newFoldedState);
+  };
 
   // 챕터 삭제
   /* const { mutate: mutateDelete } = useMutation({
@@ -52,19 +59,16 @@ export default function Chapter({
   });*/
 
   return (
-    <ChapterContainer isOpenAlone={isOpenAlone}>
+    <ChapterContainer isOpenAlone={localIsFolded}>
       <ChapterMargin>
         <div>
           <TitleInput
             value={chapterName}
             placeholder="챕터 제목을 적어주세요."
           />
-          <IconButton
-            type="button"
-            onClick={() => setIsOpenAlone(!isOpenAlone)}
-          >
-            {isOpenAlone && <ToggleIcon style={{ marginBottom: "10%" }} />}
-            {!isOpenAlone && <ToggleFold style={{ marginBottom: "11%" }} />}
+          <IconButton type="button" onClick={toggleChapter}>
+            {localIsFolded && <ToggleIcon style={{ marginBottom: "10%" }} />}
+            {!localIsFolded && <ToggleFold style={{ marginBottom: "11%" }} />}
           </IconButton>
           <IconButton type="button">
             <CopyIcon />
@@ -78,7 +82,7 @@ export default function Chapter({
           onChange={handleContentChange}
           placeholder="챕터 내용을 적어주세요."
         />
-        {isOpenAlone && (
+        {localIsFolded && (
           <OpenContainer>
             <EventList pevent={pevent} />
             <AddButton>

@@ -16,14 +16,34 @@ interface plotPageProps {
 }
 
 export default function ChapterList({ chapters, plotId }: plotPageProps) {
-  const { items: chapterList, handleDragAndDrop } =
+  const { items: chapter, handleDragAndDrop } =
     useDragAndDrop<PlotChapterType>(chapters);
 
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [chapterList, setChapterList] = useState<PlotChapterType[]>(
+    chapter.map((chapter) => ({ ...chapter }))
+  );
 
-  const [chapter, setChapter] = useState<PlotChapterType[]>(chapters);
+  const areAllChaptersFolded = chapterList.every(
+    (chapter) => chapter.is_folded
+  );
 
-  const [isAllOpen, setIsAllOpen]=useState<boolean>();
+  const toggleAllChapters = () => {
+    const newFoldedState = !areAllChaptersFolded;
+    setChapterList((prevChapters) =>
+      prevChapters.map((chapter) => ({
+        ...chapter,
+        is_folded: newFoldedState,
+      }))
+    );
+  };
+
+  const handleLocalFold = (id: string, isFolded: boolean) => {
+    setChapterList((prevChapters) =>
+      prevChapters.map((chapter) =>
+        chapter.id === id ? { ...chapter, is_folded: isFolded } : chapter
+      )
+    );
+  };
 
   useEffect(() => {}, [chapter]);
 
@@ -55,7 +75,7 @@ export default function ChapterList({ chapters, plotId }: plotPageProps) {
         is_folded: true,
       };
 
-      setChapter((prevChapters) => [...prevChapters, optimisticChapter]);
+      setChapterList((prevChapters) => [...prevChapters, optimisticChapter]);
 
       return { previousChapters };
     },
@@ -82,7 +102,7 @@ export default function ChapterList({ chapters, plotId }: plotPageProps) {
       updatedAt: Date.now().toString(),
       is_folded: true,
     };
-    setChapter((prevChapters) => [...prevChapters, optimisticChapter]);
+    setChapterList((prevChapters) => [...prevChapters, optimisticChapter]);
     console.log(chapter);
 
     //mutateCreate(chapter.length);
@@ -92,7 +112,10 @@ export default function ChapterList({ chapters, plotId }: plotPageProps) {
 
   return (
     <>
-      <ToggleBtn isOpen={isOpen} handleChange={() => setIsOpen(!isOpen)} />
+      <ToggleBtn
+        isOpen={areAllChaptersFolded}
+        handleChange={toggleAllChapters}
+      />
 
       <DragDropContext onDragEnd={handleDragAndDrop}>
         <Droppable droppableId="chapterList">
@@ -116,10 +139,12 @@ export default function ChapterList({ chapters, plotId }: plotPageProps) {
                         {...provided.dragHandleProps}
                       >
                         <Chapter
+                          chapterId={chapter.id}
                           chapterName={chapter.chapter_name}
                           chapterDescription={chapter.chapter_description}
                           pevent={chapter.pevent_list}
-                          isOpen={isOpen}
+                          isFolded={chapter.is_folded}
+                          onLocalFold={handleLocalFold}
                         />
                       </div>
                     )}
