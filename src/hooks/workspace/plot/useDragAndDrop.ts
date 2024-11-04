@@ -1,13 +1,30 @@
 import { useState } from "react";
 import { DropResult } from "react-beautiful-dnd";
+import { useMutation } from "@tanstack/react-query";
 
 interface HasOrder {
   order: number;
   [key: string]: any; // 다른 속성도 허용
 }
 
-const useDragAndDrop = <T extends HasOrder>(initialItems: T[]) => {
+interface DragAndDropProps<T> {
+  initialItems: T[];
+  mutationFn: (params: {
+    itemId: string;
+    pre_idx: number;
+    next_idx: number;
+  }) => Promise<void>;
+}
+
+const useDragAndDrop = <T extends HasOrder>({
+  initialItems,
+  mutationFn,
+}: DragAndDropProps<T>) => {
   const [items, setItems] = useState<T[]>(initialItems);
+
+  const { mutate } = useMutation({
+    mutationFn,
+  });
 
   const handleDragAndDrop = (result: DropResult) => {
     const { destination, source } = result;
@@ -25,6 +42,11 @@ const useDragAndDrop = <T extends HasOrder>(initialItems: T[]) => {
     }));
 
     setItems(updatedItems);
+    mutate({
+      itemId: movedItem.id,
+      pre_idx: source.index,
+      next_idx: destination.index,
+    });
   };
 
   return {

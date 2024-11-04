@@ -3,14 +3,22 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import Event from "./Event";
 import { useMutation } from "@tanstack/react-query";
 import { PlotEventType } from "@/utils/APIs/mock/plot";
+import useChapterList from "@/hooks/workspace/plot/useChapterList";
 
 interface EventListProps {
   pevent: PlotEventType[];
 }
 
 export const EventList = ({ pevent }: EventListProps) => {
-  const { items: eventList, handleDragAndDrop } =
-    useDragAndDrop<PlotEventType>(pevent);
+  const { mutateChapterO } = useChapterList();
+
+  const { items: eventList, handleDragAndDrop } = useDragAndDrop<PlotEventType>(
+    {
+      initialItems: pevent,
+      mutationFn: async ({ itemId, pre_idx, next_idx }) =>
+        mutateChapterO({ chapterId: itemId, pre_idx, next_idx }),
+    }
+  );
 
   // [사건]
   // 사건 추가
