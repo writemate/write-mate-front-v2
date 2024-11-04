@@ -10,7 +10,7 @@ export default function Header({toggleIdeaBox}: {toggleIdeaBox: () => void}) {
   return (
     <HeaderContainer>
       <HeaderTitle>
-        {data?.work_name}
+        {data?.title}
         {isLoading && "로딩중..."}
       </HeaderTitle>
       <SaveStatus>
