@@ -67,7 +67,7 @@ export default function ChapterList({ chapters, plotId }: plotPageProps) {
       pevent_list: [],
       createdAt: Date.now().toString(),
       updatedAt: Date.now().toString(),
-      is_folded: true,
+      is_folded: false,
     };
     setChapterList((prevChapters) => [...prevChapters, optimisticChapter]);
 
