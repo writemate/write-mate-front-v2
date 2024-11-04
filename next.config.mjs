@@ -16,8 +16,7 @@ const nextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination:
-          "https://fuk1eiks47.execute-api.ap-northeast-2.amazonaws.com/dev/:path*",
+        destination: "http://localhost:3333/api/v2/:path*",
       },
     ];
   },

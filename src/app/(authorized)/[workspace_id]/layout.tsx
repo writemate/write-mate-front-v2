@@ -41,7 +41,7 @@ export default function WorkspaceLayout({
 
   const getCurrentTitle = (path: string) => {
     if (path.includes("/info")) return "작품 정보";
-    if (path.includes("/plot")) return work?.work_name;
+    if (path.includes("/plot")) return work?.title;
     // todo: 라우팅 나오면 추가
     return false;
   };
