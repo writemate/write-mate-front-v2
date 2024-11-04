@@ -21,6 +21,8 @@ export const DOMAIN = {
   CREATE_EVENT: (chapterId: string) => `/api/chapters/${chapterId}/pevents`,
   DELETE_EVENT: (peventId: string) => `/api/pevents/${peventId}`,
   UPDATE_EVENT: (peventId: string) => `/api/pevents/${peventId}`,
+  UPDATE_EVENT_CHARACTER: (peventId: string, characterId: string) =>
+    `/api/pevents/${peventId}/character/${characterId}`,
 
   GET_MEMO_LIST: `/api/memos`,
   CREATE_MEMO: `/api/memos`,
