@@ -3,6 +3,7 @@ import CharacterModal from "./CharacterModal";
 import DeleteIcon from "@/assets/workspace/plot/delete.svg";
 import ChooseCharacter from "@/assets/workspace/plot/choosecharacter.svg";
 import {
+  CharacterImg,
   CharacterModalBtn,
   EventColumnContainer,
   EventContainer,
@@ -11,6 +12,8 @@ import {
 } from "@/styles/workspace/plot/Event.styles";
 import { PlotCharacterType } from "@/utils/APIs/mock/plot";
 import AutoResizeInput from "./AutoResizeInput";
+import styled from "styled-components";
+import UpdateModal from "./UpdateModal";
 
 interface EventProps {
   eventId: string;
@@ -28,6 +31,9 @@ export default function Event({
   const [modal, setModal] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
+  const characterRef = useRef<HTMLDivElement>(null);
+  const [updateModal, setUpdateModal] = useState<string | null>(null);
+
   const [content, setContent] = useState<string>(eventDescription);
 
   const handleContentChange = (value: string) => {
@@ -41,14 +47,30 @@ export default function Event({
     <div style={{ position: "relative" }}>
       <EventContainer>
         <EventColumnContainer>
-          <div>
-            <CharacterModalBtn
-              type="button"
-              ref={buttonRef}
-              onClick={() => setModal(!modal)}
-            >
-              <ChooseCharacter />
-            </CharacterModalBtn>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div style={{ display: "flex" }}>
+              <CharacterModalBtn
+                type="button"
+                ref={buttonRef}
+                onClick={() => setModal(!modal)}
+              >
+                <ChooseCharacter />
+              </CharacterModalBtn>
+              {eventCharacter.map((character) => (
+                <CharacterImg
+                  ref={characterRef}
+                  key={character.id}
+                  onClick={() => setUpdateModal(character.id)}
+                  $src={character.ch_image}
+                />
+              ))}
+            </div>
+            {updateModal !== null && (
+              <UpdateModal
+                onClose={() => setUpdateModal(null)}
+                characterId={updateModal}
+              />
+            )}
             <EventDeleteBtn>
               <DeleteIcon />
             </EventDeleteBtn>

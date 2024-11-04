@@ -161,5 +161,3 @@ export default function ChapterList({ chapters, plotId }: plotPageProps) {
     </>
   );
 }
-
-//tq

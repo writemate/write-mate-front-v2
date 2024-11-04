@@ -14,6 +14,22 @@ export const CharacterModalBtn = styled.button`
   border: none;
   background: transparent;
   cursor: pointer;
+  display: inline-block;
+  margin-right: 4px;
+`;
+
+export const CharacterImg = styled.div<{ $src: string }>`
+  width: 24px;
+  height: 24px;
+  background-image: url(${({ $src }) => $src});
+  background-size: cover;
+  border-radius: 100%;
+  background-color: ${({ theme }) => theme.color.gray200};
+  box-shadow: 2px 2px 8px #323f4d33;
+  border: 2px solid #fff;
+  margin-left: 4px;
+  cursor: pointer;
+  margin-top: 3px;
 `;
 
 export const EventColumnContainer = styled.div`
