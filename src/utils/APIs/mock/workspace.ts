@@ -525,18 +525,41 @@ export const generagePlotAndCharacterByScriptMock = (workspace_id:string, script
   });
   await updatePlot(newPlotId);
   createCharacterKeywordMock(workspace_id)({keyword_name: "AI생성"});
+  createCharacterKeywordMock(workspace_id)({keyword_name: "이해력 부족"});
+  createCharacterKeywordMock(workspace_id)({keyword_name: "지식 부족"});
+  createCharacterKeywordMock(workspace_id)({keyword_name: "변덕스러운"});
+
   const ai생성 = mockKeywordList.find((k) => k.keyword_name === "AI생성")!;
-  mockCharacterList.push({
-    _id: Math.random().toString(36).substring(7),
-    ch_name: "새인물",
-    ch_image: "",
-    isMain: false,
-    role: "",
-    birthday: "",
-    gender: "",
-    description: "",
-    characteristic: [],
-    keyword: [ai생성._id],
-    relatedEvent: []
-  });
+  const 이해력부족 = mockKeywordList.find((k) => k.keyword_name === "이해력 부족")!;
+  const 지식부족 = mockKeywordList.find((k) => k.keyword_name === "지식 부족")!;
+  const 변덕스러운 = mockKeywordList.find((k) => k.keyword_name === "변덕스러운")!;
+  const mockCharacterList2 = [
+    {
+      _id: "1",
+      ch_name: "베네트 씨",
+      ch_image: "",
+      isMain: false,
+      role: "아버지",
+      birthday: "",
+      gender: "남성",
+      description: "풍자적이고 변덕스러운 기질을 가진 기민한 인물",
+      characteristic: [],
+      keyword: [ai생성._id],
+      relatedEvent: [],
+    },
+    {
+      _id: "2",
+      ch_name: "베네트 부인",
+      ch_image: "",
+      isMain: false,
+      role: "어머니",
+      birthday: "",
+      gender: "여성",
+      description: "이해력이 부족하고 지식이 많은 편은 아니며 변덕스러운 성격",
+      characteristic: [],
+      keyword: [ai생성._id, 이해력부족._id, 지식부족._id, 변덕스러운._id],
+      relatedEvent: [],
+    },
+  ];
+  mockCharacterList.push(...mockCharacterList2);
 }

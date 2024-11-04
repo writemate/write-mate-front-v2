@@ -216,24 +216,15 @@ export const updatePlot = async (plotId: string): Promise<void> => {
   if(!data) return;
   data.chapters=[
     {
-      id: "13",
-      chapter_name: "dsdsf",
+      id: "2",
+      autor: "제인 오스틴",
       is_starred: false,
-      autor: "skfsfjkd",
-      work_id: "gkgkgk",
-      chapter_description: "ferfd",
+      chapter_name: "네더필드의 새로운 주인",
+      chapter_description:
+        "부유한 영국인 독신 남성 빙리가 네더필드 저택에 이사하면서 베네트 가족 중 누가 그와 결혼할지에 대한 추측이 난무한다.",
+      work_id: "story123",
       order: 0,
-      pevent_list: [
-        {
-          id: "1",
-          event_description: "asdf",
-          event_name: "asdfewfdsvd;",
-          order: 0,
-          createdAt: "string",
-          updatedAt: "string",
-          character_list: [],
-        },
-      ],
+      pevent_list: [],
       createdAt: "string;",
       updatedAt: "string;",
       is_folded: true,
