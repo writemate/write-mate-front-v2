@@ -12,7 +12,6 @@ import {
 } from "@/styles/workspace/plot/Event.styles";
 import { PlotCharacterType } from "@/utils/APIs/mock/plot";
 import AutoResizeInput from "./AutoResizeInput";
-import styled from "styled-components";
 import UpdateModal from "./UpdateModal";
 
 interface EventProps {
