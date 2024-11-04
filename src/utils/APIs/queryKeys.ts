@@ -40,4 +40,6 @@ export const workspaceQueryKeys = {
   characterRelation: (id:string) => [...workspaceQueryKeys.character(id), 'relation'] as const,
 
   characterModal: (id: string) => [...workspaceQueryKeys.all, id] as const,
+
+  script: (id: string) => [...workspaceQueryKeys.all, "script", id] as const,
 };

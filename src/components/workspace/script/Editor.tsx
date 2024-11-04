@@ -4,6 +4,11 @@ import { useState, useRef, useEffect, Dispatch, SetStateAction, useCallback } fr
 import { EditorContainer } from "@/styles/workspace/Script.styles";
 import "react-quill/dist/quill.snow.css";
 import { fontSize, font } from "./Toolbar";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { workspaceQueryKeys } from "@/utils/APIs/queryKeys";
+import { useParams } from "next/navigation";
+import { getScript, updateScriptContents } from "@/utils/APIs/mock/workspace";
+import { debounce } from "@/utils";
 
 export default function QuillEditor({
   innerRef,
@@ -13,9 +18,25 @@ export default function QuillEditor({
   MainRef: any;
 }) {
   const containerRef = useRef(null);
+  const { script_id } = useParams<{ script_id: string }>();
+  const { data: valueFromServer, isLoading, error } = useQuery({
+    queryKey: workspaceQueryKeys.script(""),
+    queryFn: () => getScript(script_id),
+  });
   const [value, setValue] = useState("");
+  useEffect(() => {
+    console.log("valueFromServer", valueFromServer);
+    if (valueFromServer) {
+      setValue(valueFromServer.contents);
+    }
+  }, [valueFromServer]);
+  const { mutate } = useMutation({
+    mutationFn: updateScriptContents(script_id),
+  });
+  const debouncedMutate = useCallback(debounce(mutate, 500),[script_id]);
   const handleChange = (content: string) => {
     setValue(content);
+    debouncedMutate(content);
   };
 
   const Font = ReactQuill.Quill.import("formats/font") as any;

@@ -2,7 +2,9 @@
 
 import ChapterList from "@/components/workspace/plot/ChapterList";
 import ToggleBtn from "@/components/workspace/plot/ToggleBtn";
-import { mockPlotList } from "@/utils/APIs/mock/plot";
+import { getPlot, mockPlotList } from "@/utils/APIs/mock/plot";
+import { getPlots } from "@/utils/APIs/plot";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { ToastContainer } from "react-toastify";
 
@@ -12,27 +14,26 @@ import { ToastContainer } from "react-toastify";
  */
 
 export default function Plot({
-  params: { workspace_id },
+  params: { plot_id },
 }: {
-  params: { workspace_id: string };
+  params: { plot_id: string };
 }) {
   //플롯데이터 요청 (GET_PLOT)
-  const plot = mockPlotList;
-  // const {
-  //   data: chapterList,
-  //   error,
-  //   isLoading,
-  // } = useQuery({
-  //   queryKey: ["getplots", workspace_id],
-  //   queryFn: () => getPlots(workspace_id),
-  // });
+  const {
+    data: plot,
+    error,
+    isLoading,
+  } = useQuery({
+    queryKey: ["getplots", plot_id],
+    queryFn: () => getPlot(plot_id),
+  });
 
   return (
     <>
       {/* <ToggleBtn isOpen={isOpen} handleChange={handleChange} />
       {isOpen && <div>open</div>} */}
       <ToastContainer />
-      <ChapterList chapters={plot.chapters} plotId={workspace_id} />
+      {plot&&<ChapterList chapters={plot.chapters} plotId={plot_id} />}
     </>
   );
 }

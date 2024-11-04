@@ -102,7 +102,7 @@ export const mockCharacterList: CharacterListType[] = [
   },
 ];
 
-export const mockPlotList: responseGetPlotType = {
+export const mockPlotList: responseGetPlotType[] = [{
   id: "1",
   plot_name: "vfmhjslfl",
   chapters: [
@@ -193,4 +193,50 @@ export const mockPlotList: responseGetPlotType = {
       is_folded: true,
     },
   ],
-};
+}];
+
+export const getPlot = async (plotId: string): Promise<responseGetPlotType> => {
+  const data = mockPlotList.find((plot) => plot.id === plotId);
+  if(data) return data;
+  return mockPlotList[0];
+}
+
+export const createPlot = async (): Promise<responseGetPlotType> => {
+  const newPlot: responseGetPlotType = {
+    id: Math.random().toString(36).substring(7),
+    plot_name: "",
+    chapters: [],
+  };
+  mockPlotList.push(newPlot);
+  return newPlot;
+}
+
+export const updatePlot = async (plotId: string): Promise<void> => {
+  const data = mockPlotList.find((plot) => plot.id === plotId);
+  if(!data) return;
+  data.chapters=[
+    {
+      id: "13",
+      chapter_name: "dsdsf",
+      is_starred: false,
+      autor: "skfsfjkd",
+      work_id: "gkgkgk",
+      chapter_description: "ferfd",
+      order: 0,
+      pevent_list: [
+        {
+          id: "1",
+          event_description: "asdf",
+          event_name: "asdfewfdsvd;",
+          order: 0,
+          createdAt: "string",
+          updatedAt: "string",
+          character_list: [],
+        },
+      ],
+      createdAt: "string;",
+      updatedAt: "string;",
+      is_folded: true,
+    },
+  ];
+}

@@ -1,6 +1,7 @@
 import { TCharacter, TFolder, TKeyword, TPlot, TWorkInfo, TRelation } from "../types";
 import axiosInstance from "../axiosInstance";
 import { colorSystem } from "@/styles/colorSystem";
+import { createPlot, updatePlot } from "@/utils/APIs/mock/plot";
 
 const mockPlotFolderList: TFolder = {
   isFolder: true,
@@ -71,7 +72,7 @@ export const updatePlotFolderMock = async ({folder}:{workId: string, folder:TFol
 }
 
 export const createPlotMock = (workId: string) => async () => {
-  return Math.random().toString(36).substring(7);
+  return (await createPlot()).id;
 }
 
 const mockScriptFolderList: TFolder = {
@@ -138,7 +139,13 @@ export const updateScriptFolderMock = async ({folder}:{workId: string, folder:TF
 }
 
 export const createScriptMock = (workId: string) => async () => {
-  return Math.random().toString(36).substring(7);
+  const newScript = {
+    id: Math.random().toString(36).substring(7),
+    script_name: "새원고",
+    contents: "",
+  };
+  mockScriptList.push(newScript);
+  return newScript.id;
 }
 
 const mockInfo: TWorkInfo = {
@@ -472,4 +479,64 @@ export const updateCharacterRelationMock = (workspace_id:string) => async ({rela
   if(!relation) return;
   relation.arrow_text_right = arrow_text_right;
   relation.arrow_text_left = arrow_text_left;
+}
+
+
+const mockScriptList: any[] = [
+  {
+    id: "1",
+    script_name: "원치 않았던 고백",
+    contents: "",
+  },
+  {
+    id: "2",
+    script_name: "원숭이도 고장날 때가 있다",
+    contents: "",
+  },
+  {
+    id: "3",
+    script_name: "원하는 만큼, 고지식하게",
+    contents: "",
+  },
+  {
+    id: "4",
+    script_name: "원더풀 고양이",
+    contents: "",
+  },
+];
+
+export const getScript = async (scriptId: string) => {
+  return mockScriptList.find((script) => script.id === scriptId);
+}
+
+export const updateScriptContents = (scriptId: string) => async (contents: string) => {
+  const script = mockScriptList.find((script) => script.id === scriptId);
+  if(script) script.contents = contents;
+}
+
+export const generagePlotAndCharacterByScriptMock = (workspace_id:string, script_id:string) => async () => {
+  await new Promise((resolve) => setTimeout(resolve, 500));
+  const newPlotId = await createPlotMock(workspace_id)();
+  mockPlotFolderList.files.push({
+    isFolder: false,
+    _id: newPlotId,
+    file_name: "플롯",
+    isPinned: false,
+  });
+  await updatePlot(newPlotId);
+  createCharacterKeywordMock(workspace_id)({keyword_name: "AI생성"});
+  const ai생성 = mockKeywordList.find((k) => k.keyword_name === "AI생성")!;
+  mockCharacterList.push({
+    _id: Math.random().toString(36).substring(7),
+    ch_name: "새인물",
+    ch_image: "",
+    isMain: false,
+    role: "",
+    birthday: "",
+    gender: "",
+    description: "",
+    characteristic: [],
+    keyword: [ai생성._id],
+    relatedEvent: []
+  });
 }
