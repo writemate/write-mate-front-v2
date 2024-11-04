@@ -2,7 +2,6 @@ import {
   AddButton,
   ChapterContainer,
   ChapterMargin,
-  ContentTextArea,
   IconButton,
   OpenContainer,
   TitleInput,
@@ -17,6 +16,7 @@ import CopyIcon from "@/assets/workspace/plot/copy.svg";
 import Add from "@/assets/workspace/plot/add.svg";
 import ToggleFold from "@/assets/workspace/plot/toggleFold.svg";
 import { PlotEventType } from "@/utils/APIs/mock/plot";
+import AutoResizeInput from "./AutoResizeInput";
 
 interface ChapterProps {
   chapterName: string;
@@ -36,6 +36,11 @@ export default function Chapter({
    *
    */
   const [isOpenAlone, setIsOpenAlone] = useState(isOpen);
+  const [content, setContent] = useState<string>(chapterDescription);
+
+  const handleContentChange = (value: string) => {
+    setContent(value);
+  };
 
   useEffect(() => {
     setIsOpenAlone(isOpen);
@@ -68,8 +73,9 @@ export default function Chapter({
             <DeleteIcon />
           </IconButton>
         </div>
-        <ContentTextArea
-          value={chapterDescription}
+        <AutoResizeInput
+          value={content}
+          onChange={handleContentChange}
           placeholder="챕터 내용을 적어주세요."
         />
         {isOpenAlone && (

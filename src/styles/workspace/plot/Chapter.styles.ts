@@ -3,7 +3,6 @@ import styled from "styled-components";
 
 export const ChapterContainer = styled.form<{ isOpenAlone: boolean }>`
   width: 100%;
-  height: ${(props) => !props.isOpenAlone && "110px"};
 
   background: #ffffff;
   border: 1px solid #f49661;
@@ -63,11 +62,13 @@ export const TitleInput = styled.input`
   color: ${colorSystem.gray900};
 `;
 
-export const ContentTextArea = styled.textarea`
+export const ContentTextArea = styled.textarea<{ isEvent: boolean }>`
   border: none;
   height: 24px;
   resize: none;
+  margin-bottom: 24px;
   width: 95%;
+  background: ${(props) => (props.isEvent ? `${colorSystem.gray25}` : "white")};
 
   font-weight: 600;
   font-size: 16px;

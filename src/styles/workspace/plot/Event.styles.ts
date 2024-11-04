@@ -56,27 +56,3 @@ export const EventTitle = styled.input`
   margin-bottom: 5px;
   margin-top: 16px;
 `;
-
-export const EventDescription = styled.textarea`
-  height: 24px;
-  width: 95%;
-  background: transparent;
-  resize: none;
-
-  border: none;
-
-  font-family: "Pretendard";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 150%;
-  display: flex;
-  align-items: center;
-
-  color: ${colorSystem.gray900};
-
-  flex: none;
-  order: 1;
-  align-self: stretch;
-  flex-grow: 0;
-`;

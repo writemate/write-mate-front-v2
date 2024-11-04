@@ -7,10 +7,10 @@ import {
   EventColumnContainer,
   EventContainer,
   EventDeleteBtn,
-  EventDescription,
   EventTitle,
 } from "@/styles/workspace/plot/Event.styles";
 import { PlotCharacterType } from "@/utils/APIs/mock/plot";
+import AutoResizeInput from "./AutoResizeInput";
 
 interface EventProps {
   eventId: string;
@@ -27,6 +27,12 @@ export default function Event({
 }: EventProps) {
   const [modal, setModal] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
+
+  const [content, setContent] = useState<string>(eventDescription);
+
+  const handleContentChange = (value: string) => {
+    setContent(value);
+  };
 
   // 사건 삭제
   //const deleteEvent = useMutation();
@@ -48,8 +54,10 @@ export default function Event({
             </EventDeleteBtn>
           </div>
           <EventTitle value={eventName} placeholder="사건 제목을 적어주세요." />
-          <EventDescription
-            value={eventDescription}
+          <AutoResizeInput
+            isEvent={true}
+            value={content}
+            onChange={handleContentChange}
             placeholder="사건 내용을 적어주세요."
           />
         </EventColumnContainer>

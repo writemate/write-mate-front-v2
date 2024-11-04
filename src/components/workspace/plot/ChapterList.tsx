@@ -23,6 +23,8 @@ export default function ChapterList({ chapters, plotId }: plotPageProps) {
 
   const [chapter, setChapter] = useState<PlotChapterType[]>(chapters);
 
+  const [isAllOpen, setIsAllOpen]=useState<boolean>();
+
   useEffect(() => {}, [chapter]);
 
   const queryClient = useQueryClient();
