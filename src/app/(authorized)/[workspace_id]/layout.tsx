@@ -9,7 +9,7 @@ import {
 import Header from "@/components/workspace/Header";
 import SideTab from "@/components/workspace/SideTab";
 import Sidebar from "@/components/workspace/Sidebar/Sidebar";
-import IdeaBox from "@/components/workspace/IdeaBox";
+import IdeaBox from "@/components/workspace/IdeaBox/IdeaBox";
 import { useWorkspaceLayout } from "@/hooks/workspace/useWorkspaceLayout";
 import { useState } from "react";
 import { useParams, usePathname } from "next/navigation";

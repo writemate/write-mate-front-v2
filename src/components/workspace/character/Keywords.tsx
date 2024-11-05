@@ -2,7 +2,7 @@
 import { Container, SubTitle } from "@/styles/workspace/Info.style";
 import { KeywordListContainer, KeywordContainer, MiniModal } from "@/styles/workspace/Character.style";
 import { useContext } from 'react';
-import AddButton from "@/assets/workspace/character/addButton.svg";
+import AddButton from "@/assets/icons/addButton.svg";
 import KeywordCancel from "@/assets/workspace/character/keywordCancel.svg";
 import { CharacterContext } from "@/hooks/workspace/character/character";
 
