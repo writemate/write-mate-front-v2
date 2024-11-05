@@ -4,7 +4,6 @@ import Event from "./Event";
 import { PlotEventType } from "@/utils/APIs/mock/plot";
 import useEventList from "@/hooks/workspace/plot/useEventList";
 import Add from "@/assets/workspace/plot/add.svg";
-import { useState } from "react";
 import { AddButton } from "@/styles/workspace/plot/Chapter.styles";
 
 interface EventListProps {

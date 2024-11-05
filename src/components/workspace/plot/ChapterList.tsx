@@ -4,7 +4,6 @@ import Chapter from "./Chapter";
 import { PlotChapterType } from "@/utils/APIs/mock/plot";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import useDragAndDrop from "@/hooks/workspace/plot/useDragAndDrop";
-import { useEffect, useState } from "react";
 import ToggleBtn from "./ToggleBtn";
 import { AddChapterButton } from "@/styles/workspace/plot/ChapterList.styles";
 import useChapterList from "@/hooks/workspace/plot/useChapterList";
@@ -54,7 +53,7 @@ export default function ChapterList({ chapters, plotId }: plotPageProps) {
   // 버튼 클릭 시 챕터 추가
   const handleAddChatper = () => {
     // mock
-    const optimisticChapter: PlotChapterType = {
+    const mockChapter: PlotChapterType = {
       id: Date.now().toString(), // 임시 id 설정
       autor: "",
       work_id: "",
@@ -67,7 +66,7 @@ export default function ChapterList({ chapters, plotId }: plotPageProps) {
       updatedAt: Date.now().toString(),
       is_folded: false,
     };
-    setChapterList((prevChapters) => [...prevChapters, optimisticChapter]);
+    setChapterList((prevChapters) => [...prevChapters, mockChapter]);
 
     mutateCreate();
   };
