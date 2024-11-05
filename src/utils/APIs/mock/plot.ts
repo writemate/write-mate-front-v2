@@ -214,20 +214,48 @@ export const createPlot = async (): Promise<responseGetPlotType> => {
 export const updatePlot = async (plotId: string): Promise<void> => {
   const data = mockPlotList.find((plot) => plot.id === plotId);
   if(!data) return;
-  data.chapters=[
-    {
-      id: "2",
-      autor: "제인 오스틴",
-      is_starred: false,
-      chapter_name: "네더필드의 새로운 주인",
-      chapter_description:
-        "부유한 영국인 독신 남성 빙리가 네더필드 저택에 이사하면서 베네트 가족 중 누가 그와 결혼할지에 대한 추측이 난무한다.",
-      work_id: "story123",
-      order: 0,
-      pevent_list: [],
-      createdAt: "string;",
-      updatedAt: "string;",
-      is_folded: true,
-    },
-  ];
+  data.plot_name = "프라이드와 편견";
+  data.chapters= [
+      {
+        id: "1",
+        autor: "제인 오스틴",
+        is_starred: false,
+        chapter_name: "네더필드 파티",
+        chapter_description: "베네트 자매들이 네더필드 파티에 참석하여 빙리 씨와 다아시 씨를 만난다.",
+        work_id: "story123",
+        order: 0,
+        pevent_list: [
+          {
+            id: "1",
+            event_description: "네더필드 파티에서 빙리 씨와 다아시 씨가 등장한다.",
+            event_name: "빙리 씨와 다아시 씨의 등장",
+            order: 0,
+            createdAt: "2024-10-01T12:00:00Z",
+            updatedAt: "2024-10-02T12:00:00Z",
+            character_list: []
+          },
+          {
+            id: "2",
+            event_description: "제인 베네트가 빙리 씨와 춤을 춘다.",
+            event_name: "제인 베네트와 빙리 씨의 춤",
+            order: 1,
+            createdAt: "2024-10-03T14:00:00Z",
+            updatedAt: "2024-10-04T14:00:00Z",
+            character_list: []
+          },
+          {
+            id: "3",
+            event_description: "엘리자베스 베네트가 다아시 씨와 대화를 한다.",
+            event_name: "엘리자베스 베네트와 다아시 씨의 대화",
+            order: 2,
+            createdAt: "2024-10-06T16:00:00Z",
+            updatedAt: "2024-10-07T16:00:00Z",
+            character_list: []
+          }
+        ],
+        createdAt: "2024-09-30T10:00:00Z",
+        updatedAt: "2024-10-05T10:00:00Z",
+        is_folded: false
+      }
+    ]
 }

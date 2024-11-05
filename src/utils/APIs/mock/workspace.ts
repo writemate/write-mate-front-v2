@@ -525,41 +525,52 @@ export const generagePlotAndCharacterByScriptMock = (workspace_id:string, script
   });
   await updatePlot(newPlotId);
   createCharacterKeywordMock(workspace_id)({keyword_name: "AI생성"});
-  createCharacterKeywordMock(workspace_id)({keyword_name: "이해력 부족"});
-  createCharacterKeywordMock(workspace_id)({keyword_name: "지식 부족"});
-  createCharacterKeywordMock(workspace_id)({keyword_name: "변덕스러운"});
+
+  createCharacterKeywordMock(workspace_id)({keyword_name: "명랑함"});
+  createCharacterKeywordMock(workspace_id)({keyword_name: "여유 있음"});
+  createCharacterKeywordMock(workspace_id)({keyword_name: "신사다움"});
+
+  createCharacterKeywordMock(workspace_id)({keyword_name: "거만함"});
+  createCharacterKeywordMock(workspace_id)({keyword_name: "불쾌함"});
+  createCharacterKeywordMock(workspace_id)({keyword_name: "잘난 체"});
 
   const ai생성 = mockKeywordList.find((k) => k.keyword_name === "AI생성")!;
-  const 이해력부족 = mockKeywordList.find((k) => k.keyword_name === "이해력 부족")!;
-  const 지식부족 = mockKeywordList.find((k) => k.keyword_name === "지식 부족")!;
-  const 변덕스러운 = mockKeywordList.find((k) => k.keyword_name === "변덕스러운")!;
-  const mockCharacterList2 = [
+  const 명랑함 = mockKeywordList.find((k) => k.keyword_name === "명랑함")!;
+  const 여유있음 = mockKeywordList.find((k) => k.keyword_name === "여유 있음")!;
+  const 신사다움 = mockKeywordList.find((k) => k.keyword_name === "신사다움")!;
+  const 거만함 = mockKeywordList.find((k) => k.keyword_name === "거만함")!;
+  const 불쾌함 = mockKeywordList.find((k) => k.keyword_name === "불쾌함")!;
+  const 잘난체 = mockKeywordList.find((k) => k.keyword_name === "잘난 체")!;
+
+
+  const mockCharacterList2: TCharacter[] =  [
     {
-      _id: "1",
-      ch_name: "베네트 씨",
+      _id: "sdfaf",
+      ch_name: "빙리 씨",
       ch_image: "",
       isMain: false,
-      role: "아버지",
+      role: "지주",
       birthday: "",
       gender: "남성",
-      description: "풍자적이고 변덕스러운 기질을 가진 기민한 인물",
+      description: "호남아이며 신사다운 인물. 명랑하고 여유 있고 자연스러운 태도를 가졌으며, 무도회를 좋아한다.",
+      keyword: [ai생성._id, 명랑함._id, 여유있음._id, 신사다움._id],
       characteristic: [],
-      keyword: [ai생성._id],
-      relatedEvent: [],
+    relatedEvent: []
     },
     {
-      _id: "2",
-      ch_name: "베네트 부인",
+      _id: "sdfsdfd",
+      ch_name: "다아시 씨",
       ch_image: "",
       isMain: false,
-      role: "어머니",
+      role: "지주",
       birthday: "",
-      gender: "여성",
-      description: "이해력이 부족하고 지식이 많은 편은 아니며 변덕스러운 성격",
+      gender: "남성",
+      description: "덩치가 크고 잘 생기며, 연간 소득이 1만 파운드에 달하는 부유한 지주. 거만하고 남과 어울리기를 싫어하며, 불쾌한 태도를 가졌다.",
+      keyword: [ai생성._id, 거만함._id, 불쾌함._id, 잘난체._id],
       characteristic: [],
-      keyword: [ai생성._id, 이해력부족._id, 지식부족._id, 변덕스러운._id],
-      relatedEvent: [],
-    },
+      relatedEvent: []
+    }
   ];
+
   mockCharacterList.push(...mockCharacterList2);
 }
