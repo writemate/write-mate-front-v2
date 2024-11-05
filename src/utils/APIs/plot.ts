@@ -1,11 +1,7 @@
 import { TPlot } from "./types";
 import axiosInstance from "./axiosInstance";
 import { DOMAIN } from "./domain";
-import {
-  PlotChapterType,
-  PlotCharacterType,
-  responseGetPlotType,
-} from "./mock/plot";
+import { PlotCharacterType, responseGetPlotType } from "./mock/plot";
 
 /**
  * 모든 플롯 가져오기
