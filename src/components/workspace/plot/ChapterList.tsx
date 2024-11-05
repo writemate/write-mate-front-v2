@@ -89,7 +89,7 @@ export default function ChapterList({ chapters, plotId }: plotPageProps) {
         <Droppable droppableId="chapterList">
           {(provided) => (
             <div
-              style={{ width: "100%" }}
+              style={{ width: "95%" }}
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
