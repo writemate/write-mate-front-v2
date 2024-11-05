@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import CharacterModal from "./CharacterModal";
 import DeleteIcon from "@/assets/workspace/plot/delete.svg";
+import DragDrop from "@/assets/workspace/plot/dragdropE.svg";
 import ChooseCharacter from "@/assets/workspace/plot/choosecharacter.svg";
 import {
   CharacterImg,
@@ -8,6 +9,7 @@ import {
   EventColumnContainer,
   EventContainer,
   EventDeleteBtn,
+  EventDragWrap,
   EventTitle,
 } from "@/styles/workspace/plot/Event.styles";
 import { PlotCharacterType } from "@/utils/APIs/mock/plot";
@@ -60,6 +62,9 @@ export default function Event({
 
   return (
     <div style={{ position: "relative" }}>
+      <EventDragWrap>
+        <DragDrop />
+      </EventDragWrap>
       <EventContainer>
         <EventColumnContainer>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
