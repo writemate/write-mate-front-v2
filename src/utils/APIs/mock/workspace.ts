@@ -1,4 +1,11 @@
-import { TCharacter, TFolder, TKeyword, TPlot, TWorkInfo, TRelation } from "../types";
+import {
+  TCharacter,
+  TFolder,
+  TKeyword,
+  TPlot,
+  TWorkInfo,
+  TRelation,
+} from "../types";
 import axiosInstance from "../axiosInstance";
 import { colorSystem } from "@/styles/colorSystem";
 import { createPlot, updatePlot } from "@/utils/APIs/mock/plot";
@@ -22,7 +29,8 @@ const mockPlotFolderList: TFolder = {
           _id: "2",
           file_name: "플레이보이가 롯폰기에서",
           isPinned: false,
-        },{
+        },
+        {
           isFolder: true,
           folder_name: "폴로 더위사냥",
           files: [
@@ -38,9 +46,9 @@ const mockPlotFolderList: TFolder = {
               file_name: "플롯2",
               isPinned: false,
             },
-          ]
-        }
-      ]
+          ],
+        },
+      ],
     },
     {
       isFolder: false,
@@ -54,22 +62,27 @@ const mockPlotFolderList: TFolder = {
       file_name: "플라토닉러브로 롯데인수하기",
       isPinned: false,
     },
-  ]
+  ],
 };
 
-export const getPlotFolderListMock = (workId: string) => async ()=> {
+export const getPlotFolderListMock = (workId: string) => async () => {
   //deep copy
   return JSON.parse(JSON.stringify(mockPlotFolderList));
-}
+};
 
 export const getChapterListMock = (workId: string) => async () => {
   const response = await axiosInstance.get<TPlot>(`/api/works/${workId}/plots`);
   return response.data;
-}
+};
 
-export const updatePlotFolderMock = async ({folder}:{workId: string, folder:TFolder}) => {
+export const updatePlotFolderMock = async ({
+  folder,
+}: {
+  workId: string;
+  folder: TFolder;
+}) => {
   mockPlotFolderList.files = folder.files;
-}
+};
 
 export const createPlotMock = (workId: string) => async () => {
   return (await createPlot()).id;
@@ -94,7 +107,8 @@ const mockScriptFolderList: TFolder = {
           _id: "2",
           file_name: "원숭이도 고장날 때가 있다",
           isPinned: false,
-        },{
+        },
+        {
           isFolder: true,
           folder_name: "폴리우레탄을 더듬다",
           files: [
@@ -110,9 +124,9 @@ const mockScriptFolderList: TFolder = {
               file_name: "원고2",
               isPinned: false,
             },
-          ]
-        }
-      ]
+          ],
+        },
+      ],
     },
     {
       isFolder: false,
@@ -126,17 +140,22 @@ const mockScriptFolderList: TFolder = {
       file_name: "원더풀 고양이",
       isPinned: false,
     },
-  ]
+  ],
 };
 
-export const getScriptFolderListMock = (workId: string) => async ()=> {
+export const getScriptFolderListMock = (workId: string) => async () => {
   //deep copy
   return JSON.parse(JSON.stringify(mockScriptFolderList));
-}
+};
 
-export const updateScriptFolderMock = async ({folder}:{workId: string, folder:TFolder}) => {
+export const updateScriptFolderMock = async ({
+  folder,
+}: {
+  workId: string;
+  folder: TFolder;
+}) => {
   mockScriptFolderList.files = folder.files;
-}
+};
 
 export const createScriptMock = (workId: string) => async () => {
   const newScript = {
@@ -161,45 +180,119 @@ const mockInfo: TWorkInfo = {
 export const getInfoMock = (workId: string) => async () => {
   await new Promise((resolve) => setTimeout(resolve, 1000));
   return JSON.parse(JSON.stringify(mockInfo)) as TWorkInfo;
-}
+};
 
-const generateUpdateInfoMock = <T extends keyof TWorkInfo>(key:T) => (workId: string) => async (value: TWorkInfo[T]) => {
-  console.log(key, value);
-  mockInfo[key] = value;
-}
+const generateUpdateInfoMock =
+  <T extends keyof TWorkInfo>(key: T) =>
+  (workId: string) =>
+  async (value: TWorkInfo[T]) => {
+    console.log(key, value);
+    mockInfo[key] = value;
+  };
 
 export const updateTitleMock = generateUpdateInfoMock("title");
 export const updateGenreMock = generateUpdateInfoMock("genre");
 export const updateLoglineMock = generateUpdateInfoMock("logline");
-export const updateExpectedQuantityMock = generateUpdateInfoMock("expectedQuantity");
+export const updateExpectedQuantityMock =
+  generateUpdateInfoMock("expectedQuantity");
 export const updateGradeMock = generateUpdateInfoMock("grade");
 export const updateIntroductionMock = generateUpdateInfoMock("introduction");
 export const updateCoverImageMock = (workId: string) => async (file: File) => {
   await new Promise((resolve) => {
     const reader = new FileReader();
-    reader.onload = function(e) {
+    reader.onload = function (e) {
       mockInfo.cover = e.target?.result as string;
       resolve(null);
-    }
+    };
     reader.readAsDataURL(file);
   });
-}
+};
 
 const mockKeywordList: TKeyword[] = [
-  { _id: "1", keyword_name: "주연", lightColor: colorSystem.red200, darkColor: colorSystem.red600 },
-  { _id: "2", keyword_name: "중립", lightColor: colorSystem.orange200, darkColor: colorSystem.orange500 },
-  { _id: "3", keyword_name: "빌런", lightColor: colorSystem.blue200, darkColor: colorSystem.blue500 },
-  { _id: "4", keyword_name: "알고보면 착한 빌런", lightColor: colorSystem.green200, darkColor: colorSystem.green500 },
-  { _id: "5", keyword_name: "바보", lightColor: colorSystem.purple200, darkColor: colorSystem.purple500 },
-  { _id: "6", keyword_name: "호라 모 젠젠 라인", lightColor: colorSystem.darkYellow200, darkColor: colorSystem.darkYellow600 },
-  { _id: "7", keyword_name: "콩라인", lightColor: colorSystem.green200, darkColor: colorSystem.green500 },
-  { _id: "8", keyword_name: "츤데레", lightColor: colorSystem.red200, darkColor: colorSystem.red500 },
-  { _id: "9", keyword_name: "설명충", lightColor: colorSystem.orange200, darkColor: colorSystem.orange500 },
-  { _id: "10", keyword_name: "집착", lightColor: colorSystem.darkYellow200, darkColor: colorSystem.darkYellow600 },
-  { _id: "11", keyword_name: "열혈", lightColor: colorSystem.green200, darkColor: colorSystem.green500 },
-  { _id: "12", keyword_name: "갭모에", lightColor: colorSystem.blue200, darkColor: colorSystem.blue500 },
-  { _id: "13", keyword_name: "금태양", lightColor: colorSystem.purple200, darkColor: colorSystem.purple500 },
-  { _id: "14", keyword_name: "병약", lightColor: colorSystem.red200, darkColor: colorSystem.red500 },
+  {
+    _id: "1",
+    keyword_name: "주연",
+    lightColor: colorSystem.red200,
+    darkColor: colorSystem.red600,
+  },
+  {
+    _id: "2",
+    keyword_name: "중립",
+    lightColor: colorSystem.orange200,
+    darkColor: colorSystem.orange500,
+  },
+  {
+    _id: "3",
+    keyword_name: "빌런",
+    lightColor: colorSystem.blue200,
+    darkColor: colorSystem.blue500,
+  },
+  {
+    _id: "4",
+    keyword_name: "알고보면 착한 빌런",
+    lightColor: colorSystem.green200,
+    darkColor: colorSystem.green500,
+  },
+  {
+    _id: "5",
+    keyword_name: "바보",
+    lightColor: colorSystem.purple200,
+    darkColor: colorSystem.purple500,
+  },
+  {
+    _id: "6",
+    keyword_name: "호라 모 젠젠 라인",
+    lightColor: colorSystem.darkYellow200,
+    darkColor: colorSystem.darkYellow600,
+  },
+  {
+    _id: "7",
+    keyword_name: "콩라인",
+    lightColor: colorSystem.green200,
+    darkColor: colorSystem.green500,
+  },
+  {
+    _id: "8",
+    keyword_name: "츤데레",
+    lightColor: colorSystem.red200,
+    darkColor: colorSystem.red500,
+  },
+  {
+    _id: "9",
+    keyword_name: "설명충",
+    lightColor: colorSystem.orange200,
+    darkColor: colorSystem.orange500,
+  },
+  {
+    _id: "10",
+    keyword_name: "집착",
+    lightColor: colorSystem.darkYellow200,
+    darkColor: colorSystem.darkYellow600,
+  },
+  {
+    _id: "11",
+    keyword_name: "열혈",
+    lightColor: colorSystem.green200,
+    darkColor: colorSystem.green500,
+  },
+  {
+    _id: "12",
+    keyword_name: "갭모에",
+    lightColor: colorSystem.blue200,
+    darkColor: colorSystem.blue500,
+  },
+  {
+    _id: "13",
+    keyword_name: "금태양",
+    lightColor: colorSystem.purple200,
+    darkColor: colorSystem.purple500,
+  },
+  {
+    _id: "14",
+    keyword_name: "병약",
+    lightColor: colorSystem.red200,
+    darkColor: colorSystem.red500,
+  },
 ];
 
 export const createCharacterKeywordMock = (workspace_id:string) => async ({keyword_name, lightColor, darkColor}:{keyword_name:string, lightColor?:string, darkColor?:string}) => {
@@ -229,7 +322,7 @@ export const createCharacterKeywordMock = (workspace_id:string) => async ({keywo
     lightColor,
     darkColor,
   });
-}
+};
 
 export const getCharacterKeywordListMock = (workspace_id:string) => async () => {
   return JSON.parse(JSON.stringify(mockKeywordList)) as TKeyword[];
@@ -412,96 +505,117 @@ export const createCharacterMock = (workspace_id:string) => async () => {
     description: "",
     characteristic: [],
     keyword: [],
-    relatedEvent: []
+    relatedEvent: [],
   });
-}
+};
 
-export const deleteCharacterKeywordMock = (workspace_id:string) => async (keyword_id:string) => {
-  const index = mockKeywordList.findIndex((k) => k._id === keyword_id);
-  if(index === -1) return;
-  mockKeywordList.splice(index, 1);
-}
+export const deleteCharacterKeywordMock =
+  (workspace_id: string) => async (keyword_id: string) => {
+    const index = mockKeywordList.findIndex((k) => k._id === keyword_id);
+    if (index === -1) return;
+    mockKeywordList.splice(index, 1);
+  };
 
-export const deleteCharacterMock = (workspace_id:string,character_id:string) => async () => {
-  const index = mockCharacterList.findIndex((c) => c._id === character_id);
-  if(index === -1) return;
-  mockCharacterList.splice(index, 1);
-}
+export const deleteCharacterMock =
+  (workspace_id: string, character_id: string) => async () => {
+    const index = mockCharacterList.findIndex((c) => c._id === character_id);
+    if (index === -1) return;
+    mockCharacterList.splice(index, 1);
+  };
 
-export const getCharacterMock = (workspace_id:string,character_id:string) => async ()=> {
-  return JSON.parse(JSON.stringify(mockCharacterList.find((c) => c._id === character_id))) as TCharacter;
-}
+export const getCharacterMock =
+  (workspace_id: string, character_id: string) => async () => {
+    return JSON.parse(
+      JSON.stringify(mockCharacterList.find((c) => c._id === character_id))
+    ) as TCharacter;
+  };
 
-const generateUpdateCharacterMock = <T extends keyof TCharacter>(key:T) => (workspace_id:string, character_id:string) => async (value: TCharacter[T]) => {
-  const character = mockCharacterList.find((c) => c._id === character_id);
-  if(!character) return;
-  character[key] = value;
-}
+const generateUpdateCharacterMock =
+  <T extends keyof TCharacter>(key: T) =>
+  (workspace_id: string, character_id: string) =>
+  async (value: TCharacter[T]) => {
+    const character = mockCharacterList.find((c) => c._id === character_id);
+    if (!character) return;
+    character[key] = value;
+  };
 
 export const updateCharacterNameMock = generateUpdateCharacterMock("ch_name");
 export const updateCharacterRoleMock = generateUpdateCharacterMock("role");
 export const updateCharacterGenderMock = generateUpdateCharacterMock("gender");
-export const updateCharacterBirthdayMock = generateUpdateCharacterMock("birthday");
-export const updateCharacterDescriptionMock = generateUpdateCharacterMock("description");
+export const updateCharacterBirthdayMock =
+  generateUpdateCharacterMock("birthday");
+export const updateCharacterDescriptionMock =
+  generateUpdateCharacterMock("description");
 
-export const setMainCharacterMock = (workspace_id:string) => async (character_id:string) => {
-  generateUpdateCharacterMock("isMain")(workspace_id,character_id)(true);
-}
+export const setMainCharacterMock =
+  (workspace_id: string) => async (character_id: string) => {
+    generateUpdateCharacterMock("isMain")(workspace_id, character_id)(true);
+  };
 
-export const removeMainCharacterMock = (workspace_id:string) => async (character_id:string) => {
-  generateUpdateCharacterMock("isMain")(workspace_id,character_id)(false);
-}
+export const removeMainCharacterMock =
+  (workspace_id: string) => async (character_id: string) => {
+    generateUpdateCharacterMock("isMain")(workspace_id, character_id)(false);
+  };
 
-export const updateCharacterCoverImageMock = (workspace_id:string,character_id:string)=> async(file: File) => {
-  const character = mockCharacterList.find((c) => c._id === character_id);
-  if(!character) return;
-  await new Promise((resolve) => {
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      character.ch_image = e.target?.result as string;
-      resolve(null);
-    }
-    reader.readAsDataURL(file);
-  });
-}
-
-export const addCharacterKeywordMock = (workspace_id:string, character_id:string) => async (keyword_id:string) => {
-  const character = mockCharacterList.find((c) => c._id === character_id);
-  if(!character) return;
-  character.keyword.push(keyword_id);
-}
-
-export const removeCharacterKeywordMock = (workspace_id:string, character_id:string) => async (keyword_id:string) => {
-  const character = mockCharacterList.find((c) => c._id === character_id);
-  if(!character) return;
-  character.keyword = character.keyword.filter((k) => k !== keyword_id);
-}
-
-export const addCharacterCharacteristicMock = (workspace_id:string, character_id:string) => async () => {
-  const character = mockCharacterList.find((c) => c._id === character_id);
-  if(!character) return;
-  character.characteristic.push({title: "", content: ""});
-}
-
-export const updateCharacterCharacteristicTitleMock = (workspace_id:string, character_id:string) =>
-  async ({index,title}:{index:number, title:string}) => {
+export const updateCharacterCoverImageMock =
+  (workspace_id: string, character_id: string) => async (file: File) => {
     const character = mockCharacterList.find((c) => c._id === character_id);
-    if(!character) return;
+    if (!character) return;
+    await new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        character.ch_image = e.target?.result as string;
+        resolve(null);
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+export const addCharacterKeywordMock =
+  (workspace_id: string, character_id: string) =>
+  async (keyword_id: string) => {
+    const character = mockCharacterList.find((c) => c._id === character_id);
+    if (!character) return;
+    character.keyword.push(keyword_id);
+  };
+
+export const removeCharacterKeywordMock =
+  (workspace_id: string, character_id: string) =>
+  async (keyword_id: string) => {
+    const character = mockCharacterList.find((c) => c._id === character_id);
+    if (!character) return;
+    character.keyword = character.keyword.filter((k) => k !== keyword_id);
+  };
+
+export const addCharacterCharacteristicMock =
+  (workspace_id: string, character_id: string) => async () => {
+    const character = mockCharacterList.find((c) => c._id === character_id);
+    if (!character) return;
+    character.characteristic.push({ title: "", content: "" });
+  };
+
+export const updateCharacterCharacteristicTitleMock =
+  (workspace_id: string, character_id: string) =>
+  async ({ index, title }: { index: number; title: string }) => {
+    const character = mockCharacterList.find((c) => c._id === character_id);
+    if (!character) return;
     character.characteristic[index].title = title;
-}
+  };
 
-export const updateCharacterCharacteristicContentMock = (workspace_id:string, character_id:string) =>
-  async ({index,content}:{index:number, content:string}) => {
+export const updateCharacterCharacteristicContentMock =
+  (workspace_id: string, character_id: string) =>
+  async ({ index, content }: { index: number; content: string }) => {
     const character = mockCharacterList.find((c) => c._id === character_id);
-    if(!character) return;
+    if (!character) return;
     character.characteristic[index].content = content;
-}
+  };
 
-export const removeCharacterCharacteristicMock = (workspace_id:string, character_id:string) => async (index:number) => {
-  const character = mockCharacterList.find((c) => c._id === character_id);
-  if(!character) return;
-  character.characteristic.splice(index, 1);
-}
+export const removeCharacterCharacteristicMock =
+  (workspace_id: string, character_id: string) => async (index: number) => {
+    const character = mockCharacterList.find((c) => c._id === character_id);
+    if (!character) return;
+    character.characteristic.splice(index, 1);
+  };
 
 const CharacterRelationMock: TRelation[] = [
   {
@@ -560,27 +674,40 @@ const CharacterRelationMock: TRelation[] = [
   },
 ];
 
-export const getCharacterRelationMock = (workspace_id:string) => async () => {
+export const getCharacterRelationMock = (workspace_id: string) => async () => {
   return JSON.parse(JSON.stringify(CharacterRelationMock)) as TRelation[];
-}
+};
 
-export const createCharacterRelationMock = (workspace_id:string) => async ({arrow_text_right, arrow_text_left, start_ch, end_ch}:{arrow_text_right:string, arrow_text_left:string, start_ch:string, end_ch:string}) => {
-  CharacterRelationMock.push({
-    _id: Math.random().toString(36).substring(7),
-    arrow_right: true,
-    arrow_left: true,
+export const createCharacterRelationMock =
+  (workspace_id: string) =>
+  async ({
     arrow_text_right,
     arrow_text_left,
     start_ch,
     end_ch,
-  });
-}
+  }: {
+    arrow_text_right: string;
+    arrow_text_left: string;
+    start_ch: string;
+    end_ch: string;
+  }) => {
+    CharacterRelationMock.push({
+      _id: Math.random().toString(36).substring(7),
+      arrow_right: true,
+      arrow_left: true,
+      arrow_text_right,
+      arrow_text_left,
+      start_ch,
+      end_ch,
+    });
+  };
 
-export const deleteCharacterRelationMock = (workspace_id:string) => async (relation_id:string) => {
-  const index = CharacterRelationMock.findIndex((r) => r._id === relation_id);
-  if(index === -1) return;
-  CharacterRelationMock.splice(index, 1);
-}
+export const deleteCharacterRelationMock =
+  (workspace_id: string) => async (relation_id: string) => {
+    const index = CharacterRelationMock.findIndex((r) => r._id === relation_id);
+    if (index === -1) return;
+    CharacterRelationMock.splice(index, 1);
+  };
 
 export const updateCharacterRelationMock = (workspace_id:string) => async ({relation_id, arrow_text_right, arrow_text_left}:{relation_id:string, arrow_text_right:string, arrow_text_left:string}) => {
   const relation = CharacterRelationMock.find((r) => r._id === relation_id);
