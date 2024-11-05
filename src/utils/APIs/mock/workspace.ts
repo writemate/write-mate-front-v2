@@ -636,22 +636,22 @@ const mockScriptList: any[] = [
   {
     id: "1",
     script_name: "원치 않았던 고백",
-    contents: "",
+    contents: ``,
   },
   {
     id: "2",
     script_name: "원숭이도 고장날 때가 있다",
-    contents: "",
+    contents: "werwe",
   },
   {
     id: "3",
     script_name: "원하는 만큼, 고지식하게",
-    contents: "",
+    contents: "zxcv",
   },
   {
     id: "4",
     script_name: "원더풀 고양이",
-    contents: "",
+    contents: "234234",
   },
 ];
 

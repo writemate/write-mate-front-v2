@@ -37,6 +37,7 @@ export default function QuillEditor({
   const handleChange = (content: string) => {
     setValue(content);
     debouncedMutate(content);
+    console.log(content);
   };
 
   const Font = ReactQuill.Quill.import("formats/font") as any;
