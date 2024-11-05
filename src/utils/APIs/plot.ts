@@ -135,10 +135,7 @@ export const updateChapterFold = async (
  * @param chapterId
  * @returns id
  */
-export const createEvent = async (
-  plotId: string,
-  order: number
-): Promise<TPlot> => {
+export const createEvent = async (plotId: string): Promise<TPlot> => {
   const response = await axiosInstance.post<TPlot>(DOMAIN.CREATE_EVENT(plotId));
 
   return response.data;

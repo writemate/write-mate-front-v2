@@ -13,12 +13,14 @@ import {
 import { PlotCharacterType } from "@/utils/APIs/mock/plot";
 import AutoResizeInput from "./AutoResizeInput";
 import UpdateModal from "./UpdateModal";
+import useEventList from "@/hooks/workspace/plot/useEventList";
 
 interface EventProps {
   eventId: string;
   eventName: string;
   eventDescription: string;
   eventCharacter: PlotCharacterType[];
+  onDelete: (peventId: string) => void;
 }
 
 export default function Event({
@@ -26,6 +28,7 @@ export default function Event({
   eventName,
   eventDescription,
   eventCharacter,
+  onDelete,
 }: EventProps) {
   const [modal, setModal] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -33,14 +36,27 @@ export default function Event({
   const characterRef = useRef<HTMLDivElement>(null);
   const [updateModal, setUpdateModal] = useState<string | null>(null);
 
+  const [title, setTitle] = useState<string>(eventName);
   const [content, setContent] = useState<string>(eventDescription);
 
+  const { mutateEventName, mutateEventD } = useEventList();
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setTitle(value);
+    mutateEventName({ peventId: eventId, event_name: value });
+  };
+
+  // 사건 설명 수정
   const handleContentChange = (value: string) => {
     setContent(value);
+    mutateEventD({ peventId: eventId, event_description: eventDescription });
   };
 
   // 사건 삭제
-  //const deleteEvent = useMutation();
+  const deleteEvent = () => {
+    onDelete(eventId);
+  };
 
   return (
     <div style={{ position: "relative" }}>
@@ -70,11 +86,15 @@ export default function Event({
                 characterId={updateModal}
               />
             )}
-            <EventDeleteBtn>
+            <EventDeleteBtn onClick={deleteEvent}>
               <DeleteIcon />
             </EventDeleteBtn>
           </div>
-          <EventTitle value={eventName} placeholder="사건 제목을 적어주세요." />
+          <EventTitle
+            value={eventName}
+            onChange={handleNameChange}
+            placeholder="사건 제목을 적어주세요."
+          />
           <AutoResizeInput
             isEvent={true}
             value={content}

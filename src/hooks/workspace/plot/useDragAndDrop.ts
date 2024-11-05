@@ -51,6 +51,7 @@ const useDragAndDrop = <T extends HasOrder>({
 
   return {
     items,
+    setItems,
     handleDragAndDrop,
   };
 };

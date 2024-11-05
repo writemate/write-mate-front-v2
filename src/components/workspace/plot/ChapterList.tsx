@@ -18,17 +18,15 @@ export default function ChapterList({ chapters, plotId }: plotPageProps) {
   const { mutateCreate, mutateDelete, mutateChapterO, mutateChapterFold } =
     useChapterList();
 
-  const { items: chapter, handleDragAndDrop } = useDragAndDrop<PlotChapterType>(
-    {
-      initialItems: chapters,
-      mutationFn: async ({ itemId, pre_idx, next_idx }) =>
-        mutateChapterO({ chapterId: itemId, pre_idx, next_idx }),
-    }
-  );
-
-  const [chapterList, setChapterList] = useState<PlotChapterType[]>(
-    chapter.map((chapter) => ({ ...chapter }))
-  );
+  const {
+    items: chapterList,
+    setItems: setChapterList,
+    handleDragAndDrop,
+  } = useDragAndDrop<PlotChapterType>({
+    initialItems: chapters,
+    mutationFn: async ({ itemId, pre_idx, next_idx }) =>
+      mutateChapterO({ chapterId: itemId, pre_idx, next_idx }),
+  });
 
   const areAllChaptersFolded = chapterList.every(
     (chapter) => chapter.is_folded
@@ -62,7 +60,7 @@ export default function ChapterList({ chapters, plotId }: plotPageProps) {
       work_id: "",
       chapter_name: ``,
       chapter_description: "",
-      order: chapter.length,
+      order: chapterList.length,
       is_starred: false,
       pevent_list: [],
       createdAt: Date.now().toString(),

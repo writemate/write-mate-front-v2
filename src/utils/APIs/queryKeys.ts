@@ -30,10 +30,11 @@ export const workspaceQueryKeys = {
     [...workspaceQueryKeys.info(id), "mainPlot"] as const,
 
   chapterList: (id: string) =>
-    [...workspaceQueryKeys.all, "chapter", id] as const,
+    [...workspaceQueryKeys.all, "chapterList", id] as const,
   chapter: (id: string) => [...workspaceQueryKeys.all, "chapter", id] as const,
 
-  eventList: () => [...workspaceQueryKeys.all, "event"] as const,
+  eventList: (id: string) =>
+    [...workspaceQueryKeys.all, "eventList", id] as const,
   event: (id: string) => [...workspaceQueryKeys.all, "event", id] as const,
 
   character: (id: string) =>

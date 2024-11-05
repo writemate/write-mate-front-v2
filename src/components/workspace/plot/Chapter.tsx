@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import DeleteIcon from "@/assets/workspace/plot/delete.svg";
 import ToggleIcon from "@/assets/workspace/plot/toggle.svg";
 import CopyIcon from "@/assets/workspace/plot/copy.svg";
-import Add from "@/assets/workspace/plot/add.svg";
+
 import ToggleFold from "@/assets/workspace/plot/toggleFold.svg";
 import { PlotEventType } from "@/utils/APIs/mock/plot";
 import AutoResizeInput from "./AutoResizeInput";
@@ -96,9 +96,6 @@ export default function Chapter({
         {localIsFolded && (
           <OpenContainer>
             <EventList pevent={pevent} />
-            <AddButton>
-              <Add />
-            </AddButton>
           </OpenContainer>
         )}
       </ChapterMargin>

@@ -25,6 +25,22 @@ export interface TPatchUpdateFRequest {
   is_folded: boolean;
 }
 
+export interface TPatchUpdateENameRequest {
+  peventId: string;
+  event_name: string;
+}
+
+export interface TPatchUpdateEDRequest {
+  peventId: string;
+  event_description: string;
+}
+
+export interface TPatchUpdateEORequest {
+  peventId: string;
+  pre_idx: number;
+  next_idx: number;
+}
+
 export type PlotChapterType = {
   id: string;
   autor: string;
