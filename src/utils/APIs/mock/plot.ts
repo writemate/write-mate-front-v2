@@ -82,10 +82,10 @@ export type CharacterListType = {
 
 export const mockCharacterList: CharacterListType[] = [
   {
-    id: "string;",
+    id: "1",
     ch_image:
       "https://artmugfile2.cafe24.com/image/goods_img1/2/24621.jpg?ver=1657860911",
-    ch_name: "string;",
+    ch_name: "제인 베네트",
     description: "string;",
     keyword: ["st"],
   },
@@ -93,7 +93,7 @@ export const mockCharacterList: CharacterListType[] = [
     id: "strinddg",
     ch_image:
       "https://artmugfile2.cafe24.com/image/goods_img1/2/24621.jpg?ver=1657860911",
-    ch_name: "string;",
+    ch_name: "찰스 빙리",
     description: "string;",
     keyword: ["st"],
   },
@@ -101,7 +101,7 @@ export const mockCharacterList: CharacterListType[] = [
     id: "string2s",
     ch_image:
       "https://artmugfile2.cafe24.com/image/goods_img1/2/24621.jpg?ver=1657860911",
-    ch_name: "이상혁",
+    ch_name: "엘리자베스 베네트",
     description: "string;",
     keyword: ["st"],
   },
@@ -109,14 +109,14 @@ export const mockCharacterList: CharacterListType[] = [
     id: "stringd1",
     ch_image:
       "https://artmugfile2.cafe24.com/image/goods_img1/2/24621.jpg?ver=1657860911",
-    ch_name: "한태산",
+    ch_name: "피츠윌리엄 다아시",
     description: "string;",
     keyword: ["st"],
   },
   {
     id: "string",
     ch_image: "",
-    ch_name: "박성호",
+    ch_name: "캐롤라인 빙리",
     description: "string;",
     keyword: ["st"],
   },
@@ -203,7 +203,7 @@ export const mockPlotList: responseGetPlotType[] = [{
           order: 1,
           createdAt: "2024-10-03T14:00:00Z",
           updatedAt: "2024-10-04T14:00:00Z",
-          character_list: [],
+          character_list: [mockCharacterList[0],mockCharacterList[1]],
         },
         {
           id: "3",
@@ -212,7 +212,7 @@ export const mockPlotList: responseGetPlotType[] = [{
           order: 2,
           createdAt: "2024-10-06T16:00:00Z",
           updatedAt: "2024-10-07T16:00:00Z",
-          character_list: [],
+          character_list: [mockCharacterList[2],mockCharacterList[3]],
         },
       ],
       createdAt: "2024-09-30T10:00:00Z",
@@ -237,7 +237,7 @@ export const mockPlotList: responseGetPlotType[] = [{
           order: 1,
           createdAt: "2024-09-30T10:00:00Z",
           updatedAt: "2024-10-05T10:00:00Z",
-          character_list: [],
+          character_list: [mockCharacterList[0],mockCharacterList[1]],
         },
         {
           id: "2",
@@ -247,7 +247,7 @@ export const mockPlotList: responseGetPlotType[] = [{
           order: 2,
           createdAt: "2024-09-30T10:00:00Z",
           updatedAt: "2024-10-05T10:00:00Z",
-          character_list: [],
+          character_list: [mockCharacterList[2],mockCharacterList[3],mockCharacterList[1]],
         },
         {
           id: "3",
@@ -257,7 +257,7 @@ export const mockPlotList: responseGetPlotType[] = [{
           order: 3,
           createdAt: "2024-09-30T10:00:00Z",
           updatedAt: "2024-10-05T10:00:00Z",
-          character_list: [],
+          character_list: [mockCharacterList[2], mockCharacterList[4]],
         },
       ],
       createdAt: "2024-09-30T10:00:00Z",
