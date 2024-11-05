@@ -110,7 +110,7 @@ const transformToNodesAndLinks = (data: TRelation[],characterList: TCharacter[])
     return {
       id,
       name: character?.ch_name ?? '삭제되었거나 존재하지 않는 사용자입니다',
-      image: character?.ch_image,
+      image: character?.ch_image??"",
     };
   });
 

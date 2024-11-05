@@ -68,7 +68,7 @@ const LinkButton = styled(Link)`
   }
 `;
 
-export const Button = styled.div`
+const Button = styled.div`
   user-select: none;
   cursor: pointer;
   display: flex;

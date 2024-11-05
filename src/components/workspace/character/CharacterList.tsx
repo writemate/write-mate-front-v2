@@ -60,7 +60,7 @@ export default function CharacterList() {
         {characterList && keywordList && characterList.map((character, index) => (
           <CharacterCard key={index+1} href={`/${workspace_id}/character/${character._id}`}>
             <CharacterCardTitle>
-              <CharacterImage $src={character.ch_image} />
+              <CharacterImage $src={character.ch_image??""} />
               <div>
                 <CharacterName>{character.ch_name}</CharacterName>
                 <CharacterRole>{character.role}</CharacterRole>

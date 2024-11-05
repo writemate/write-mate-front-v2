@@ -36,7 +36,7 @@ export default function EditRelation<T extends boolean>({
       <hr/>
       <RelationContentsContainer>
         <RelationCharacterContainer>
-          <RelationCharacterImage $src={selectedCharacter1?.ch_image}/>
+          <RelationCharacterImage $src={selectedCharacter1?.ch_image??""}/>
           {!isNewMode && <RelationCharacterName>{selectedCharacter1?.ch_name}</RelationCharacterName>}
           {isNewMode && <DropdownCharacter placeholder="인물 선택" options={characterList!} selected={selectedCharacter1?.ch_name} setSelected={selectCharacter1}/>}
           <RelationCharacterDescription>{selectedCharacter1?.description}</RelationCharacterDescription>
@@ -54,7 +54,7 @@ export default function EditRelation<T extends boolean>({
           </div>
         </RelationArrowContainer>
         <RelationCharacterContainer>
-          <RelationCharacterImage $src={selectedCharacter2?.ch_image}/>
+          <RelationCharacterImage $src={selectedCharacter2?.ch_image??""}/>
           {!isNewMode && <RelationCharacterName>{selectedCharacter2?.ch_name}</RelationCharacterName>}
           {isNewMode && <DropdownCharacter placeholder="인물 선택" options={characterList!} selected={selectedCharacter2?.ch_name} setSelected={selectCharacter2}/>}
           <RelationCharacterDescription>{selectedCharacter2?.description}</RelationCharacterDescription>

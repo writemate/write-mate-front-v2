@@ -150,12 +150,12 @@ export const createScriptMock = (workId: string) => async () => {
 
 const mockInfo: TWorkInfo = {
   cover: "https://artmugfile2.cafe24.com/image/goods_img1/2/24621.jpg?ver=1657860911",
-  title: "",
+  title: "오만과 편견 (*Pride and Prejudice*)",
   genre: "",
-  logline: "",
+  logline: "성격과 계급이 다른 두 사람이 오해와 편견을 넘어서 진정한 사랑을 찾는 이야기",
   expectedQuantity: -1,
   grade: null,
-  introduction: "",
+  introduction: "*오만과 편견*은 19세기 영국 상류층을 배경으로 하여, 결혼과 계급, 인간의 편견과 감정에 대해 탐구하는 제인 오스틴의 대표작입니다. 이야기는 주인공 엘리자베스 베넷이 첫인상에 대해 오만했던 피츠윌리엄 다아시를 이해하고 사랑하게 되기까지의 여정을 그립니다. 풍자와 사회적 통찰이 녹아 있는 이 소설은 당시 여성의 결혼 문제와 계급 간 갈등을 비판하면서도, 개인의 성장과 자기 이해를 통해 사랑을 찾는 과정을 섬세하게 묘사합니다.",
 }
 
 export const getInfoMock = (workId: string) => async () => {
@@ -525,51 +525,133 @@ export const generagePlotAndCharacterByScriptMock = (workspace_id:string, script
   });
   await updatePlot(newPlotId);
   createCharacterKeywordMock(workspace_id)({keyword_name: "AI생성"});
+const ai생성 = mockKeywordList.find((k) => k.keyword_name === "AI생성")!;
 
-  createCharacterKeywordMock(workspace_id)({keyword_name: "명랑함"});
-  createCharacterKeywordMock(workspace_id)({keyword_name: "여유 있음"});
-  createCharacterKeywordMock(workspace_id)({keyword_name: "신사다움"});
+createCharacterKeywordMock(workspace_id)({keyword_name: "지식"});
+createCharacterKeywordMock(workspace_id)({keyword_name: "지혜"});
+createCharacterKeywordMock(workspace_id)({keyword_name: "자립"});
+createCharacterKeywordMock(workspace_id)({keyword_name: "자신감"});
 
-  createCharacterKeywordMock(workspace_id)({keyword_name: "거만함"});
-  createCharacterKeywordMock(workspace_id)({keyword_name: "불쾌함"});
-  createCharacterKeywordMock(workspace_id)({keyword_name: "잘난 체"});
+createCharacterKeywordMock(workspace_id)({keyword_name: "아름다움"});
+createCharacterKeywordMock(workspace_id)({keyword_name: "친절"});
+createCharacterKeywordMock(workspace_id)({keyword_name: "이해력"});
 
-  const ai생성 = mockKeywordList.find((k) => k.keyword_name === "AI생성")!;
-  const 명랑함 = mockKeywordList.find((k) => k.keyword_name === "명랑함")!;
-  const 여유있음 = mockKeywordList.find((k) => k.keyword_name === "여유 있음")!;
-  const 신사다움 = mockKeywordList.find((k) => k.keyword_name === "신사다움")!;
-  const 거만함 = mockKeywordList.find((k) => k.keyword_name === "거만함")!;
-  const 불쾌함 = mockKeywordList.find((k) => k.keyword_name === "불쾌함")!;
-  const 잘난체 = mockKeywordList.find((k) => k.keyword_name === "잘난 체")!;
+createCharacterKeywordMock(workspace_id)({keyword_name: "비판"});
+createCharacterKeywordMock(workspace_id)({keyword_name: "자기애"});
+
+createCharacterKeywordMock(workspace_id)({keyword_name: "부"});
+createCharacterKeywordMock(workspace_id)({keyword_name: "거만함"});
+createCharacterKeywordMock(workspace_id)({keyword_name: "관대함"});
+
+createCharacterKeywordMock(workspace_id)({keyword_name: "자존심"});
+createCharacterKeywordMock(workspace_id)({keyword_name: "미모"});
+createCharacterKeywordMock(workspace_id)({keyword_name: "자만심"});
+createCharacterKeywordMock(workspace_id)({keyword_name: "우스움"});
+
+createCharacterKeywordMock(workspace_id)({keyword_name: "위선"});
+createCharacterKeywordMock(workspace_id)({keyword_name: "광기"});
+createCharacterKeywordMock(workspace_id)({keyword_name: "우둔함"});
+
+const 지식 = mockKeywordList.find((k) => k.keyword_name === "지식")!;
+const 지혜 = mockKeywordList.find((k) => k.keyword_name === "지혜")!;
+const 자립 = mockKeywordList.find((k) => k.keyword_name === "자립")!;
+const 자신감 = mockKeywordList.find((k) => k.keyword_name === "자신감")!;
+const 아름다움 = mockKeywordList.find((k) => k.keyword_name === "아름다움")!;
+const 친절 = mockKeywordList.find((k) => k.keyword_name === "친절")!;
+const 이해력 = mockKeywordList.find((k) => k.keyword_name === "이해력")!;
+const 비판 = mockKeywordList.find((k) => k.keyword_name === "비판")!;
+const 자기애 = mockKeywordList.find((k) => k.keyword_name === "자기애")!;
+const 부 = mockKeywordList.find((k) => k.keyword_name === "부")!;
+const 거만함 = mockKeywordList.find((k) => k.keyword_name === "거만함")!;
+const 관대함 = mockKeywordList.find((k) => k.keyword_name === "관대함")!;
+const 자존심 = mockKeywordList.find((k) => k.keyword_name === "자존심")!;
+const 미모 = mockKeywordList.find((k) => k.keyword_name === "미모")!;
+const 자만심 = mockKeywordList.find((k) => k.keyword_name === "자만심")!;
+const 우스움 = mockKeywordList.find((k) => k.keyword_name === "우스움")!;
+const 위선 = mockKeywordList.find((k) => k.keyword_name === "위선")!;
+const 광기 = mockKeywordList.find((k) => k.keyword_name === "광기")!;
+const 우둔함 = mockKeywordList.find((k) => k.keyword_name === "우둔함")!;
 
 
   const mockCharacterList2: TCharacter[] =  [
     {
-      _id: "sdfaf",
-      ch_name: "빙리 씨",
-      ch_image: "",
-      isMain: false,
-      role: "지주",
+      _id: "1",
+      ch_name: "엘리자베스 베네트",
+      ch_image: null,
+      isMain: true,
+      role: "주인공",
       birthday: "",
-      gender: "남성",
-      description: "호남아이며 신사다운 인물. 명랑하고 여유 있고 자연스러운 태도를 가졌으며, 무도회를 좋아한다.",
-      keyword: [ai생성._id, 명랑함._id, 여유있음._id, 신사다움._id],
+      gender: "여성",
+      description: "지적이고 명석한 젊은 여성으로, 자존심이 강하고 독립적이다.",
       characteristic: [],
-    relatedEvent: []
+      keyword: [ai생성._id, 지식._id, 지혜._id, 자립._id, 자신감._id],
+      relatedEvent: [],
     },
     {
-      _id: "sdfsdfd",
-      ch_name: "다아시 씨",
-      ch_image: "",
+      _id: "2",
+      ch_name: "제인 베네트",
+      ch_image: null,
       isMain: false,
-      role: "지주",
+      role: "엘리자베스의 누나",
+      birthday: "",
+      gender: "여성",
+      description: "아름답고 온화한 젊은 여성으로, 타인의 감정을 잘 이해한다.",
+      characteristic: [],
+      keyword: [ai생성._id,아름다움._id, 친절._id, 이해력._id],
+      relatedEvent: [],
+    },
+    {
+      _id: "3",
+      ch_name: "메리 베네트",
+      ch_image: null,
+      isMain: false,
+      role: "엘리자베스의 누나",
+      birthday: "",
+      gender: "여성",
+      description: "똑똑하고 독설적이지만, 자기중심적이고 덜 아름답다.",
+      characteristic: [],
+      keyword: [ai생성._id,지식._id, 비판._id, 자기애._id],
+      relatedEvent: [],
+    },
+    {
+      _id: "4",
+      ch_name: "캐서린 드 버그",
+      ch_image: null,
+      isMain: false,
+      role: "엘리자베스와 다아시의 이웃",
+      birthday: "",
+      gender: "여성",
+      description: "부자이고 자만하지만, 친절한 면도 있다.",
+      characteristic: [],
+      keyword: [ai생성._id,부._id, 거만함._id, 관대함._id],
+      relatedEvent: [],
+    },
+    {
+      _id: "5",
+      ch_name: "윌리엄 다아시",
+      ch_image: null,
+      isMain: true,
+      role: "주인공의 짝사랑 대상",
       birthday: "",
       gender: "남성",
-      description: "덩치가 크고 잘 생기며, 연간 소득이 1만 파운드에 달하는 부유한 지주. 거만하고 남과 어울리기를 싫어하며, 불쾌한 태도를 가졌다.",
-      keyword: [ai생성._id, 거만함._id, 불쾌함._id, 잘난체._id],
+      description: "부자이고 잘생기지만, 자존심이 강하고 거만하다.",
       characteristic: [],
-      relatedEvent: []
-    }
+      keyword: [ai생성._id,부._id, 미모._id, 자존심._id, 거만함._id],
+      relatedEvent: [],
+    },
+    {
+      _id: "6",
+      ch_name: "피츠윌리엄 콜린스",
+      ch_image: null,
+      isMain: false,
+      role: "엘리자베스에게 구혼하는 성직자",
+      birthday: "",
+      gender: "남성",
+      description: "자만심이 강하고 우스운 성격으로, 엘리자베스에게 거절당한다.",
+      characteristic: [],
+      keyword: [ai생성._id,자만심._id, 우스움._id],
+      relatedEvent: [],
+    },
   ];
 
   mockCharacterList.push(...mockCharacterList2);

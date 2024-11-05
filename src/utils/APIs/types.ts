@@ -73,7 +73,7 @@ export type TKeyword = {
 export type TCharacter = {
   _id: string;
   ch_name: string;
-  ch_image: string;
+  ch_image: string|null;
   description: string;
   isMain: boolean;
   role: string;
