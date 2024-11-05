@@ -269,9 +269,9 @@ export const mockPlotList: responseGetPlotType[] = [{
 
 export const getPlot = async (plotId: string): Promise<responseGetPlotType> => {
   const data = mockPlotList.find((plot) => plot.id === plotId);
-  if(data) return data;
+  if (data) return data;
   return mockPlotList[0];
-}
+};
 
 export const createPlot = async (): Promise<responseGetPlotType> => {
   const newPlot: responseGetPlotType = {
@@ -281,57 +281,57 @@ export const createPlot = async (): Promise<responseGetPlotType> => {
   };
   mockPlotList.push(newPlot);
   return newPlot;
-}
+};
 
 export const updatePlot = async (plotId: string): Promise<void> => {
   const data = mockPlotList.find((plot) => plot.id === plotId);
-  if(!data) return;
+  if (!data) return;
   data.plot_name = "자존심과 편견";
-  data.chapters= [
-      {
-        id: "1",
-        autor: "제인 오스틴",
-        is_starred: true,
-        chapter_name: "자존심과 편견: 첫 장",
-        chapter_description:
-          "자존심과 편견의 첫 장에서 베네트 가족과 루커스 가족 간의 우호적 관계와 빙리와 다아시의 도착에 대한 흥분이 소개됩니다.",
-        work_id: "story123",
-        order: 0,
-        pevent_list: [
-          {
-            id: "1",
-            event_description:
-              "루커스 가족이 베네트 가족에게 빙리 씨와 다아시 씨의 도착 소식을 전합니다.",
-            event_name: "빙리 씨와 다아시 씨의 도착 소식 전달",
-            order: 1,
-            createdAt: "2024-10-01T12:00:00Z",
-            updatedAt: "2024-10-02T12:00:00Z",
-            character_list: [],
-          },
-          {
-            id: "2",
-            event_description:
-              "메리 베네트는 빙리 씨가 베네트 가족의 누군가와 결혼할 것이라고 추측합니다.",
-            event_name: "메리 베네트의 추측",
-            order: 2,
-            createdAt: "2024-10-03T14:00:00Z",
-            updatedAt: "2024-10-04T14:00:00Z",
-            character_list: [],
-          },
-          {
-            id: "3",
-            event_description:
-              "엘리자베스 베네트는 빙리 씨와 다아시 씨의 자존심에 대해 논평합니다.",
-            event_name: "엘리자베스 베네트의 자존심 논평",
-            order: 3,
-            createdAt: "2024-10-05T16:00:00Z",
-            updatedAt: "2024-10-06T16:00:00Z",
-            character_list: [],
-          },
-        ],
-        createdAt: "2024-09-30T10:00:00Z",
-        updatedAt: "2024-10-05T10:00:00Z",
-        is_folded: false,
-      },
-    ];
-}
+  data.chapters = [
+    {
+      id: "1",
+      autor: "제인 오스틴",
+      is_starred: true,
+      chapter_name: "자존심과 편견: 첫 장",
+      chapter_description:
+        "자존심과 편견의 첫 장에서 베네트 가족과 루커스 가족 간의 우호적 관계와 빙리와 다아시의 도착에 대한 흥분이 소개됩니다.",
+      work_id: "story123",
+      order: 0,
+      pevent_list: [
+        {
+          id: "1",
+          event_description:
+            "루커스 가족이 베네트 가족에게 빙리 씨와 다아시 씨의 도착 소식을 전합니다.",
+          event_name: "빙리 씨와 다아시 씨의 도착 소식 전달",
+          order: 1,
+          createdAt: "2024-10-01T12:00:00Z",
+          updatedAt: "2024-10-02T12:00:00Z",
+          character_list: [],
+        },
+        {
+          id: "2",
+          event_description:
+            "메리 베네트는 빙리 씨가 베네트 가족의 누군가와 결혼할 것이라고 추측합니다.",
+          event_name: "메리 베네트의 추측",
+          order: 2,
+          createdAt: "2024-10-03T14:00:00Z",
+          updatedAt: "2024-10-04T14:00:00Z",
+          character_list: [],
+        },
+        {
+          id: "3",
+          event_description:
+            "엘리자베스 베네트는 빙리 씨와 다아시 씨의 자존심에 대해 논평합니다.",
+          event_name: "엘리자베스 베네트의 자존심 논평",
+          order: 3,
+          createdAt: "2024-10-05T16:00:00Z",
+          updatedAt: "2024-10-06T16:00:00Z",
+          character_list: [],
+        },
+      ],
+      createdAt: "2024-09-30T10:00:00Z",
+      updatedAt: "2024-10-05T10:00:00Z",
+      is_folded: false,
+    },
+  ];
+};

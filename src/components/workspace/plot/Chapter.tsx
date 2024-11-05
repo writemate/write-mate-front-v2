@@ -2,6 +2,8 @@ import {
   ChapterContainer,
   ChapterDragWrap,
   ChapterMargin,
+  HeaderContainer,
+  HeaderRightButtonList,
   IconButton,
   OpenContainer,
   TitleInput,
@@ -76,21 +78,29 @@ export default function Chapter({
 
       <ChapterMargin>
         <div>
-          <TitleInput
-            value={title}
-            onChange={handleNameChange}
-            placeholder="챕터 제목을 적어주세요."
-          />
-          <IconButton type="button" onClick={toggleChapter}>
-            {localIsFolded && <ToggleIcon style={{ marginBottom: "10%" }} />}
-            {!localIsFolded && <ToggleFold style={{ marginBottom: "11%" }} />}
-          </IconButton>
-          <IconButton type="button">
-            <CopyIcon />
-          </IconButton>
-          <IconButton type="button" onClick={deleteChapter}>
-            <DeleteIcon />
-          </IconButton>
+          <HeaderContainer>
+            <TitleInput
+              value={title}
+              onChange={handleNameChange}
+              placeholder="챕터 제목을 적어주세요."
+            />
+            <HeaderRightButtonList>
+              <IconButton type="button" onClick={toggleChapter}>
+                {localIsFolded && (
+                  <ToggleIcon style={{ marginBottom: "10%" }} />
+                )}
+                {!localIsFolded && (
+                  <ToggleFold style={{ marginBottom: "11%" }} />
+                )}
+              </IconButton>
+              <IconButton type="button">
+                <CopyIcon />
+              </IconButton>
+              <IconButton type="button" onClick={deleteChapter}>
+                <DeleteIcon />
+              </IconButton>
+            </HeaderRightButtonList>
+          </HeaderContainer>
         </div>
         <AutoResizeInput
           isFolded={localIsFolded}

@@ -13,6 +13,19 @@ export const ChapterContainer = styled.form<{ isOpenAlone: boolean }>`
   border-radius: 12px;
 `;
 
+export const HeaderContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+`;
+export const HeaderRightButtonList = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-grow: 1;
+`;
+
 export const ChapterDragWrap = styled.div`
   float: left;
   padding-left: 17px;
@@ -56,7 +69,7 @@ export const AddButton = styled.button`
 export const TitleInput = styled.input`
   height: 36px;
   text-overflow: clip;
-  width: 89%;
+  width: 80%;
   border: none;
 
   font-weight: 700;
