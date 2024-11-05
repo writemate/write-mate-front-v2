@@ -573,4 +573,5 @@ export const generagePlotAndCharacterByScriptMock = (workspace_id:string, script
   ];
 
   mockCharacterList.push(...mockCharacterList2);
+  return newPlotId;
 }
