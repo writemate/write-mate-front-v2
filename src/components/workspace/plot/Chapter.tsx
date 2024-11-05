@@ -88,6 +88,7 @@ export default function Chapter({
           </IconButton>
         </div>
         <AutoResizeInput
+          isFolded={localIsFolded}
           value={content}
           onChange={handleContentChange}
           placeholder="챕터 내용을 적어주세요."

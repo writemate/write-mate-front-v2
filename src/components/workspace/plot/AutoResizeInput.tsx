@@ -6,6 +6,7 @@ interface AutoResizeInputProps {
   placeholder: string;
   onChange?: (value: string) => void;
   isEvent?: boolean;
+  isFolded?: boolean;
 }
 
 export default function AutoResizeInput({
@@ -13,6 +14,7 @@ export default function AutoResizeInput({
   placeholder,
   onChange,
   isEvent = false,
+  isFolded = true,
 }: AutoResizeInputProps) {
   const [inputValue, setInputValue] = useState(value);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -47,6 +49,7 @@ export default function AutoResizeInput({
   };
   return (
     <ContentTextArea
+      isFolded
       isEvent={isEvent}
       ref={textareaRef}
       placeholder={placeholder}

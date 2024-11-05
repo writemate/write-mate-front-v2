@@ -62,12 +62,15 @@ export const TitleInput = styled.input`
   color: ${colorSystem.gray900};
 `;
 
-export const ContentTextArea = styled.textarea<{ isEvent: boolean }>`
+export const ContentTextArea = styled.textarea<{
+  isEvent: boolean;
+  isFolded: boolean;
+}>`
   border: none;
   height: 24px;
   resize: none;
-  margin-bottom: 24px;
   width: 95%;
+  margin-bottom: ${(props) => props.isFolded && !props.isEvent && "24px"};
   background: ${(props) => (props.isEvent ? `${colorSystem.gray25}` : "white")};
 
   font-weight: 600;
