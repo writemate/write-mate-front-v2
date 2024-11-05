@@ -202,67 +202,6 @@ const mockKeywordList: TKeyword[] = [
   { _id: "14", keyword_name: "병약", lightColor: colorSystem.red200, darkColor: colorSystem.red500 },
 ];
 
-const mockCharacterList: TCharacter[] = [{
-  _id: "1",
-  ch_name: "주인공",
-  ch_image: "",
-  isMain: true,
-  role: "주인공",
-  birthday: "",
-  gender: "",
-  description: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Asperiores ea aliquam doloribus delectus est ipsam dolorum magni, ducimus rem quas reiciendis pariatur beatae? Sapiente, obcaecati optio asperiores quia voluptatum harum.",
-  characteristic: [],
-  keyword: ["1", "5", "9"],
-  relatedEvent: [],
-},{
-  _id: "2",
-  ch_name: "ㄴㅇ라ㅣㅜㄴㅇ라ㅣㅜㄴㅇ라ㅣㅜㄴㅇ라ㅣㅜㄴㅇ라ㅣㅜㄴㅇ",
-  ch_image: "https://artmugfile2.cafe24.com/image/goods_img1/2/24621.jpg?ver=1657860911",
-  isMain: true,
-  role: "주인공ㄴㅇㄹㅎㅇㄹㄴㅇㄹ허ㅏㅣㅠㅜㄴㅇㄹㅎ허ㅏㅣㅜㄴㅇ",
-  birthday: "",
-  gender: "",
-  description: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Asperiores ea aliquam doloribus delectus est ipsam dolorum magni, ducimus rem quas reiciendis pariatur beatae? Sapiente, obcaecati optio asperiores quia voluptatum harum.",
-  characteristic: [],
-  keyword: ["7", "2", "3", "4"],
-  relatedEvent: [],
-}
-,{
-  _id: "3",
-  ch_name: "ㄷㅅㄹㅎㅇㅍㅇㄹㅍ",
-  ch_image: "https://artmugfile2.cafe24.com/image/goods_img1/2/24621.jpg?ver=1657860911",
-  isMain: true,
-  role: "ㄴㅇㄹㄴㅇ륭ㅅ롯ㅇㄹ혹ㄴㅇㅎㄷㄱㅇㅎㅇㄹ퓨",
-  birthday: "",
-  gender: "",
-  description: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Asperiores ea aliquam doloribus delectus est ipsam dolorum magni, ducimus rem quas reiciendis pariatur beatae? Sapiente, obcaecati optio asperiores quia voluptatum harum.",
-  characteristic: [],
-  keyword: ["9", "2", "1"],
-  relatedEvent: [],
-}
-,{
-  _id: "4",
-  ch_name: "ㅇ롱ㄹ혿ㄱ욯ㅇㄹ퓽류",
-  ch_image: "https://artmugfile2.cafe24.com/image/goods_img1/2/24621.jpg?ver=1657860911",
-  isMain: true,
-  role: "ㅎㄱㄴㅎㄱㅇㄹㅍㄷㄱㅎㄹㅇㅍㅇ퓨",
-  birthday: "",
-  gender: "",
-  description: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Asperiores ea aliquam doloribus delectus est ipsam dolorum magni, ducimus rem quas reiciendis pariatur beatae? Sapiente, obcaecati optio asperiores quia voluptatum harum.",
-  characteristic: [],
-  keyword: ["3","6","7","14"],
-  relatedEvent: [],
-}
-];
-
-export const getCharacterKeywordListMock = (workspace_id:string) => async () => {
-  return JSON.parse(JSON.stringify(mockKeywordList)) as TKeyword[];
-}
-
-export const getCharacterListMock = (workspace_id:string) => async () => {
-  return JSON.parse(JSON.stringify(mockCharacterList)) as TCharacter[];
-}
-
 export const createCharacterKeywordMock = (workspace_id:string) => async ({keyword_name, lightColor, darkColor}:{keyword_name:string, lightColor?:string, darkColor?:string}) => {
   const randomColorList = [[
     colorSystem.red200,
@@ -291,6 +230,175 @@ export const createCharacterKeywordMock = (workspace_id:string) => async ({keywo
     darkColor,
   });
 }
+
+export const getCharacterKeywordListMock = (workspace_id:string) => async () => {
+  return JSON.parse(JSON.stringify(mockKeywordList)) as TKeyword[];
+}
+
+createCharacterKeywordMock("")({keyword_name: "AI생성"});
+
+createCharacterKeywordMock("")({keyword_name: "오만함"});
+createCharacterKeywordMock("")({keyword_name: "편견"});
+
+createCharacterKeywordMock("")({keyword_name: "애정"});
+createCharacterKeywordMock("")({keyword_name: "허영"});
+createCharacterKeywordMock("")({keyword_name: "소심"});
+
+createCharacterKeywordMock("")({keyword_name: "이기심"});
+createCharacterKeywordMock("")({keyword_name: "겉치레"});
+
+createCharacterKeywordMock("")({keyword_name: "착함"});
+createCharacterKeywordMock("")({keyword_name: "대화"});
+createCharacterKeywordMock("")({keyword_name: "남의 이점 추출"});
+
+createCharacterKeywordMock("")({keyword_name: "명료함"});
+createCharacterKeywordMock("")({keyword_name: "비판"});
+createCharacterKeywordMock("")({keyword_name: "인지"});
+
+createCharacterKeywordMock("")({keyword_name: "사교성"});
+createCharacterKeywordMock("")({keyword_name: "관용"});
+createCharacterKeywordMock("")({keyword_name: "안이함"});
+
+createCharacterKeywordMock("")({keyword_name: "오해"});
+createCharacterKeywordMock("")({keyword_name: "편견"});
+createCharacterKeywordMock("")({keyword_name: "결단력"});
+
+createCharacterKeywordMock("")({keyword_name: "교양"});
+
+
+const 오만함 = mockKeywordList.find((k) => k.keyword_name === "오만함")!;
+const 편견 = mockKeywordList.find((k) => k.keyword_name === "편견")!;
+
+const 허영 = mockKeywordList.find((k) => k.keyword_name === "허영")!;
+const 소심 = mockKeywordList.find((k) => k.keyword_name === "소심")!;
+
+const 이기심 = mockKeywordList.find((k) => k.keyword_name === "이기심")!;
+const 겉치레 = mockKeywordList.find((k) => k.keyword_name === "겉치레")!;
+
+const 착함 = mockKeywordList.find((k) => k.keyword_name === "착함")!;
+const 대화 = mockKeywordList.find((k) => k.keyword_name === "대화")!;
+const 남의이점추출 = mockKeywordList.find((k) => k.keyword_name === "남의 이점 추출")!;
+const 명료함 = mockKeywordList.find((k) => k.keyword_name === "명료함")!;
+const 비판 = mockKeywordList.find((k) => k.keyword_name === "비판")!;
+const 인지 = mockKeywordList.find((k) => k.keyword_name === "인지")!;
+const 사교성 = mockKeywordList.find((k) => k.keyword_name === "사교성")!;
+const 관용 = mockKeywordList.find((k) => k.keyword_name === "관용")!;
+const 안이함 = mockKeywordList.find((k) => k.keyword_name === "안이함")!;
+const 오해 = mockKeywordList.find((k) => k.keyword_name === "오해")!;
+const 결단력 = mockKeywordList.find((k) => k.keyword_name === "결단력")!;
+const 교양 = mockKeywordList.find((k) => k.keyword_name === "교양")!;
+
+const mockCharacterList: TCharacter[] = [
+  {
+    _id: "1",
+    ch_name: "베네트 씨",
+    ch_image: "",
+    isMain: true,
+    role: "아버지",
+    birthday: "1760-01-01",
+    gender: "남성",
+    description: "베네트 가문의 가장으로, 오만하고 편견 있으며, 딸들을 적당히 사랑하는 인물.",
+    keyword: [ 오만함._id, 편견._id],
+    characteristic: [],
+    relatedEvent: []
+  },
+  {
+    _id: "2",
+    ch_name: "베네트 부인",
+    ch_image: "",
+    isMain: true,
+    role: "어머니",
+    birthday: "1765-01-01",
+    gender: "여성",
+    description: "베네트 가문의 어머니로, 허영스럽고 소심한 성격.",
+    keyword: [ 허영._id, 소심._id],
+    characteristic: [],
+    relatedEvent: []
+  },
+  {
+    _id: "4",
+    ch_name: "롱 부인",
+    ch_image: "",
+    isMain: false,
+    role: "이웃",
+    birthday: "1770-01-01",
+    gender: "여성",
+    description: "베네트 가문의 이웃으로, 이기적이고 겉치레를 좋아하는 성격.",
+    keyword: [이기심._id, 겉치레._id],
+    characteristic: [],
+    relatedEvent: []
+  },
+    {
+      _id: "5",
+      ch_name: "제인 베넷",
+      ch_image: "",
+      isMain: true,
+      role: "주인공",
+      birthday: "",
+      gender: "여성",
+      description: "차분하고 온화한 성격으로 남을 쉽게 좋아한다. 잘난 체하거나 거만한 사람들을 싫어한다.",
+      characteristic: [],
+      keyword: [ 착함._id, 대화._id, 남의이점추출._id],
+      relatedEvent: []
+  },
+    {
+      _id: "6",
+      ch_name: "엘리자베스 베넷",
+      ch_image: "",
+      isMain: true,
+      role: "조력자",
+      birthday: "",
+      gender: "여성",
+      description: "똑똑하고 관찰력이 뛰어나며, 남의 허위를 쉽게 간파한다. 거만함과 어리석음을 싫어한다.",
+      characteristic: [],
+      keyword: [  명료함._id, 비판._id, 인지._id],
+      relatedEvent: []
+  },
+    {
+      _id: "7",
+      ch_name: "찰스 빙리",
+      ch_image: "",
+      isMain: true,
+      role: "조력자",
+      birthday: "",
+      gender: "남성",
+      description: "착하고 상냥하며 쾌활한 성격으로, 모든 사람에게 친절하다. 하지만 좀 안이한 면이 있다.",
+      characteristic: [],
+      keyword: [  사교성._id, 관용._id, 안이함._id],
+      relatedEvent: []
+  },
+    {
+      _id: "8",
+      ch_name: "피츠윌리엄 다아시",
+      ch_image: "",
+      isMain: true,
+      role: "조력자",
+      birthday: "",
+      gender: "남성",
+      description: "지적이고 이해력이 우수하지만, 교양은 있지만 사람을 끄는 데가 없다. 고집이 세고 까다롭다.",
+      characteristic: [],
+      keyword: [  오해._id, 편견._id, 결단력._id],
+      relatedEvent: []
+  },
+    {
+      _id: "9",
+      ch_name: "캐롤라인 빙리",
+      ch_image: "",
+      isMain: false,
+      role: "제3자",
+      birthday: "",
+      gender: "여성",
+      description: "거만하고 잘난 체하는 성격으로, 자신을 더 높게 생각한다. 명성과 지위를 중시한다.",
+      characteristic: [],
+      keyword: [ 교양._id],
+      relatedEvent: []
+  }
+];
+
+export const getCharacterListMock = (workspace_id:string) => async () => {
+  return JSON.parse(JSON.stringify(mockCharacterList)) as TCharacter[];
+}
+
 
 export const createCharacterMock = (workspace_id:string) => async () => {
   mockCharacterList.push({
