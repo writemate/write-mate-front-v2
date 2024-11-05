@@ -1,11 +1,15 @@
 import { colorSystem } from "@/styles/colorSystem";
 import styled from "styled-components";
-import { IconButton } from "./Chapter.styles";
+import { ChapterDragWrap, IconButton } from "./Chapter.styles";
 
 export const EventDeleteBtn = styled(IconButton)`
   font-size: 14.88px;
   float: right;
   margin-right: 20px;
+`;
+
+export const EventDragWrap = styled(ChapterDragWrap)`
+  padding-left: 12px;
 `;
 
 export const CharacterModalBtn = styled.button`

@@ -4,12 +4,9 @@ import Chapter from "./Chapter";
 import { PlotChapterType } from "@/utils/APIs/mock/plot";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import useDragAndDrop from "@/hooks/workspace/plot/useDragAndDrop";
-import { useEffect, useState } from "react";
 import ToggleBtn from "./ToggleBtn";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createChapter } from "@/utils/APIs/plot";
 import { AddChapterButton } from "@/styles/workspace/plot/ChapterList.styles";
-import { workspaceQueryKeys } from "@/utils/APIs/queryKeys";
+import useChapterList from "@/hooks/workspace/plot/useChapterList";
 
 interface plotPageProps {
   chapters: PlotChapterType[];
@@ -17,12 +14,18 @@ interface plotPageProps {
 }
 
 export default function ChapterList({ chapters, plotId }: plotPageProps) {
-  const { items: chapter, handleDragAndDrop } =
-    useDragAndDrop<PlotChapterType>(chapters);
+  const { mutateCreate, mutateDelete, mutateChapterO, mutateChapterFold } =
+    useChapterList();
 
-  const [chapterList, setChapterList] = useState<PlotChapterType[]>(
-    chapter.map((chapter) => ({ ...chapter }))
-  );
+  const {
+    items: chapterList,
+    setItems: setChapterList,
+    handleDragAndDrop,
+  } = useDragAndDrop<PlotChapterType>({
+    initialItems: chapters,
+    mutationFn: async ({ itemId, pre_idx, next_idx }) =>
+      mutateChapterO({ chapterId: itemId, pre_idx, next_idx }),
+  });
 
   const areAllChaptersFolded = chapterList.every(
     (chapter) => chapter.is_folded
@@ -44,69 +47,36 @@ export default function ChapterList({ chapters, plotId }: plotPageProps) {
         chapter.id === id ? { ...chapter, is_folded: isFolded } : chapter
       )
     );
+    mutateChapterFold({ chapterId: id, is_folded: isFolded });
   };
-
-  const queryClient = useQueryClient();
-
-  // 챕터 추가
-  const { mutate: mutateCreate } = useMutation<PlotChapterType, Error, number>({
-    mutationFn: (order: number) => createChapter(plotId, order),
-    onMutate: async () => {
-      await queryClient.cancelQueries({ queryKey: ["chapters", plotId] });
-
-      const previousChapters = queryClient.getQueryData<PlotChapterType[]>([
-        "chapters",
-        plotId,
-      ]);
-
-      // UI 상에서 즉시 새로운 챕터 추가 (낙관적 업데이트)
-      const optimisticChapter: PlotChapterType = {
-        id: Date.now().toString(), // 임시 id 설정
-        autor: "",
-        work_id: "",
-        chapter_name: "",
-        chapter_description: "",
-        order: chapterList.length,
-        is_starred: false,
-        pevent_list: [],
-        createdAt: Date.now().toString(),
-        updatedAt: Date.now().toString(),
-        is_folded: true,
-      };
-
-      setChapterList((prevChapters) => [...prevChapters, optimisticChapter]);
-
-      return { previousChapters };
-    },
-    onSuccess: () => {
-      // 성공 시 데이터를 최신 상태로 동기화
-      queryClient.invalidateQueries({
-        queryKey: workspaceQueryKeys.chapterList(plotId),
-      });
-    },
-  });
 
   // 버튼 클릭 시 챕터 추가
   const handleAddChatper = () => {
-    const optimisticChapter: PlotChapterType = {
+    // mock
+    const mockChapter: PlotChapterType = {
       id: Date.now().toString(), // 임시 id 설정
       autor: "",
       work_id: "",
       chapter_name: ``,
       chapter_description: "",
-      order: chapter.length,
+      order: chapterList.length,
       is_starred: false,
       pevent_list: [],
       createdAt: Date.now().toString(),
       updatedAt: Date.now().toString(),
-      is_folded: true,
+      is_folded: false,
     };
-    setChapterList((prevChapters) => [...prevChapters, optimisticChapter]);
+    setChapterList((prevChapters) => [...prevChapters, mockChapter]);
 
-    //mutateCreate(chapter.length);
+    mutateCreate();
   };
 
-  // 챕터 수정
+  const handleDeleteChapter = (chapterId: string) => {
+    setChapterList((prevChapters) =>
+      prevChapters.filter((chapter) => chapter.id !== chapterId)
+    );
+    mutateDelete(chapterId);
+  };
 
   return (
     <>
@@ -137,12 +107,14 @@ export default function ChapterList({ chapters, plotId }: plotPageProps) {
                         {...provided.dragHandleProps}
                       >
                         <Chapter
+                          plotId={plotId}
                           chapterId={chapter.id}
                           chapterName={chapter.chapter_name}
                           chapterDescription={chapter.chapter_description}
                           pevent={chapter.pevent_list}
                           isFolded={chapter.is_folded}
                           onLocalFold={handleLocalFold}
+                          onDelete={handleDeleteChapter}
                         />
                       </div>
                     )}

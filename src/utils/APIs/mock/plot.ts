@@ -4,6 +4,43 @@ export interface responseGetPlotType {
   chapters: PlotChapterType[];
 }
 
+export interface TPatchUpdateNameRequest {
+  chapterId: string;
+  chapter_name: string;
+}
+
+export interface TPatchUpdateDRequest {
+  chapterId: string;
+  chapter_description: string;
+}
+
+export interface TPatchUpdateORequest {
+  chapterId: string;
+  pre_idx: number;
+  next_idx: number;
+}
+
+export interface TPatchUpdateFRequest {
+  chapterId: string;
+  is_folded: boolean;
+}
+
+export interface TPatchUpdateENameRequest {
+  peventId: string;
+  event_name: string;
+}
+
+export interface TPatchUpdateEDRequest {
+  peventId: string;
+  event_description: string;
+}
+
+export interface TPatchUpdateEORequest {
+  peventId: string;
+  pre_idx: number;
+  next_idx: number;
+}
+
 export type PlotChapterType = {
   id: string;
   autor: string;
