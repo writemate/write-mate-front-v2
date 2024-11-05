@@ -104,7 +104,7 @@ export const updateChapterOrder = async (
   next_idx: number
 ): Promise<void> => {
   const response = await axiosInstance.patch<void>(
-    DOMAIN.UPDATE_CHAPTER_ORDER_FOLD(plotId, chapterId),
+    DOMAIN.UPDATE_CHAPTER_ORDER(plotId, chapterId),
     { pre_idx, next_idx }
   );
 
@@ -123,7 +123,7 @@ export const updateChapterFold = async (
   is_folded: boolean
 ): Promise<void> => {
   const response = await axiosInstance.patch<void>(
-    DOMAIN.UPDATE_CHAPTER_ORDER_FOLD(plotId, chapterId),
+    DOMAIN.UPDATE_CHAPTER_FOLD(plotId, chapterId),
     { is_folded }
   );
 
