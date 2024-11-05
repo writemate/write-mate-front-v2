@@ -1,7 +1,10 @@
 'use client';
 import { styled } from 'styled-components';
-import { clickable, FlexColumnCenter, FlexRowCenter, FlexRowSpaceBetween } from '@/styles';
+import { clickable, FlexColumnCenter, FlexColumnLeftStart, FlexRowCenter, FlexRowSpaceBetween } from '@/styles';
 import Close from '@/assets/icons/close.svg';
+import Copy from '@/assets/icons/copy.svg';
+import Add from "@/assets/icons/addButton.svg";
+import TextareaAutosize from 'react-textarea-autosize';
 
 export const IdeaBoxContainer = styled.div`
   ${FlexColumnCenter}
@@ -68,4 +71,56 @@ export const IdeaBoxContent = styled.div`
   background-color: rgba(241, 245, 251, 0.43);
   overflow-y: auto;
   overflow-x: hidden;
+`;
+
+
+export const MemoCard = styled.div`
+  ${FlexColumnLeftStart};
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 2px 2px 12px 0px rgba(19, 19, 19, 0.06);
+  margin-bottom: 6px;
+  padding: 8px;
+`;
+
+export const MemoHeader = styled.div`
+  ${FlexRowSpaceBetween};
+  width: 100%;
+`;
+
+
+export const MemoContent = styled(TextareaAutosize)`
+  width: 100%;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  color: ${({ theme }) => theme.color.gray300};
+  border: none;
+  outline: none;
+  resize: none;
+  &::placeholder {
+    color: ${({ theme }) => theme.color.gray200};
+  }
+`;
+
+export const MemoTitle = styled.input`
+  width: 100%;
+  color: ${({ theme }) => theme.color.gray900};
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%; 
+  border: none;
+  outline: none;
+`;
+
+export const CopyButton = styled(Copy)`
+  ${clickable}
+`;
+
+export const AddButton = styled(Add)`
+  margin-top: 20px;
+  ${clickable}
 `;

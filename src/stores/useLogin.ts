@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { User, Unsubscribe, signInWithPopup } from 'firebase/auth';
 import { auth, provider } from '@/utils/initFirebase';
 import { getUserInfoWithToken, signUp } from '@/utils/APIs/user';
+import { AxiosError } from 'axios';
 
 type State = {
   user: null | User;  // null: not checked or logout, User: login
@@ -20,13 +21,10 @@ export const useLogin = create<State>((set) => ({
     try{
       await getUserInfoWithToken(await result.user.getIdToken());
     } catch (error) {
-      console.log("getUserInfo error: ", error);
-      try{
-        await signUp(await result.user.getIdToken());
-      } catch (error) {
-        console.log("signUp error: ", error);
-        return;
-      }
+      if(!(error instanceof AxiosError)) throw new Error("unknown error");
+      if(!error.response) throw error;
+      if(error.response.status !== 404) throw error;
+      await signUp(await result.user.getIdToken());
     }
     //TODO: check if the user is already registered in the database, if not, register the user
   },
