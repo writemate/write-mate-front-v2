@@ -1,15 +1,17 @@
 import { TPlot } from "./types";
 import axiosInstance from "./axiosInstance";
 import { DOMAIN } from "./domain";
-import { ChapterType, responseGetPlotType } from "./mock/plot";
+import { PlotCharacterType, responseGetPlotType } from "./mock/plot";
 
 /**
  * 모든 플롯 가져오기
  * @param workId
  * @returns chapter[]
  */
-export const getPlots = async (workId: string): Promise<ChapterType[]> => {
-  const response = await axiosInstance.get<ChapterType[]>(
+export const getPlots = async (
+  workId: string
+): Promise<responseGetPlotType> => {
+  const response = await axiosInstance.get<responseGetPlotType>(
     DOMAIN.GET_PLOT(workId)
   );
 
@@ -19,25 +21,18 @@ export const getPlots = async (workId: string): Promise<ChapterType[]> => {
 /**
  * 챕터 생성하기
  * @param plotId
- * @param order
- * @returns chapter
+ * @returns 챕터 id
  */
-export const createChapter = async (
-  plotId: string,
-  order: number
-): Promise<ChapterType> => {
-  const response = await axiosInstance.post<ChapterType>(
-    DOMAIN.CREATE_CHAPTER(plotId),
-    {
-      order: order,
-    }
+export const createChapter = async (plotId: string): Promise<string> => {
+  const response = await axiosInstance.post<string>(
+    DOMAIN.CREATE_CHAPTER(plotId)
   );
 
   return response.data;
 };
 
 /**
- * 플롯 삭제하기
+ * 챕터 삭제하기
  * @param plotId
  * @param chapterId
  * @returns
@@ -54,36 +49,78 @@ export const deleteChapter = async (
 };
 
 /**
- * 플롯 수정하기
- * @param chapterId
+ * 챕터 이름 수정하기
  * @param plotId
- * @param plotName
- * @param plotDescription
- * @param order
- * @param nextOrder
- * @param isStared
- * @returns chapter
+ * @param chapterId
+ * @param chapter_name
  */
-export const updateChapter = async (
-  chapterId: string,
+export const updateChapterName = async (
   plotId: string,
-  plotName?: string,
-  plotDescription?: string,
-  order?: number,
-  nextOrder?: number,
-  isStared?: boolean,
-  isFolded?: boolean
-): Promise<TPlot> => {
-  const response = await axiosInstance.patch<TPlot>(
-    DOMAIN.UPDATE_CHAPTER(plotId, chapterId),
-    {
-      plot_name: plotName,
-      plot_description: plotDescription,
-      order: order,
-      next_order: nextOrder,
-      is_starred: isStared,
-      is_folded: isFolded,
-    }
+  chapterId: string,
+  chapter_name: string
+): Promise<void> => {
+  const response = await axiosInstance.patch<void>(
+    DOMAIN.UPDATE_CHAPTER_NAME(plotId, chapterId),
+    { chapter_name }
+  );
+
+  return response.data;
+};
+
+/**
+ * 챕터 설명 수정하기
+ * @param plotId
+ * @param chapterId
+ * @param chapter_description
+ */
+export const updateChapterDescription = async (
+  plotId: string,
+  chapterId: string,
+  chapter_description: string
+): Promise<void> => {
+  const response = await axiosInstance.patch<void>(
+    DOMAIN.UPDATE_CHAPTER_DESCRIPTION(plotId, chapterId),
+    { chapter_description }
+  );
+
+  return response.data;
+};
+
+/**
+ * 챕터 순서 수정하기
+ * @param plotId
+ * @param chapterId
+ * @param pre_idx 현재 idx
+ * @param next_idx 바꿀 idx
+ */
+export const updateChapterOrder = async (
+  plotId: string,
+  chapterId: string,
+  pre_idx: number,
+  next_idx: number
+): Promise<void> => {
+  const response = await axiosInstance.patch<void>(
+    DOMAIN.UPDATE_CHAPTER_ORDER(plotId, chapterId),
+    { pre_idx, next_idx }
+  );
+
+  return response.data;
+};
+
+/**
+ * 챕터 접힘 여부 수정하기
+ * @param plotId
+ * @param chapterId
+ * @param is_folded
+ */
+export const updateChapterFold = async (
+  plotId: string,
+  chapterId: string,
+  is_folded: boolean
+): Promise<void> => {
+  const response = await axiosInstance.patch<void>(
+    DOMAIN.UPDATE_CHAPTER_FOLD(plotId, chapterId),
+    { is_folded }
   );
 
   return response.data;
@@ -92,17 +129,10 @@ export const updateChapter = async (
 /**
  * 사건 생성하기
  * @param chapterId
- * @param order
- * @returns event
+ * @returns id
  */
-export const createEvent = async (
-  plotId: string,
-  order: number
-): Promise<TPlot> => {
-  const response = await axiosInstance.post<TPlot>(
-    DOMAIN.CREATE_EVENT(plotId),
-    { order: order }
-  );
+export const createEvent = async (plotId: string): Promise<TPlot> => {
+  const response = await axiosInstance.post<TPlot>(DOMAIN.CREATE_EVENT(plotId));
 
   return response.data;
 };
@@ -121,26 +151,81 @@ export const deleteEvent = async (peventId: string): Promise<void> => {
 };
 
 /**
- * 사건 수정하기
+ * 사건 이름 수정하기
  * @param peventId
- * @param eventName
- * @param eventDescription
- * @param order
- * @returns event
+ * @param event_name
  */
-export const updateEvent = async (
+export const updateEventName = async (
   peventId: string,
-  eventName?: string,
-  eventDescription?: string,
-  order?: number
-): Promise<TPlot> => {
-  const response = await axiosInstance.patch<TPlot>(
-    DOMAIN.UPDATE_EVENT(peventId),
-    {
-      evnet_name: eventName,
-      event_description: eventDescription,
-      order: order,
-    }
+  event_name: string
+): Promise<void> => {
+  const response = await axiosInstance.patch<void>(
+    DOMAIN.UPDATE_EVENT_NAME(peventId),
+    { event_name }
+  );
+
+  return response.data;
+};
+
+/**
+ * 사건 설명 수정하기
+ * @param pevntId
+ * @param event_description
+ */
+export const updateEventDescription = async (
+  peventId: string,
+  event_description: string
+): Promise<void> => {
+  const response = await axiosInstance.patch<void>(
+    DOMAIN.UPDATE_EVENT_DESCRIPTION(peventId),
+    { event_description }
+  );
+
+  return response.data;
+};
+
+/**
+ * 사건 순서 수정하기
+ * @param pevntId
+ * @param pre_idx 현재 idx
+ * @param next_idx 바꿀 idx
+ */
+export const updateEventOrder = async (
+  pevntId: string,
+  pre_idx: number,
+  next_idx: number
+): Promise<void> => {
+  const response = await axiosInstance.patch<void>(
+    DOMAIN.UPDATE_EVENT_ORDER(pevntId),
+    { pre_idx, next_idx }
+  );
+
+  return response.data;
+};
+
+/**
+ * 사건에 인물 수동 할당하기
+ */
+export const addCharacter = async (
+  peventId: string,
+  characterId: string
+): Promise<PlotCharacterType> => {
+  const response = await axiosInstance.patch<PlotCharacterType>(
+    DOMAIN.UPDATE_EVENT_CHARACTER(peventId, characterId)
+  );
+
+  return response.data;
+};
+
+/**
+ * 사건에 인물 할당 해제하기
+ */
+export const deleteCharacter = async (
+  peventId: string,
+  characterId: string
+): Promise<void> => {
+  const response = await axiosInstance.delete<void>(
+    DOMAIN.UPDATE_EVENT_CHARACTER(peventId, characterId)
   );
 
   return response.data;

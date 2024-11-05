@@ -1,35 +1,23 @@
-'use client';
-import { MainContainer } from '@/styles';
-import { useLogin } from '@/stores/useLogin';
-import useDashboardData from '@/hooks/dashboard/useDashboardData';
-import Link from 'next/link';
+"use client";
+import { useLogin } from "@/stores/useLogin";
+import { TitleAndWorkListContainer } from "@/styles/dashboard/WorkList";
+import { WorkStudioTitleAndNavigationBar } from "@/components/dashboard/TitleAndNavigationBar";
+import WorkList from "@/components/dashboard/WorkList";
+import { useState } from "react";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 export default function Dashboard() {
   const user = useLogin((state) => state.user)!;
-  const { data, mutate, error, isLoading, isAdding } = useDashboardData();
+  const [isInProgress, setIsInProgress] = useState("진행 중");
 
   return (
-    <MainContainer>
-      <h1>대시보드</h1>
-      <p>{user.displayName}님 환영합니다!</p>
-      {isLoading && <p>로딩중...</p>}
-      {error && <p>에러가 발생했습니다.</p>}
-      {data && (
-        <div>
-          <h2>작업실</h2>
-          {data.map((work,i) => (
-            <Link key={i+1} href={`/${work.id}/info`} passHref>
-              <div>{work.title}</div>
-            </Link>
-          ))}
-          {isAdding && <p>작업실 추가 중...</p>}
-          {!isAdding && (
-            <button onClick={() => mutate()}>
-              작업실 추가
-            </button>
-          )}
-        </div>
-      )}
-    </MainContainer>
+    <TitleAndWorkListContainer>
+      <ReactQueryDevtools />
+      <WorkStudioTitleAndNavigationBar
+        isInProgress={isInProgress}
+        setIsInProgress={setIsInProgress}
+      />
+      <WorkList isInProgress={isInProgress} />
+    </TitleAndWorkListContainer>
   );
 }

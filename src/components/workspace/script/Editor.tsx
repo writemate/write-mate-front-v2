@@ -1,15 +1,9 @@
 "use client";
 import ReactQuill from "react-quill";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, Dispatch, SetStateAction, useCallback } from "react";
 import { EditorContainer } from "@/styles/workspace/Script.styles";
 import "react-quill/dist/quill.snow.css";
 import { fontSize, font } from "./Toolbar";
-
-interface DeltaOperation {
-  insert?: string | Record<string, any>; // insert는 문자열 또는 객체일 수 있음
-  delete?: number;
-  retain?: number;
-}
 
 export default function QuillEditor({
   innerRef,
@@ -18,7 +12,7 @@ export default function QuillEditor({
   innerRef: any;
   MainRef: any;
 }) {
-  const containerRef = useRef(null); // EditorContainer ref
+  const containerRef = useRef(null);
   const [value, setValue] = useState("");
   const handleChange = (content: string) => {
     setValue(content);
@@ -45,103 +39,120 @@ export default function QuillEditor({
     },
   };
 
-  const getCursorLineNumber = () => {
-    const editor = innerRef.current.getEditor(); // Quill 인스턴스에 접근
-    const range = editor.getSelection(); // 현재 선택 범위 또는 커서 위치 가져오기
+  const getCursorMetrics = () => {
+    const quill = innerRef.current.getEditor();
+    var distanceFromTop = 0;
+    var lineHeight = 0;
 
-    if (range) {
-      const index = range.index;
-      const delta = editor.getContents().ops as DeltaOperation[]; // DeltaOperation[]으로 명시적 타입 지정
-      let content = "";
+    const hasFocus = quill.hasFocus();
+    if (hasFocus) {
+      const range = quill.getSelection();
+      const bounds = quill.getBounds(range.index);
+      const editorContainer = document.querySelector(
+        ".ql-editor"
+      ) as HTMLElement;
+      const lineElement = editorContainer.querySelector(
+        `p.span[data-line-index="${range.index}"]`
+      ) as HTMLElement;
+      distanceFromTop = bounds.top;
+      lineHeight = lineElement ? lineElement.offsetHeight : bounds.height;
+    }
+    return { distanceFromTop, lineHeight, hasFocus };
+  };
 
-      // 전체 Delta를 문자열로 변환 (삽입된 내용만 추출)
-      delta.forEach((op: DeltaOperation) => {
-        if (op.insert && typeof op.insert === "string") {
-          content += op.insert;
-        }
-      });
+  const editorContainerPaddingTop = () => {
+    if (containerRef.current) {
+      return parseFloat(
+        window.getComputedStyle(containerRef.current).paddingTop
+      );
+    }
+    return 0;
+  };
 
-      // 커서 위치까지의 텍스트를 자르고, 줄바꿈(\n)의 개수를 카운트
-      const textBeforeCursor = content.slice(0, index);
-      const lineNumber = textBeforeCursor.split("\n").length;
+  const handleAutoScroll = () => {
+    // 1. 자동 스크롤 구현 (완료)
+    // 자동 스크롤이 일어나는 조건 : 커서가 활성화되어 있고, 현재 라인이 화면 밑에 가려져 있을 때
+    // 얼마나 스크롤 되는가? : 현재 라인을 가장 밑줄로 올리는 만큼 스크롤
 
-      console.log(`Current line number: ${lineNumber}`);
-      return lineNumber;
-    } else {
-      console.log("Cursor is not in the editor.");
-      return 0;
+    // 2. 문제 1 : paste 이벤트 발생 자동 스크롤의 조건이 달성되지 않았으나 스크롤이 일어남
+    // 문제의 원인 : paste 이벤트 발생 시, 커서가 활성화되어 있지 않아도 quill editor 내부적으로 커서가 활성화되어 있음?
+
+    const container = MainRef.current;
+    const CursorMetrics = getCursorMetrics();
+
+    const currentLine =
+      parseFloat("50") +
+      editorContainerPaddingTop() +
+      parseFloat("12") +
+      CursorMetrics.distanceFromTop +
+      CursorMetrics.lineHeight;
+
+    const autoScrollStartThreshold =
+      parseFloat(container.scrollTop) +
+      parseFloat(container.clientHeight) -
+      editorContainerPaddingTop() * 0.7;
+
+    const isOverflow = currentLine >= autoScrollStartThreshold;
+
+    const targetAutoScrollTop =
+      currentLine + editorContainerPaddingTop() * 0.7 - container.clientHeight;
+
+    console.log(editorContainerPaddingTop(), isOverflow, targetAutoScrollTop);
+    if (isOverflow) {
+      container.scrollTo(0, targetAutoScrollTop);
     }
   };
 
-  useEffect(() => {
-    const handleMouseDown = (event: any) => {
-      const quillEditor = innerRef.current.getEditor().root;
-      if (quillEditor && quillEditor.contains(event.target)) {
-        // Quill 에디터 내부를 클릭한 경우, 기본 동작 유지
-        return;
-      } else {
-        // Quill 에디터 외부를 클릭한 경우, 선택 해제 방지
-        event.preventDefault();
-      }
-    };
-
-    document.addEventListener("mousedown", handleMouseDown);
-
-    if (innerRef.current) {
-      const container = MainRef.current;
-      const quill = innerRef.current.getEditor();
-      const editor = innerRef.current.getEditor().root;
-
-      quill.on("text-change", () => {
-        const onelineheight = () => {
-          const pElement = editor.querySelector(".ql-editor p");
-          if (pElement) {
-            const computedStyle = window.getComputedStyle(pElement);
-            return parseFloat(computedStyle.height);
-          }
-          return 0;
-        };
-        const editorContainerPaddingTop = () => {
-          if (containerRef.current) {
-            return parseFloat(
-              window.getComputedStyle(containerRef.current).paddingTop
-            );
-          }
-          return 0;
-        };
-        const currentLine =
-          parseFloat("200") +
-          editorContainerPaddingTop() +
-          parseFloat("12") +
-          onelineheight() * getCursorLineNumber();
-
-        const shouldScroll =
-          currentLine - parseFloat(container.scrollTop) >
-          parseFloat(container.clientHeight) - onelineheight() * 3;
-
-        console.log(
-          shouldScroll,
-          currentLine,
-          container.scrollTop,
-          container.clientHeight,
-          onelineheight()
-        );
-
-        if (shouldScroll) {
-          // Scroll the MainContainer smoothly to the bottom
-          container.scrollTo({
-            top: currentLine - container.clientHeight + onelineheight() * 3,
-            behavior: "auto",
-          });
-        }
-      });
+  const handleMouseDown = (event: any) => {
+    const quillEditor = innerRef.current.getEditor().root;
+    if (quillEditor && quillEditor.contains(event.target)) {
+      return;
+    } else {
+      event.preventDefault();
     }
+  };
 
-    // 컴포넌트 언마운트 시 이벤트 리스너 제거
+  
+  useEffect(() => {
+    document.addEventListener("mousedown", handleMouseDown);
     return () => {
       document.removeEventListener("mousedown", handleMouseDown);
     };
   }, []);
+  
+  const [cursorPositionAfterPaste, setCursorPositionAfterPaste] = useState<number | null>(null);
+  const isPasted = cursorPositionAfterPaste !== null;
+
+  const handleEditorChange = useCallback((quill:any)=>(eventName: string, ...args: any[]) => {
+    if (eventName === "selection-change") {
+      if(isPasted){
+        quill.setSelection(cursorPositionAfterPaste);
+        setCursorPositionAfterPaste(null);
+      }
+      handleAutoScroll();
+      return;
+    }
+    if (eventName === "text-change") {
+      console.log(args[0]);
+      if(args[0].ops.length !== 2) return;
+      const retain = args[0].ops[0].retain;
+      if(retain === undefined) return;
+      const insert = args[0].ops[1].insert;
+      if(insert === undefined) return;
+      if(insert.length < 2) return;
+      setCursorPositionAfterPaste(retain + insert.length);
+    }
+  }, [cursorPositionAfterPaste]);
+
+  useEffect(() => {
+    if (!innerRef.current) return;
+    const quill = innerRef.current.getEditor();
+    const handler = handleEditorChange(quill);
+    quill.on("editor-change", handler);
+    return () => {
+      quill.off("editor-change", handler);
+    };
+  }, [innerRef.current, handleEditorChange]);
 
   return (
     <EditorContainer ref={containerRef}>
@@ -149,6 +160,8 @@ export default function QuillEditor({
         value={value}
         onChange={handleChange}
         modules={modules}
+        theme="snow"
+        scrollingContainer={MainRef.current ?? undefined}
         placeholder="내용을 입력하세요."
         ref={innerRef}
       ></ReactQuill>

@@ -1,83 +1,106 @@
 import {
-  AddButton,
   ChapterContainer,
+  ChapterDragWrap,
   ChapterMargin,
-  ContentTextArea,
   IconButton,
   OpenContainer,
   TitleInput,
 } from "@/styles/workspace/plot/Chapter.styles";
-import { TPlotEvent } from "@/utils/APIs/types";
 import { EventList } from "./EventList";
 import { useEffect, useState } from "react";
-import { useMutation } from "@tanstack/react-query";
-import { deleteChapter } from "@/utils/APIs/plot";
 import DeleteIcon from "@/assets/workspace/plot/delete.svg";
 import ToggleIcon from "@/assets/workspace/plot/toggle.svg";
 import CopyIcon from "@/assets/workspace/plot/copy.svg";
-import Add from "@/assets/workspace/plot/add.svg";
+import DragDrop from "@/assets/workspace/plot/dragdrop.svg";
 import ToggleFold from "@/assets/workspace/plot/toggleFold.svg";
+import { PlotEventType } from "@/utils/APIs/mock/plot";
+import AutoResizeInput from "./AutoResizeInput";
+import useChapterList from "@/hooks/workspace/plot/useChapterList";
 
 interface ChapterProps {
+  chapterId: string;
   chapterName: string;
   chapterDescription: string;
-  pevent: TPlotEvent[];
-  isOpen: boolean;
+  pevent: PlotEventType[];
+  isFolded: boolean;
+  onLocalFold: (id: string, isFolded: boolean) => void;
+  plotId: string;
+  onDelete: (chapterId: string) => void;
 }
 
 export default function Chapter({
+  chapterId,
   chapterName,
   chapterDescription,
   pevent,
-  isOpen,
+  isFolded,
+  onLocalFold,
+  onDelete,
 }: ChapterProps) {
-  /**
-   * todo: input 늘어나면 줄바꿈
-   *
-   */
-  const [isOpenAlone, setIsOpenAlone] = useState(isOpen);
+  const [title, setTitle] = useState<string>(chapterName);
+  const [content, setContent] = useState<string>(chapterDescription);
+  const { mutateChapterName, mutateChapterD } = useChapterList();
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setTitle(value);
+    mutateChapterName({ chapterId, chapter_name: value });
+  };
+
+  const handleContentChange = (value: string) => {
+    setContent(value);
+    mutateChapterD({ chapterId, chapter_description: value });
+  };
+
+  const [localIsFolded, setLocalIsFolded] = useState(isFolded);
 
   useEffect(() => {
-    setIsOpenAlone(isOpen);
-  }, [isOpen]);
+    setLocalIsFolded(isFolded);
+  }, [isFolded]);
 
-  // 챕터 삭제
-  /* const { mutate: mutateDelete } = useMutation({
-    mutationFn: deleteChapter,
-  });*/
+  const toggleChapter = () => {
+    const newFoldedState = !localIsFolded;
+    setLocalIsFolded(newFoldedState);
+    onLocalFold(chapterId, newFoldedState);
+  };
+
+  const deleteChapter = () => {
+    onDelete(chapterId);
+  };
 
   return (
-    <ChapterContainer isOpenAlone={isOpenAlone}>
+    <ChapterContainer isOpenAlone={localIsFolded}>
+      <ChapterDragWrap>
+        <DragDrop />
+      </ChapterDragWrap>
+
       <ChapterMargin>
         <div>
           <TitleInput
-            value={chapterName}
+            value={title}
+            onChange={handleNameChange}
             placeholder="챕터 제목을 적어주세요."
           />
-          <IconButton
-            type="button"
-            onClick={() => setIsOpenAlone(!isOpenAlone)}
-          >
-            {isOpenAlone && <ToggleIcon style={{ marginBottom: "10%" }} />}
-            {!isOpenAlone && <ToggleFold style={{ marginBottom: "11%" }} />}
+          <IconButton type="button" onClick={toggleChapter}>
+            {localIsFolded && <ToggleIcon style={{ marginBottom: "10%" }} />}
+            {!localIsFolded && <ToggleFold style={{ marginBottom: "11%" }} />}
           </IconButton>
           <IconButton type="button">
             <CopyIcon />
           </IconButton>
-          <IconButton type="button">
+          <IconButton type="button" onClick={deleteChapter}>
             <DeleteIcon />
           </IconButton>
         </div>
-        <ContentTextArea
-          value={chapterDescription}
+        <AutoResizeInput
+          isFolded={localIsFolded}
+          value={content}
+          onChange={handleContentChange}
           placeholder="챕터 내용을 적어주세요."
         />
-        {isOpenAlone && (
+        {localIsFolded && (
           <OpenContainer>
             <EventList pevent={pevent} />
-            <AddButton>
-              <Add />
-            </AddButton>
           </OpenContainer>
         )}
       </ChapterMargin>

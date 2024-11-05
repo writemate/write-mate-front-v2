@@ -1,11 +1,15 @@
 import { colorSystem } from "@/styles/colorSystem";
 import styled from "styled-components";
-import { IconButton } from "./Chapter.styles";
+import { ChapterDragWrap, IconButton } from "./Chapter.styles";
 
 export const EventDeleteBtn = styled(IconButton)`
   font-size: 14.88px;
   float: right;
   margin-right: 20px;
+`;
+
+export const EventDragWrap = styled(ChapterDragWrap)`
+  padding-left: 12px;
 `;
 
 export const CharacterModalBtn = styled.button`
@@ -14,6 +18,22 @@ export const CharacterModalBtn = styled.button`
   border: none;
   background: transparent;
   cursor: pointer;
+  display: inline-block;
+  margin-right: 4px;
+`;
+
+export const CharacterImg = styled.div<{ $src: string }>`
+  width: 24px;
+  height: 24px;
+  background-image: url(${({ $src }) => $src});
+  background-size: cover;
+  border-radius: 100%;
+  background-color: ${({ theme }) => theme.color.gray200};
+  box-shadow: 2px 2px 8px #323f4d33;
+  border: 2px solid #fff;
+  margin-left: 4px;
+  cursor: pointer;
+  margin-top: 3px;
 `;
 
 export const EventColumnContainer = styled.div`
@@ -55,28 +75,4 @@ export const EventTitle = styled.input`
   background: transparent;
   margin-bottom: 5px;
   margin-top: 16px;
-`;
-
-export const EventDescription = styled.textarea`
-  height: 24px;
-  width: 95%;
-  background: transparent;
-  resize: none;
-
-  border: none;
-
-  font-family: "Pretendard";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 150%;
-  display: flex;
-  align-items: center;
-
-  color: ${colorSystem.gray900};
-
-  flex: none;
-  order: 1;
-  align-self: stretch;
-  flex-grow: 0;
 `;

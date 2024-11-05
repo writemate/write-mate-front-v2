@@ -1,4 +1,4 @@
-import {styled, css, keyframes } from 'styled-components';
+import { styled, css, keyframes } from "styled-components";
 
 export const FlexRowCenter = css`
   display: flex;
@@ -79,11 +79,15 @@ export const ButtonCss = css`
   font-weight: 600;
 `;
 
-export const Button = styled.button<{ $background?: string, $color?: string, $border?: boolean }>`
-  ${ButtonCss}; 
-  background-color: ${props => props.$background || 'white'};
-  color: ${props => props.$color || 'black'};
-  border: ${props => props.$border ? '1px solid black' : 'none'};
+export const Button = styled.button<{
+  $background?: string;
+  $color?: string;
+  $border?: boolean;
+}>`
+  ${ButtonCss};
+  background-color: ${(props) => props.$background || "white"};
+  color: ${(props) => props.$color || "black"};
+  border: ${(props) => (props.$border ? "1px solid black" : "none")};
   border-radius: 100px;
   padding: 8px;
   font-size: 16px;
@@ -106,14 +110,17 @@ export const ReverseButtonWithHoverAnimation = styled.button`
   }
 `;
 
-export const MainContainer = styled.main<{ $background?: string, $flexdirection?: string }>`
+export const MainContainer = styled.main<{
+  $background?: string;
+  $flexdirection?: string;
+}>`
   padding: 20px max(30px, calc(50% - 590px));
   margin: 0;
   width: 100%;
   display: flex;
-  flex-direction: ${props => props.$flexdirection || 'column'};
+  flex-direction: ${(props) => props.$flexdirection || "column"};
   align-items: center;
-  background: ${props => props.$background || 'none'};
+  background: ${(props) => props.$background || "none"};
   gap: 20px;
   flex-wrap: wrap;
 `;
@@ -124,7 +131,7 @@ export const Input = styled.input`
   font-size: 16px;
   border: 1px solid transparent;
   padding: 13px 20px;
-  box-shadow: 0 0 12px 0 #0000001A;
+  box-shadow: 0 0 12px 0 #0000001a;
   width: 100%;
   color: ${({ theme }) => theme.color.gray900};
   &:focus {
@@ -140,7 +147,7 @@ export const TextArea = styled.textarea`
   border-radius: 12px;
   border: 1px solid transparent;
   padding: 13px 20px;
-  box-shadow: 0 0 12px 0 #0000001A;
+  box-shadow: 0 0 12px 0 #0000001a;
   width: 100%;
   resize: none;
   color: ${({ theme }) => theme.color.gray900};
@@ -166,7 +173,7 @@ export const DropdownSelector = styled.div`
   padding: 12px;
   border-radius: 24px;
   height: 44px;
-  box-shadow: 0 0 12px 0 #0000001A;
+  box-shadow: 0 0 12px 0 #0000001a;
   background: white;
   font-weight: 600;
   gap: 12px;
@@ -182,7 +189,7 @@ export const DropDownListContainer = styled.div`
   padding: 6px 4px;
   gap: 2px;
   background: white;
-  box-shadow: 0 0 8px 0 #1E212B33;
+  box-shadow: 0 0 8px 0 #1e212b33;
   z-index: 100;
 `;
 
@@ -194,7 +201,7 @@ export const DropDownOption = styled.div`
   border-bottom: 1px solid transparent;
   width: 100%;
   &:hover {
-    background: #F2F4F9;
+    background: #f2f4f9;
     border-bottom: 1px solid ${({ theme }) => theme.color.gray100};
   }
 `;
@@ -209,7 +216,7 @@ export const ModalContainer = styled.div`
   padding: 28px;
   background: rgba(0, 0, 0, 0.5);
   z-index: 9999;
-  &>* {
+  & > * {
     width: 100%;
   }
 `;

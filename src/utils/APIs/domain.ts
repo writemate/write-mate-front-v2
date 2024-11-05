@@ -4,7 +4,9 @@ export const DOMAIN = {
   GET_USER: "/api/users",
   CREATE_USER: "/api/users",
 
-  GET_WORKLIST: (category: typeof workspaceCategory[keyof typeof workspaceCategory]) => `/api/works?category=${category}`,
+  GET_WORKLIST: (
+    category: (typeof workspaceCategory)[keyof typeof workspaceCategory]
+  ) => `/api/works?category=${category}`,
   CREATE_WORK: "/api/works",
   GET_WORK: (workId: string) => `/api/works/${workId}`,
 
@@ -13,12 +15,24 @@ export const DOMAIN = {
   CREATE_CHAPTER: (plotId: string) => `/api/plots/${plotId}/plots`,
   DELETE_CHAPTER: (plotId: string, chapterId: string) =>
     `/api/plots/${plotId}/chapters/${chapterId}`,
-  UPDATE_CHAPTER: (plotId: string, chapterId: string) =>
-    `/api/plots/${plotId}/chapters/${chapterId}`,
+  UPDATE_CHAPTER_NAME: (plotId: string, chapterId: string) =>
+    `/api/plots/${plotId}/chapters/${chapterId}/name`,
+  UPDATE_CHAPTER_DESCRIPTION: (plotId: string, chapterId: string) =>
+    `/api/plots/${plotId}/chapters/${chapterId}/description`,
+  UPDATE_CHAPTER_ORDER: (plotId: string, chapterId: string) =>
+    `/api/plots/${plotId}/chapters/${chapterId}/order`,
+  UPDATE_CHAPTER_FOLD: (plotId: string, chapterId: string) =>
+    `/api/plots/${plotId}/chapters/${chapterId}/folded`,
 
   CREATE_EVENT: (chapterId: string) => `/api/chapters/${chapterId}/pevents`,
   DELETE_EVENT: (peventId: string) => `/api/pevents/${peventId}`,
-  UPDATE_EVENT: (peventId: string) => `/api/pevents/${peventId}`,
+  UPDATE_EVENT_NAME: (peventId: string) => `/api/pevents/${peventId}/name`,
+  UPDATE_EVENT_DESCRIPTION: (peventId: string) =>
+    `/api/pevents/${peventId}/description`,
+  UPDATE_EVENT_ORDER: (peventId: string) => `/api/pevents/${peventId}/order`,
+
+  UPDATE_EVENT_CHARACTER: (peventId: string, characterId: string) =>
+    `/api/pevents/${peventId}/character/${characterId}`,
 
   GET_MEMO_LIST: `/api/memos`,
   CREATE_MEMO: `/api/memos`,

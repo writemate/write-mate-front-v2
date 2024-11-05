@@ -2,12 +2,12 @@
  * 유저 타입
  */
 export type TUser = {
-  id:string;
-  uid:string;
-  user_name:string;
-  user_image:string;
-  status:string;
-  email:string;
+  id: string;
+  uid: string;
+  user_name: string;
+  user_image: string;
+  status: string;
+  email: string;
 };
 
 /**
@@ -24,13 +24,13 @@ export interface TFile {
   isFolder: false;
   file_name: string;
   isPinned: boolean;
-};
+}
 
 export interface TFolder {
   isFolder: true;
   folder_name: string;
-  files: Array<TFile|TFolder>;
-};
+  files: Array<TFile | TFolder>;
+}
 
 export interface TFileWithOptions extends TFile {
   isSelect: boolean;
@@ -41,7 +41,7 @@ export interface TFolderWithOptions extends TFolder {
   isOpen: boolean;
   isSelect: boolean;
   isEditing: boolean;
-  files: Array<TFileWithOptions|TFolderWithOptions>;
+  files: Array<TFileWithOptions | TFolderWithOptions>;
 }
 
 /**
@@ -79,7 +79,7 @@ export type TCharacter = {
   role: string;
   birthday: string;
   gender: string;
-  characteristic: Array<{title: string, content: string}>;
+  characteristic: Array<{ title: string; content: string }>;
   keyword: string[];
   relatedEvent: string[];
 };
@@ -127,7 +127,6 @@ export type TPlotEventCharacter = {
   id: string;
 };
 
-
 /**
  * 스토리지 캐릭터 타입
  */
@@ -165,9 +164,9 @@ export type CreateWorkRes = {
  * 설정집 카테고리
  */
 export const workspaceCategory = {
-  before: 'before',
-  ongoing: 'ongoing',
-  completed: 'completed',
+  before: "before",
+  ongoing: "ongoing",
+  completed: "completed",
 } as const;
 
 /**
@@ -185,7 +184,8 @@ export type TWorkCharacter = {
   created_at: string;
 };
 
-export type TWorkCategory = (typeof workspaceCategory)[keyof typeof workspaceCategory];
+export type TWorkCategory =
+  (typeof workspaceCategory)[keyof typeof workspaceCategory];
 
 export type TSynopsis = {
   _id: string;

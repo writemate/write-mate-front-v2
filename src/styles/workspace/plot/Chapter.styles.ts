@@ -3,8 +3,7 @@ import styled from "styled-components";
 
 export const ChapterContainer = styled.form<{ isOpenAlone: boolean }>`
   width: 100%;
-  height: ${(props) => !props.isOpenAlone && "110px"};
-
+  position: relative;
   background: #ffffff;
   border: 1px solid #f49661;
   margin-bottom: 18.18px;
@@ -12,6 +11,13 @@ export const ChapterContainer = styled.form<{ isOpenAlone: boolean }>`
   flex-wrap: wrap;
   box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
+`;
+
+export const ChapterDragWrap = styled.div`
+  float: left;
+  padding-left: 17px;
+  position: absolute;
+  top: 45%;
 `;
 
 export const ChapterMargin = styled.div`
@@ -63,11 +69,16 @@ export const TitleInput = styled.input`
   color: ${colorSystem.gray900};
 `;
 
-export const ContentTextArea = styled.textarea`
+export const ContentTextArea = styled.textarea<{
+  isEvent: boolean;
+  isFolded: boolean;
+}>`
   border: none;
   height: 24px;
   resize: none;
   width: 95%;
+  margin-bottom: ${(props) => props.isFolded && !props.isEvent && "24px"};
+  background: ${(props) => (props.isEvent ? `${colorSystem.gray25}` : "white")};
 
   font-weight: 600;
   font-size: 16px;

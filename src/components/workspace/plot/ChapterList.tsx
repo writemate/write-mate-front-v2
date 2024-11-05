@@ -1,90 +1,89 @@
 "use client";
 
 import Chapter from "./Chapter";
-import { ChapterType } from "@/utils/APIs/mock/plot";
+import { PlotChapterType } from "@/utils/APIs/mock/plot";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import useDragAndDrop from "@/hooks/workspace/plot/useDragAndDrop";
-import { useEffect, useState } from "react";
 import ToggleBtn from "./ToggleBtn";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createChapter } from "@/utils/APIs/plot";
-import { TPlot } from "@/utils/APIs/types";
 import { AddChapterButton } from "@/styles/workspace/plot/ChapterList.styles";
+import useChapterList from "@/hooks/workspace/plot/useChapterList";
 
 interface plotPageProps {
-  chapters: ChapterType[];
-  isOpenAll: boolean;
+  chapters: PlotChapterType[];
   plotId: string;
 }
 
-export default function ChapterList({
-  chapters,
-  isOpenAll,
-  plotId,
-}: plotPageProps) {
-  const { items: chapterList, handleDragAndDrop } =
-    useDragAndDrop<ChapterType>(chapters);
+export default function ChapterList({ chapters, plotId }: plotPageProps) {
+  const { mutateCreate, mutateDelete, mutateChapterO, mutateChapterFold } =
+    useChapterList();
 
-  const [isOpen, setIsOpen] = useState<boolean>(isOpenAll);
-
-  const [chapter, setChapter] = useState<ChapterType[]>(chapters);
-
-  useEffect(() => {}, [chapter]);
-
-  const queryClient = useQueryClient();
-
-  // 챕터 추가 - 되는지모르겟노 그냥 뇌가 멈춤 ㅋ
-  const { mutate: mutateCreate } = useMutation<ChapterType, Error, number>({
-    mutationFn: (order: number) => createChapter(plotId, order),
-    onMutate: async () => {
-      await queryClient.cancelQueries({ queryKey: ["chapters", plotId] });
-
-      const previousChapters = queryClient.getQueryData<ChapterType[]>([
-        "chapters",
-        plotId,
-      ]);
-
-      // UI 상에서 즉시 새로운 챕터 추가 (낙관적 업데이트)
-      const optimisticChapter: ChapterType = {
-        _id: Date.now().toString(), // 임시 id 설정
-        chapter_name: ``,
-        chapter_description: "",
-        order: chapter.length,
-        pevent: [],
-      };
-
-      setChapter((prevChapters) => [...prevChapters, optimisticChapter]);
-
-      return { previousChapters };
-    },
-    onError: (err, context) => {},
-    onSuccess: () => {
-      // 성공 시 데이터를 최신 상태로 동기화
-      queryClient.invalidateQueries({ queryKey: ["chapters", plotId] });
-    },
+  const {
+    items: chapterList,
+    setItems: setChapterList,
+    handleDragAndDrop,
+  } = useDragAndDrop<PlotChapterType>({
+    initialItems: chapters,
+    mutationFn: async ({ itemId, pre_idx, next_idx }) =>
+      mutateChapterO({ chapterId: itemId, pre_idx, next_idx }),
   });
+
+  const areAllChaptersFolded = chapterList.every(
+    (chapter) => chapter.is_folded
+  );
+
+  const toggleAllChapters = () => {
+    const newFoldedState = !areAllChaptersFolded;
+    setChapterList((prevChapters) =>
+      prevChapters.map((chapter) => ({
+        ...chapter,
+        is_folded: newFoldedState,
+      }))
+    );
+  };
+
+  const handleLocalFold = (id: string, isFolded: boolean) => {
+    setChapterList((prevChapters) =>
+      prevChapters.map((chapter) =>
+        chapter.id === id ? { ...chapter, is_folded: isFolded } : chapter
+      )
+    );
+    mutateChapterFold({ chapterId: id, is_folded: isFolded });
+  };
 
   // 버튼 클릭 시 챕터 추가
   const handleAddChatper = () => {
-    // 일단 모킹인데 UI가 안바뀜 어캐함
-    const optimisticChapter: ChapterType = {
-      _id: Date.now().toString(), // 임시 id 설정
+    // mock
+    const mockChapter: PlotChapterType = {
+      id: Date.now().toString(), // 임시 id 설정
+      autor: "",
+      work_id: "",
       chapter_name: ``,
       chapter_description: "",
-      order: chapter.length,
-      pevent: [],
+      order: chapterList.length,
+      is_starred: false,
+      pevent_list: [],
+      createdAt: Date.now().toString(),
+      updatedAt: Date.now().toString(),
+      is_folded: false,
     };
-    setChapter((prevChapters) => [...prevChapters, optimisticChapter]);
-    console.log(chapter);
+    setChapterList((prevChapters) => [...prevChapters, mockChapter]);
 
-    //mutateCreate(chapter.length);
+    mutateCreate();
   };
 
-  // 챕터 수정
+  const handleDeleteChapter = (chapterId: string) => {
+    setChapterList((prevChapters) =>
+      prevChapters.filter((chapter) => chapter.id !== chapterId)
+    );
+    mutateDelete(chapterId);
+  };
 
   return (
     <>
-      <ToggleBtn isOpen={isOpen} handleChange={() => setIsOpen(!isOpen)} />
+      <ToggleBtn
+        isOpen={areAllChaptersFolded}
+        handleChange={toggleAllChapters}
+      />
 
       <DragDropContext onDragEnd={handleDragAndDrop}>
         <Droppable droppableId="chapterList">
@@ -97,8 +96,8 @@ export default function ChapterList({
               {chapterList.map((chapter, index) =>
                 chapter ? (
                   <Draggable
-                    key={chapter._id}
-                    draggableId={chapter._id}
+                    key={chapter.id}
+                    draggableId={chapter.id}
                     index={index}
                   >
                     {(provided) => (
@@ -108,10 +107,14 @@ export default function ChapterList({
                         {...provided.dragHandleProps}
                       >
                         <Chapter
+                          plotId={plotId}
+                          chapterId={chapter.id}
                           chapterName={chapter.chapter_name}
                           chapterDescription={chapter.chapter_description}
-                          pevent={chapter.pevent}
-                          isOpen={isOpen}
+                          pevent={chapter.pevent_list}
+                          isFolded={chapter.is_folded}
+                          onLocalFold={handleLocalFold}
+                          onDelete={handleDeleteChapter}
                         />
                       </div>
                     )}
@@ -130,5 +133,3 @@ export default function ChapterList({
     </>
   );
 }
-
-//tq

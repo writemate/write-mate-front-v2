@@ -3,7 +3,7 @@ import { styled } from 'styled-components';
 import { clickable, FlexRowCenter, FlexRowLeftStart } from '..';
 import { GtagForClick } from '@/utils/GtagForClick';
 import Guide from "@/assets/icons/guide.svg";
-import IdeaBox from "@/assets/icons/ideaBox.svg";
+import IdeaBox from "@/assets/icons/ideabox.svg";
 import Download from "@/assets/icons/download.svg";
 import Profile from "@/assets/icons/profile.svg";
 
