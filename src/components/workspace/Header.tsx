@@ -1,18 +1,31 @@
-'use client';
-import { HeaderContainer, HeaderTitle, SaveStatus, VersionControlButton, 
-  RightContainer, GuideButton, IdeaBoxButton, DownloadButton, ProfileButton
- } from "@/styles/workspace/Header.styles";
+"use client";
+import {
+  HeaderContainer,
+  HeaderTitle,
+  SaveStatus,
+  VersionControlButton,
+  RightContainer,
+  GuideButton,
+  IdeaBoxButton,
+  DownloadButton,
+  ProfileButton,
+} from "@/styles/workspace/Header.styles";
 import Link from "next/link";
 import RightArrow from "@/assets/icons/rightArrow.svg";
 import useWorkspaceHeader from "@/hooks/workspace/useWorkspaceHeader";
 
-export default function Header({toggleIdeaBox}: {toggleIdeaBox: () => void}) {
+export default function Header({
+  toggleIdeaBox,
+}: {
+  toggleIdeaBox: () => void;
+}) {
   const { data, error, isLoading } = useWorkspaceHeader();
 
-  return ( 
+  return (
     <HeaderContainer>
       <HeaderTitle>
-        {data?.title}
+        {/* {data?.title} */}
+        오만과 편견
         {isLoading && "로딩중..."}
       </HeaderTitle>
       <SaveStatus>
@@ -26,7 +39,7 @@ export default function Header({toggleIdeaBox}: {toggleIdeaBox: () => void}) {
       <RightContainer>
         {/*TODO: 맞는 아이콘으로 교체해야함 */}
         <GuideButton />
-        <IdeaBoxButton onClick={toggleIdeaBox}/>
+        <IdeaBoxButton onClick={toggleIdeaBox} />
         <DownloadButton />
         <ProfileButton />
       </RightContainer>
