@@ -8,7 +8,8 @@ import {
 } from "@/styles/dashboard/TitleAndNavigationBar";
 import { workspaceCategory } from "@/utils/APIs/types";
 import { ideaBoxCategory } from "@/utils/APIs/types";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
+import { IdeaBoxContext } from "@/hooks/dashboard/ideaBox";
 
 export function WorkStudioTitleAndNavigationBar() {
   const { workCategory, handleWorkCategoryChange } =
@@ -41,8 +42,7 @@ export function WorkStudioTitleAndNavigationBar() {
 }
 
 export function IdeaBoxTitleAndNavigationBar() {
-  const { ideaCategory, handleIdeaCategoryChange } =
-    useContext(DashboardContext);
+  const { ideaCategory, handleIdeaCategoryChange } = useContext(IdeaBoxContext);
 
   return (
     <TitleAndNavigationBar>
