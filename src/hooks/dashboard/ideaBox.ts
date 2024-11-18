@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { dashboardQueryKeys } from "@/utils/APIs/queryKeys";
-import { use, useEffect, useState } from "react";
+import { createContext, use, useEffect, useState } from "react";
 import { ideaBoxCategory } from "@/utils/APIs/types";
 import { getMemo } from "@/utils/APIs/dashboard";
 
@@ -49,3 +49,7 @@ export function useIdeaBox() {
     memoRefetch,
   };
 }
+
+export const IdeaBoxContext = createContext(
+  {} as ReturnType<typeof useIdeaBox>
+);
