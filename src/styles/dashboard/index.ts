@@ -1,17 +1,12 @@
 "use client";
-import {
-  FlexRowLeftStart,
-  clickable,
-  FlexColumnCenter,
-  Button,
-} from "@/styles";
+import { FlexRowLeftStart, clickable, FlexColumnCenter } from "@/styles";
 import { styled, css } from "styled-components";
 
 export const HighlghtCssForHoberAfter = css<{ $isActivated?: boolean }>`
   content: "";
   position: absolute;
   background-color: ${({ $isActivated, theme }) =>
-    $isActivated ? theme.color.orange200 : theme.color.gray100};
+    $isActivated ? theme.color.orange200 : theme.color.gray200};
   opacity: 0.2;
   border-radius: 9999px;
   width: 100%;
@@ -32,7 +27,6 @@ export const DashboardContainer = styled.div`
 // SideTabAndFooterContainer
 export const SideTabAndFooterContainer = styled.div`
   display: flex;
-  padding: 17px 37px px;
   flex-direction: column;
   justify-content: space-between;
   height: 100%;

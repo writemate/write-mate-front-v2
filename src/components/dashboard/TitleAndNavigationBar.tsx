@@ -1,39 +1,37 @@
 "use client";
+import { DashboardContext } from "@/hooks/dashboard/dashboard";
 import {
   Title,
   NavigationBar,
   NavigationButton,
   TitleAndNavigationBar,
 } from "@/styles/dashboard/TitleAndNavigationBar";
+import { workspaceCategory } from "@/utils/APIs/types";
+import { ideaBoxCategory } from "@/utils/APIs/types";
+import { useContext, useEffect } from "react";
 
-export function WorkStudioTitleAndNavigationBar({
-  isInProgress,
-  setIsInProgress,
-}: {
-  isInProgress: string;
-  setIsInProgress: Function;
-}) {
+export function WorkStudioTitleAndNavigationBar() {
+  const { workCategory, handleWorkCategoryChange } =
+    useContext(DashboardContext);
+
   return (
     <TitleAndNavigationBar>
       <Title>대시보드</Title>
-      {/* Todo
-      - 네비게이션 바 
-      - 작업실 버튼
-      */}
+
       <NavigationBar>
         <NavigationButton
           onClick={() => {
-            setIsInProgress("진행 중");
+            handleWorkCategoryChange(workspaceCategory.ongoing);
           }}
-          $isActivated={isInProgress == "진행 중" ? true : false}
+          $isActivated={workCategory === workspaceCategory.ongoing}
         >
           집필 중
         </NavigationButton>
         <NavigationButton
           onClick={() => {
-            setIsInProgress("완결");
+            handleWorkCategoryChange(workspaceCategory.completed);
           }}
-          $isActivated={isInProgress == "완결" ? true : false}
+          $isActivated={workCategory === workspaceCategory.completed}
         >
           완결
         </NavigationButton>
@@ -42,30 +40,27 @@ export function WorkStudioTitleAndNavigationBar({
   );
 }
 
-export function IdeaBoxTitleAndNavigationBar({
-  isInProgress,
-  setIsInProgress,
-}: {
-  isInProgress: string;
-  setIsInProgress: Function;
-}) {
+export function IdeaBoxTitleAndNavigationBar() {
+  const { ideaCategory, handleIdeaCategoryChange } =
+    useContext(DashboardContext);
+
   return (
     <TitleAndNavigationBar>
       <Title>아이디어 보관함</Title>
       <NavigationBar>
         <NavigationButton
           onClick={() => {
-            setIsInProgress("메모");
+            handleIdeaCategoryChange(ideaBoxCategory.memo);
           }}
-          $isActivated={isInProgress == "메모" ? true : false}
+          $isActivated={ideaCategory === ideaBoxCategory.memo}
         >
           메모
         </NavigationButton>
         <NavigationButton
           onClick={() => {
-            setIsInProgress("인물");
+            handleIdeaCategoryChange(ideaBoxCategory.character);
           }}
-          $isActivated={isInProgress == "인물" ? true : false}
+          $isActivated={ideaCategory === ideaBoxCategory.character}
         >
           인물
         </NavigationButton>
@@ -73,41 +68,23 @@ export function IdeaBoxTitleAndNavigationBar({
     </TitleAndNavigationBar>
   );
 }
-export function TrashTitleAndNavigationBar({
-  isInProgress,
-  setIsInProgress,
-}: {
-  isInProgress: string;
-  setIsInProgress: Function;
-}) {
+
+export function TrashTitleAndNavigationBar() {
+  const { workCategory, handleWorkCategoryChange } =
+    useContext(DashboardContext);
+
   return (
     <TitleAndNavigationBar>
       <Title>휴지통</Title>
       <NavigationBar>
         <NavigationButton
           onClick={() => {
-            setIsInProgress("");
+            handleWorkCategoryChange(workspaceCategory.trash);
           }}
-          $isActivated={isInProgress == "작품" ? true : false}
+          $isActivated={workCategory === workspaceCategory.trash}
         >
           작품
         </NavigationButton>
-        {/* <NavigationButton
-          onClick={() => {
-            setIsInProgress("");
-          }}
-          $isActivated={isInProgress == "작품" ? true : false}
-        >
-          작품
-        </NavigationButton>
-        <NavigationButton
-          onClick={() => {
-            setIsInProgress("");
-          }}
-          $isActivated={isInProgress == "작품" ? true : false}
-        >
-          작품
-        </NavigationButton> */}
       </NavigationBar>
     </TitleAndNavigationBar>
   );

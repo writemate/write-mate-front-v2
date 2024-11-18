@@ -30,6 +30,7 @@ export const HeaderLeftButton = styled.button`
 
   &:hover {
     transform: scale(1.05); /* 살짝 확대 효과 */
+    filter: brightness(105%);
   }
 
   p {

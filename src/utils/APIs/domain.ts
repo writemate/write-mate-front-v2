@@ -9,6 +9,10 @@ export const DOMAIN = {
   ) => `/api/works?category=${category}`,
   CREATE_WORK: "/api/works",
   GET_WORK: (workId: string) => `/api/works/${workId}`,
+  UPDATE_WORK_CATEGORY: (workId: string) => `/api/works/${workId}/category`,
+  UPDATE_WORK_TITLE: (workId: string) => `/api/works/${workId}/title`,
+  UPDATE_WORK_COVER: (workId: string) => `/api/works/${workId}/cover`,
+  DELETE_WORK: (workId: string) => `/api/works/${workId}`,
 
   GET_PLOT: (workId: string) => `/api/works/${workId}/plots`,
 

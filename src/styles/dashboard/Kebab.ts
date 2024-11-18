@@ -1,10 +1,10 @@
 "use client";
 import { clickable, Button } from "@/styles";
 import { styled, css } from "styled-components";
-export const KebabDropdownContainer = styled.div`
-  position: relative;
-  top: 0px;
-  left: 160px;
+export const KebabContainer = styled.div`
+  position: absolute;
+  top: 110%;
+  right: 0%;
   display: flex;
   width: 132px;
   padding: 6px 4px;
@@ -19,7 +19,7 @@ export const KebabDropdownContainer = styled.div`
   z-index: 10000;
 `;
 
-export const KebabDropdownButton = styled(Button)<{
+export const KebabItem = styled(Button)<{
   $isActivated?: boolean;
   $isMajor?: boolean;
   $isLast?: boolean;
