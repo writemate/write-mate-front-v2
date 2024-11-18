@@ -1,7 +1,56 @@
 "use client";
 
-import { IdeaListContainer } from "@/styles/dashboard/IdeaList";
+import { useMemo } from "@/hooks/dashboard/useMemo";
+import {
+  AddButton,
+  CopyButton,
+  MemoCard,
+  MemoContent,
+  MemoHeader,
+  MemoTitle,
+} from "@/styles/dashboard/IdeaBox";
+import { copy } from "@/utils/copy";
 
 export function MemoList() {
-  return <IdeaListContainer></IdeaListContainer>;
+  const {
+    memoList,
+    error,
+    isLoading,
+    isCreating,
+    isDeleting,
+    onClickCreateMemo,
+    onClickDeleteMemo,
+    onChangeMemoName,
+    onChangeMemoDescription,
+  } = useMemo();
+
+  if (isLoading) return <div>메모를 불러오는 중...</div>;
+  if (error) return <div>메모를 불러오는 중 에러가 발생했습니다.</div>;
+
+  return (
+    <>
+      {memoList &&
+        memoList.map((memo) => (
+          <MemoCard key={memo.id}>
+            <MemoHeader>
+              <MemoTitle
+                value={memo.memo_name}
+                onChange={onChangeMemoName(memo.id)}
+                placeholder="메모 이름을 입력하세요"
+              />
+              <CopyButton onClick={copy(memo.memo_description)} />
+            </MemoHeader>
+            <MemoContent
+              value={memo.memo_description}
+              onChange={onChangeMemoDescription(memo.id)}
+              maxRows={3}
+              cacheMeasurements
+              placeholder="메모 내용을 입력하세요"
+            />
+          </MemoCard>
+        ))}
+      {isCreating && <div>메모를 생성하는 중...</div>}
+      <AddButton onClick={onClickCreateMemo} />
+    </>
+  );
 }
