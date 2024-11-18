@@ -1,8 +1,8 @@
-'use client';
-import { MainContainer } from '@/styles';
-import { useLogin } from '@/stores/useLogin';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+"use client";
+import { MainContainer } from "@/styles";
+import { useLogin } from "@/stores/useLogin";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Signup() {
   const { isLogin, login } = useLogin();
@@ -10,7 +10,7 @@ export default function Signup() {
 
   useEffect(() => {
     if (isLogin) {
-      router.push('/dashboard');
+      router.push("/dashboard");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLogin]);

@@ -18,9 +18,7 @@ export default function Header({}: {}) {
     <HeaderContainer>
       <HeaderLeftButton
         onClick={(event) => {
-          event.preventDefault();
-          event.stopPropagation();
-          console.log("이벤트 공지");
+          window.open("https://promotion.write-mate.net/", "_blank");
         }}
       >
         <Event /> <p>이벤트 공지</p>
@@ -28,18 +26,14 @@ export default function Header({}: {}) {
       <HeaderRightButtonList>
         <HeaderRightButton
           onClick={(event) => {
-            event.preventDefault();
-            event.stopPropagation();
-            console.log("도움말");
+            window.open("https://guide.write-mate.net/", "_blank");
           }}
         >
           <Help />
         </HeaderRightButton>
         <HeaderRightButton
           onClick={(event) => {
-            event.preventDefault();
-            event.stopPropagation();
-            console.log("채팅");
+            window.open("http://pf.kakao.com/_lrfTG/chat", "_blank");
           }}
         >
           <Chat />
@@ -47,8 +41,6 @@ export default function Header({}: {}) {
         <Separator />
         <HearderProfileButton
           onClick={(event) => {
-            event.preventDefault();
-            event.stopPropagation();
             console.log("마이페이지");
           }}
         >

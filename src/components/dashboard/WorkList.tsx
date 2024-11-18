@@ -1,20 +1,17 @@
 "use client";
-import useDashboardData from "@/hooks/dashboard/useDashboardData";
 import {
   WorkButtonList,
-  WorkButton,
-  WorkButtonImage,
-  WorkButtonTitle,
-  WorkButtonDate,
-  WorkButtonKebab,
+  EmptyListDiscription,
 } from "@/styles/dashboard/WorkList";
-import KebabMenu from "@/assets/icons/KebabMenu.svg";
-import { useState } from "react";
-import KebabDropdownMenu from "./KebabDropdownMenu";
+import { useContext, useEffect } from "react";
+import { AddWorkspaceButton } from "@/styles/dashboard/SideTab";
+import { DashboardContext } from "@/hooks/dashboard/dashboard";
+import WorkButton from "./WorkButton";
+import { workspaceCategory } from "@/utils/APIs/types";
 
-export default function WorkList({ isInProgress }: { isInProgress: string }) {
-  const { data, mutate, error, isLoading, isAdding } = useDashboardData();
-  const [isKebabMenuOpenWork, setIsKebabMenuOpenWork] = useState("");
+export default function WorkList() {
+  const { data, error, isLoading, addWorkspace, workCategory } =
+    useContext(DashboardContext);
 
   return (
     <>
@@ -22,37 +19,27 @@ export default function WorkList({ isInProgress }: { isInProgress: string }) {
       {error && <div>에러 발생</div>}
       {data && (
         <WorkButtonList>
-          {data.map((work, i) => (
-            <WorkButton key={i + 1} href={`/${work.id}/info`} passHref>
-              <WorkButtonImage src={work.cover} alt={work.title} />
-              <WorkButtonTitle>{work.title}</WorkButtonTitle>
-              <WorkButtonDate>
-                {new Date(work.updatedAt).toLocaleString("ko-KR", {
-                  year: "numeric",
-                  month: "2-digit",
-                  day: "2-digit",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
-              </WorkButtonDate>
-              <WorkButtonKebab
-                $isOpen={isKebabMenuOpenWork === work.id}
-                onClick={(event) => {
-                  event.preventDefault();
-                  setIsKebabMenuOpenWork(work.id);
-                  console.log("button");
-                }}
-              >
-                <KebabMenu />
-              </WorkButtonKebab>
-              <KebabDropdownMenu
-                isInProgress={isInProgress == "진행 중" ? true : false}
-                work={work}
-                isKebabMenuOpenWork={isKebabMenuOpenWork}
-                setIsKebabMenuOpenWork={setIsKebabMenuOpenWork}
-              />
-            </WorkButton>
-          ))}
+          {data.length === 0 && workCategory !== workspaceCategory.trash && (
+            <>
+              <EmptyListDiscription>
+                새로운 작품을 집필해보세요!
+                <AddWorkspaceButton onClick={() => addWorkspace()}>
+                  새 작품 집필하기
+                </AddWorkspaceButton>
+              </EmptyListDiscription>
+            </>
+          )}
+          {data.length === 0 && workCategory === workspaceCategory.trash && (
+            <>
+              <EmptyListDiscription>
+                삭제된 작품이 없습니다.
+              </EmptyListDiscription>
+            </>
+          )}
+          {!isLoading &&
+            data.map((work, i) => (
+              <WorkButton workValue={work} key={work.id} />
+            ))}
         </WorkButtonList>
       )}
     </>

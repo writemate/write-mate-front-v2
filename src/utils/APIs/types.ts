@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 /**
  * 유저 타입
  */
@@ -13,6 +15,11 @@ export type TUser = {
 /**
  * 메모 타입
  */
+export const ideaBoxCategory = {
+  memo: "memo",
+  character: "character",
+} as const;
+
 export type TMemo = {
   id: string;
   memo_name: string;
@@ -167,6 +174,7 @@ export const workspaceCategory = {
   before: "before",
   ongoing: "ongoing",
   completed: "completed",
+  trash: "trash",
 } as const;
 
 /**

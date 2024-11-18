@@ -75,4 +75,10 @@ export const AddWorkspaceButton = styled.button`
   font-weight: 800;
   line-height: 100%; /* 16px */
   letter-spacing: 0.32px;
+  max-width: 177px;
+
+  &:hover {
+    transform: scale(1.05); /* 살짝 확대 효과 */
+    filter: brightness(105%);
+  }
 `;

@@ -90,7 +90,7 @@ export const KebabWrapper = styled.div`
 
 export const Kebab = styled(KebabIcon)`
   ${clickable}
-  &>rect {
+  & > rect {
     display: none;
   }
   &:hover {

@@ -7,30 +7,35 @@ import {
 } from "@/styles/dashboard/index";
 import SideTab from "@/components/dashboard/SideTab";
 import Header from "@/components/dashboard/Header";
-import { useState } from "react";
 import Footer from "@/assets/dashboard/footer.svg";
+import {
+  DashboardContext,
+  useDashboardData,
+} from "@/hooks/dashboard/dashboard";
+import DeleteModal from "@/components/DeleteModal";
+
 export default function WorkspaceLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [activeContent, setactiveContent] = useState("artStudio"); // 기본 값으로 artStudio 설정
+  const value = useDashboardData();
 
   return (
-    <DashboardContainer>
-      <SideTabAndFooterContainer>
-        <SideTab
-          activeContent={activeContent}
-          setActiveContent={setactiveContent}
-        />
-        <FooterContainer>
-          <Footer /> 로그아웃
-        </FooterContainer>
-      </SideTabAndFooterContainer>
-      <HeaderAndMainContainer>
-        <Header />
-        {children}
-      </HeaderAndMainContainer>
-    </DashboardContainer>
+    <DashboardContext.Provider value={value}>
+      <DashboardContainer>
+        <SideTabAndFooterContainer>
+          <SideTab />
+          <FooterContainer>
+            <Footer /> 로그아웃
+          </FooterContainer>
+        </SideTabAndFooterContainer>
+        <HeaderAndMainContainer>
+          <Header />
+          {children}
+        </HeaderAndMainContainer>
+      </DashboardContainer>
+      <DeleteModal />
+    </DashboardContext.Provider>
   );
 }
