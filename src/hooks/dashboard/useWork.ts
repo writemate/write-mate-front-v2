@@ -101,10 +101,12 @@ export function useWork(workId: string) {
   // 작품 카테고리 변경
   const [toBeCategory, setToBeCategory] = useState<
     keyof typeof workspaceCategory
-  >(workspaceCategory.before);
+  >(workspaceCategory.trash); // 이거 deleteModal에서 동작이 이상해서 trash로 설정해놓음
+
   const { mutate: mutateCategory } = useMutation({
     mutationFn: async () => {
       if (!work) return Promise.reject(new Error("Work is undefined"));
+      console.log(toBeCategory);
       return updateWorkCategory(work.id)(toBeCategory);
     },
     onSuccess: () => {
