@@ -3,21 +3,8 @@ import { styled } from "styled-components";
 import { Button, FlexColumnCenter } from "@/styles";
 import Danger from "@/assets/icons/danger.svg";
 
-export const BackGroundContainer = styled.div`
-  ${FlexColumnCenter}
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
-  justify-content: center;
-  align-items: center;
-`;
-
 export const ModalContainer = styled.div`
   ${FlexColumnCenter}
-  width: 50%;
   padding: 31px 41px;
 
   border-radius: 12px;
@@ -30,11 +17,9 @@ export const ModalContainer = styled.div`
   p {
     color: #121212;
     text-align: center;
-    font-family: Pretendard;
-    font-size: 24px;
-    font-style: normal;
+    font-size: 20px;
     font-weight: 500;
-    line-height: 100%; /* 24px */
+    line-height: 160%;
   }
 `;
 
