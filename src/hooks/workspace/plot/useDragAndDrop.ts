@@ -18,10 +18,6 @@ interface DragAndDropProps{
 const useDragAndDrop = <T extends HasOrder>({ mutationOrderFn }:DragAndDropProps) => {
   const [items, setItems] = useState<T[]>([]);
 
-  const { mutate } = useMutation({
-    mutationFn: mutationOrderFn,
-  });
-
   const handleDragAndDrop = (result: DropResult) => {
     const { destination, source } = result;
 
@@ -38,7 +34,7 @@ const useDragAndDrop = <T extends HasOrder>({ mutationOrderFn }:DragAndDropProps
     }));
 
     setItems(updatedItems);
-    mutate({
+    mutationOrderFn({
       itemId: movedItem.id,
       pre_idx: source.index,
       next_idx: destination.index,
