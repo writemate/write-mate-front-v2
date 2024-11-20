@@ -10,7 +10,7 @@ import { workspaceCategory } from "@/utils/APIs/types";
 import { AddWork } from "./ColoredRoundButtons";
 
 export default function WorkList() {
-  const { data, error, isLoading, addWorkspace, workCategory } =
+  const { data, error, isLoading, onClickAddWorkspace, workCategory } =
     useContext(DashboardContext);
 
   return (
@@ -23,7 +23,7 @@ export default function WorkList() {
             <>
               <EmptyListDiscription>
                 새로운 작품을 집필해보세요!
-                <AddWork actfunction={addWorkspace} />
+                <AddWork actfunction={onClickAddWorkspace} />
               </EmptyListDiscription>
             </>
           )}
