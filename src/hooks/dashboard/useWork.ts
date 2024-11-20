@@ -7,7 +7,7 @@ import {
   updateWorkTitle,
 } from "@/utils/APIs/dashboard";
 import { useContext, useEffect, useRef, useState } from "react";
-import { DashboardContext } from "./dashboard";
+import { DashboardContext } from "./workStudioAndTrash";
 import { TWork, workspaceCategory } from "@/utils/APIs/types";
 import useToast from "@/hooks/useToastNotification";
 

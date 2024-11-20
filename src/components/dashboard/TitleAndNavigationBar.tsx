@@ -1,5 +1,5 @@
 "use client";
-import { DashboardContext } from "@/hooks/dashboard/dashboard";
+import { DashboardContext } from "@/hooks/dashboard/workStudioAndTrash";
 import { IdeaBoxContext } from "@/hooks/dashboard/ideaBox";
 import {
   Title,
