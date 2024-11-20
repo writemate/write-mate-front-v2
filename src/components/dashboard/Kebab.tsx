@@ -3,7 +3,7 @@ import { ChangeCoverInput, WorkButtonKebab } from "@/styles/dashboard/WorkList";
 import { KebabContainer, KebabItem } from "@/styles/dashboard/Kebab";
 import KebabMenu from "@/assets/icons/KebabMenu.svg";
 import { useContext, useEffect, useRef } from "react";
-import { DashboardContext } from "@/hooks/dashboard/dashboard";
+import { DashboardContext } from "@/hooks/dashboard/workStudioAndTrash";
 import { useWork } from "@/hooks/dashboard/useWork";
 
 export default function WorkList({
