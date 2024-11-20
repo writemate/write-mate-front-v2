@@ -9,7 +9,7 @@ import {
 } from "@/styles/dashboard/WorkList";
 import { useContext, useRef } from "react";
 import Kebab from "./Kebab";
-import { DashboardContext } from "@/hooks/dashboard/dashboard";
+import { DashboardContext } from "@/hooks/dashboard/workStudioAndTrash";
 import { useWork } from "@/hooks/dashboard/useWork";
 
 export default function WorkList({

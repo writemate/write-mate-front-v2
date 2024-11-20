@@ -1,6 +1,5 @@
 "use client";
-
-import { useMemo } from "@/hooks/dashboard/useMemo";
+import { IdeaBoxContext } from "@/hooks/dashboard/ideaBox";
 import {
   MemoListContainer,
   MemoCard,
@@ -11,7 +10,7 @@ import {
   OpenButton,
 } from "@/styles/dashboard/MemoList";
 import { TMemo } from "@/utils/APIs/types";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 export default function MemoList() {
   const {
@@ -25,7 +24,7 @@ export default function MemoList() {
     onChangeMemoName,
     onChangeMemoDescription,
     onChangeMemoStart,
-  } = useMemo();
+  } = useContext(IdeaBoxContext);
 
   const [columns, setColumns] = useState<TMemo[][]>([[], [], []]); // 3개의 열로 초기화
 

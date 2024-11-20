@@ -11,7 +11,7 @@ import Footer from "@/assets/dashboard/footer.svg";
 import {
   DashboardContext,
   useDashboardData,
-} from "@/hooks/dashboard/dashboard";
+} from "@/hooks/dashboard/workStudioAndTrash";
 import DeleteModal from "@/components/DeleteModal";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
