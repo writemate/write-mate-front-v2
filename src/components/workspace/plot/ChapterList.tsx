@@ -7,14 +7,12 @@ import useDragAndDrop from "@/hooks/workspace/plot/useDragAndDrop";
 import ToggleBtn from "./ToggleBtn";
 import { AddChapterButton } from "@/styles/workspace/plot/ChapterList.styles";
 import useChapterList from "@/hooks/workspace/plot/useChapterList";
+import { useParams } from "next/navigation";
 
-interface plotPageProps {
-  chapters: PlotChapterType[];
-  plotId: string;
-}
 
-export default function ChapterList({ chapters, plotId }: plotPageProps) {
-  const { mutateCreate, mutateDelete, mutateChapterO, mutateChapterFold } =
+export default function ChapterList() {
+  const { plotId } = useParams<{ plotId: string }>();
+  const { mutateCreate, mutateDelete, mutateChapterOrder, mutateChapterFold } =
     useChapterList();
 
   const {
@@ -22,9 +20,8 @@ export default function ChapterList({ chapters, plotId }: plotPageProps) {
     setItems: setChapterList,
     handleDragAndDrop,
   } = useDragAndDrop<PlotChapterType>({
-    initialItems: chapters,
-    mutationFn: async ({ itemId, pre_idx, next_idx }) =>
-      mutateChapterO({ chapterId: itemId, pre_idx, next_idx }),
+    mutationOrderFn: async ({ itemId, pre_idx, next_idx }) =>
+      mutateChapterOrder({ chapterId: itemId, pre_idx, next_idx }),
   });
 
   const areAllChaptersFolded = chapterList.every(

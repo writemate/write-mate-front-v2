@@ -7,23 +7,19 @@ interface HasOrder {
   [key: string]: any; // 다른 속성도 허용
 }
 
-interface DragAndDropProps<T> {
-  initialItems: T[];
-  mutationFn: (params: {
+interface DragAndDropProps{
+  mutationOrderFn: (params: {
     itemId: string;
     pre_idx: number;
     next_idx: number;
   }) => Promise<void>;
 }
 
-const useDragAndDrop = <T extends HasOrder>({
-  initialItems,
-  mutationFn,
-}: DragAndDropProps<T>) => {
-  const [items, setItems] = useState<T[]>(initialItems);
+const useDragAndDrop = <T extends HasOrder>({ mutationOrderFn }:DragAndDropProps) => {
+  const [items, setItems] = useState<T[]>([]);
 
   const { mutate } = useMutation({
-    mutationFn,
+    mutationFn: mutationOrderFn,
   });
 
   const handleDragAndDrop = (result: DropResult) => {
