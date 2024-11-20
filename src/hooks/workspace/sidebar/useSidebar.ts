@@ -32,7 +32,7 @@ export default function usePlotSidebar(type: "plot" | "script") {
   });
   const [draggingItem, setDraggingItem] = useState<TFileWithOptions|TFolderWithOptions|null>(null);
 
-  const { mutate } = useMutation({ mutationFn: updateFolder });
+  const { mutate: mutateFolder } = useMutation({ mutationFn: updateFolder });
 
   const { mutateAsync: addItem, isPending } = useMutation({mutationFn: create(workspace_id)});
 
@@ -142,13 +142,13 @@ export default function usePlotSidebar(type: "plot" | "script") {
       folderOrfile.folder_name = folderOrfile.folder_name.trim();
     else {
       folderOrfile.file_name = folderOrfile.file_name.trim();
-      //파일 이름 변경 완료 시 해당 파일의 선택을 해제한다(현재 접속 중인 파일이 있을 경우 해당 파일을 선택한다).
       //만약 이름 변경 시 해당 파일로 이동해야 한다면 이 부분을 수정해야 한다.
+      //파일 이름 변경 완료 시 해당 파일의 선택을 해제한다(현재 접속 중인 파일이 있을 경우 해당 파일을 선택한다).
       if(plot_id) currentFileSelect(rootFolder, plot_id);
-      recursiveUnselect(rootFolder);
+      else recursiveUnselect(rootFolder);
     }
     setRootFolder({...rootFolder});
-    mutate({ workId: workspace_id, folder: rootFolder });
+    mutateFolder({ workId: workspace_id, folder: rootFolder });
   }
 
   const onBlur = (folderOrfile: TFolderWithOptions|TFileWithOptions) => () => applyChange(folderOrfile);
@@ -176,7 +176,7 @@ export default function usePlotSidebar(type: "plot" | "script") {
     parent.files.splice(index, 1);
     setRootFolder({...rootFolder});
     //서버에 폴더 구조 반영
-    mutate({ workId: workspace_id, folder: rootFolder });
+    mutateFolder({ workId: workspace_id, folder: rootFolder });
     //TODO: 서버에 파일 삭제 반영
   }
 
@@ -185,7 +185,7 @@ export default function usePlotSidebar(type: "plot" | "script") {
     recursiveFileUnpin(rootFolder);
     file.isPinned = true;
     setRootFolder({...rootFolder});
-    mutate({ workId: workspace_id, folder: rootFolder });
+    mutateFolder({ workId: workspace_id, folder: rootFolder });
   }
 
   const changeOrderItem = (getIndex:(index:number)=>number) => (file: TFileWithOptions|TFolderWithOptions) => {
@@ -207,7 +207,7 @@ export default function usePlotSidebar(type: "plot" | "script") {
     const targetIndex = targetParent.files.indexOf(file);
     targetParent.files.splice(getIndex(targetIndex), 0, draggingItem);
     setRootFolder({...rootFolder});
-    mutate({ workId: workspace_id, folder: rootFolder });
+    mutateFolder({ workId: workspace_id, folder: rootFolder });
   }
 
   const changeOrderAfterItem = changeOrderItem((index) => index + 1);
@@ -230,7 +230,7 @@ export default function usePlotSidebar(type: "plot" | "script") {
     targetParent.files.push(draggingItem);
     targetParent.isOpen = true;
     setRootFolder({...rootFolder});
-    mutate({ workId: workspace_id, folder: rootFolder });
+    mutateFolder({ workId: workspace_id, folder: rootFolder });
   }
 
   return {
