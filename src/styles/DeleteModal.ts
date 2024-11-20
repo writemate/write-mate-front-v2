@@ -17,11 +17,9 @@ export const ModalContainer = styled.div`
   p {
     color: #121212;
     text-align: center;
-    font-family: Pretendard;
-    font-size: 24px;
-    font-style: normal;
+    font-size: 20px;
     font-weight: 500;
-    line-height: 100%; /* 24px */
+    line-height: 160%;
   }
 `;
 

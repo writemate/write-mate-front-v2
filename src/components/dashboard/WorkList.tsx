@@ -3,11 +3,11 @@ import {
   WorkButtonList,
   EmptyListDiscription,
 } from "@/styles/dashboard/WorkList";
-import { useContext, useEffect } from "react";
-import { AddWorkspaceButton } from "@/styles/dashboard/SideTab";
+import { useContext } from "react";
 import { DashboardContext } from "@/hooks/dashboard/dashboard";
 import WorkButton from "./WorkButton";
 import { workspaceCategory } from "@/utils/APIs/types";
+import { AddWork } from "./ColoredRoundButtons";
 
 export default function WorkList() {
   const { data, error, isLoading, addWorkspace, workCategory } =
@@ -23,9 +23,7 @@ export default function WorkList() {
             <>
               <EmptyListDiscription>
                 새로운 작품을 집필해보세요!
-                <AddWorkspaceButton onClick={() => addWorkspace()}>
-                  새 작품 집필하기
-                </AddWorkspaceButton>
+                <AddWork actfunction={addWorkspace} />
               </EmptyListDiscription>
             </>
           )}

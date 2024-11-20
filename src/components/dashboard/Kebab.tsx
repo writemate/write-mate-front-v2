@@ -34,8 +34,8 @@ export default function WorkList({
     setOpenDeleteModal,
     isDeleting,
     setIsDeleting,
+    setIsPermanentDelete,
   } = useContext(DashboardContext);
-
   const handleClickOutside = (event: MouseEvent) => {
     if (
       menuRef.current &&
@@ -131,6 +131,7 @@ export default function WorkList({
                 $isLast={true}
                 onClick={(event) => {
                   event.preventDefault();
+                  setIsPermanentDelete(false);
                   setIsDeleting(workValue.id);
                   setOpenDeleteModal(true);
                 }}
@@ -162,7 +163,9 @@ export default function WorkList({
               $isLast={true}
               onClick={(event) => {
                 event.preventDefault();
-                onDeleteWork();
+                setIsPermanentDelete(true);
+                setIsDeleting(workValue.id);
+                setOpenDeleteModal(true);
               }}
             >
               영구 삭제

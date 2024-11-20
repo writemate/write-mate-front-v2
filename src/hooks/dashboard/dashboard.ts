@@ -5,14 +5,22 @@ import {
   addWorkStudio,
   deleteWork,
 } from "@/utils/APIs/dashboard";
-import { createContext, use, useEffect, useState } from "react";
-import { ideaBoxCategory, workspaceCategory } from "@/utils/APIs/types";
+import { createContext, useEffect, useState } from "react";
+import { workspaceCategory } from "@/utils/APIs/types";
 import { usePathname } from "next/navigation";
+import useToast from "@/hooks/useToastNotification";
 
 export function useDashboardData() {
+  const { notifyPositive } = useToast();
   const queryClient = useQueryClient();
-
+  const pathname = usePathname();
+  const [isKebabMenuOpenWork, setIsKebabMenuOpenWork] = useState(""); // 어떤 케밥이 열려있는지 확인용
+  const [isEditing, setIsEditing] = useState(""); // 어떤 작품이 수정중인지 확인용
+  const [isDeleting, setIsDeleting] = useState(""); // 어떤 작품이 삭제중인지 확인용
+  const [openDeleteModal, setOpenDeleteModal] = useState(false); // 삭제 모달 오픈 여부
+  const [isPermanentDelete, setIsPermanentDelete] = useState(false); // 영구 삭제 여부
   const [workCategory, setWorkCategory] = useState<
+    // 작품 카테고리
     keyof typeof workspaceCategory
   >(() => {
     if (typeof window !== "undefined") {
@@ -23,8 +31,37 @@ export function useDashboardData() {
     }
     return "ongoing";
   });
+  const { data, error, isLoading } = useQuery({
+    queryKey: [dashboardQueryKeys.workStudio(), workCategory],
+    queryFn: getWorkStudio(workCategory),
+  });
+  const { mutate: onClickAddWorkspace, isPending: isAdding } = useMutation({
+    mutationFn: addWorkStudio,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [dashboardQueryKeys.workStudio(), workCategory],
+      });
+      notifyPositive("작품이 추가되었습니다.");
+    },
+  });
+  const { mutate: onDeleteWork } = useMutation({
+    mutationFn: (workId: string) => deleteWork(workId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [dashboardQueryKeys.workStudio(), workCategory],
+      });
+      notifyPositive("작품이 삭제되었습니다.");
+    },
+  });
+
   function handleWorkCategoryChange(category: keyof typeof workspaceCategory) {
     setWorkCategory(category);
+  }
+  function handleKebabMenuOpenWork(work_id: string) {
+    setIsKebabMenuOpenWork((prev) => (prev === work_id ? "" : work_id));
+  }
+  function handleEditing(work_id: string) {
+    setIsEditing((prev) => (prev === work_id ? "" : work_id));
   }
 
   useEffect(() => {
@@ -32,9 +69,6 @@ export function useDashboardData() {
       localStorage.setItem("workCategory", workCategory);
     }
   }, [workCategory]);
-
-  // pathname이 변경될 때마다 필요시 workCategory 변경 => 애초에 이렇게 하는게 최선인지 조금 의문이 들긴 함.
-  const pathname = usePathname();
   useEffect(() => {
     const handleWorkCategory = () => {
       if (
@@ -46,65 +80,28 @@ export function useDashboardData() {
         setWorkCategory("trash");
       }
     };
-    console.log(pathname, workCategory);
     handleWorkCategory();
   }, [pathname, workCategory]);
 
-  const [isKebabMenuOpenWork, setIsKebabMenuOpenWork] = useState("");
-  function handleKebabMenuOpenWork(work_id: string) {
-    setIsKebabMenuOpenWork((prev) => (prev === work_id ? "" : work_id));
-  }
-
-  const [isEditing, setIsEditing] = useState("");
-  function handleEditing(work_id: string) {
-    setIsEditing((prev) => (prev === work_id ? "" : work_id));
-  }
-
-  const { data, error, isLoading, refetch } = useQuery({
-    queryKey: [dashboardQueryKeys.workStudio(), workCategory],
-    queryFn: getWorkStudio(workCategory),
-  });
-
-  const { mutate: addWorkspace, isPending: isAdding } = useMutation({
-    mutationFn: addWorkStudio,
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [dashboardQueryKeys.workStudio(), workCategory],
-      });
-    },
-  });
-
-  const [openDeleteModal, setOpenDeleteModal] = useState(false);
-  const [isDeleting, setIsDeleting] = useState("");
-
-  const { mutate: onDeleteWork } = useMutation({
-    mutationFn: (workId: string) => deleteWork(workId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [dashboardQueryKeys.workStudio(), workCategory],
-      });
-      refetch();
-    },
-  });
-
   return {
     workCategory,
-    handleWorkCategoryChange,
-    isKebabMenuOpenWork,
-    handleKebabMenuOpenWork,
-    isEditing,
-    handleEditing,
     data,
     error,
-    isLoading,
-    refetch,
-    addWorkspace,
-    isAdding,
-    openDeleteModal,
-    setOpenDeleteModal,
-    onDeleteWork,
+    isEditing,
+    isKebabMenuOpenWork,
     isDeleting,
+    isLoading,
+    isAdding,
+    isPermanentDelete,
+    openDeleteModal,
+    handleWorkCategoryChange,
+    handleKebabMenuOpenWork,
+    handleEditing,
+    onClickAddWorkspace,
+    setOpenDeleteModal,
     setIsDeleting,
+    setIsPermanentDelete,
+    onDeleteWork,
   };
 }
 

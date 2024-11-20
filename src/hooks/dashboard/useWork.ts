@@ -9,29 +9,23 @@ import {
 import { useContext, useEffect, useRef, useState } from "react";
 import { DashboardContext } from "./dashboard";
 import { TWork, workspaceCategory } from "@/utils/APIs/types";
+import useToast from "@/hooks/useToastNotification";
 
 export function useWork(workId: string) {
-  const { handleEditing, data, refetch } = useContext(DashboardContext);
+  const { notifyPositive, notifyNegative } = useToast();
+  const { handleEditing, data, workCategory } = useContext(DashboardContext);
 
   const queryClient = useQueryClient();
-
+  const menuRef = useRef<HTMLDivElement | null>(null);
+  const excludeButtonRef = useRef<HTMLDivElement | null>(null);
+  let file: File | null = null;
   const [work, setWork] = useState<TWork | undefined>(() =>
     data?.find((work) => work.id === workId)
   );
+  const [toBeCategory, setToBeCategory] = useState<
+    keyof typeof workspaceCategory
+  >(workspaceCategory.trash); // 이거 deleteModal에서 동작이 이상해서 trash로 설정해놓음
 
-  // workId 또는 data 변경 시 work 상태 업데이트
-  useEffect(() => {
-    if (workId) {
-      const foundWork = data?.find((work) => work.id === workId);
-      setWork(foundWork); // work가 없으면 undefined로 설정
-    }
-  }, [workId, data]);
-
-  // 케밥 메뉴 클릭 onBlur를 제어하기 위한 ref
-  const menuRef = useRef<HTMLDivElement | null>(null);
-  const excludeButtonRef = useRef<HTMLDivElement | null>(null);
-
-  // 작품 제목 변경
   const { mutate: mutateTitle } = useMutation({
     mutationFn: () => {
       if (!work) return Promise.reject(new Error("Work is undefined"));
@@ -39,17 +33,51 @@ export function useWork(workId: string) {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [dashboardQueryKeys.workStudio(), work?.id],
+        queryKey: [dashboardQueryKeys.workStudio(), workCategory],
       });
-      refetch();
+    },
+  });
+  const { mutate: mutateCover } = useMutation({
+    mutationFn: () => {
+      if (!work) return Promise.reject(new Error("Work is undefined"));
+      if (!file) return Promise.reject(new Error("File is undefined"));
+      return updateWorkCover(work.id)(file);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [dashboardQueryKeys.workStudio(), workCategory],
+      });
+      notifyPositive("이미지가 변경되었습니다.");
+    },
+  });
+  const { mutate: mutateCategory } = useMutation({
+    mutationFn: async () => {
+      if (!work) return Promise.reject(new Error("Work is undefined"));
+      console.log(toBeCategory);
+      return updateWorkCategory(work.id)(toBeCategory);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [dashboardQueryKeys.workStudio(), workCategory],
+      });
+      notifyPositive("카테고리가 변경되었습니다.");
+    },
+  });
+  const { mutate: onDeleteWork } = useMutation({
+    mutationFn: () => {
+      if (!work) return Promise.reject(new Error("Work is undefined"));
+      return deleteWork(work.id);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [dashboardQueryKeys.workStudio(), workCategory],
+      });
+      notifyNegative("작품이 삭제되었습니다.");
     },
   });
 
   const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!work) return;
-
-    const newTitle = e.target.value.trim();
-
     setWork({
       ...work,
       title: e.target.value,
@@ -62,9 +90,9 @@ export function useWork(workId: string) {
       ...work,
     });
     mutateTitle();
+    notifyPositive("제목이 변경되었습니다.");
     handleEditing("");
   };
-
   const onKeyDownTitle = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (!work) return;
     if (e.key === "Enter") {
@@ -75,76 +103,25 @@ export function useWork(workId: string) {
       handleEditing("");
     }
   };
-
-  // 작품 이미지 변경
-  let file: File | null = null;
-  const { mutate: mutateCover } = useMutation({
-    mutationFn: () => {
-      if (!work) return Promise.reject(new Error("Work is undefined"));
-      if (!file) return Promise.reject(new Error("File is undefined"));
-      return updateWorkCover(work.id)(file);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [dashboardQueryKeys.workStudio(), work?.id],
-      });
-      refetch();
-    },
-  });
-
   const onChangeCover = (e: React.ChangeEvent<HTMLInputElement>) => {
     file = e.target.files?.[0] || null;
     if (!file) return;
     mutateCover();
   };
-
-  // 작품 카테고리 변경
-  const [toBeCategory, setToBeCategory] = useState<
-    keyof typeof workspaceCategory
-  >(workspaceCategory.trash); // 이거 deleteModal에서 동작이 이상해서 trash로 설정해놓음
-
-  const { mutate: mutateCategory } = useMutation({
-    mutationFn: async () => {
-      if (!work) return Promise.reject(new Error("Work is undefined"));
-      console.log(toBeCategory);
-      return updateWorkCategory(work.id)(toBeCategory);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [dashboardQueryKeys.workStudio(), work?.id],
-      });
-      refetch();
-    },
-  });
-
   const onChangeCategory = (toBeCategory: keyof typeof workspaceCategory) => {
     setToBeCategory(toBeCategory);
     mutateCategory();
   };
 
-  // 작품 삭제
-  const { mutate: onDeleteWork } = useMutation({
-    mutationFn: () => {
-      if (!work) return Promise.reject(new Error("Work is undefined"));
-      return deleteWork(work.id);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [dashboardQueryKeys.workStudio(), work?.id],
-      });
-      refetch();
-    },
-  });
-
   return {
+    work,
+    menuRef,
+    excludeButtonRef,
     onChangeTitle,
     onBlurTitle,
     onKeyDownTitle,
-    menuRef,
-    excludeButtonRef,
     onChangeCover,
     onChangeCategory,
-    work,
     onDeleteWork,
   };
 }
