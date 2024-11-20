@@ -66,24 +66,27 @@ export const CopyButton = styled(Copy)`
 
 export const MemoListContainer = styled.div`
   display: flex;
-  gap: 16px; /* 열 간 간격 */
-  justify-content: space-between; /* 열 간 균등 분배 */
+  gap: 16px;
+  justify-content: space-between;
+  align-items: flex-start;
   padding: 20px;
-  overflow-y: auto;
+  margin-bottom: 20px;
   width: 100%;
   height: 100%;
+  overflow-y: auto;
 
   & > .column {
-    flex: 1; /* 모든 열이 동일한 비율로 확장 */
+    flex: 1;
     display: flex;
-    flex-direction: column; /* 세로로 메모 카드 쌓기 */
-    gap: 16px; /* 메모 간 간격 */
+    flex-direction: column;
+    gap: 16px;
   }
 `;
 
 export const AddMemoButton = styled.button`
   ${clickable}
   position: fixed;
+  left: calc(50% - 88.5px);
   bottom: 70px;
 
   width: 100%;
@@ -94,7 +97,6 @@ export const AddMemoButton = styled.button`
   background: var(--writemate-orange-400, #f49661);
   border: none;
 
-  /* Menu button 1 */
   box-shadow: 0px 0px 8px 0px rgba(255, 84, 0, 0.2);
 
   color: var(--white, #fff);
@@ -115,4 +117,11 @@ export const AddMemoButton = styled.button`
 export const OpenButton = styled(OpenModal)`
   ${clickable}
   width: 18px;
+`;
+
+export const HiddenMemoListContainer = styled(MemoListContainer)`
+  visibility: hidden;
+  height: 0;
+  padding: 0;
+  margin: 0;
 `;

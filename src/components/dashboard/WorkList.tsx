@@ -5,7 +5,7 @@ import {
 } from "@/styles/dashboard/WorkList";
 import { useContext } from "react";
 import { DashboardContext } from "@/hooks/dashboard/workStudioAndTrash";
-import WorkButton from "./WorkButton";
+import WorkButton from "./WorkItem";
 import { workspaceCategory } from "@/utils/APIs/types";
 import { AddWork } from "./ColoredRoundButtons";
 

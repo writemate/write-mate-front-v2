@@ -8,7 +8,7 @@ import {
   TitleAndDateAndKebab,
 } from "@/styles/dashboard/WorkList";
 import { useContext, useRef } from "react";
-import Kebab from "./Kebab";
+import Kebab from "./KebabMenu";
 import { DashboardContext } from "@/hooks/dashboard/workStudioAndTrash";
 import { useWork } from "@/hooks/dashboard/useWork";
 

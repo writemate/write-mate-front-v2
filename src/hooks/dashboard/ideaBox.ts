@@ -1,6 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { memoQueryKeys } from "@/utils/APIs/queryKeys";
-import { createContext, use, useCallback, useEffect, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { ideaBoxCategory, TMemo } from "@/utils/APIs/types";
 import {
   createMemo,
@@ -14,6 +21,9 @@ import { debounce } from "@/utils";
 export function useIdeaBox() {
   const queryClient = useQueryClient();
   const [memoList, setMemoList] = useState<TMemo[]>([]);
+  const [columns, setColumns] = useState<TMemo[][]>([]);
+  const [numColumns, setNumColumns] = useState(3);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const [ideaCategory, setIdeaCategory] = useState<
     keyof typeof ideaBoxCategory
@@ -78,7 +88,6 @@ export function useIdeaBox() {
     if (!window.confirm("정말로 삭제하시겠습니까?")) return;
     deleteMemoMutation(id);
   };
-
   const onChangeMemoName =
     (id: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
       debounceUpdateMemoName({ id, memo_name: e.target.value });
@@ -106,6 +115,48 @@ export function useIdeaBox() {
       memo_description: event.target.value,
     });
   };
+  const calculateColumns = () => {
+    const width = window.innerWidth;
+    if (width > 1200) return 4;
+    if (width > 800) return 3;
+    if (width > 500) return 2;
+    return 1;
+  };
+  const updateColumns = () => {
+    const cols = calculateColumns();
+    setNumColumns(cols);
+
+    const newColumns: TMemo[][] = Array.from({ length: cols }, () => []);
+    const columnHeights = Array(cols).fill(0);
+
+    const memoElements = Array.from(
+      containerRef.current?.querySelectorAll(".memo-card") || []
+    );
+
+    const processBatch = (start: number) => {
+      const batchSize = 10; // 한 번에 처리할 메모 개수
+      for (
+        let i = start;
+        i < Math.min(start + batchSize, memoElements.length);
+        i++
+      ) {
+        const element = memoElements[i];
+        const memoHeight = (element as HTMLElement).offsetHeight;
+        const minIndex = columnHeights.indexOf(Math.min(...columnHeights));
+        newColumns[minIndex].push(memoList[i]);
+        columnHeights[minIndex] += memoHeight;
+      }
+
+      if (start + batchSize < memoElements.length) {
+        requestAnimationFrame(() => processBatch(start + batchSize));
+      } else {
+        setColumns(newColumns); // 모든 작업이 완료된 후 상태 업데이트
+      }
+    };
+
+    processBatch(0);
+  };
+
   function handleIdeaCategoryChange(
     category: (typeof ideaBoxCategory)[keyof typeof ideaBoxCategory]
   ) {
@@ -122,6 +173,13 @@ export function useIdeaBox() {
       setMemoList(data);
     }
   }, [data]);
+  useEffect(() => {
+    const debouncedUpdateColumns = debounce(updateColumns, 500);
+    debouncedUpdateColumns();
+    window.addEventListener("resize", debouncedUpdateColumns);
+
+    return () => window.removeEventListener("resize", debouncedUpdateColumns);
+  }, [memoList]);
 
   return {
     ideaCategory,
@@ -132,6 +190,8 @@ export function useIdeaBox() {
     isUpdatingName,
     isUpdatingDescription,
     isDeleting,
+    columns,
+    containerRef,
     onClickCreateMemo,
     onClickDeleteMemo,
     onChangeMemoName,
