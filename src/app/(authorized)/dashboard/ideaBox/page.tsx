@@ -2,14 +2,19 @@
 import { TitleAndWorkListContainer } from "@/styles/dashboard/WorkList";
 import { IdeaBoxTitleAndNavigationBar } from "@/components/dashboard/TitleAndNavigationBar";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { MemoList } from "@/components/dashboard/IdeaList";
+import MemoList from "@/components/dashboard/MemoList";
+import { IdeaBoxContext, useIdeaBox } from "@/hooks/dashboard/ideaBox";
 
 export default function Dashboard() {
+  const value = useIdeaBox();
+
   return (
-    <TitleAndWorkListContainer>
-      <ReactQueryDevtools />
-      <IdeaBoxTitleAndNavigationBar />
-      <MemoList />
-    </TitleAndWorkListContainer>
+    <IdeaBoxContext.Provider value={value}>
+      <TitleAndWorkListContainer>
+        <ReactQueryDevtools />
+        <IdeaBoxTitleAndNavigationBar />
+        <MemoList />
+      </TitleAndWorkListContainer>
+    </IdeaBoxContext.Provider>
   );
 }

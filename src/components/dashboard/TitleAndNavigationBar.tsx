@@ -1,5 +1,6 @@
 "use client";
 import { DashboardContext } from "@/hooks/dashboard/dashboard";
+import { IdeaBoxContext } from "@/hooks/dashboard/ideaBox";
 import {
   Title,
   NavigationBar,
@@ -8,8 +9,7 @@ import {
 } from "@/styles/dashboard/TitleAndNavigationBar";
 import { workspaceCategory } from "@/utils/APIs/types";
 import { ideaBoxCategory } from "@/utils/APIs/types";
-import { useContext } from "react";
-import { IdeaBoxContext } from "@/hooks/dashboard/ideaBox";
+import { useContext, useEffect } from "react";
 
 export function WorkStudioTitleAndNavigationBar() {
   const { workCategory, handleWorkCategoryChange } =
