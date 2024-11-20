@@ -1,12 +1,7 @@
 "use client";
 
 import ChapterList from "@/components/workspace/plot/ChapterList";
-import { ToastContainer } from "react-toastify";
-
-/**
-접는 로직 다시보기
-
- */
+import { ToastContainer, toast } from "react-toastify";
 
 export default function Plot() {
   return (
