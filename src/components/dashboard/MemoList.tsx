@@ -37,12 +37,9 @@ export default function MemoList() {
       <MemoListContainer>
         {columns.map((column, colIndex) => (
           <div className="column" key={colIndex}>
-            {column
-              .slice()
-              .reverse()
-              .map((memo) => (
-                <MemoItem key={memo.id} memoId={memo.id} />
-              ))}
+            {column.map((memo) => (
+              <MemoItem key={memo.id} memoId={memo.id} />
+            ))}
           </div>
         ))}
         {isCreating && <div>메모를 생성하는 중...</div>}

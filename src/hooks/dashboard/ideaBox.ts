@@ -1,13 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { memoQueryKeys } from "@/utils/APIs/queryKeys";
-import {
-  createContext,
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
+import { createContext, useCallback, useEffect, useRef, useState } from "react";
 import { ideaBoxCategory, TMemo } from "@/utils/APIs/types";
 import {
   createMemo,
@@ -115,6 +108,7 @@ export function useIdeaBox() {
       memo_description: event.target.value,
     });
   };
+
   const calculateColumns = () => {
     const width = window.innerWidth;
     if (width > 1200) return 4;
@@ -122,39 +116,26 @@ export function useIdeaBox() {
     if (width > 500) return 2;
     return 1;
   };
+
   const updateColumns = () => {
+    console.log("updateColumns");
     const cols = calculateColumns();
     setNumColumns(cols);
 
     const newColumns: TMemo[][] = Array.from({ length: cols }, () => []);
     const columnHeights = Array(cols).fill(0);
 
-    const memoElements = Array.from(
-      containerRef.current?.querySelectorAll(".memo-card") || []
-    );
+    const memoElements =
+      containerRef.current?.querySelectorAll(".memo-card") || [];
 
-    const processBatch = (start: number) => {
-      const batchSize = 10; // 한 번에 처리할 메모 개수
-      for (
-        let i = start;
-        i < Math.min(start + batchSize, memoElements.length);
-        i++
-      ) {
-        const element = memoElements[i];
-        const memoHeight = (element as HTMLElement).offsetHeight;
-        const minIndex = columnHeights.indexOf(Math.min(...columnHeights));
-        newColumns[minIndex].push(memoList[i]);
-        columnHeights[minIndex] += memoHeight;
-      }
+    memoElements.forEach((element, index) => {
+      const memoHeight = (element as HTMLElement).offsetHeight;
+      const minIndex = columnHeights.indexOf(Math.min(...columnHeights));
+      newColumns[minIndex].push(memoList[index]);
+      columnHeights[minIndex] += memoHeight;
+    });
 
-      if (start + batchSize < memoElements.length) {
-        requestAnimationFrame(() => processBatch(start + batchSize));
-      } else {
-        setColumns(newColumns); // 모든 작업이 완료된 후 상태 업데이트
-      }
-    };
-
-    processBatch(0);
+    setColumns(newColumns);
   };
 
   function handleIdeaCategoryChange(
@@ -174,11 +155,9 @@ export function useIdeaBox() {
     }
   }, [data]);
   useEffect(() => {
-    const debouncedUpdateColumns = debounce(updateColumns, 500);
-    debouncedUpdateColumns();
-    window.addEventListener("resize", debouncedUpdateColumns);
-
-    return () => window.removeEventListener("resize", debouncedUpdateColumns);
+    updateColumns();
+    window.addEventListener("resize", updateColumns);
+    return () => window.removeEventListener("resize", updateColumns);
   }, [memoList]);
 
   return {
