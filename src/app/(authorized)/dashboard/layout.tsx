@@ -13,6 +13,8 @@ import {
   useDashboardData,
 } from "@/hooks/dashboard/dashboard";
 import DeleteModal from "@/components/DeleteModal";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function WorkspaceLayout({
   children,
@@ -36,6 +38,7 @@ export default function WorkspaceLayout({
         </HeaderAndMainContainer>
       </DashboardContainer>
       <DeleteModal />
+      <ToastContainer />
     </DashboardContext.Provider>
   );
 }

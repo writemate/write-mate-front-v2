@@ -4,7 +4,6 @@ import {
   LogoLink,
   SideTabLink,
   SideTabMenu,
-  AddWorkspaceButton,
 } from "@/styles/dashboard/SideTab";
 import Logo from "@/assets/dashboard/sideTab/logo.svg";
 import ActiveArtStudio from "@/assets/dashboard/sideTab/active/artStudio.svg";
@@ -17,9 +16,10 @@ import InactiveTrash from "@/assets/dashboard/sideTab/inactive/trash.svg";
 import { DashboardContext } from "@/hooks/dashboard/dashboard";
 import { usePathname } from "next/navigation";
 import { useContext } from "react";
+import { AddWork } from "./ColoredRoundButtons";
 
 export default function SideTab() {
-  const { addWorkspace, isAdding } = useContext(DashboardContext);
+  const { onClickAddWorkspace, isAdding } = useContext(DashboardContext);
 
   return (
     <>
@@ -63,11 +63,7 @@ export default function SideTab() {
           </SideTabLink>
         </SideTabMenu>
         {isAdding && <p>작업실 추가 중...</p>}
-        {!isAdding && (
-          <AddWorkspaceButton onClick={() => addWorkspace()}>
-            새 작품 집필하기
-          </AddWorkspaceButton>
-        )}
+        {!isAdding && <AddWork actfunction={onClickAddWorkspace} />}
       </SideTabContainer>
     </>
   );

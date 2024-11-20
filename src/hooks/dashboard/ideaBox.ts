@@ -30,23 +30,9 @@ export function useIdeaBox() {
     setIdeaCategory(category);
   }
 
-  const {
-    data: memoList,
-    error: memoError,
-    isLoading: memeIsLoading,
-    refetch: memoRefetch,
-  } = useQuery({
-    queryKey: [dashboardQueryKeys.ideaBox(), ideaCategory],
-    queryFn: getMemo,
-  });
-
   return {
     ideaCategory,
     handleIdeaCategoryChange,
-    memoList,
-    memoError,
-    memeIsLoading,
-    memoRefetch,
   };
 }
 
