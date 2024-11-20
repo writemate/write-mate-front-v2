@@ -70,7 +70,7 @@ const useChapterList = () => {
   });
 
   // 챕터 설명 수정하기
-  const { mutate: mutateChapterD } = useMutation({
+  const { mutate: mutateChapterDescription } = useMutation({
     mutationFn: ({ chapterId, chapter_description }: TPatchUpdateDRequest) =>
       updateChapterDescription(plot_id, chapterId, chapter_description),
     onSuccess: (data, { chapterId }) => {
@@ -82,7 +82,7 @@ const useChapterList = () => {
 
   // 챕터 순서 수정하기
   // todo: 테스트 후 toast 지우기
-  const { mutate: mutateChapterO } = useMutation({
+  const { mutate: mutateChapterOrder } = useMutation({
     mutationFn: ({ chapterId, pre_idx, next_idx }: TPatchUpdateORequest) =>
       updateChapterOrder(plot_id, chapterId, pre_idx, next_idx),
     onError: () => {
@@ -111,8 +111,8 @@ const useChapterList = () => {
     mutateCreate,
     mutateDelete,
     mutateChapterName,
-    mutateChapterD,
-    mutateChapterO,
+    mutateChapterDescription,
+    mutateChapterOrder,
     mutateChapterFold,
   };
 };
