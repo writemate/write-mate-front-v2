@@ -7,7 +7,7 @@ import {
   CopyButton,
   AddButton,
 } from "@/styles/workspace/IdeaBox.styles";
-import { useIdeaBox } from "@/hooks/dashboard/useIdeaBox";
+import useIdeaBox from "@/hooks/dashboard/useIdeaBox";
 import { copy } from "@/utils/copy";
 
 export default function Memo() {
