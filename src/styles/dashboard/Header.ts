@@ -1,7 +1,5 @@
 "use client";
-import { FlexRowLeftStart, clickable, FlexColumnCenter } from "@/styles";
-import exp from "constants";
-import { styled, css } from "styled-components";
+import { styled } from "styled-components";
 
 export const HeaderContainer = styled.div`
   display: flex;
@@ -13,7 +11,6 @@ export const HeaderContainer = styled.div`
 `;
 
 export const HeaderLeftButton = styled.button`
-  ${clickable}
   display: flex;
   height: 44px;
   padding: 11.5px 12px;
@@ -22,7 +19,7 @@ export const HeaderLeftButton = styled.button`
   gap: 8px;
 
   border-radius: 9999px;
-  background: var(--writemate-red-400, #c55858);
+  background: ${({ theme }) => theme.color.red400};
   box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1),
     0px 1px 2px -1px rgba(0, 0, 0, 0.1);
 
@@ -34,7 +31,7 @@ export const HeaderLeftButton = styled.button`
   }
 
   p {
-    color: var(--www-write-mate-net-nero, var(--white, #fff));
+    color: ${({ theme }) => theme.color.white};
     font-size: 14px;
     font-style: normal;
     font-weight: 350;
@@ -67,7 +64,7 @@ export const HeaderRightButton = styled.button`
       rgba(200, 200, 200, 0.2) 0%,
       rgba(198, 198, 198, 0) 100%
     ),
-    var(--white, #fff);
+    ${({ theme }) => theme.color.white};
 
   filter: drop-shadow(1px 1px 4px rgba(0, 0, 0, 0.12));
   border: none;
@@ -91,7 +88,7 @@ export const HearderProfileButton = styled.button`
       rgba(200, 200, 200, 0.2) 0%,
       rgba(198, 198, 198, 0) 100%
     ),
-    var(--white, #fff);
+    ${({ theme }) => theme.color.white};
 
   /* icon Shadow */
   box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.12);

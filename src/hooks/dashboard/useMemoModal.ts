@@ -1,11 +1,15 @@
 import { debounce } from "@/utils";
-import { updaetMemoName, updateMemoDescription } from "@/utils/APIs/memo";
+import {
+  deleteMemo,
+  updaetMemoName,
+  updateMemoDescription,
+} from "@/utils/APIs/memo";
 import { memoQueryKeys } from "@/utils/APIs/queryKeys";
 import { TMemo } from "@/utils/APIs/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createContext, useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 
-export function useMemoModal() {
+export default function useMemoModal() {
   const queryClient = useQueryClient();
 
   const [openEditModal, setOpenEditModal] = useState(false);
@@ -27,6 +31,13 @@ export function useMemoModal() {
       queryClient.invalidateQueries({ queryKey: memoQueryKeys.memoList() });
     },
   });
+  const { mutate: deleteMemoMutation } = useMutation({
+    mutationFn: deleteMemo,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: memoQueryKeys.memoList() });
+    },
+  });
+
   const debounceUpdateMemoName = useCallback(
     debounce(updateMemoNameMutation, 500),
     [selectedMemo]
@@ -78,9 +89,7 @@ export function useMemoModal() {
     }
   };
 
-  const onClickDeleteMemo = (id: string) => () => {
-    if (!window.confirm("정말로 삭제하시겠습니까?")) return;
-  };
+  const onClickDeleteMemo = () => {};
 
   function focusInput(ref: HTMLCollectionOf<Element>) {
     window.setTimeout(() => {
@@ -91,7 +100,12 @@ export function useMemoModal() {
     setOpenEditModal(false);
     setSelectedMemo(null);
   }
-  function openNewMemoEditModal(memo: TMemo) {
+  function openNewMemoEditModal() {
+    const memoList = queryClient.getQueryData<TMemo[]>(
+      memoQueryKeys.memoList()
+    );
+    if (!memoList) return;
+    const memo = memoList[0];
     setSelectedMemo(memo);
     focusInput(descriptionRef);
     setOpenEditModal(true);

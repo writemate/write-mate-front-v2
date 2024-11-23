@@ -6,10 +6,10 @@ import { workspaceCategory } from "@/utils/APIs/types";
 import { usePathname } from "next/navigation";
 import { notifySuccess } from "@/utils/showToast";
 import useIdeaBox from "@/hooks/dashboard/useIdeaBox";
-import { useDeleteModal } from "./useDeleteModal";
-import { useMemoModal } from "./useMemoModal";
+import useDeleteModal from "./useDeleteModal";
+import useMemoModal from "./useMemoModal";
 
-export function useDashboardData() {
+export function useWorkstudioAndTrash() {
   const queryClient = useQueryClient();
   const pathname = usePathname();
   const [isKebabMenuOpenWork, setIsKebabMenuOpenWork] = useState(""); // 어떤 케밥이 열려있는지 확인용
@@ -87,9 +87,9 @@ export function useDashboardData() {
 
 export const DashboardContext = createContext(
   {} as {
-    dashboardData: ReturnType<typeof useDashboardData>;
+    workstudioAndTrash: ReturnType<typeof useWorkstudioAndTrash>;
     ideaBox: ReturnType<typeof useIdeaBox>;
-    deleteModal: ReturnType<typeof useDeleteModal>;
+    removeConfirmationModal: ReturnType<typeof useDeleteModal>;
     memoModal: ReturnType<typeof useMemoModal>;
   }
 );

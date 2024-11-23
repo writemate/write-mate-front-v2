@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { memoQueryKeys } from "@/utils/APIs/queryKeys";
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ideaBoxCategory, TMemo } from "@/utils/APIs/types";
 import {
   createMemo,
@@ -11,12 +11,11 @@ import {
 } from "@/utils/APIs/memo";
 import { debounce } from "@/utils";
 import { notifySuccess } from "@/utils/showToast";
-import { useMemoModal } from "./useMemoModal";
+import useMemoModal from "./useMemoModal";
 
 export default function useIdeaBox() {
   const queryClient = useQueryClient();
   const [memoList, setMemoList] = useState<TMemo[]>([]);
-  const { openNewMemoEditModal } = useMemoModal();
 
   const [ideaCategory, setIdeaCategory] = useState<
     keyof typeof ideaBoxCategory
@@ -41,13 +40,6 @@ export default function useIdeaBox() {
       }
       queryClient.invalidateQueries({ queryKey: memoQueryKeys.memoList() });
       notifySuccess("메모가 생성되었습니다.");
-      const newMemo = {
-        id: createdId,
-        memo_name: "",
-        memo_description: "",
-        updatedAt: new Date().toISOString(),
-      };
-      openNewMemoEditModal(newMemo);
     },
   });
   const { mutate: updateMemoNameMutation, isPending: isUpdatingName } =

@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { dashboardQueryKeys, workspaceQueryKeys } from "@/utils/APIs/queryKeys";
+import { dashboardQueryKeys } from "@/utils/APIs/queryKeys";
 import {
   deleteWork,
   updateWorkCategory,
@@ -11,9 +11,9 @@ import { DashboardContext } from "./dashboard";
 import { TWork, workspaceCategory } from "@/utils/APIs/types";
 import { notifySuccess, notifyError } from "@/utils/showToast";
 
-export function useWork(workId: string) {
+export default function useWork(workId: string) {
   const { handleEditing, data, workCategory } =
-    useContext(DashboardContext).dashboardData;
+    useContext(DashboardContext).workstudioAndTrash;
 
   const queryClient = useQueryClient();
   const [work, setWork] = useState<TWork | undefined>(() =>

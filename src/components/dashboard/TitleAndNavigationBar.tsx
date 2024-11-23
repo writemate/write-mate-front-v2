@@ -12,7 +12,7 @@ import { useContext } from "react";
 
 export function WorkStudioTitleAndNavigationBar() {
   const { workCategory, handleWorkCategoryChange } =
-    useContext(DashboardContext).dashboardData;
+    useContext(DashboardContext).workstudioAndTrash;
 
   return (
     <TitleAndNavigationBar>
@@ -71,7 +71,7 @@ export function IdeaBoxTitleAndNavigationBar() {
 
 export function TrashTitleAndNavigationBar() {
   const { workCategory, handleWorkCategoryChange } =
-    useContext(DashboardContext).dashboardData;
+    useContext(DashboardContext).workstudioAndTrash;
 
   return (
     <TitleAndNavigationBar>

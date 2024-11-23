@@ -39,7 +39,7 @@ function Memo({ closeModal }: { closeModal: () => void }) {
             placeholder="메모 내용을 입력하세요"
           />
           <div>
-            <button onClick>삭제</button>
+            <button onClick={}>삭제</button>
             <button onClick={closeModal}>닫기</button>
           </div>
         </MemoModalContainer>

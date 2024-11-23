@@ -4,7 +4,7 @@ import { KebabContainer, KebabItem } from "@/styles/dashboard/Kebab";
 import KebabMenu from "@/assets/icons/KebabMenu.svg";
 import { useContext, useEffect, useRef } from "react";
 import { DashboardContext } from "@/hooks/dashboard/dashboard";
-import { useWork } from "@/hooks/dashboard/useWork";
+import useWork from "@/hooks/dashboard/useWork";
 
 export default function WorkList({
   workValue,
@@ -25,9 +25,9 @@ export default function WorkList({
     isKebabMenuOpenWork,
     handleKebabMenuOpenWork,
     handleEditing,
-  } = useContext(DashboardContext).dashboardData;
+  } = useContext(DashboardContext).workstudioAndTrash;
   const { setIsPermanentDelete, setSelectedWorkForDelete, setOpenDeleteModal } =
-    useContext(DashboardContext).deleteModal;
+    useContext(DashboardContext).removeConfirmationModal;
   const handleClickOutside = (event: MouseEvent) => {
     if (
       menuRef.current &&

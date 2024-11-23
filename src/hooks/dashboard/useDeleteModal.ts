@@ -5,7 +5,7 @@ import { useContext, useState } from "react";
 import { DashboardContext } from "@/hooks/dashboard/dashboard";
 import { notifySuccess } from "@/utils/showToast";
 
-export function useDeleteModal() {
+export default function useDeleteModal() {
   const queryClient = useQueryClient();
 
   const [selectedWorkForDelete, setSelectedWorkForDelete] = useState("");
@@ -19,7 +19,7 @@ export function useDeleteModal() {
       queryClient.invalidateQueries({
         queryKey: [
           dashboardQueryKeys.workStudio(),
-          useContext(DashboardContext).dashboardData.workCategory,
+          useContext(DashboardContext).workstudioAndTrash.workCategory,
         ],
       });
       notifySuccess("작품이 삭제되었습니다.");
