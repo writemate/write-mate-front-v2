@@ -1,5 +1,6 @@
 "use client";
 import { useContext } from "react";
+import React from "react";
 import Modal from "@/components/Modal";
 import {
   MemoContent,
@@ -16,6 +17,8 @@ function Memo({ closeModal }: { closeModal: () => void }) {
     onChangeSelectedMemoDescription,
     onKeyDownTitle,
   } = useContext(DashboardContext).memoModal;
+  const { onClickDeleteMemo } =
+    useContext(DashboardContext).removeConfirmationModal;
 
   return (
     <>
@@ -39,7 +42,7 @@ function Memo({ closeModal }: { closeModal: () => void }) {
             placeholder="메모 내용을 입력하세요"
           />
           <div>
-            <button>삭제</button>
+            <button onClick={onClickDeleteMemo(selectedMemo.id)}>삭제</button>
             <button onClick={closeModal}>닫기</button>
           </div>
         </MemoModalContainer>
@@ -48,7 +51,7 @@ function Memo({ closeModal }: { closeModal: () => void }) {
   );
 }
 
-export default function DeleteModal() {
+export default function MemoModal() {
   const { openEditModal, closeEditModal } =
     useContext(DashboardContext).memoModal;
 

@@ -89,14 +89,18 @@ export default function useMemoModal() {
     }
   };
 
-  const onClickDeleteMemo = () => {};
+  const onDeleteMemo = () => {
+    if (selectedMemo) {
+      deleteMemoMutation(selectedMemo.id);
+    }
+  };
 
   function focusInput(ref: HTMLCollectionOf<Element>) {
     window.setTimeout(() => {
       if (ref.length > 0) (ref[0] as HTMLElement).focus();
     }, 0);
   }
-  function closeEditModal() {
+  function closeMemoModal() {
     setOpenEditModal(false);
     setSelectedMemo(null);
   }
@@ -116,10 +120,11 @@ export default function useMemoModal() {
     selectedMemo,
     onClickMemoTitle,
     onClickMemoContent,
-    closeEditModal,
+    closeEditModal: closeMemoModal,
     onChangeSelectedMemoName,
     onChangeSelectedMemoDescription,
     onKeyDownTitle,
     openNewMemoEditModal,
+    onDeleteMemo,
   };
 }

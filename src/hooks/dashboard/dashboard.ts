@@ -6,7 +6,7 @@ import { workspaceCategory } from "@/utils/APIs/types";
 import { usePathname } from "next/navigation";
 import { notifySuccess } from "@/utils/showToast";
 import useIdeaBox from "@/hooks/dashboard/useIdeaBox";
-import useDeleteModal from "./useDeleteModal";
+import useOpenAndCloseDeleteConfirmation from "./useDeleteModal";
 import useMemoModal from "./useMemoModal";
 
 export function useWorkstudioAndTrash() {
@@ -89,7 +89,9 @@ export const DashboardContext = createContext(
   {} as {
     workstudioAndTrash: ReturnType<typeof useWorkstudioAndTrash>;
     ideaBox: ReturnType<typeof useIdeaBox>;
-    removeConfirmationModal: ReturnType<typeof useDeleteModal>;
+    removeConfirmationModal: ReturnType<
+      typeof useOpenAndCloseDeleteConfirmation
+    >;
     memoModal: ReturnType<typeof useMemoModal>;
   }
 );

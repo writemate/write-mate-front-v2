@@ -5,27 +5,26 @@ import Danger from "@/assets/icons/danger.svg";
 
 export const ModalContainer = styled.div`
   ${FlexColumnCenter}
-  padding: 31px 41px;
+  padding: 16px;
 
   border-radius: 12px;
-  background: var(--white, #fff);
+  background: ${({ theme }) => theme.color.white};
   box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.12);
   justify-content: center;
   align-items: center;
-  gap: 26px;
+  gap: 8px;
 
   p {
-    color: #121212;
+    color: ${({ theme }) => theme.color.black};
     text-align: center;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 500;
     line-height: 160%;
   }
 `;
 
 export const DangerIcon = styled(Danger)`
-  margin-top: 51px;
-  flex-shrink: 0;
+  margin-top: 20px;
 `;
 
 export const ButtonContainer = styled.div`

@@ -1,30 +1,10 @@
-import { deleteWork } from "@/utils/APIs/dashboard";
-import { dashboardQueryKeys } from "@/utils/APIs/queryKeys";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useContext, useState } from "react";
-import { DashboardContext } from "@/hooks/dashboard/dashboard";
-import { notifySuccess } from "@/utils/showToast";
+import { useState } from "react";
 
-export default function useDeleteModal() {
-  const queryClient = useQueryClient();
-
+export default function useOpenAndCloseDeleteConfirmation() {
   const [selectedWorkForDelete, setSelectedWorkForDelete] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [selectedMemoForDelete, setSelectedMemoForDelete] = useState("");
   const [isPermanentDelete, setIsPermanentDelete] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
-
-  const { mutate: onDeleteWork } = useMutation({
-    mutationFn: (workId: string) => deleteWork(workId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [
-          dashboardQueryKeys.workStudio(),
-          useContext(DashboardContext).workstudioAndTrash.workCategory,
-        ],
-      });
-      notifySuccess("작품이 삭제되었습니다.");
-    },
-  });
 
   const onPermanentDeleteWork = () => {
     setIsPermanentDelete(true);
@@ -32,7 +12,6 @@ export default function useDeleteModal() {
   const onClickMoveToTrash =
     (workId: string) => (event: React.MouseEvent<HTMLButtonElement>) => {
       event.preventDefault();
-
       setIsPermanentDelete(false);
       setSelectedWorkForDelete(workId);
       setOpenDeleteModal(true);
@@ -41,24 +20,31 @@ export default function useDeleteModal() {
   const onClickDeleteWork =
     (workId: string) => (event: React.MouseEvent<HTMLButtonElement>) => {
       event.preventDefault();
-
       setIsPermanentDelete(true);
       setSelectedWorkForDelete(workId);
       setOpenDeleteModal(true);
     };
 
+  const onClickDeleteMemo =
+    (memoId: string) => (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      setIsPermanentDelete(true);
+      setSelectedMemoForDelete(memoId);
+      setOpenDeleteModal(true);
+    };
+
   return {
     selectedWorkForDelete,
-    isDeleting,
+    selectedMemoForDelete,
     isPermanentDelete,
     openDeleteModal,
     setSelectedWorkForDelete,
-    onDeleteWork,
+    setSelectedMemoForDelete,
     onPermanentDeleteWork,
     setOpenDeleteModal,
-    setIsDeleting,
     setIsPermanentDelete,
     onClickMoveToTrash,
     onClickDeleteWork,
+    onClickDeleteMemo,
   };
 }

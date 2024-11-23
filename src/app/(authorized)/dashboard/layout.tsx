@@ -17,7 +17,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import MemoEditModal from "@/components/dashboard/MemoModal";
 import useIdeaBox from "@/hooks/dashboard/useIdeaBox";
-import useDeleteModal from "@/hooks/dashboard/useDeleteModal";
+import useOpenAndCloseDeleteConfirmation from "@/hooks/dashboard/useDeleteModal";
 import useMemoModal from "@/hooks/dashboard/useMemoModal";
 
 export default function WorkspaceLayout({
@@ -27,7 +27,7 @@ export default function WorkspaceLayout({
 }) {
   const dashboardValue = useWorkstudioAndTrash();
   const ideaBoxValue = useIdeaBox();
-  const deleteModalValue = useDeleteModal();
+  const deleteModalValue = useOpenAndCloseDeleteConfirmation();
   const memoModalValue = useMemoModal();
   const contextValue = {
     workstudioAndTrash: dashboardValue,
@@ -50,8 +50,8 @@ export default function WorkspaceLayout({
           {children}
         </HeaderAndMainContainer>
       </DashboardContainer>
-      <DeleteModal />
       <MemoEditModal />
+      <DeleteModal />
       <ToastContainer />
     </DashboardContext.Provider>
   );
