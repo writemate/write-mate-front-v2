@@ -3,7 +3,7 @@ import { ChangeCoverInput, WorkButtonKebab } from "@/styles/dashboard/WorkList";
 import { KebabContainer, KebabItem } from "@/styles/dashboard/Kebab";
 import KebabMenu from "@/assets/icons/KebabMenu.svg";
 import { useContext, useEffect, useRef } from "react";
-import { DashboardContext } from "@/hooks/dashboard/workStudioAndTrash";
+import { DashboardContext } from "@/hooks/dashboard/dashboard";
 import { useWork } from "@/hooks/dashboard/useWork";
 
 export default function WorkList({
@@ -18,23 +18,17 @@ export default function WorkList({
   };
   inputRef: React.RefObject<HTMLInputElement>;
 }) {
-  const {
-    menuRef,
-    excludeButtonRef,
-    onChangeCategory,
-    onChangeCover,
-    onDeleteWork,
-  } = useWork(workValue.id);
+  const { menuRef, excludeButtonRef, onChangeCategory, onChangeCover } =
+    useWork(workValue.id);
   const {
     workCategory,
     isKebabMenuOpenWork,
     handleKebabMenuOpenWork,
     handleEditing,
-    openDeleteModal,
     setOpenDeleteModal,
-    isDeleting,
     setIsDeleting,
     setIsPermanentDelete,
+    setSelectedWorkForDelete,
   } = useContext(DashboardContext);
   const handleClickOutside = (event: MouseEvent) => {
     if (
@@ -132,7 +126,7 @@ export default function WorkList({
                 onClick={(event) => {
                   event.preventDefault();
                   setIsPermanentDelete(false);
-                  setIsDeleting(workValue.id);
+                  setSelectedWorkForDelete(workValue.id);
                   setOpenDeleteModal(true);
                 }}
               >
@@ -164,7 +158,7 @@ export default function WorkList({
               onClick={(event) => {
                 event.preventDefault();
                 setIsPermanentDelete(true);
-                setIsDeleting(workValue.id);
+                setSelectedWorkForDelete(workValue.id);
                 setOpenDeleteModal(true);
               }}
             >

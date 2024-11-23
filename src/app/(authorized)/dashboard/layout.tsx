@@ -11,20 +11,21 @@ import Footer from "@/assets/dashboard/footer.svg";
 import {
   DashboardContext,
   useDashboardData,
-} from "@/hooks/dashboard/workStudioAndTrash";
+} from "@/hooks/dashboard/dashboard";
 import DeleteModal from "@/components/DeleteModal";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import MemoEditModal from "@/components/dashboard/MemoModal";
 
 export default function WorkspaceLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const value = useDashboardData();
+  const dashboardValue = useDashboardData();
 
   return (
-    <DashboardContext.Provider value={value}>
+    <DashboardContext.Provider value={dashboardValue}>
       <DashboardContainer>
         <SideTabAndFooterContainer>
           <SideTab />
@@ -38,6 +39,7 @@ export default function WorkspaceLayout({
         </HeaderAndMainContainer>
       </DashboardContainer>
       <DeleteModal />
+      <MemoEditModal />
       <ToastContainer />
     </DashboardContext.Provider>
   );

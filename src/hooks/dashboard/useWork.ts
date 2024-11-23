@@ -6,25 +6,31 @@ import {
   updateWorkCover,
   updateWorkTitle,
 } from "@/utils/APIs/dashboard";
-import { useContext, useEffect, useRef, useState } from "react";
-import { DashboardContext } from "./workStudioAndTrash";
+import { useContext, useRef, useState } from "react";
+import { DashboardContext } from "./dashboard";
 import { TWork, workspaceCategory } from "@/utils/APIs/types";
-import useToast from "@/hooks/useToastNotification";
+import { notifySuccess, notifyError } from "@/utils/showToast";
+
+//  수행하는 기능
+//  1. 작품의 제목을 변경하는 기능
+//  2. 작품의 커버를 변경하는 기능
+//  3. 작품의 카테고리를 변경하는 기능
+//  4. 작품을 삭제하는 기능
 
 export function useWork(workId: string) {
-  const { notifyPositive, notifyNegative } = useToast();
   const { handleEditing, data, workCategory } = useContext(DashboardContext);
 
   const queryClient = useQueryClient();
-  const menuRef = useRef<HTMLDivElement | null>(null);
-  const excludeButtonRef = useRef<HTMLDivElement | null>(null);
-  let file: File | null = null;
   const [work, setWork] = useState<TWork | undefined>(() =>
     data?.find((work) => work.id === workId)
   );
   const [toBeCategory, setToBeCategory] = useState<
     keyof typeof workspaceCategory
   >(workspaceCategory.trash); // 이거 deleteModal에서 동작이 이상해서 trash로 설정해놓음
+
+  let file: File | null = null;
+  const menuRef = useRef<HTMLDivElement | null>(null);
+  const excludeButtonRef = useRef<HTMLDivElement | null>(null);
 
   const { mutate: mutateTitle } = useMutation({
     mutationFn: () => {
@@ -47,7 +53,7 @@ export function useWork(workId: string) {
       queryClient.invalidateQueries({
         queryKey: [dashboardQueryKeys.workStudio(), workCategory],
       });
-      notifyPositive("이미지가 변경되었습니다.");
+      notifySuccess("커버가 변경되었습니다.");
     },
   });
   const { mutate: mutateCategory } = useMutation({
@@ -60,7 +66,7 @@ export function useWork(workId: string) {
       queryClient.invalidateQueries({
         queryKey: [dashboardQueryKeys.workStudio(), workCategory],
       });
-      notifyPositive("카테고리가 변경되었습니다.");
+      notifySuccess("카테고리가 변경되었습니다.");
     },
   });
   const { mutate: onDeleteWork } = useMutation({
@@ -72,7 +78,7 @@ export function useWork(workId: string) {
       queryClient.invalidateQueries({
         queryKey: [dashboardQueryKeys.workStudio(), workCategory],
       });
-      notifyNegative("작품이 삭제되었습니다.");
+      notifyError("작품이 삭제되었습니다.");
     },
   });
 
@@ -83,14 +89,13 @@ export function useWork(workId: string) {
       title: e.target.value,
     });
   };
-
   const onBlurTitle = () => {
     if (!work) return;
     setWork({
       ...work,
     });
     mutateTitle();
-    notifyPositive("제목이 변경되었습니다.");
+    notifySuccess("제목이 변경되었습니다.");
     handleEditing("");
   };
   const onKeyDownTitle = (e: React.KeyboardEvent<HTMLInputElement>) => {

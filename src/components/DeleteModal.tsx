@@ -1,5 +1,5 @@
 "use client";
-import { DashboardContext } from "@/hooks/dashboard/workStudioAndTrash";
+import { DashboardContext } from "@/hooks/dashboard/dashboard";
 import {
   ButtonContainer,
   DangerIcon,
@@ -11,8 +11,8 @@ import { useWork } from "@/hooks/dashboard/useWork";
 import Modal from "@/components/Modal";
 
 function TrashContent({ closeModal }: { closeModal: () => void }) {
-  const { isDeleting } = useContext(DashboardContext);
-  const { onChangeCategory } = useWork(isDeleting);
+  const { selectedWorkForDelete } = useContext(DashboardContext);
+  const { onChangeCategory } = useWork(selectedWorkForDelete);
 
   const handleDelete = () => {
     onChangeCategory("trash");
@@ -40,8 +40,8 @@ function TrashContent({ closeModal }: { closeModal: () => void }) {
 }
 
 function DeleteContent({ closeModal }: { closeModal: () => void }) {
-  const { isDeleting } = useContext(DashboardContext);
-  const { onDeleteWork } = useWork(isDeleting);
+  const { selectedWorkForDelete } = useContext(DashboardContext);
+  const { onDeleteWork } = useWork(selectedWorkForDelete);
 
   const handleDelete = () => {
     onDeleteWork();
@@ -72,13 +72,13 @@ export default function DeleteModal() {
   const {
     openDeleteModal,
     setOpenDeleteModal,
-    setIsDeleting,
+    setSelectedWorkForDelete,
     isPermanentDelete,
   } = useContext(DashboardContext);
 
   const closeModal = () => {
     setOpenDeleteModal(false);
-    setIsDeleting("");
+    setSelectedWorkForDelete("");
   };
 
   return (

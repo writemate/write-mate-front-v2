@@ -13,7 +13,7 @@ import InactiveArtStudio from "@/assets/dashboard/sideTab/inactive/artStudio.svg
 import InactiveIdeaBox from "@/assets/dashboard/sideTab/inactive/ideaBox.svg";
 import InactiveTrash from "@/assets/dashboard/sideTab/inactive/trash.svg";
 
-import { DashboardContext } from "@/hooks/dashboard/workStudioAndTrash";
+import { DashboardContext } from "@/hooks/dashboard/dashboard";
 import { usePathname } from "next/navigation";
 import { useContext } from "react";
 import { AddWork } from "./ColoredRoundButtons";

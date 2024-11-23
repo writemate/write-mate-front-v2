@@ -4,7 +4,7 @@ import {
   EmptyListDiscription,
 } from "@/styles/dashboard/WorkList";
 import { useContext } from "react";
-import { DashboardContext } from "@/hooks/dashboard/workStudioAndTrash";
+import { DashboardContext } from "@/hooks/dashboard/dashboard";
 import WorkButton from "./WorkItem";
 import { workspaceCategory } from "@/utils/APIs/types";
 import { AddWork } from "./ColoredRoundButtons";
@@ -36,7 +36,7 @@ export default function WorkList() {
           )}
           {!isLoading &&
             data.map((work, i) => (
-              <WorkButton workValue={work} key={work.id} />
+              <WorkButton key={work.id} workId={work.id} />
             ))}
         </WorkButtonList>
       )}

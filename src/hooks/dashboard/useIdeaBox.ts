@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { memoQueryKeys } from "@/utils/APIs/queryKeys";
-import { createContext, useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { ideaBoxCategory, TMemo } from "@/utils/APIs/types";
 import {
   createMemo,
@@ -10,13 +10,13 @@ import {
   updateMemoDescription,
 } from "@/utils/APIs/memo";
 import { debounce } from "@/utils";
+import { notifySuccess } from "@/utils/showToast";
+import { DashboardContext } from "./dashboard";
 
-export function useIdeaBox() {
+export default function useIdeaBox() {
   const queryClient = useQueryClient();
   const [memoList, setMemoList] = useState<TMemo[]>([]);
-  const [columns, setColumns] = useState<TMemo[][]>([]);
-  const [numColumns, setNumColumns] = useState(3);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const { openNewMemoEditModal } = useContext(DashboardContext);
 
   const [ideaCategory, setIdeaCategory] = useState<
     keyof typeof ideaBoxCategory
@@ -33,14 +33,21 @@ export function useIdeaBox() {
     queryKey: memoQueryKeys.memoList(),
     queryFn: getMemoList,
   });
-  const {
-    mutate: createMemoMutation,
-    isPending: isCreating,
-    mutateAsync: createMemoAsync,
-  } = useMutation({
+  const { mutate: createMemoMutation, isPending: isCreating } = useMutation({
     mutationFn: createMemo,
-    onSuccess: () => {
+    onSuccess: (createdId) => {
+      if (createdId) {
+        console.log("Created Memo ID:", createdId); // 메모 ID 출력
+      }
       queryClient.invalidateQueries({ queryKey: memoQueryKeys.memoList() });
+      notifySuccess("메모가 생성되었습니다.");
+      const newMemo = {
+        id: createdId,
+        memo_name: "",
+        memo_description: "",
+        updatedAt: new Date().toISOString(),
+      };
+      openNewMemoEditModal(newMemo);
     },
   });
   const { mutate: updateMemoNameMutation, isPending: isUpdatingName } =
@@ -74,6 +81,7 @@ export function useIdeaBox() {
     debounce(updateMemoDescriptionMutation, 500),
     [data]
   );
+
   const onClickCreateMemo = () => {
     createMemoMutation();
   };
@@ -99,44 +107,6 @@ export function useIdeaBox() {
         )
       );
     };
-  const onChangeMemoStart = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const memoId = await createMemoAsync();
-    updateMemoDescriptionMutation({
-      id: memoId,
-      memo_description: event.target.value,
-    });
-  };
-
-  const calculateColumns = () => {
-    const width = window.innerWidth;
-    if (width > 1200) return 4;
-    if (width > 800) return 3;
-    if (width > 500) return 2;
-    return 1;
-  };
-
-  const updateColumns = () => {
-    console.log("updateColumns");
-    const cols = calculateColumns();
-    setNumColumns(cols);
-
-    const newColumns: TMemo[][] = Array.from({ length: cols }, () => []);
-    const columnHeights = Array(cols).fill(0);
-
-    const memoElements =
-      containerRef.current?.querySelectorAll(".memo-card") || [];
-
-    memoElements.forEach((element, index) => {
-      const memoHeight = (element as HTMLElement).offsetHeight;
-      const minIndex = columnHeights.indexOf(Math.min(...columnHeights));
-      newColumns[minIndex].push(memoList[index]);
-      columnHeights[minIndex] += memoHeight;
-    });
-
-    setColumns(newColumns);
-  };
 
   function handleIdeaCategoryChange(
     category: (typeof ideaBoxCategory)[keyof typeof ideaBoxCategory]
@@ -154,11 +124,6 @@ export function useIdeaBox() {
       setMemoList(data);
     }
   }, [data]);
-  useEffect(() => {
-    updateColumns();
-    window.addEventListener("resize", updateColumns);
-    return () => window.removeEventListener("resize", updateColumns);
-  }, [memoList]);
 
   return {
     ideaCategory,
@@ -169,17 +134,11 @@ export function useIdeaBox() {
     isUpdatingName,
     isUpdatingDescription,
     isDeleting,
-    columns,
-    containerRef,
+    setMemoList,
     onClickCreateMemo,
     onClickDeleteMemo,
     onChangeMemoName,
     onChangeMemoDescription,
-    onChangeMemoStart,
     handleIdeaCategoryChange,
   };
 }
-
-export const IdeaBoxContext = createContext(
-  {} as ReturnType<typeof useIdeaBox>
-);
