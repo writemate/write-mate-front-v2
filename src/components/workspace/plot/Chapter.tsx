@@ -39,7 +39,7 @@ export default function Chapter({
 }: ChapterProps) {
   const [title, setTitle] = useState<string>(chapterName);
   const [content, setContent] = useState<string>(chapterDescription);
-  const { mutateChapterName, mutateChapterD } = useChapterList();
+  const { mutateChapterName, mutateChapterDescription } = useChapterList();
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -49,7 +49,7 @@ export default function Chapter({
 
   const handleContentChange = (value: string) => {
     setContent(value);
-    mutateChapterD({ chapterId, chapter_description: value });
+    mutateChapterDescription({ chapterId, chapter_description: value });
   };
 
   const [localIsFolded, setLocalIsFolded] = useState(isFolded);
