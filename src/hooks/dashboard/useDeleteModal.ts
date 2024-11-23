@@ -29,6 +29,23 @@ export default function useDeleteModal() {
   const onPermanentDeleteWork = () => {
     setIsPermanentDelete(true);
   };
+  const onClickMoveToTrash =
+    (workId: string) => (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+
+      setIsPermanentDelete(false);
+      setSelectedWorkForDelete(workId);
+      setOpenDeleteModal(true);
+    };
+
+  const onClickDeleteWork =
+    (workId: string) => (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+
+      setIsPermanentDelete(true);
+      setSelectedWorkForDelete(workId);
+      setOpenDeleteModal(true);
+    };
 
   return {
     selectedWorkForDelete,
@@ -41,5 +58,7 @@ export default function useDeleteModal() {
     setOpenDeleteModal,
     setIsDeleting,
     setIsPermanentDelete,
+    onClickMoveToTrash,
+    onClickDeleteWork,
   };
 }

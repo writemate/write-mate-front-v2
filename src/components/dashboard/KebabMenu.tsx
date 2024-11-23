@@ -2,54 +2,91 @@
 import { ChangeCoverInput, WorkButtonKebab } from "@/styles/dashboard/WorkList";
 import { KebabContainer, KebabItem } from "@/styles/dashboard/Kebab";
 import KebabMenu from "@/assets/icons/KebabMenu.svg";
-import { useContext, useEffect, useRef } from "react";
+import { useContext } from "react";
 import { DashboardContext } from "@/hooks/dashboard/dashboard";
 import useWork from "@/hooks/dashboard/useWork";
+import { TWork } from "@/utils/APIs/types";
 
 export default function WorkList({
   workValue,
   inputRef,
 }: {
-  workValue: {
-    id: string;
-    title: string;
-    cover: string;
-    updatedAt: string;
-  };
+  workValue: TWork;
   inputRef: React.RefObject<HTMLInputElement>;
 }) {
-  const { menuRef, excludeButtonRef, onChangeCategory, onChangeCover } =
-    useWork(workValue.id);
   const {
-    workCategory,
-    isKebabMenuOpenWork,
-    handleKebabMenuOpenWork,
-    handleEditing,
-  } = useContext(DashboardContext).workstudioAndTrash;
-  const { setIsPermanentDelete, setSelectedWorkForDelete, setOpenDeleteModal } =
+    menuRef,
+    excludeButtonRef,
+    ref,
+    onClickChangeCover,
+    onClickChangeTitle,
+    onClickChangeCategory,
+    onClickChangeCoverInput,
+    onChangeCoverInput,
+  } = useWork(workValue.id);
+  const { workCategory, isKebabMenuOpenWork, handleKebabMenuOpenWork } =
+    useContext(DashboardContext).workstudioAndTrash;
+  const { onClickMoveToTrash, onClickDeleteWork } =
     useContext(DashboardContext).removeConfirmationModal;
-  const handleClickOutside = (event: MouseEvent) => {
-    if (
-      menuRef.current &&
-      !menuRef.current.contains(event.target as Node) &&
-      excludeButtonRef.current &&
-      !excludeButtonRef.current.contains(event.target as Node)
-    ) {
-      handleKebabMenuOpenWork("");
-    }
-  };
 
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  function workstudioKebabMenu() {
+    return (
+      (workCategory === "ongoing" || workCategory === "completed") && (
+        <KebabContainer ref={menuRef}>
+          <KebabItem onClick={onClickChangeTitle(inputRef)}>
+            작품명 변경
+          </KebabItem>
+          <ChangeCoverInput
+            type="file"
+            accept="image/*"
+            onChange={onChangeCoverInput}
+            onClick={onClickChangeCoverInput}
+            ref={ref}
+          />
+          <KebabItem onClick={onClickChangeCover}>표지 이미지 변경</KebabItem>
+          {workCategory == "ongoing" && (
+            <KebabItem onClick={onClickChangeCategory("completed")}>
+              완결로 변경
+            </KebabItem>
+          )}
+          {workCategory == "completed" && (
+            <KebabItem onClick={onClickChangeCategory("ongoing")}>
+              집필 중으로 변경
+            </KebabItem>
+          )}
+          <KebabItem
+            $isMajor={true}
+            $isLast={true}
+            onClick={onClickMoveToTrash(workValue.id)}
+          >
+            휴지통으로 이동
+          </KebabItem>
+        </KebabContainer>
+      )
+    );
+  }
 
-  const ref = useRef<HTMLInputElement>(null);
-  const onClickChangeCover = () => {
-    ref.current?.click();
-  };
+  function trashKebabMenu() {
+    return (
+      workCategory === "trash" && (
+        <KebabContainer ref={menuRef}>
+          <KebabItem onClick={onClickChangeCategory("completed")}>
+            완결로 복구
+          </KebabItem>
+          <KebabItem onClick={onClickChangeCategory("ongoing")}>
+            집필 중으로 복구
+          </KebabItem>
+          <KebabItem
+            $isMajor={true}
+            $isLast={true}
+            onClick={onClickDeleteWork(workValue.id)}
+          >
+            영구 삭제
+          </KebabItem>
+        </KebabContainer>
+      )
+    );
+  }
 
   return (
     <>
@@ -64,106 +101,10 @@ export default function WorkList({
         }}
       >
         <KebabMenu />
+        {isKebabMenuOpenWork === workValue.id && workstudioKebabMenu()}
         {isKebabMenuOpenWork === workValue.id &&
-          (workCategory === "ongoing" || workCategory === "completed") && (
-            <KebabContainer ref={menuRef}>
-              <KebabItem
-                onClick={(event) => {
-                  event.preventDefault();
-                  handleEditing(workValue.id);
-                  console.log(inputRef.current);
-                  inputRef.current?.focus();
-                }}
-              >
-                작품명 변경
-              </KebabItem>
-              <ChangeCoverInput
-                type="file"
-                accept="image/*"
-                onChange={(event) => {
-                  event.stopPropagation();
-                  onChangeCover(event);
-                }}
-                onClick={(event) => {
-                  event.stopPropagation();
-                }}
-                ref={ref}
-              />
-              <KebabItem
-                onClick={(event) => {
-                  event.preventDefault();
-                  event.stopPropagation();
-                  onClickChangeCover();
-                }}
-              >
-                표지 이미지 변경
-              </KebabItem>
-              {workCategory == "ongoing" && (
-                <KebabItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    onChangeCategory("completed");
-                  }}
-                >
-                  완결로 변경
-                </KebabItem>
-              )}
-              {workCategory == "completed" && (
-                <KebabItem
-                  onClick={(event) => {
-                    event.preventDefault();
-                    onChangeCategory("ongoing");
-                  }}
-                >
-                  집필 중으로 변경
-                </KebabItem>
-              )}
-              <KebabItem
-                $isMajor={true}
-                $isLast={true}
-                onClick={(event) => {
-                  event.preventDefault();
-                  setIsPermanentDelete(false);
-                  setSelectedWorkForDelete(workValue.id);
-                  setOpenDeleteModal(true);
-                }}
-              >
-                휴지통으로 이동
-              </KebabItem>
-            </KebabContainer>
-          )}
-        {isKebabMenuOpenWork === workValue.id && workCategory == "trash" && (
-          <KebabContainer ref={menuRef}>
-            <KebabItem
-              onClick={(event) => {
-                event.preventDefault();
-                onChangeCategory("completed");
-              }}
-            >
-              완결로 복구
-            </KebabItem>
-            <KebabItem
-              onClick={(event) => {
-                event.preventDefault();
-                onChangeCategory("ongoing");
-              }}
-            >
-              집필 중으로 복구
-            </KebabItem>
-            <KebabItem
-              $isMajor={true}
-              $isLast={true}
-              onClick={(event) => {
-                event.preventDefault();
-                setIsPermanentDelete(true);
-                setSelectedWorkForDelete(workValue.id);
-                setOpenDeleteModal(true);
-              }}
-            >
-              영구 삭제
-            </KebabItem>
-          </KebabContainer>
-        )}
+          workCategory == "trash" &&
+          trashKebabMenu()}
       </WorkButtonKebab>
     </>
   );

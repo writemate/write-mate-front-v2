@@ -6,13 +6,13 @@ import {
   updateWorkCover,
   updateWorkTitle,
 } from "@/utils/APIs/dashboard";
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { DashboardContext } from "./dashboard";
 import { TWork, workspaceCategory } from "@/utils/APIs/types";
 import { notifySuccess, notifyError } from "@/utils/showToast";
 
 export default function useWork(workId: string) {
-  const { handleEditing, data, workCategory } =
+  const { handleEditing, data, workCategory, handleKebabMenuOpenWork } =
     useContext(DashboardContext).workstudioAndTrash;
 
   const queryClient = useQueryClient();
@@ -26,6 +26,7 @@ export default function useWork(workId: string) {
   let file: File | null = null;
   const menuRef = useRef<HTMLDivElement | null>(null);
   const excludeButtonRef = useRef<HTMLDivElement | null>(null);
+  const ref = useRef<HTMLInputElement>(null);
 
   const { mutate: mutateTitle } = useMutation({
     mutationFn: () => {
@@ -113,7 +114,66 @@ export default function useWork(workId: string) {
     mutateCategory();
   };
 
+  const onClickChangeTitle =
+    (inputRef: React.RefObject<HTMLInputElement>) =>
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      if (work) {
+        handleEditing(work.id);
+        inputRef.current?.focus();
+      }
+    };
+  const onClickChangeCover = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    ref.current?.click();
+  };
+  const onClickChangeCategory =
+    (category: keyof typeof workspaceCategory) =>
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      onChangeCategory(category);
+    };
+
+  const onClickChangeCoverInput = (
+    event: React.MouseEvent<HTMLInputElement>
+  ) => {
+    event.stopPropagation();
+  };
+  const onChangeCoverInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    onChangeCover(event);
+  };
+
+  const handleClickOutside =
+    (
+      menuRef: React.RefObject<HTMLElement>,
+      excludeButtonRef: React.RefObject<HTMLElement>
+    ) =>
+    (event: MouseEvent) => {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(event.target as Node) &&
+        excludeButtonRef.current &&
+        !excludeButtonRef.current.contains(event.target as Node)
+      ) {
+        handleKebabMenuOpenWork("");
+      }
+    };
+
+  useEffect(() => {
+    document.addEventListener(
+      "mousedown",
+      handleClickOutside(menuRef, excludeButtonRef)
+    );
+    return () => {
+      document.removeEventListener(
+        "mousedown",
+        handleClickOutside(menuRef, excludeButtonRef)
+      );
+    };
+  }, []);
   return {
+    ref,
     work,
     menuRef,
     excludeButtonRef,
@@ -123,5 +183,10 @@ export default function useWork(workId: string) {
     onChangeCover,
     onChangeCategory,
     onDeleteWork,
+    onClickChangeCover,
+    onClickChangeTitle,
+    onClickChangeCategory,
+    onClickChangeCoverInput,
+    onChangeCoverInput,
   };
 }
