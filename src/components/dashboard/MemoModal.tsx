@@ -7,6 +7,8 @@ import {
   MemoHeader,
   MemoTitle,
   MemoModalContainer,
+  MemoUpdatedDate,
+  MemoModalButtonContainer,
 } from "@/styles/dashboard/MemoList";
 import { DashboardContext } from "@/hooks/dashboard/dashboard";
 
@@ -24,6 +26,16 @@ function Memo({ closeModal }: { closeModal: () => void }) {
     <>
       {selectedMemo && (
         <MemoModalContainer>
+          <MemoUpdatedDate>
+            {"수정 시각 :  " +
+              new Date(selectedMemo.updatedAt).toLocaleString("ko-KR", {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+          </MemoUpdatedDate>
           <MemoHeader>
             <MemoTitle
               className="memo-modal-name"
@@ -41,10 +53,10 @@ function Memo({ closeModal }: { closeModal: () => void }) {
             minRows={20}
             placeholder="메모 내용을 입력하세요"
           />
-          <div>
+          <MemoModalButtonContainer>
             <button onClick={onClickDeleteMemo(selectedMemo.id)}>삭제</button>
-            <button onClick={closeModal}>닫기</button>
-          </div>
+            <button onClick={closeModal}>저장</button>
+          </MemoModalButtonContainer>
         </MemoModalContainer>
       )}
     </>

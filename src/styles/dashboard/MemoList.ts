@@ -121,7 +121,14 @@ export const MemoListContainer = styled.div`
     min-height: calc(14px * 1.5 * 6);
   }
 `;
-
+export const MemoUpdatedDate = styled.div`
+  align-self: flex-end;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 100%;
+  color: ${({ theme }) => theme.color.gray300};
+`;
 export const MemoModalContainer = styled.div`
   ${FlexColumnCenter}
   width: 100%;
@@ -137,7 +144,7 @@ export const MemoModalContainer = styled.div`
 
   button {
     ${clickable}
-    align-self: flex-end;
+    flex-shrink: 0;
     padding: 0px 8px;
     height: 24px;
 
@@ -156,24 +163,33 @@ export const MemoModalContainer = styled.div`
     gap: 4px;
   }
   ${MemoTitle} {
-    font-size: 16px;
+    font-size: 18px;
     padding: 8px 8px;
+    color: ${({ theme }) => theme.color.black};
+    flex-wrap: wrap;
+    overflow-x: scroll;
   }
 
   ${MemoContent} {
     overflow-y: scroll;
+    color: ${({ theme }) => theme.color.gray900};
     max-height: 80vh;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 160%;
     padding: 0px 8px;
   }
+
+  ${MemoUpdatedDate} {
+    align-self: center;
+    flex-shrink: 0;
+    font-size: 14px;
+    padding: 8px 8px;
+  }
 `;
 
-export const MemoUpdatedDate = styled.div`
-  align-self: flex-end;
-  font-size: 10px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 100%;
-  color: ${({ theme }) => theme.color.gray300};
+export const MemoModalButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  padding: 8px;
 `;
