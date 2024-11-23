@@ -16,6 +16,9 @@ import DeleteModal from "@/components/DeleteModal";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import MemoEditModal from "@/components/dashboard/MemoModal";
+import useIdeaBox from "@/hooks/dashboard/useIdeaBox";
+import { useDeleteModal } from "@/hooks/dashboard/useDeleteModal";
+import { useMemoModal } from "@/hooks/dashboard/useMemoModal";
 
 export default function WorkspaceLayout({
   children,
@@ -23,9 +26,18 @@ export default function WorkspaceLayout({
   children: React.ReactNode;
 }) {
   const dashboardValue = useDashboardData();
+  const ideaBoxValue = useIdeaBox();
+  const deleteModalValue = useDeleteModal();
+  const memoModalValue = useMemoModal();
+  const contextValue = {
+    dashboardData: dashboardValue,
+    ideaBox: ideaBoxValue,
+    deleteModal: deleteModalValue,
+    memoModal: memoModalValue,
+  };
 
   return (
-    <DashboardContext.Provider value={dashboardValue}>
+    <DashboardContext.Provider value={contextValue}>
       <DashboardContainer>
         <SideTabAndFooterContainer>
           <SideTab />

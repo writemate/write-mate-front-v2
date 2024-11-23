@@ -10,42 +10,6 @@ import { useDeleteModal } from "./useDeleteModal";
 import { useMemoModal } from "./useMemoModal";
 
 export function useDashboardData() {
-  const {
-    ideaCategory,
-    memoList,
-    isCreating,
-    isUpdatingName,
-    isUpdatingDescription,
-    setMemoList,
-    onClickCreateMemo,
-    onClickDeleteMemo,
-    onChangeMemoName,
-    onChangeMemoDescription,
-    handleIdeaCategoryChange,
-  } = useIdeaBox();
-  const {
-    selectedWorkForDelete,
-    isDeleting,
-    isPermanentDelete,
-    openDeleteModal,
-    setSelectedWorkForDelete,
-    onDeleteWork,
-    onPermanentDeleteWork,
-    setOpenDeleteModal,
-    setIsDeleting,
-    setIsPermanentDelete,
-  } = useDeleteModal();
-  const {
-    openEditModal,
-    selectedMemo,
-    onClickMemoTitle,
-    onClickMemoContent,
-    closeEditModal,
-    onChangeSelectedMemoName,
-    onChangeSelectedMemoDescription,
-    onKeyDownTitle,
-    openNewMemoEditModal,
-  } = useMemoModal();
   const queryClient = useQueryClient();
   const pathname = usePathname();
   const [isKebabMenuOpenWork, setIsKebabMenuOpenWork] = useState(""); // 어떤 케밥이 열려있는지 확인용
@@ -118,39 +82,14 @@ export function useDashboardData() {
     handleKebabMenuOpenWork,
     handleEditing,
     onClickAddWorkspace,
-    ideaCategory,
-    memoList,
-    isCreating,
-    isUpdatingName,
-    isUpdatingDescription,
-    setMemoList,
-    onClickCreateMemo,
-    onClickDeleteMemo,
-    onChangeMemoName,
-    onChangeMemoDescription,
-    handleIdeaCategoryChange,
-    openEditModal,
-    selectedMemo,
-    onClickMemoTitle,
-    onClickMemoContent,
-    closeEditModal,
-    onChangeSelectedMemoName,
-    onChangeSelectedMemoDescription,
-    onKeyDownTitle,
-    openNewMemoEditModal,
-    selectedWorkForDelete,
-    isDeleting,
-    isPermanentDelete,
-    openDeleteModal,
-    setSelectedWorkForDelete,
-    onDeleteWork,
-    onPermanentDeleteWork,
-    setOpenDeleteModal,
-    setIsDeleting,
-    setIsPermanentDelete,
   };
 }
 
 export const DashboardContext = createContext(
-  {} as ReturnType<typeof useDashboardData>
+  {} as {
+    dashboardData: ReturnType<typeof useDashboardData>;
+    ideaBox: ReturnType<typeof useIdeaBox>;
+    deleteModal: ReturnType<typeof useDeleteModal>;
+    memoModal: ReturnType<typeof useMemoModal>;
+  }
 );

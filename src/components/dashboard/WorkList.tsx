@@ -11,7 +11,7 @@ import { AddWork } from "./ColoredRoundButtons";
 
 export default function WorkList() {
   const { data, error, isLoading, onClickAddWorkspace, workCategory } =
-    useContext(DashboardContext);
+    useContext(DashboardContext).dashboardData;
 
   return (
     <>
@@ -35,9 +35,7 @@ export default function WorkList() {
             </>
           )}
           {!isLoading &&
-            data.map((work, i) => (
-              <WorkButton key={work.id} workId={work.id} />
-            ))}
+            data.map((work) => <WorkButton key={work.id} workId={work.id} />)}
         </WorkButtonList>
       )}
     </>

@@ -7,17 +7,13 @@ import {
   MemoTitle,
   MemoUpdatedDate,
 } from "@/styles/dashboard/MemoList";
-import React, { useContext } from "react";
+import { useContext } from "react";
 
 export default function MemoItem({ memoId }: { memoId: string }) {
-  const {
-    memoList,
-    error,
-    isLoading,
-    onClickMemoTitle,
-    onClickMemoContent,
-    selectedMemo,
-  } = useContext(DashboardContext);
+  const { memoList, error, isLoading } = useContext(DashboardContext).ideaBox;
+  const { selectedMemo, onClickMemoTitle, onClickMemoContent } =
+    useContext(DashboardContext).memoModal;
+
   const memo = memoList.find((memo) => memo.id === memoId);
 
   if (isLoading) return <div>메모를 불러오는 중...</div>;

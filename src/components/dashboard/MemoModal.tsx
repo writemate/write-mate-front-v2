@@ -15,7 +15,7 @@ function Memo({ closeModal }: { closeModal: () => void }) {
     onChangeSelectedMemoName,
     onChangeSelectedMemoDescription,
     onKeyDownTitle,
-  } = useContext(DashboardContext);
+  } = useContext(DashboardContext).memoModal;
 
   return (
     <>
@@ -49,7 +49,8 @@ function Memo({ closeModal }: { closeModal: () => void }) {
 }
 
 export default function DeleteModal() {
-  const { openEditModal, closeEditModal } = useContext(DashboardContext);
+  const { openEditModal, closeEditModal } =
+    useContext(DashboardContext).memoModal;
 
   const closeModal = () => {
     closeEditModal();

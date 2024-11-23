@@ -11,14 +11,9 @@ import { DashboardContext } from "./dashboard";
 import { TWork, workspaceCategory } from "@/utils/APIs/types";
 import { notifySuccess, notifyError } from "@/utils/showToast";
 
-//  수행하는 기능
-//  1. 작품의 제목을 변경하는 기능
-//  2. 작품의 커버를 변경하는 기능
-//  3. 작품의 카테고리를 변경하는 기능
-//  4. 작품을 삭제하는 기능
-
 export function useWork(workId: string) {
-  const { handleEditing, data, workCategory } = useContext(DashboardContext);
+  const { handleEditing, data, workCategory } =
+    useContext(DashboardContext).dashboardData;
 
   const queryClient = useQueryClient();
   const [work, setWork] = useState<TWork | undefined>(() =>

@@ -11,12 +11,12 @@ import {
 } from "@/utils/APIs/memo";
 import { debounce } from "@/utils";
 import { notifySuccess } from "@/utils/showToast";
-import { DashboardContext } from "./dashboard";
+import { useMemoModal } from "./useMemoModal";
 
 export default function useIdeaBox() {
   const queryClient = useQueryClient();
   const [memoList, setMemoList] = useState<TMemo[]>([]);
-  const { openNewMemoEditModal } = useContext(DashboardContext);
+  const { openNewMemoEditModal } = useMemoModal();
 
   const [ideaCategory, setIdeaCategory] = useState<
     keyof typeof ideaBoxCategory

@@ -6,7 +6,7 @@ import { DashboardContext } from "@/hooks/dashboard/dashboard";
 
 export default function MemoList() {
   const { memoList, error, isLoading, isCreating, onClickCreateMemo } =
-    useContext(DashboardContext);
+    useContext(DashboardContext).ideaBox;
 
   if (isLoading) return <div>메모를 불러오는 중...</div>;
   if (error) return <div>메모를 불러오는 중 에러가 발생했습니다.</div>;

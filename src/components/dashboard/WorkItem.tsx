@@ -13,7 +13,7 @@ import { useWork } from "@/hooks/dashboard/useWork";
 import { DashboardContext } from "@/hooks/dashboard/dashboard";
 
 export default function WorkItem({ workId }: { workId: string }) {
-  const { data } = useContext(DashboardContext);
+  const { data } = useContext(DashboardContext).dashboardData;
   const work = data?.find((work) => work.id === workId);
   const { onChangeTitle, onBlurTitle, onKeyDownTitle } = useWork(workId);
   const inputRef = useRef<HTMLInputElement>(null);

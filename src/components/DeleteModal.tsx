@@ -11,7 +11,7 @@ import { useWork } from "@/hooks/dashboard/useWork";
 import Modal from "@/components/Modal";
 
 function TrashContent({ closeModal }: { closeModal: () => void }) {
-  const { selectedWorkForDelete } = useContext(DashboardContext);
+  const { selectedWorkForDelete } = useContext(DashboardContext).deleteModal;
   const { onChangeCategory } = useWork(selectedWorkForDelete);
 
   const handleDelete = () => {
@@ -40,7 +40,7 @@ function TrashContent({ closeModal }: { closeModal: () => void }) {
 }
 
 function DeleteContent({ closeModal }: { closeModal: () => void }) {
-  const { selectedWorkForDelete } = useContext(DashboardContext);
+  const { selectedWorkForDelete } = useContext(DashboardContext).deleteModal;
   const { onDeleteWork } = useWork(selectedWorkForDelete);
 
   const handleDelete = () => {
@@ -74,8 +74,7 @@ export default function DeleteModal() {
     setOpenDeleteModal,
     setSelectedWorkForDelete,
     isPermanentDelete,
-  } = useContext(DashboardContext);
-
+  } = useContext(DashboardContext).deleteModal;
   const closeModal = () => {
     setOpenDeleteModal(false);
     setSelectedWorkForDelete("");

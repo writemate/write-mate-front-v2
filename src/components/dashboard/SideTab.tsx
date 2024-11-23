@@ -19,7 +19,8 @@ import { useContext } from "react";
 import { AddWork } from "./ColoredRoundButtons";
 
 export default function SideTab() {
-  const { onClickAddWorkspace, isAdding } = useContext(DashboardContext);
+  const { onClickAddWorkspace, isAdding } =
+    useContext(DashboardContext).dashboardData;
 
   return (
     <>

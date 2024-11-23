@@ -25,11 +25,9 @@ export default function WorkList({
     isKebabMenuOpenWork,
     handleKebabMenuOpenWork,
     handleEditing,
-    setOpenDeleteModal,
-    setIsDeleting,
-    setIsPermanentDelete,
-    setSelectedWorkForDelete,
-  } = useContext(DashboardContext);
+  } = useContext(DashboardContext).dashboardData;
+  const { setIsPermanentDelete, setSelectedWorkForDelete, setOpenDeleteModal } =
+    useContext(DashboardContext).deleteModal;
   const handleClickOutside = (event: MouseEvent) => {
     if (
       menuRef.current &&

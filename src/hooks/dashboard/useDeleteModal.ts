@@ -1,12 +1,11 @@
 import { deleteWork } from "@/utils/APIs/dashboard";
 import { dashboardQueryKeys } from "@/utils/APIs/queryKeys";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createContext, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { DashboardContext } from "@/hooks/dashboard/dashboard";
 import { notifySuccess } from "@/utils/showToast";
 
 export function useDeleteModal() {
-  const { workCategory } = useContext(DashboardContext);
   const queryClient = useQueryClient();
 
   const [selectedWorkForDelete, setSelectedWorkForDelete] = useState("");
@@ -18,7 +17,10 @@ export function useDeleteModal() {
     mutationFn: (workId: string) => deleteWork(workId),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [dashboardQueryKeys.workStudio(), workCategory],
+        queryKey: [
+          dashboardQueryKeys.workStudio(),
+          useContext(DashboardContext).dashboardData.workCategory,
+        ],
       });
       notifySuccess("작품이 삭제되었습니다.");
     },
