@@ -12,7 +12,7 @@ export const getPlots = async (
   workId: string
 ): Promise<responseGetPlotType> => {
   const response = await axiosInstance.get<responseGetPlotType>(
-    DOMAIN.GET_PLOT(workId)
+    DOMAIN.GET_PLOT_LIST(workId)
   );
 
   return response.data;
@@ -211,7 +211,7 @@ export const addCharacter = async (
   characterId: string
 ): Promise<PlotCharacterType> => {
   const response = await axiosInstance.patch<PlotCharacterType>(
-    DOMAIN.UPDATE_EVENT_CHARACTER(peventId, characterId)
+    DOMAIN.ADD_EVENT_CHARACTER(peventId, characterId)
   );
 
   return response.data;
@@ -225,7 +225,7 @@ export const deleteCharacter = async (
   characterId: string
 ): Promise<void> => {
   const response = await axiosInstance.delete<void>(
-    DOMAIN.UPDATE_EVENT_CHARACTER(peventId, characterId)
+    DOMAIN.DELETE_EVENT_CHARACTER(peventId, characterId)
   );
 
   return response.data;

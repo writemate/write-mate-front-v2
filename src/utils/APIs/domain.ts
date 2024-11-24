@@ -9,13 +9,27 @@ export const DOMAIN = {
   ) => `/api/works?category=${category}`,
   CREATE_WORK: "/api/works",
   GET_WORK: (workId: string) => `/api/works/${workId}`,
+  DELETE_WORK: (workId: string) => `/api/works/${workId}`,
   UPDATE_WORK_CATEGORY: (workId: string) => `/api/works/${workId}/category`,
   UPDATE_WORK_TITLE: (workId: string) => `/api/works/${workId}/title`,
   UPDATE_WORK_COVER: (workId: string) => `/api/works/${workId}/cover`,
-  DELETE_WORK: (workId: string) => `/api/works/${workId}`,
+  UPDATE_WORK_LOGLINE: (workId: string) => `/api/works/${workId}/logline`,
+  UPDATE_WORK_GENRE: (workId: string) => `/api/works/${workId}/genre`,
+  UPDATE_WORK_QUANTITY: (workId: string) => `/api/works/${workId}/quantity`,
+  UPDATE_WORK_INTRODUCTION: (workId: string) => `/api/works/${workId}/introduction`,
+  UPDATE_WORK_GRADE: (workId: string) => `/api/works/${workId}/grade`,
 
-  GET_PLOT: (workId: string) => `/api/works/${workId}/plots`,
+  GET_PLOT_LIST: (workId: string) => `/api/works/${workId}/plotlist`,
+  UPDATE_PLOT_LIST: (workId: string) => `/api/works/${workId}/plotlist`,
+  GET_SCRIPT_LIST: (workId: string) => `/api/works/${workId}/scriptlist`,
+  UPDATE_SCRIPT_LIST: (workId: string) => `/api/works/${workId}/scriptlist`,
 
+  CREATE_PLOT: (workId: string) => `/api/plots`,
+  DELETE_PLOT: (plotId: string) => `/api/plots/${plotId}`,
+  UPDATE_PLOT_NAME: (plotId: string) => `/api/plots/${plotId}/name`,
+  SET_MAIN_PLOT: (plotId: string) => `/api/plots/${plotId}/main`,
+  
+  GET_CHAPTER_WITH_EVENTS: (plotId: string) => `/api/plots/${plotId}`,
   CREATE_CHAPTER: (plotId: string) => `/api/plots/${plotId}/plots`,
   DELETE_CHAPTER: (plotId: string, chapterId: string) =>
     `/api/plots/${plotId}/chapters/${chapterId}`,
@@ -35,7 +49,9 @@ export const DOMAIN = {
     `/api/pevents/${peventId}/description`,
   UPDATE_EVENT_ORDER: (peventId: string) => `/api/pevents/${peventId}/order`,
 
-  UPDATE_EVENT_CHARACTER: (peventId: string, characterId: string) =>
+  ADD_EVENT_CHARACTER: (peventId: string, characterId: string) =>
+    `/api/pevents/${peventId}/character/${characterId}`,
+  DELETE_EVENT_CHARACTER: (peventId: string, characterId: string) =>
     `/api/pevents/${peventId}/character/${characterId}`,
 
   GET_MEMO_LIST: `/api/memos`,
