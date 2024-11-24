@@ -50,7 +50,7 @@ function Memo({ closeModal }: { closeModal: () => void }) {
             defaultValue={selectedMemo.memo_description}
             onChange={onChangeSelectedMemoDescription}
             cacheMeasurements
-            minRows={20}
+            minRows={10}
             placeholder="메모 내용을 입력하세요"
           />
           <MemoModalButtonContainer>

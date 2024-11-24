@@ -6,7 +6,7 @@ import { workspaceCategory } from "@/utils/APIs/types";
 import { usePathname } from "next/navigation";
 import { notifySuccess } from "@/utils/showToast";
 import useIdeaBox from "@/hooks/dashboard/useIdeaBox";
-import useOpenAndCloseDeleteConfirmation from "./useDeleteModal";
+import useOpenAndCloseDeleteConfirmation from "./useDeleteConfirmModal";
 import useMemoModal from "./useMemoModal";
 
 export function useWorkstudioAndTrash() {
@@ -19,13 +19,11 @@ export function useWorkstudioAndTrash() {
     // 작품 카테고리
     keyof typeof workspaceCategory
   >(() => {
-    if (typeof window !== "undefined") {
-      const category = localStorage.getItem("workCategory");
-      return category
-        ? (category as keyof typeof workspaceCategory)
-        : "ongoing";
-    }
-    return "ongoing";
+    if (typeof window === "undefined") return "ongoing";
+    if (!localStorage.getItem("workCategory")) return "ongoing";
+    return localStorage.getItem(
+      "workCategory"
+    ) as keyof typeof workspaceCategory;
   });
   const { data, error, isLoading } = useQuery({
     queryKey: [dashboardQueryKeys.workStudio(), workCategory],

@@ -11,23 +11,18 @@ import {
 } from "@/utils/APIs/memo";
 import { debounce } from "@/utils";
 import { notifySuccess } from "@/utils/showToast";
-import useMemoModal from "./useMemoModal";
 
 export default function useIdeaBox() {
   const queryClient = useQueryClient();
-  const [memoList, setMemoList] = useState<TMemo[]>([]);
-
   const [ideaCategory, setIdeaCategory] = useState<
     keyof typeof ideaBoxCategory
   >(() => {
-    if (typeof window !== "undefined") {
-      const category = localStorage.getItem("ideaCategory");
-      return category
-        ? (category as (typeof ideaBoxCategory)[keyof typeof ideaBoxCategory])
-        : "memo";
-    }
-    return "memo";
+    if (typeof window == "undefined") return "memo";
+    if (!localStorage.getItem("ideaCategory")) return "memo";
+    return localStorage.getItem("ideaCategory") as keyof typeof ideaBoxCategory;
   });
+  const [memoList, setMemoList] = useState<TMemo[]>([]);
+
   const { data, error, isLoading } = useQuery({
     queryKey: memoQueryKeys.memoList(),
     queryFn: getMemoList,
