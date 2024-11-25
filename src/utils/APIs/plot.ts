@@ -8,7 +8,7 @@ import { PlotCharacterType, responseGetPlotType } from "./mock/plot";
  * @param workId
  * @returns chapter[]
  */
-export const getPlots = async (
+export const getPlotList = async (
   workId: string
 ): Promise<responseGetPlotType> => {
   const response = await axiosInstance.get<responseGetPlotType>(

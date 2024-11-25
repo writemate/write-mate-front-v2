@@ -18,8 +18,7 @@ export const EventList = ({ pevent }: EventListProps) => {
     setItems: setEventList,
     handleDragAndDrop,
   } = useDragAndDrop<PlotEventType>({
-    initialItems: pevent,
-    mutationFn: async ({ itemId, pre_idx, next_idx }) =>
+    mutationOrderFn: async ({ itemId, pre_idx, next_idx }) =>
       mutateEventO({ peventId: itemId, pre_idx, next_idx }),
   });
 
