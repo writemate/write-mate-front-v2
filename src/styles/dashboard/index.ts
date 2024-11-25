@@ -20,7 +20,7 @@ export const DashboardContainer = styled.div`
   padding: 16px 28px;
   width: 100%;
   height: 100%;
-  background-color: #fdefe7;
+  background-color: ${({ theme }) => theme.color.orange100};
   z-index: 0;
 `;
 
@@ -40,7 +40,8 @@ export const FooterContainer = styled.div<{ $isActivated?: boolean }>`
   align-items: center;
   gap: 8px;
   padding: 11px;
-  color: #939393;
+  color: ${({ $isActivated, theme }) =>
+    $isActivated ? theme.color.orange400 : theme.color.gray300};
 
   &:hover::after {
     ${HighlghtCssForHoberAfter}
@@ -56,7 +57,7 @@ export const HeaderAndMainContainer = styled.div`
   ${FlexColumnCenter}
   flex-grow: 1;
   height: 100%;
-  background-color: #ffffff;
+  background-color: ${({ theme }) => theme.color.white};
   filter: drop-shadow(-2px 2px 5px rgba(0, 0, 0, 0.08));
   border-radius: 0px 12px 12px 12px;
   padding: 17px 20px;

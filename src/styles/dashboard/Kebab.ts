@@ -1,6 +1,6 @@
 "use client";
 import { clickable, Button } from "@/styles";
-import { styled, css } from "styled-components";
+import { styled } from "styled-components";
 export const KebabContainer = styled.div`
   position: absolute;
   top: 110%;
@@ -13,7 +13,7 @@ export const KebabContainer = styled.div`
   align-items: center;
 
   border-radius: 8px;
-  background: var(--white, #fff);
+  background: ${({ theme }) => theme.color.white};
   box-shadow: 0px 0px 8px 0px rgba(30, 33, 43, 0.2);
 
   z-index: 10000;
@@ -40,12 +40,10 @@ export const KebabItem = styled(Button)<{
     $isMajor ? theme.color.red600 : theme.color.black};
   text-align: center;
 
-  /* Writemate_MVP2/B6_R_13 */
-  font-family: Pretendard;
   font-size: 13px;
   font-style: normal;
   font-weight: 400;
-  line-height: 135%; /* 17.55px */
+  line-height: 135%;
 
   &:hover {
     background: ${({ theme, $isMajor }) =>

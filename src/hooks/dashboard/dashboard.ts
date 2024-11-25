@@ -1,24 +1,20 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { dashboardQueryKeys } from "@/utils/APIs/queryKeys";
-import {
-  getWorkStudio,
-  addWorkStudio,
-  deleteWork,
-} from "@/utils/APIs/dashboard";
+import { getWorkStudio, addWorkStudio } from "@/utils/APIs/dashboard";
 import { createContext, useEffect, useState } from "react";
 import { workspaceCategory } from "@/utils/APIs/types";
 import { usePathname } from "next/navigation";
-import useToast from "@/hooks/useToastNotification";
+import { notifySuccess } from "@/utils/showToast";
+import useIdeaBox from "@/hooks/dashboard/useIdeaBox";
+import useOpenAndCloseDeleteConfirmation from "./useDeleteModal";
+import useMemoModal from "./useMemoModal";
 
-export function useDashboardData() {
-  const { notifyPositive } = useToast();
+export function useWorkstudioAndTrash() {
   const queryClient = useQueryClient();
   const pathname = usePathname();
   const [isKebabMenuOpenWork, setIsKebabMenuOpenWork] = useState(""); // 어떤 케밥이 열려있는지 확인용
   const [isEditing, setIsEditing] = useState(""); // 어떤 작품이 수정중인지 확인용
-  const [isDeleting, setIsDeleting] = useState(""); // 어떤 작품이 삭제중인지 확인용
-  const [openDeleteModal, setOpenDeleteModal] = useState(false); // 삭제 모달 오픈 여부
-  const [isPermanentDelete, setIsPermanentDelete] = useState(false); // 영구 삭제 여부
+
   const [workCategory, setWorkCategory] = useState<
     // 작품 카테고리
     keyof typeof workspaceCategory
@@ -41,16 +37,7 @@ export function useDashboardData() {
       queryClient.invalidateQueries({
         queryKey: [dashboardQueryKeys.workStudio(), workCategory],
       });
-      notifyPositive("작품이 추가되었습니다.");
-    },
-  });
-  const { mutate: onDeleteWork } = useMutation({
-    mutationFn: (workId: string) => deleteWork(workId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [dashboardQueryKeys.workStudio(), workCategory],
-      });
-      notifyPositive("작품이 삭제되었습니다.");
+      notifySuccess("작품이 추가되었습니다.");
     },
   });
 
@@ -89,22 +76,22 @@ export function useDashboardData() {
     error,
     isEditing,
     isKebabMenuOpenWork,
-    isDeleting,
     isLoading,
     isAdding,
-    isPermanentDelete,
-    openDeleteModal,
     handleWorkCategoryChange,
     handleKebabMenuOpenWork,
     handleEditing,
     onClickAddWorkspace,
-    setOpenDeleteModal,
-    setIsDeleting,
-    setIsPermanentDelete,
-    onDeleteWork,
   };
 }
 
 export const DashboardContext = createContext(
-  {} as ReturnType<typeof useDashboardData>
+  {} as {
+    workstudioAndTrash: ReturnType<typeof useWorkstudioAndTrash>;
+    ideaBox: ReturnType<typeof useIdeaBox>;
+    removeConfirmationModal: ReturnType<
+      typeof useOpenAndCloseDeleteConfirmation
+    >;
+    memoModal: ReturnType<typeof useMemoModal>;
+  }
 );

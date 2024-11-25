@@ -16,10 +16,11 @@ import InactiveTrash from "@/assets/dashboard/sideTab/inactive/trash.svg";
 import { DashboardContext } from "@/hooks/dashboard/dashboard";
 import { usePathname } from "next/navigation";
 import { useContext } from "react";
-import { AddWork } from "./ColoredRoundButtons";
+import { AddWork } from "./ReusedButtons";
 
 export default function SideTab() {
-  const { onClickAddWorkspace, isAdding } = useContext(DashboardContext);
+  const { onClickAddWorkspace, isAdding } =
+    useContext(DashboardContext).workstudioAndTrash;
 
   return (
     <>

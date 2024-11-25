@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { dashboardQueryKeys, workspaceQueryKeys } from "@/utils/APIs/queryKeys";
+import { dashboardQueryKeys } from "@/utils/APIs/queryKeys";
 import {
   deleteWork,
   updateWorkCategory,
@@ -9,22 +9,24 @@ import {
 import { useContext, useEffect, useRef, useState } from "react";
 import { DashboardContext } from "./dashboard";
 import { TWork, workspaceCategory } from "@/utils/APIs/types";
-import useToast from "@/hooks/useToastNotification";
+import { notifySuccess, notifyError } from "@/utils/showToast";
 
-export function useWork(workId: string) {
-  const { notifyPositive, notifyNegative } = useToast();
-  const { handleEditing, data, workCategory } = useContext(DashboardContext);
+export default function useWork(workId: string) {
+  const { handleEditing, data, workCategory, handleKebabMenuOpenWork } =
+    useContext(DashboardContext).workstudioAndTrash;
 
   const queryClient = useQueryClient();
-  const menuRef = useRef<HTMLDivElement | null>(null);
-  const excludeButtonRef = useRef<HTMLDivElement | null>(null);
-  let file: File | null = null;
   const [work, setWork] = useState<TWork | undefined>(() =>
     data?.find((work) => work.id === workId)
   );
   const [toBeCategory, setToBeCategory] = useState<
     keyof typeof workspaceCategory
   >(workspaceCategory.trash); // 이거 deleteModal에서 동작이 이상해서 trash로 설정해놓음
+
+  let file: File | null = null;
+  const menuRef = useRef<HTMLDivElement | null>(null);
+  const excludeButtonRef = useRef<HTMLDivElement | null>(null);
+  const ref = useRef<HTMLInputElement>(null);
 
   const { mutate: mutateTitle } = useMutation({
     mutationFn: () => {
@@ -47,7 +49,7 @@ export function useWork(workId: string) {
       queryClient.invalidateQueries({
         queryKey: [dashboardQueryKeys.workStudio(), workCategory],
       });
-      notifyPositive("이미지가 변경되었습니다.");
+      notifySuccess("커버가 변경되었습니다.");
     },
   });
   const { mutate: mutateCategory } = useMutation({
@@ -60,7 +62,7 @@ export function useWork(workId: string) {
       queryClient.invalidateQueries({
         queryKey: [dashboardQueryKeys.workStudio(), workCategory],
       });
-      notifyPositive("카테고리가 변경되었습니다.");
+      notifySuccess("카테고리가 변경되었습니다.");
     },
   });
   const { mutate: onDeleteWork } = useMutation({
@@ -72,7 +74,7 @@ export function useWork(workId: string) {
       queryClient.invalidateQueries({
         queryKey: [dashboardQueryKeys.workStudio(), workCategory],
       });
-      notifyNegative("작품이 삭제되었습니다.");
+      notifyError("작품이 삭제되었습니다.");
     },
   });
 
@@ -83,14 +85,13 @@ export function useWork(workId: string) {
       title: e.target.value,
     });
   };
-
   const onBlurTitle = () => {
     if (!work) return;
     setWork({
       ...work,
     });
     mutateTitle();
-    notifyPositive("제목이 변경되었습니다.");
+    notifySuccess("제목이 변경되었습니다.");
     handleEditing("");
   };
   const onKeyDownTitle = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -113,7 +114,66 @@ export function useWork(workId: string) {
     mutateCategory();
   };
 
+  const onClickChangeTitle =
+    (inputRef: React.RefObject<HTMLInputElement>) =>
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      if (work) {
+        handleEditing(work.id);
+        inputRef.current?.focus();
+      }
+    };
+  const onClickChangeCover = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    ref.current?.click();
+  };
+  const onClickChangeCategory =
+    (category: keyof typeof workspaceCategory) =>
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      onChangeCategory(category);
+    };
+
+  const onClickChangeCoverInput = (
+    event: React.MouseEvent<HTMLInputElement>
+  ) => {
+    event.stopPropagation();
+  };
+  const onChangeCoverInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    onChangeCover(event);
+  };
+
+  const handleClickOutside =
+    (
+      menuRef: React.RefObject<HTMLElement>,
+      excludeButtonRef: React.RefObject<HTMLElement>
+    ) =>
+    (event: MouseEvent) => {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(event.target as Node) &&
+        excludeButtonRef.current &&
+        !excludeButtonRef.current.contains(event.target as Node)
+      ) {
+        handleKebabMenuOpenWork("");
+      }
+    };
+
+  useEffect(() => {
+    document.addEventListener(
+      "mousedown",
+      handleClickOutside(menuRef, excludeButtonRef)
+    );
+    return () => {
+      document.removeEventListener(
+        "mousedown",
+        handleClickOutside(menuRef, excludeButtonRef)
+      );
+    };
+  }, []);
   return {
+    ref,
     work,
     menuRef,
     excludeButtonRef,
@@ -123,5 +183,10 @@ export function useWork(workId: string) {
     onChangeCover,
     onChangeCategory,
     onDeleteWork,
+    onClickChangeCover,
+    onClickChangeTitle,
+    onClickChangeCategory,
+    onClickChangeCoverInput,
+    onChangeCoverInput,
   };
 }

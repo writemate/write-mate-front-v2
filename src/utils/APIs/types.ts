@@ -24,6 +24,7 @@ export type TMemo = {
   id: string;
   memo_name: string;
   memo_description: string;
+  updatedAt: string;
 };
 
 export interface TFile {

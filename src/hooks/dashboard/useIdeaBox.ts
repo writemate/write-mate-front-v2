@@ -1,33 +1,45 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { memoQueryKeys } from "@/utils/APIs/queryKeys";
-import {
-  getMemoList,
-  updateMemoDescription,
-  updaetMemoName,
-  deleteMemo,
-  createMemo,
-} from "@/utils/APIs/memo";
 import { useCallback, useEffect, useState } from "react";
-import { TMemo } from "@/utils/APIs/types";
+import { ideaBoxCategory, TMemo } from "@/utils/APIs/types";
+import {
+  createMemo,
+  deleteMemo,
+  getMemoList,
+  updaetMemoName,
+  updateMemoDescription,
+} from "@/utils/APIs/memo";
 import { debounce } from "@/utils";
+import { notifySuccess } from "@/utils/showToast";
+import useMemoModal from "./useMemoModal";
 
-export function useMemo() {
+export default function useIdeaBox() {
   const queryClient = useQueryClient();
-  const [openModal, setOpenModal] = useState(false);
   const [memoList, setMemoList] = useState<TMemo[]>([]);
 
+  const [ideaCategory, setIdeaCategory] = useState<
+    keyof typeof ideaBoxCategory
+  >(() => {
+    if (typeof window !== "undefined") {
+      const category = localStorage.getItem("ideaCategory");
+      return category
+        ? (category as (typeof ideaBoxCategory)[keyof typeof ideaBoxCategory])
+        : "memo";
+    }
+    return "memo";
+  });
   const { data, error, isLoading } = useQuery({
     queryKey: memoQueryKeys.memoList(),
     queryFn: getMemoList,
   });
-  const {
-    mutate: createMemoMutation,
-    isPending: isCreating,
-    mutateAsync: createMemoAsync,
-  } = useMutation({
+  const { mutate: createMemoMutation, isPending: isCreating } = useMutation({
     mutationFn: createMemo,
-    onSuccess: () => {
+    onSuccess: (createdId) => {
+      if (createdId) {
+        console.log("Created Memo ID:", createdId); // 메모 ID 출력
+      }
       queryClient.invalidateQueries({ queryKey: memoQueryKeys.memoList() });
+      notifySuccess("메모가 생성되었습니다.");
     },
   });
   const { mutate: updateMemoNameMutation, isPending: isUpdatingName } =
@@ -61,15 +73,13 @@ export function useMemo() {
     debounce(updateMemoDescriptionMutation, 500),
     [data]
   );
+
   const onClickCreateMemo = () => {
     createMemoMutation();
   };
   const onClickDeleteMemo = (id: string) => () => {
     if (!window.confirm("정말로 삭제하시겠습니까?")) return;
     deleteMemoMutation(id);
-  };
-  const onClickOpenModal = () => {
-    setOpenModal(true);
   };
   const onChangeMemoName =
     (id: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -89,16 +99,18 @@ export function useMemo() {
         )
       );
     };
-  const onChangeMemoStart = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const memoId = await createMemoAsync();
-    updateMemoDescriptionMutation({
-      id: memoId,
-      memo_description: event.target.value,
-    });
-  };
 
+  function handleIdeaCategoryChange(
+    category: (typeof ideaBoxCategory)[keyof typeof ideaBoxCategory]
+  ) {
+    setIdeaCategory(category);
+  }
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("ideaCategory", ideaCategory);
+    }
+  }, [ideaCategory]);
   useEffect(() => {
     if (data) {
       setMemoList(data);
@@ -106,6 +118,7 @@ export function useMemo() {
   }, [data]);
 
   return {
+    ideaCategory,
     memoList,
     error,
     isLoading,
@@ -113,10 +126,11 @@ export function useMemo() {
     isUpdatingName,
     isUpdatingDescription,
     isDeleting,
+    setMemoList,
     onClickCreateMemo,
     onClickDeleteMemo,
     onChangeMemoName,
     onChangeMemoDescription,
-    onChangeMemoStart,
+    handleIdeaCategoryChange,
   };
 }
