@@ -16,11 +16,6 @@ import { DashboardContext } from "@/hooks/dashboard/dashboard";
 export default function MemoModal() {
   const { isOpenEditModal, closeMemoModal } =
     useContext(DashboardContext).memoModal;
-
-  useEffect(() => {
-    console.log("MemoModal", isOpenEditModal);
-  }, [isOpenEditModal]);
-
   return (
     <>
       {isOpenEditModal && (

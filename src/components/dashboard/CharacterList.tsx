@@ -54,7 +54,7 @@ function AddMemo() {
 
   return (
     <AddMemoButton
-      isEmpty={memoCharacterList.length === 0}
+      $isEmpty={memoCharacterList.length === 0}
       onClick={onClickAddMemo}
     >
       인물 메모 추가

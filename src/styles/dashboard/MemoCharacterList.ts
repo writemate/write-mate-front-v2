@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-export const AddMemoButton = styled.button<{ isEmpty?: boolean }>`
+export const AddMemoButton = styled.button<{ $isEmpty?: boolean }>`
   position: fixed;
   left: calc(50% - 88.5px);
-  bottom: ${({ isEmpty }) => (isEmpty ? "calc(50% - 120px)" : "50px")};
+  bottom: ${({ $isEmpty }) => ($isEmpty ? "calc(50% - 120px)" : "50px")};
 
   width: 100%;
   padding: 12px;
