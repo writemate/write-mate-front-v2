@@ -8,7 +8,7 @@ import TextareaAutosize from 'react-textarea-autosize';
 
 export const IdeaBoxContainer = styled.div`
   ${FlexColumnCenter}
-  width: 309px;
+  width: 309px; //수정 시 workspace/index.ts의 MainContainer padding-right 수정 필요
   height: 100%;
   border-left: 1px solid #D7DCE7;
   background-color: #ffffff;
