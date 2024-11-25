@@ -61,11 +61,11 @@ export const CopyButton = styled(Copy)`
   ${clickable}
 `;
 
-export const AddMemoButton = styled.button`
+export const AddMemoButton = styled.button<{ isEmpty?: boolean }>`
   ${clickable}
   position: fixed;
   left: calc(50% - 88.5px);
-  bottom: 50px;
+  bottom: ${({ isEmpty }) => (isEmpty ? "calc(50% - 120px)" : "50px")};
 
   width: 100%;
   padding: 12px;
@@ -74,8 +74,6 @@ export const AddMemoButton = styled.button`
   border-radius: 100px;
   background: ${({ theme }) => theme.color.gray300};
   border: none;
-
-  box-shadow: 0px 0px 8px 0px rgba(255, 84, 0, 0.2);
 
   color: ${({ theme }) => theme.color.white};
   font-family: Pretendard;
@@ -98,9 +96,11 @@ export const OpenButton = styled(OpenModal)`
 `;
 
 export const MemoListContainer = styled.div`
+  position: relative;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   align-items: start;
+  justify-content: start;
   gap: 16px;
   padding: 16px;
   padding-bottom: 100px;
@@ -183,13 +183,17 @@ export const MemoModalContainer = styled.div`
     align-self: center;
     flex-shrink: 0;
     font-size: 14px;
-    padding: 8px 8px;
   }
 `;
 
 export const MemoModalButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
+`;
+
+export const MemoModalBottom = styled.div`
+  ${FlexRowSpaceBetween}
   width: 100%;
   padding: 8px;
+  border-top: 1px solid ${({ theme }) => theme.color.gray200};
 `;

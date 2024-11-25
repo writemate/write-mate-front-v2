@@ -113,14 +113,51 @@ function ConfirmDeleteMemoModal({ closeModal }: { closeModal: () => void }) {
   );
 }
 
+function ConfirmDeleteMemoCharacterModal({
+  closeModal,
+}: {
+  closeModal: () => void;
+}) {
+  const { onDeleteMemo } = useContext(DashboardContext).memoCharacterModal;
+
+  const onClickConfirmDelete = () => {
+    onDeleteMemo();
+    closeModal();
+  };
+  const onClickCancel = () => {
+    closeModal();
+  };
+
+  return (
+    <ModalContainer>
+      <DangerIcon />
+      <p>
+        해당 인물 메모를 삭제하시겠습니까?
+        <br />
+        삭제된 데이터는 복구가 어렵습니다.
+      </p>
+      <ButtonContainer>
+        <ModalButton $isDanger={true} onClick={onClickConfirmDelete}>
+          삭제
+        </ModalButton>
+        <ModalButton $isDanger={false} onClick={onClickCancel}>
+          취소
+        </ModalButton>
+      </ButtonContainer>
+    </ModalContainer>
+  );
+}
+
 export default function DeleteModal() {
   const {
     openDeleteModal,
     selectedWorkForDelete,
     selectedMemoForDelete,
+    selectedMemoCharacterForDelete,
     setOpenDeleteModal,
     setSelectedWorkForDelete,
     setSelectedMemoForDelete,
+    setSelectedMemoCharacterForDelete,
     isPermanentDelete,
   } = useContext(DashboardContext).removeConfirmationModal;
 
@@ -128,6 +165,7 @@ export default function DeleteModal() {
     setOpenDeleteModal(false);
     setSelectedWorkForDelete("");
     setSelectedMemoForDelete("");
+    setSelectedMemoCharacterForDelete("");
   };
 
   return (
@@ -143,6 +181,9 @@ export default function DeleteModal() {
             )}
             {selectedMemoForDelete != "" && (
               <ConfirmDeleteMemoModal closeModal={closeModal} />
+            )}
+            {selectedMemoCharacterForDelete != "" && (
+              <ConfirmDeleteMemoCharacterModal closeModal={closeModal} />
             )}
           </>
         </Modal>

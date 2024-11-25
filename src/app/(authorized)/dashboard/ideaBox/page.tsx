@@ -8,7 +8,7 @@ import { DashboardContext } from "@/hooks/dashboard/dashboard";
 import CharacterList from "@/components/dashboard/CharacterList";
 
 export default function Dashboard() {
-  const { ideaCategory } = useContext(DashboardContext).ideaBox;
+  const { ideaCategory } = useContext(DashboardContext).ideaBoxMemo;
 
   return (
     <TitleAndWorkListContainer>

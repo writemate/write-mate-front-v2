@@ -12,22 +12,26 @@ import {
 import { debounce } from "@/utils";
 import { notifySuccess } from "@/utils/showToast";
 
-export default function useIdeaBox() {
+export default function useIdeaBoxMemo() {
   const queryClient = useQueryClient();
+  const [memoList, setMemoList] = useState<TMemo[]>([]);
+
   const [ideaCategory, setIdeaCategory] = useState<
     keyof typeof ideaBoxCategory
   >(() => {
-    if (typeof window == "undefined") return "memo";
+    if (typeof window === "undefined") return "memo";
     if (!localStorage.getItem("ideaCategory")) return "memo";
     return localStorage.getItem("ideaCategory") as keyof typeof ideaBoxCategory;
   });
-  const [memoList, setMemoList] = useState<TMemo[]>([]);
-
   const { data, error, isLoading } = useQuery({
     queryKey: memoQueryKeys.memoList(),
     queryFn: getMemoList,
   });
-  const { mutate: createMemoMutation, isPending: isCreating } = useMutation({
+  const {
+    mutate: createMemoMutation,
+    isPending: isCreating,
+    mutateAsync: createMemoMutateAsync,
+  } = useMutation({
     mutationFn: createMemo,
     onSuccess: (createdId) => {
       if (createdId) {
@@ -68,7 +72,6 @@ export default function useIdeaBox() {
     debounce(updateMemoDescriptionMutation, 500),
     [data]
   );
-
   const onClickCreateMemo = () => {
     createMemoMutation();
   };
@@ -112,6 +115,18 @@ export default function useIdeaBox() {
     }
   }, [data]);
 
+  async function getNewlyCreatedMemo() {
+    const createdMemoId = await createMemoMutateAsync();
+    if (!createdMemoId) return null;
+    const newMemo: TMemo = {
+      id: createdMemoId,
+      memo_name: "",
+      memo_description: "",
+      updatedAt: new Date().toISOString(),
+    };
+    return newMemo;
+  }
+
   return {
     ideaCategory,
     memoList,
@@ -127,5 +142,6 @@ export default function useIdeaBox() {
     onChangeMemoName,
     onChangeMemoDescription,
     handleIdeaCategoryChange,
+    getNewlyCreatedMemo,
   };
 }

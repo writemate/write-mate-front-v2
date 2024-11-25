@@ -27,6 +27,18 @@ export type TMemo = {
   updatedAt: string;
 };
 
+export type TMemoCharacter = {
+  id: string;
+  ch_name: string;
+  ch_image: string;
+  description: string;
+  role: string;
+  gender: string;
+  birthday: string;
+  characteristic: Array<{ title: string; content: string }>;
+  updatedAt: string;
+};
+
 export interface TFile {
   _id: string;
   isFolder: false;

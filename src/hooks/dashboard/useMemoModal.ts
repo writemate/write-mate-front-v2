@@ -104,16 +104,6 @@ export default function useMemoModal() {
     setOpenEditModal(false);
     setSelectedMemo(null);
   }
-  function openNewMemoEditModal() {
-    const memoList = queryClient.getQueryData<TMemo[]>(
-      memoQueryKeys.memoList()
-    );
-    if (!memoList) return;
-    const memo = memoList[0];
-    setSelectedMemo(memo);
-    focusInput(descriptionRef);
-    setOpenEditModal(true);
-  }
 
   return {
     openEditModal,
@@ -124,7 +114,6 @@ export default function useMemoModal() {
     onChangeSelectedMemoName,
     onChangeSelectedMemoDescription,
     onKeyDownTitle,
-    openNewMemoEditModal,
     onDeleteMemo,
   };
 }

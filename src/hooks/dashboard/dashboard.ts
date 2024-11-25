@@ -5,9 +5,11 @@ import { createContext, useEffect, useState } from "react";
 import { workspaceCategory } from "@/utils/APIs/types";
 import { usePathname } from "next/navigation";
 import { notifySuccess } from "@/utils/showToast";
-import useIdeaBox from "@/hooks/dashboard/useIdeaBox";
+import useIdeaBoxMemo from "@/hooks/dashboard/useIdeaBoxMemo";
 import useOpenAndCloseDeleteConfirmation from "./useDeleteConfirmModal";
 import useMemoModal from "./useMemoModal";
+import useIdeaBoxMemoCharacter from "./useIdeaBoxMemoCharacter";
+import useMemoCharacterModal from "./useMemoCharacterModal";
 
 export function useWorkstudioAndTrash() {
   const queryClient = useQueryClient();
@@ -86,10 +88,12 @@ export function useWorkstudioAndTrash() {
 export const DashboardContext = createContext(
   {} as {
     workstudioAndTrash: ReturnType<typeof useWorkstudioAndTrash>;
-    ideaBox: ReturnType<typeof useIdeaBox>;
+    ideaBoxMemo: ReturnType<typeof useIdeaBoxMemo>;
+    ideaBoxMemoCharacter: ReturnType<typeof useIdeaBoxMemoCharacter>;
     removeConfirmationModal: ReturnType<
       typeof useOpenAndCloseDeleteConfirmation
     >;
     memoModal: ReturnType<typeof useMemoModal>;
+    memoCharacterModal: ReturnType<typeof useMemoCharacterModal>;
   }
 );

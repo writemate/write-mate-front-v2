@@ -10,7 +10,8 @@ import {
 import { useContext } from "react";
 
 export default function MemoItem({ memoId }: { memoId: string }) {
-  const { memoList, error, isLoading } = useContext(DashboardContext).ideaBox;
+  const { memoList, error, isLoading } =
+    useContext(DashboardContext).ideaBoxMemo;
   const { selectedMemo, onClickMemoTitle, onClickMemoContent } =
     useContext(DashboardContext).memoModal;
 
