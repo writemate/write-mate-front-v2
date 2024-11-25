@@ -1,6 +1,6 @@
 import axiosInstance from "./axiosInstance";
 import { DOMAIN } from "./domain";
-import { TMemo, TMemoCharacter } from "./types";
+import { TMemo, TMCharacter } from "./types";
 
 /*
  * 메모
@@ -45,23 +45,23 @@ export const updateMemoDescription = async ({
  * 메모 캐릭터
  */
 
-export const getMemoCharacterList = async () => {
-  const response = await axiosInstance.get<TMemoCharacter[]>(
+export const getMCharacterList = async () => {
+  const response = await axiosInstance.get<TMCharacter[]>(
     DOMAIN.GET_MEMO_CHARACTER_LIST
   );
   return response.data;
 };
 
-export const createMemoCharacter = async () => {
+export const createMCharacter = async () => {
   const response = await axiosInstance.post(DOMAIN.CREATE_MEMO_CHARACTER);
   return response.data;
 };
 
-export const deleteMemoCharacter = async (id: string) => {
+export const deleteMCharacter = async (id: string) => {
   await axiosInstance.delete(DOMAIN.DELETE_MEMO_CHARACTER(id));
 };
 
-export const updateMemoCharacterName = async ({
+export const updateMCharacterName = async ({
   id,
   ch_name,
 }: {
@@ -71,7 +71,7 @@ export const updateMemoCharacterName = async ({
   await axiosInstance.patch(DOMAIN.UPDATE_MEMO_CHARACTER_NAME(id), { ch_name });
 };
 
-export const updateMemoCharacterImage = async ({
+export const updateMCharacterImage = async ({
   id,
   ch_image,
 }: {
@@ -83,7 +83,7 @@ export const updateMemoCharacterImage = async ({
   });
 };
 
-export const updateMemoCharacterDescription = async ({
+export const updateMCharacterDescription = async ({
   id,
   description,
 }: {
@@ -95,7 +95,7 @@ export const updateMemoCharacterDescription = async ({
   });
 };
 
-export const updateMemoCharacterRole = async ({
+export const updateMCharacterRole = async ({
   id,
   role,
 }: {
@@ -105,7 +105,7 @@ export const updateMemoCharacterRole = async ({
   await axiosInstance.patch(DOMAIN.UPDATE_MEMO_CHARACTER_ROLE(id), { role });
 };
 
-export const updateMemoCharacterGender = async ({
+export const updateMCharacterGender = async ({
   id,
   gender,
 }: {
@@ -117,7 +117,7 @@ export const updateMemoCharacterGender = async ({
   });
 };
 
-export const updateMemoCharacterBirthday = async ({
+export const updateMCharacterBirthday = async ({
   id,
   birthday,
 }: {
@@ -129,7 +129,7 @@ export const updateMemoCharacterBirthday = async ({
   });
 };
 
-export const createMemoCharacterCharacteristic = async ({
+export const createMCharacterCharacteristic = async ({
   id,
   characteristic,
 }: {
@@ -141,7 +141,7 @@ export const createMemoCharacterCharacteristic = async ({
   });
 };
 
-export const deleteMemoCharacterCharacteristic = async ({
+export const deleteMCharacterCharacteristic = async ({
   id,
   characteristicId,
 }: {
@@ -153,7 +153,7 @@ export const deleteMemoCharacterCharacteristic = async ({
   );
 };
 
-export const updateMemoCharacterCharacteristicTitle = async ({
+export const updateMCharacterCharacteristicTitle = async ({
   id,
   characteristicId,
   title,
@@ -168,7 +168,7 @@ export const updateMemoCharacterCharacteristicTitle = async ({
   );
 };
 
-export const updateMemoCharacterCharacteristicContent = async ({
+export const updateMCharacterCharacteristicContent = async ({
   id,
   characteristicId,
   content,

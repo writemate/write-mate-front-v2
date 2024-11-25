@@ -1,14 +1,13 @@
 "use Client";
-
 import { DashboardContext } from "@/hooks/dashboard/dashboard";
 import { LoadingMessage } from "@/styles/dashboard/Loading";
-import { AddMemoButton } from "@/styles/dashboard/MemoCharacterList";
-import { TMemoCharacter } from "@/utils/APIs/types";
+import { AddMemoButton } from "@/styles/dashboard/MCharacterList";
+import { TMCharacter } from "@/utils/APIs/types";
 import { useContext } from "react";
 
 export default function CharacterList() {
   const { memoCharacterList, error, isLoading } =
-    useContext(DashboardContext).ideaBoxMemoCharacter;
+    useContext(DashboardContext).ideaBoxMCharacter;
 
   return (
     <div>
@@ -27,29 +26,27 @@ export default function CharacterList() {
 }
 
 interface MemoItemProps {
-  character: TMemoCharacter;
+  character: TMCharacter;
 }
 
 function MemoItem({ character }: MemoItemProps) {
-  const { onClickMemoCharacterDescription } =
+  const { onClickMCharacterDescription } =
     useContext(DashboardContext).memoCharacterModal;
 
   return (
-    <div onClick={onClickMemoCharacterDescription(character)}>
-      {character.id}
-    </div>
+    <div onClick={onClickMCharacterDescription(character)}>{character.id}</div>
   );
 }
 
 function AddMemo() {
-  const { memoCharacterList, getNewlyCreatedMemoCharacter } =
-    useContext(DashboardContext).ideaBoxMemoCharacter;
-  const { onClickMemoCharacterDescription } =
+  const { memoCharacterList, getNewlyCreatedMCharacter } =
+    useContext(DashboardContext).ideaBoxMCharacter;
+  const { onClickMCharacterDescription } =
     useContext(DashboardContext).memoCharacterModal;
   const onClickAddMemo = async () => {
-    const newMemo = await getNewlyCreatedMemoCharacter();
+    const newMemo = await getNewlyCreatedMCharacter();
     if (!newMemo) return;
-    onClickMemoCharacterDescription(newMemo)();
+    onClickMCharacterDescription(newMemo)();
   };
 
   return (

@@ -15,13 +15,13 @@ import {
 import DeleteModal from "@/components/DeleteModal";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import MemoCharacterEditModal from "@/components/dashboard/MemoCharacterModal";
-import MemoEditModal from "@/components/dashboard/MemoModal";
+import MemoCharacterEditModal from "@/components/dashboard/Character/MCharacterModal";
+import MemoEditModal from "@/components/dashboard/Memo/MemoModal";
 import useIdeaBoxMemo from "@/hooks/dashboard/useIdeaBoxMemo";
 import useOpenAndCloseDeleteConfirmation from "@/hooks/dashboard/useDeleteConfirmModal";
 import useMemoModal from "@/hooks/dashboard/useMemoModal";
-import useIdeaBoxMemoCharacter from "@/hooks/dashboard/useIdeaBoxMemoCharacter";
-import useMemoCharacterModal from "@/hooks/dashboard/useMemoCharacterModal";
+import useIdeaBoxMemoCharacter from "@/hooks/dashboard/useIdeaBoxMCharacter";
+import useMemoCharacterModal from "@/hooks/dashboard/useMCharacterModal";
 
 export default function WorkspaceLayout({
   children,
@@ -37,7 +37,7 @@ export default function WorkspaceLayout({
   const contextValue = {
     workstudioAndTrash: dashboardValue,
     ideaBoxMemo: ideaBoxMemoValue,
-    ideaBoxMemoCharacter: ideaBoxMemoCharacterValue,
+    ideaBoxMCharacter: ideaBoxMemoCharacterValue,
     removeConfirmationModal: deleteConfirmModalValue,
     memoModal: memoModalValue,
     memoCharacterModal: memoCharacterModalValue,

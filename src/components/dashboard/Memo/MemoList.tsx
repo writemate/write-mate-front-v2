@@ -1,7 +1,7 @@
 "use client";
 import { MemoListContainer, AddMemoButton } from "@/styles/dashboard/MemoList";
 import { useContext } from "react";
-import MemoItem from "@/components/dashboard/MemoItem";
+import MemoItem from "@/components/dashboard/Memo/MemoItem";
 import { DashboardContext } from "@/hooks/dashboard/dashboard";
 import { LoadingMessage } from "@/styles/dashboard/Loading";
 

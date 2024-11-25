@@ -27,7 +27,7 @@ export type TMemo = {
   updatedAt: string;
 };
 
-export type TMemoCharacter = {
+export type TMCharacter = {
   id: string;
   ch_name: string;
   ch_image: string;

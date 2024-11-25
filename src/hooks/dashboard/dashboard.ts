@@ -8,8 +8,8 @@ import { notifySuccess } from "@/utils/showToast";
 import useIdeaBoxMemo from "@/hooks/dashboard/useIdeaBoxMemo";
 import useOpenAndCloseDeleteConfirmation from "./useDeleteConfirmModal";
 import useMemoModal from "./useMemoModal";
-import useIdeaBoxMemoCharacter from "./useIdeaBoxMemoCharacter";
-import useMemoCharacterModal from "./useMemoCharacterModal";
+import useIdeaBoxMemoCharacter from "./useIdeaBoxMCharacter";
+import useMemoCharacterModal from "./useMCharacterModal";
 
 export function useWorkstudioAndTrash() {
   const queryClient = useQueryClient();
@@ -89,7 +89,7 @@ export const DashboardContext = createContext(
   {} as {
     workstudioAndTrash: ReturnType<typeof useWorkstudioAndTrash>;
     ideaBoxMemo: ReturnType<typeof useIdeaBoxMemo>;
-    ideaBoxMemoCharacter: ReturnType<typeof useIdeaBoxMemoCharacter>;
+    ideaBoxMCharacter: ReturnType<typeof useIdeaBoxMemoCharacter>;
     removeConfirmationModal: ReturnType<
       typeof useOpenAndCloseDeleteConfirmation
     >;
