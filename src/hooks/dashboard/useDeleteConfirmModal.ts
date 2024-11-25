@@ -2,21 +2,17 @@ import { useState } from "react";
 
 export default function useOpenAndCloseDeleteConfirmation() {
   const [selectedWorkForDelete, setSelectedWorkForDelete] = useState("");
-  const [selectedMemoForDelete, setSelectedMemoForDelete] = useState("");
-  const [selectedMemoCharacterForDelete, setSelectedMemoCharacterForDelete] =
-    useState("");
   const [isPermanentDelete, setIsPermanentDelete] = useState(false);
-  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [isDeleteMemo, setIsDeleteMemo] = useState(false);
+  const [isDeleteMemoCharacter, setIsDeleteMemoCharacter] = useState(false);
+  const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
 
-  const onPermanentDeleteWork = () => {
-    setIsPermanentDelete(true);
-  };
   const onClickMoveToTrash =
     (workId: string) => (event: React.MouseEvent<HTMLButtonElement>) => {
       event.preventDefault();
       setIsPermanentDelete(false);
       setSelectedWorkForDelete(workId);
-      setOpenDeleteModal(true);
+      setIsOpenDeleteModal(true);
     };
 
   const onClickDeleteWork =
@@ -24,41 +20,43 @@ export default function useOpenAndCloseDeleteConfirmation() {
       event.preventDefault();
       setIsPermanentDelete(true);
       setSelectedWorkForDelete(workId);
-      setOpenDeleteModal(true);
+      setIsOpenDeleteModal(true);
     };
 
-  const onClickDeleteMemo =
-    (memoId: string) => (event: React.MouseEvent<HTMLButtonElement>) => {
-      event.preventDefault();
-      setIsPermanentDelete(true);
-      setSelectedMemoForDelete(memoId);
-      setOpenDeleteModal(true);
-    };
+  const onClickDeleteMemo = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    setIsPermanentDelete(true);
+    setIsDeleteMemo(true);
+    setIsOpenDeleteModal(true);
+  };
 
-  const onClickDeleteMemoCharacter =
-    (memoCharacterId: string) =>
-    (event: React.MouseEvent<HTMLButtonElement>) => {
-      event.preventDefault();
-      setIsPermanentDelete(true);
-      setSelectedMemoCharacterForDelete(memoCharacterId);
-      setOpenDeleteModal(true);
-    };
+  const onClickDeleteMCharacter = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+    setIsPermanentDelete(true);
+    setIsDeleteMemoCharacter(true);
+    setIsOpenDeleteModal(true);
+  };
+
+  const closeConfirmModal = () => {
+    setIsOpenDeleteModal(false);
+    setSelectedWorkForDelete("");
+    setIsPermanentDelete(false);
+    setIsDeleteMemo(false);
+    setIsDeleteMemoCharacter(false);
+  };
 
   return {
     selectedWorkForDelete,
-    selectedMemoForDelete,
-    selectedMemoCharacterForDelete,
+    isDeleteMemo,
+    isDeleteMemoCharacter,
     isPermanentDelete,
-    openDeleteModal,
-    onPermanentDeleteWork,
-    setSelectedWorkForDelete,
-    setSelectedMemoForDelete,
-    setSelectedMemoCharacterForDelete,
-    setOpenDeleteModal,
-    setIsPermanentDelete,
+    isOpenDeleteModal,
     onClickMoveToTrash,
     onClickDeleteWork,
     onClickDeleteMemo,
-    onClickDeleteMemoCharacter,
+    onClickDeleteMCharacter,
+    closeConfirmModal,
   };
 }

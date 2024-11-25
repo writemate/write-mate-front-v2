@@ -1,5 +1,5 @@
 "use client";
-import { useContext } from "react";
+import { use, useContext, useEffect } from "react";
 import React from "react";
 import Modal from "@/components/Modal";
 import {
@@ -13,12 +13,32 @@ import {
 } from "@/styles/dashboard/MemoList";
 import { DashboardContext } from "@/hooks/dashboard/dashboard";
 
-function Memo({ closeModal }: { closeModal: () => void }) {
+export default function MemoModal() {
+  const { isOpenEditModal, closeMemoModal } =
+    useContext(DashboardContext).memoModal;
+
+  useEffect(() => {
+    console.log("MemoModal", isOpenEditModal);
+  }, [isOpenEditModal]);
+
+  return (
+    <>
+      {isOpenEditModal && (
+        <Modal closeModal={closeMemoModal} maxWidth="600px">
+          <Memo />
+        </Modal>
+      )}
+    </>
+  );
+}
+
+function Memo() {
   const {
     selectedMemo,
     onChangeSelectedMemoName,
     onChangeSelectedMemoDescription,
     onKeyDownTitle,
+    closeMemoModal,
   } = useContext(DashboardContext).memoModal;
   const { onClickDeleteMemo } =
     useContext(DashboardContext).removeConfirmationModal;
@@ -56,30 +76,11 @@ function Memo({ closeModal }: { closeModal: () => void }) {
                 })}
             </MemoUpdatedDate>
             <MemoModalButtonContainer>
-              <button onClick={onClickDeleteMemo(selectedMemo.id)}>삭제</button>
-              <button onClick={closeModal}>저장</button>
+              <button onClick={onClickDeleteMemo}>삭제</button>
+              <button onClick={closeMemoModal}>저장</button>
             </MemoModalButtonContainer>
           </MemoModalBottom>
         </MemoModalContainer>
-      )}
-    </>
-  );
-}
-
-export default function MemoModal() {
-  const { openEditModal, closeEditModal } =
-    useContext(DashboardContext).memoModal;
-
-  const closeModal = () => {
-    closeEditModal();
-  };
-
-  return (
-    <>
-      {openEditModal && (
-        <Modal closeModal={closeModal} maxWidth="600px">
-          <Memo closeModal={closeModal} />
-        </Modal>
       )}
     </>
   );

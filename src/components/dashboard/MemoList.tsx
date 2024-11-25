@@ -36,7 +36,7 @@ function AddMemo() {
   };
 
   return (
-    <AddMemoButton isEmpty={memoList.length === 0} onClick={onClickAddMemo}>
+    <AddMemoButton $isEmpty={memoList.length === 0} onClick={onClickAddMemo}>
       메모 추가
     </AddMemoButton>
   );

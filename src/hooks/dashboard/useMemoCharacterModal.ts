@@ -12,7 +12,7 @@ import { useCallback, useState } from "react";
 export default function useMemoCharacterModal() {
   const queryClient = useQueryClient();
 
-  const [openEditModal, setOpenEditModal] = useState(false);
+  const [isOpenEditModal, setIsOpenEditModal] = useState(false);
   const [selectedMemoCharacter, setSelectedMemoCharacter] =
     useState<TMemoCharacter | null>(null);
   const nameRef = document.getElementsByClassName("memo-modal-name");
@@ -57,13 +57,13 @@ export default function useMemoCharacterModal() {
   const onClickMemoCharacterName = (memoCharacter: TMemoCharacter) => () => {
     setSelectedMemoCharacter(memoCharacter);
     focusInput(nameRef);
-    setOpenEditModal(true);
+    setIsOpenEditModal(true);
   };
   const onClickMemoCharacterDescription =
     (memoCharacter: TMemoCharacter) => () => {
       setSelectedMemoCharacter(memoCharacter);
       focusInput(descriptionRef);
-      setOpenEditModal(true);
+      setIsOpenEditModal(true);
     };
 
   const onChangeSelectedMemoCharacterName = (
@@ -111,12 +111,12 @@ export default function useMemoCharacterModal() {
     }, 0);
   }
   function closeMemoModal() {
-    setOpenEditModal(false);
+    setIsOpenEditModal(false);
     setSelectedMemoCharacter(null);
   }
 
   return {
-    openEditModal,
+    isOpenEditModal,
     selectedMemoCharacter,
     closeEditModal: closeMemoModal,
     onClickMemoCharacterName,

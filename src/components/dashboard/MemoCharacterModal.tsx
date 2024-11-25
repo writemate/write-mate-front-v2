@@ -5,30 +5,20 @@ import Modal from "@/components/Modal";
 import { DashboardContext } from "@/hooks/dashboard/dashboard";
 import TextareaAutosize from "react-textarea-autosize";
 
-function MemoCharacter({ closeModal }: { closeModal: () => void }) {
-  return (
-    <div>
-      <CharacterName />
-      <CharacterImage />
-      <CharacterDescription />
-      <Footer closeModal={closeModal} />
-    </div>
-  );
-}
-
 export default function MemoCharacterModal() {
-  const { openEditModal, closeEditModal } =
+  const { isOpenEditModal, closeEditModal } =
     useContext(DashboardContext).memoCharacterModal;
-
-  const closeModal = () => {
-    closeEditModal();
-  };
 
   return (
     <>
-      {openEditModal && (
-        <Modal closeModal={closeModal} maxWidth="600px">
-          <MemoCharacter closeModal={closeModal} />
+      {isOpenEditModal && (
+        <Modal closeModal={closeEditModal} maxWidth="600px">
+          <div style={{ background: "#ffffff" }}>
+            <CharacterName />
+            <CharacterImage />
+            <CharacterDescription />
+            <Footer />
+          </div>
         </Modal>
       )}
     </>
@@ -109,12 +99,11 @@ function CharacterDescription() {
   );
 }
 
-function Footer({ closeModal }: { closeModal: () => void }) {
-  const { selectedMemoCharacter } =
+function Footer() {
+  const { selectedMemoCharacter, closeEditModal } =
     useContext(DashboardContext).memoCharacterModal;
-  const { onClickDeleteMemoCharacter } =
+  const { onClickDeleteMCharacter } =
     useContext(DashboardContext).removeConfirmationModal;
-
   if (!selectedMemoCharacter) {
     return null;
   }
@@ -132,10 +121,8 @@ function Footer({ closeModal }: { closeModal: () => void }) {
           })}
       </div>
       <div>
-        <button onClick={onClickDeleteMemoCharacter(selectedMemoCharacter.id)}>
-          삭제
-        </button>
-        <button onClick={closeModal}>저장</button>
+        <button onClick={onClickDeleteMCharacter}>삭제</button>
+        <button onClick={closeEditModal}>저장</button>
       </div>
     </div>
   );

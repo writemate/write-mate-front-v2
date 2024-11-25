@@ -37,7 +37,7 @@ export default function MemoItem({ memoId }: { memoId: string }) {
   return (
     <>
       {memo && (
-        <MemoCard isSelected={memo.id === selectedMemo?.id}>
+        <MemoCard $isSelected={memo.id === selectedMemo?.id}>
           <MemoHeader>
             <MemoTitle
               value={getTempName()}

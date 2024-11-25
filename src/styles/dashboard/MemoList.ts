@@ -11,7 +11,7 @@ import OpenModal from "@/assets/icons/openModal.svg";
 import TextareaAutosize from "react-textarea-autosize";
 
 interface MemoCardProps {
-  isSelected?: boolean;
+  $isSelected?: boolean;
 }
 
 export const MemoCard = styled.div<MemoCardProps>`
@@ -22,7 +22,7 @@ export const MemoCard = styled.div<MemoCardProps>`
   box-shadow: 2px 2px 12px 0px rgba(19, 19, 19, 0.06);
   margin-bottom: 6px;
   padding: 8px;
-  visibility: ${({ isSelected }) => (isSelected ? "hidden" : "visible")};
+  visibility: ${({ $isSelected }) => ($isSelected ? "hidden" : "visible")};
 `;
 
 export const MemoHeader = styled.div`
@@ -61,11 +61,14 @@ export const CopyButton = styled(Copy)`
   ${clickable}
 `;
 
-export const AddMemoButton = styled.button<{ isEmpty?: boolean }>`
+interface AddMemoButtonProps {
+  $isEmpty?: boolean;
+}
+export const AddMemoButton = styled.button<AddMemoButtonProps>`
   ${clickable}
   position: fixed;
   left: calc(50% - 88.5px);
-  bottom: ${({ isEmpty }) => (isEmpty ? "calc(50% - 120px)" : "50px")};
+  bottom: ${({ $isEmpty }) => ($isEmpty ? "calc(50% - 120px)" : "50px")};
 
   width: 100%;
   padding: 12px;
