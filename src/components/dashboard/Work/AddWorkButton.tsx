@@ -1,6 +1,6 @@
 "use client";
 
-import { AddWorkspaceButton } from "@/styles/dashboard/ReusedButtons";
+import { AddWorkspaceButton } from "@/styles/dashboard/Work/AddWorkButton";
 
 interface AddButtonProps {
   actfunction: () => void;

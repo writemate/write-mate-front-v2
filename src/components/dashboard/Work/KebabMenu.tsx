@@ -1,6 +1,9 @@
 "use client";
-import { ChangeCoverInput, WorkButtonKebab } from "@/styles/dashboard/WorkList";
-import { KebabContainer, KebabItem } from "@/styles/dashboard/Kebab";
+import {
+  ChangeCoverInput,
+  WorkButtonKebab,
+} from "@/styles/dashboard/Work/WorkList";
+import { KebabContainer, KebabItem } from "@/styles/dashboard/Work/Kebab";
 import KebabMenu from "@/assets/icons/KebabMenu.svg";
 import { useContext } from "react";
 import { DashboardContext } from "@/hooks/dashboard/dashboard";

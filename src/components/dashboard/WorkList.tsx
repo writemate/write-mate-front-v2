@@ -2,12 +2,12 @@
 import {
   WorkButtonList,
   EmptyListDiscription,
-} from "@/styles/dashboard/WorkList";
+} from "@/styles/dashboard/Work/WorkList";
 import { useContext } from "react";
 import { DashboardContext } from "@/hooks/dashboard/dashboard";
 import WorkButton from "./Work/WorkItem";
 import { workspaceCategory } from "@/utils/APIs/types";
-import { AddWork } from "./ReusedButtons";
+import { AddWork } from "./Work/AddWorkButton";
 import { LoadingMessage } from "@/styles/dashboard/Loading";
 
 export default function WorkList() {

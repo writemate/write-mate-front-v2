@@ -88,8 +88,7 @@ export const AddMemoButton = styled.button<AddMemoButtonProps>`
   max-width: 177px;
 
   &:hover {
-    transform: scale(1.05);
-    filter: brightness(105%);
+    filter: brightness(95%);
   }
 `;
 

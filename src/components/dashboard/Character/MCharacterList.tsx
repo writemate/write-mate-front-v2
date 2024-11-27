@@ -1,7 +1,7 @@
 "use Client";
 import { DashboardContext } from "@/hooks/dashboard/dashboard";
 import { LoadingMessage } from "@/styles/dashboard/Loading";
-import { AddMemoButton } from "@/styles/dashboard/MCharacterList";
+import { AddMemoButton } from "@/styles/dashboard/MCharacter/MCharacterList";
 import { TMCharacter } from "@/utils/APIs/types";
 import { useContext } from "react";
 

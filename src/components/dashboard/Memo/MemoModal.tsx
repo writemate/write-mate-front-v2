@@ -10,7 +10,7 @@ import {
   MemoUpdatedDate,
   MemoModalButtonContainer,
   MemoModalBottom,
-} from "@/styles/dashboard/MemoList";
+} from "@/styles/dashboard/Memo/MemoList";
 import { DashboardContext } from "@/hooks/dashboard/dashboard";
 
 export default function MemoModal() {

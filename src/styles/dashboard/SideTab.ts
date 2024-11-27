@@ -25,33 +25,29 @@ export const LogoLink = styled(Link)`
 `;
 
 const SideTabSVG = css<{ $isActivated?: boolean }>`
+  position: relative;
   display: flex;
   width: 100%;
   justify-content: flex-start;
   align-items: center;
   gap: 10px;
-  & * {
-    color: ${({ $isActivated, theme }) =>
-      $isActivated ? theme.color.orange400 : theme.color.gray400};
-  }
-  &:hover {
-    transform: scale(1.05);
-  }
-  &:hover::after {
-    ${HighlghtCssForHoberAfter}
-    left: -3%;
-    width: 103%;
-    height: 100%;
-  }
   color: ${({ $isActivated, theme }) =>
     $isActivated ? theme.color.orange400 : theme.color.gray400};
-  font-weight: ${({ $isActivated }) => ($isActivated ? "bold" : "normal")};
+  font-weight: ${({ $isActivated }) => ($isActivated ? 700 : 500)};
 `;
 
 export const SideTabLink = styled(Link)<{ $isActivated?: boolean }>`
   ${SideTabSVG}
   margin-bottom: 10px;
   padding: 5px;
+
+  &:hover::after {
+    ${HighlghtCssForHoberAfter}
+    left: -5%;
+    width: 105%;
+    height: 100%;
+    z-index: -1;
+  }
 `;
 
 export const AddWorkspaceButton = styled.button`
@@ -75,7 +71,6 @@ export const AddWorkspaceButton = styled.button`
   max-width: 177px;
 
   &:hover {
-    transform: scale(1.05);
-    filter: brightness(105%);
+    filter: brightness(95%);
   }
 `;
