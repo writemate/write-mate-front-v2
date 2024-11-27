@@ -17,7 +17,8 @@ export default function MCharacterModal() {
             <CharacterName />
             <CharacterImage />
             <CharacterDescription />
-            <Footer />
+            <BirthAndGender />
+            <DateAndButtonList />
           </div>
         </Modal>
       )}
@@ -96,7 +97,37 @@ function CharacterDescription() {
   );
 }
 
-function Footer() {
+function BirthAndGender() {
+  const {
+    selectedMCharacter,
+    onChangeSelectedMCharacterBirthday,
+    onChangeSelectedMCharacterGender,
+  } = useContext(DashboardContext).memoCharacterModal;
+  if (!selectedMCharacter) {
+    return null;
+  }
+
+  return (
+    <div>
+      <p>생년월일</p>
+      <input
+        className="memo-modal-birth"
+        defaultValue={selectedMCharacter.birthday}
+        onChange={onChangeSelectedMCharacterBirthday}
+        placeholder="인물의 생년월일을 입력하세요."
+      />
+      <p>성별</p>
+      <input
+        className="memo-modal-gender"
+        defaultValue={selectedMCharacter.gender}
+        onChange={onChangeSelectedMCharacterGender}
+        placeholder="인물의 성별을 입력하세요."
+      />
+    </div>
+  );
+}
+
+function DateAndButtonList() {
   const { selectedMCharacter, closeEditModal } =
     useContext(DashboardContext).memoCharacterModal;
   const { onClickDeleteMCharacter } =

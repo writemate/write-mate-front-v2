@@ -1,8 +1,15 @@
 import { debounce } from "@/utils";
 import {
-  deleteMCharacter,
-  updateMCharacterDescription,
   updateMCharacterName,
+  updateMCharacterRole,
+  updateMCharacterDescription,
+  updateMCharacterGender,
+  updateMCharacterBirthday,
+  createMCharacterCharacteristic,
+  updateMCharacterCharacteristicTitle,
+  updateMCharacterCharacteristicContent,
+  deleteMCharacterCharacteristic,
+  deleteMCharacter,
 } from "@/utils/APIs/memo";
 import { memoQueryKeys } from "@/utils/APIs/queryKeys";
 import { TMCharacter } from "@/utils/APIs/types";
@@ -36,6 +43,23 @@ export default function useMCharacterModal() {
       });
     },
   });
+  const { mutate: updateMCharacterBirthdayMutation } = useMutation({
+    mutationFn: updateMCharacterBirthday,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: memoQueryKeys.memoCharacterList(),
+      });
+    },
+  });
+  const { mutate: updateMCharacterRoleMutation } = useMutation({
+    mutationFn: updateMCharacterRole,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: memoQueryKeys.memoCharacterList(),
+      });
+    },
+  });
+
   const { mutate: deleteMCharacterMutation } = useMutation({
     mutationFn: deleteMCharacter,
     onSuccess: () => {
@@ -49,8 +73,25 @@ export default function useMCharacterModal() {
     debounce(updateMCharacterNameMutation, 500),
     [selectedMCharacter]
   );
+
   const debounceUpdateMCharacterDescription = useCallback(
     debounce(updateMCharacterDescriptionMutation, 500),
+    [selectedMCharacter]
+  );
+  const debounceUpdateMCharacterBirthday = useCallback(
+    debounce(updateMCharacterBirthdayMutation, 500),
+    [selectedMCharacter]
+  );
+  const debounceUpdateMCharacterGender = useCallback(
+    debounce(updateMCharacterGender, 500),
+    [selectedMCharacter]
+  );
+  const debounceUpdateMCharacterCharacteristicTitle = useCallback(
+    debounce(updateMCharacterCharacteristicTitle, 500),
+    [selectedMCharacter]
+  );
+  const debounceUpdateMCharacterCharacteristicContent = useCallback(
+    debounce(updateMCharacterCharacteristicContent, 500),
     [selectedMCharacter]
   );
 
@@ -88,7 +129,33 @@ export default function useMCharacterModal() {
       });
     }
     setSelectedMCharacter((old) =>
-      old ? { ...old, memo_description: e.target.value } : null
+      old ? { ...old, description: e.target.value } : null
+    );
+  };
+  const onChangeSelectedMCharacterBirthday = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    if (selectedMCharacter) {
+      debounceUpdateMCharacterBirthday({
+        id: selectedMCharacter.id,
+        birthday: e.target.value,
+      });
+    }
+    setSelectedMCharacter((old) =>
+      old ? { ...old, birthday: e.target.value } : null
+    );
+  };
+  const onChangeSelectedMCharacterGender = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    if (selectedMCharacter) {
+      debounceUpdateMCharacterGender({
+        id: selectedMCharacter.id,
+        gender: e.target.value,
+      });
+    }
+    setSelectedMCharacter((old) =>
+      old ? { ...old, gender: e.target.value } : null
     );
   };
 
@@ -122,6 +189,8 @@ export default function useMCharacterModal() {
     onClickMCharacterDescription,
     onChangeSelectedMCharacterName,
     onChangeSelectedMCharacterDescription,
+    onChangeSelectedMCharacterBirthday,
+    onChangeSelectedMCharacterGender,
     onKeyDownName,
     onDeleteMemo,
   };
