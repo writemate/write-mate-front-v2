@@ -35,7 +35,7 @@ export const DOMAIN = {
   SET_MAIN_SCRIPT: (scriptId: string) => `/api/scripts/${scriptId}/main`,
   
   GET_CHAPTER_LIST_WITH_EVENTS: (plotId: string) => `/api/plots/${plotId}`,
-  CREATE_CHAPTER: (plotId: string) => `/api/plots/${plotId}/plots`,
+  CREATE_CHAPTER: (plotId: string) => `/api/plots/${plotId}/chapters`,
   DELETE_CHAPTER: (plotId: string, chapterId: string) =>
     `/api/plots/${plotId}/chapters/${chapterId}`,
   UPDATE_CHAPTER_NAME: (plotId: string, chapterId: string) =>

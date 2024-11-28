@@ -1,29 +1,22 @@
 import { TPlot } from "./types";
 import axiosInstance from "./axiosInstance";
 import { DOMAIN } from "./domain";
-import { PlotCharacterType, responseGetPlotType } from "./mock/plot";
+import { PlotCharacterType } from "./mock/plot";
 
-/**
- * 모든 플롯 가져오기
- * @param workId
- * @returns chapter[]
- */
-export const getPlotList = async (
-  workId: string
-): Promise<responseGetPlotType> => {
-  const response = await axiosInstance.get<responseGetPlotType>(
-    DOMAIN.GET_PLOT_LIST(workId)
+export const getPlotInfo = (plotId: string) => async ()=> {
+  const response = await axiosInstance.get<TPlot>(
+    DOMAIN.GET_CHAPTER_LIST_WITH_EVENTS(plotId)
   );
 
   return response.data;
-};
+}
 
 /**
  * 챕터 생성하기
  * @param plotId
  * @returns 챕터 id
  */
-export const createChapter = async (plotId: string): Promise<string> => {
+export const createChapter = (plotId: string) => async () => {
   const response = await axiosInstance.post<string>(
     DOMAIN.CREATE_CHAPTER(plotId)
   );
@@ -37,10 +30,7 @@ export const createChapter = async (plotId: string): Promise<string> => {
  * @param chapterId
  * @returns
  */
-export const deleteChapter = async (
-  plotId: string,
-  chapterId: string
-): Promise<void> => {
+export const deleteChapter = ( plotId: string ) => async ( chapterId: string) => {
   const response = await axiosInstance.delete<void>(
     DOMAIN.DELETE_CHAPTER(plotId, chapterId)
   );
@@ -54,11 +44,8 @@ export const deleteChapter = async (
  * @param chapterId
  * @param chapter_name
  */
-export const updateChapterName = async (
-  plotId: string,
-  chapterId: string,
-  chapter_name: string
-): Promise<void> => {
+export const updateChapterName = ( plotId: string ) => 
+  async ({ chapterId, chapter_name }: { chapterId: string; chapter_name: string }) => {
   const response = await axiosInstance.patch<void>(
     DOMAIN.UPDATE_CHAPTER_NAME(plotId, chapterId),
     { chapter_name }
@@ -73,11 +60,8 @@ export const updateChapterName = async (
  * @param chapterId
  * @param chapter_description
  */
-export const updateChapterDescription = async (
-  plotId: string,
-  chapterId: string,
-  chapter_description: string
-): Promise<void> => {
+export const updateChapterDescription = ( plotId: string ) =>
+  async ({chapterId, chapter_description}: {chapterId: string, chapter_description: string}) => {
   const response = await axiosInstance.patch<void>(
     DOMAIN.UPDATE_CHAPTER_DESCRIPTION(plotId, chapterId),
     { chapter_description }
@@ -93,12 +77,8 @@ export const updateChapterDescription = async (
  * @param pre_idx 현재 idx
  * @param next_idx 바꿀 idx
  */
-export const updateChapterOrder = async (
-  plotId: string,
-  chapterId: string,
-  pre_idx: number,
-  next_idx: number
-): Promise<void> => {
+export const updateChapterOrder = ( plotId: string) =>
+  async ({ pre_idx, next_idx, chapterId }: { pre_idx: number; next_idx: number; chapterId: string }) => {
   const response = await axiosInstance.patch<void>(
     DOMAIN.UPDATE_CHAPTER_ORDER(plotId, chapterId),
     { pre_idx, next_idx }
@@ -113,11 +93,8 @@ export const updateChapterOrder = async (
  * @param chapterId
  * @param is_folded
  */
-export const updateChapterFold = async (
-  plotId: string,
-  chapterId: string,
-  is_folded: boolean
-): Promise<void> => {
+export const updateChapterFold = ( plotId: string ) =>
+  async ({ chapterId, is_folded }: { chapterId: string; is_folded: boolean }) => {
   const response = await axiosInstance.patch<void>(
     DOMAIN.UPDATE_CHAPTER_FOLD(plotId, chapterId),
     { is_folded }

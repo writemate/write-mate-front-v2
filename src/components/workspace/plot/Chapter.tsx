@@ -16,16 +16,14 @@ import ToggleFold from "@/assets/workspace/plot/toggleFold.svg";
 import { PlotEventType } from "@/utils/APIs/mock/plot";
 import AutoResizeInput from "./AutoResizeInput";
 import useChapterList from "@/hooks/workspace/plot/useChapterList";
+import { TPlotEvent } from "@/utils/APIs/types";
 
 interface ChapterProps {
   chapterId: string;
   chapterName: string;
   chapterDescription: string;
-  pevent: PlotEventType[];
+  pevent: TPlotEvent[];
   isFolded: boolean;
-  onLocalFold: (id: string, isFolded: boolean) => void;
-  plotId: string;
-  onDelete: (chapterId: string) => void;
 }
 
 export default function Chapter({
@@ -34,8 +32,6 @@ export default function Chapter({
   chapterDescription,
   pevent,
   isFolded,
-  onLocalFold,
-  onDelete,
 }: ChapterProps) {
   const [title, setTitle] = useState<string>(chapterName);
   const [content, setContent] = useState<string>(chapterDescription);
@@ -61,11 +57,6 @@ export default function Chapter({
   const toggleChapter = () => {
     const newFoldedState = !localIsFolded;
     setLocalIsFolded(newFoldedState);
-    onLocalFold(chapterId, newFoldedState);
-  };
-
-  const deleteChapter = () => {
-    onDelete(chapterId);
   };
 
   return (
@@ -88,7 +79,7 @@ export default function Chapter({
           <IconButton type="button">
             <CopyIcon />
           </IconButton>
-          <IconButton type="button" onClick={deleteChapter}>
+          <IconButton type="button" onClick={()=>{}}>
             <DeleteIcon />
           </IconButton>
         </div>
@@ -100,7 +91,7 @@ export default function Chapter({
         />
         {localIsFolded && (
           <OpenContainer>
-            <EventList pevent={pevent} />
+            {/* <EventList pevent={pevent} /> */}
           </OpenContainer>
         )}
       </ChapterMargin>
