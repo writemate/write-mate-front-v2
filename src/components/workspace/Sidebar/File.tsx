@@ -17,6 +17,7 @@ import {
   BottomDropLine,
 } from "@/styles/workspace/SideBar.styles";
 import { useDrag } from "@/hooks/workspace/sidebar/useDrag";
+import { useParams } from "next/navigation";
 
 export default function File({
   file,
@@ -29,12 +30,12 @@ export default function File({
 }) {
   const {
     workspace_id,
-    onChange,
     onBlur,
     onKeyDown,
     changeName,
     deleteFolderOrFile,
     setMainPlot,
+    isSelectedFolderExist,
   } = useContext(SidebarContext);
   const { isKebabOpen, openKebab, closeKebab } = useKebab();
   const {
@@ -45,11 +46,17 @@ export default function File({
     onDragLeave,
     onDrop,
   } = useDrag(file);
+  const { plot_id, script_id } = useParams<{ plot_id?: string; script_id?: string }>();
+  const isSelect = (() => {
+    if(file.isEditing) return true;
+    if(isSelectedFolderExist) return false;
+    if(type === "plot") return plot_id === file.id;
+    return script_id === file.id;
+  })();
 
   return (
     <FileContainer
       $nestedLevel={nestedLevel}
-      $isSelect={file.isSelect}
       $isEditing={file.isEditing}
       onDragStart={onDragStart}
       onDragOver={onDragOver}
@@ -59,14 +66,13 @@ export default function File({
       href={`/${workspace_id}/${type}/${file.id}`}
     >
       <TopDropLine $nestedLevel={nestedLevel} $active={isDragOverBefore} />
-      {file.isSelect && <SeletedFile />}
-      {!file.isSelect && <FileIcon />}
+      {isSelect && <SeletedFile />}
+      {!isSelect && <FileIcon />}
       {!file.isEditing && <FileName>{file.file_name}</FileName>}
       {file.isEditing && (
         <input
           type="text"
-          value={file.file_name}
-          onChange={onChange(file)}
+          defaultValue={file.file_name}
           onBlur={onBlur(file)}
           onKeyDown={onKeyDown(file)}
           autoFocus

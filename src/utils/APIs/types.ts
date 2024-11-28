@@ -41,7 +41,6 @@ export interface TFolder {
 }
 
 export interface TFileWithOptions extends TFile {
-  isSelect: boolean;
   isEditing: boolean;
 }
 

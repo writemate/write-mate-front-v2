@@ -61,6 +61,18 @@ export const createPlot = (workId: string) => async () => {
   const response = await axiosInstance.post<string>(DOMAIN.CREATE_PLOT(workId));
   return response.data;
 }
+export const updatePlotName = async ({ id, name }: { id: string, name: string }) => {
+  const response = await axiosInstance.patch<void>(DOMAIN.UPDATE_PLOT_NAME(id), { plot_name: name });
+  return response.data;
+}
+export const setMainPlot = async (plotId: string) => {
+  const response = await axiosInstance.patch<void>(DOMAIN.SET_MAIN_PLOT(plotId));
+  return response.data;
+}
+export const deletePlot = async (plotId: string) => {
+  const response = await axiosInstance.delete<void>(DOMAIN.DELETE_PLOT(plotId));
+  return response.data;
+}
 
 export const getScriptFolderList = (workId: string) => async () => {
   const response = await axiosInstance.get<TFolder>(DOMAIN.GET_SCRIPT_LIST(workId));
@@ -72,6 +84,18 @@ export const updateScriptFolder = (workId: string) => async (folder: TFolder) =>
 }
 export const createScript = (workId: string) => async () => {
   const response = await axiosInstance.post<string>(DOMAIN.CREATE_SCRIPT(workId));
+  return response.data;
+}
+export const updateScriptName = async ({ id, name }: { id: string, name: string }) => {
+  const response = await axiosInstance.patch<void>(DOMAIN.UPDATE_SCRIPT_NAME(id), { script_name: name });
+  return response.data;
+}
+export const setMainScript = async (scriptId: string) => {
+  const response = await axiosInstance.patch<void>(DOMAIN.SET_MAIN_SCRIPT(scriptId));
+  return response.data;
+}
+export const deleteScript = async (scriptId: string) => {
+  const response = await axiosInstance.delete<void>(DOMAIN.DELETE_SCRIPT(scriptId));
   return response.data;
 }
 

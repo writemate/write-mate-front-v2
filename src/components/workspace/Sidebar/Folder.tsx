@@ -15,7 +15,7 @@ import File from "@/components/workspace/Sidebar/File";
 export default function Folder({ folder, nestedLevel = 0, type}:
   { folder: TFolderWithOptions, nestedLevel?: number, type: "plot" | "script" }) {
 
-  const { toggleFolder, openFolder, onChange, onBlur, onKeyDown, changeName, deleteFolderOrFile } = useContext(SidebarContext);
+  const { toggleFolder, openFolder, onBlur, onKeyDown, changeName, deleteFolderOrFile } = useContext(SidebarContext);
   const { isKebabOpen, openKebab, closeKebab } = useKebab();
   const { isDragOverAfter, isDragOverBefore, onDragStart, onDragOver, onDragLeave, onDrop} = useDrag(folder);
   
@@ -32,8 +32,7 @@ export default function Folder({ folder, nestedLevel = 0, type}:
         {!folder.isSelect && <FolderIcon />}
         {!folder.isEditing&&<FolderName>{folder.folder_name}</FolderName>}
         {folder.isEditing&&
-          <input type="text" value={folder.folder_name}
-            onChange={onChange(folder)} onBlur={onBlur(folder)} onKeyDown={onKeyDown(folder)}
+          <input type="text" defaultValue={folder.folder_name} onBlur={onBlur(folder)} onKeyDown={onKeyDown(folder)}
             autoFocus/>
         }
         <KebabWrapper tabIndex={0} onBlur={closeKebab}>
