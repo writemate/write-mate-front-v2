@@ -28,7 +28,7 @@ export type TMemo = {
 };
 
 export interface TFile {
-  _id: string;
+  id: string;
   isFolder: false;
   file_name: string;
   isPinned: boolean;

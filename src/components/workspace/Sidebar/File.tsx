@@ -56,7 +56,7 @@ export default function File({
       onDragLeave={onDragLeave}
       draggable={true}
       onDrop={onDrop}
-      href={`/${workspace_id}/${type}/${file._id}`}
+      href={`/${workspace_id}/${type}/${file.id}`}
     >
       <TopDropLine $nestedLevel={nestedLevel} $active={isDragOverBefore} />
       {file.isSelect && <SeletedFile />}

@@ -24,12 +24,17 @@ export const DOMAIN = {
   GET_SCRIPT_LIST: (workId: string) => `/api/works/${workId}/scriptlist`,
   UPDATE_SCRIPT_LIST: (workId: string) => `/api/works/${workId}/scriptlist`,
 
-  CREATE_PLOT: (workId: string) => `/api/plots`,
+  CREATE_PLOT: (workId: string) => `/api/plots?workId=${workId}`,
   DELETE_PLOT: (plotId: string) => `/api/plots/${plotId}`,
   UPDATE_PLOT_NAME: (plotId: string) => `/api/plots/${plotId}/name`,
   SET_MAIN_PLOT: (plotId: string) => `/api/plots/${plotId}/main`,
+
+  CREATE_SCRIPT: (workId: string) => `/api/scripts?workId=${workId}`,
+  DELETE_SCRIPT: (scriptId: string) => `/api/scripts/${scriptId}`,
+  UPDATE_SCRIPT_NAME: (scriptId: string) => `/api/scripts/${scriptId}/name`,
+  SET_MAIN_SCRIPT: (scriptId: string) => `/api/scripts/${scriptId}/main`,
   
-  GET_CHAPTER_WITH_EVENTS: (plotId: string) => `/api/plots/${plotId}`,
+  GET_CHAPTER_LIST_WITH_EVENTS: (plotId: string) => `/api/plots/${plotId}`,
   CREATE_CHAPTER: (plotId: string) => `/api/plots/${plotId}/plots`,
   DELETE_CHAPTER: (plotId: string, chapterId: string) =>
     `/api/plots/${plotId}/chapters/${chapterId}`,
