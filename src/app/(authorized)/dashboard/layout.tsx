@@ -15,8 +15,8 @@ import {
 import DeleteModal from "@/components/DeleteModal";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import MemoCharacterEditModal from "@/components/dashboard/MCharacter/MCharacterModal";
-import MemoEditModal from "@/components/dashboard/Memo/MemoModal";
+import MemoCharacterEditModal from "@/components/dashboard/IdeaBox/MCharacter/MCharacterModal";
+import MemoEditModal from "@/components/dashboard/IdeaBox/Memo/MemoModal";
 import useIdeaBoxMemo from "@/hooks/dashboard/useIdeaBoxMemo";
 import useOpenAndCloseDeleteConfirmation from "@/hooks/dashboard/useDeleteConfirmModal";
 import useMemoModal from "@/hooks/dashboard/useMemoModal";

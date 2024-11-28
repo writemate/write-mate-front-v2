@@ -1,11 +1,6 @@
 "use client";
 import { styled } from "styled-components";
-import {
-  clickable,
-  FlexColumnCenter,
-  FlexColumnLeftStart,
-  FlexRowSpaceBetween,
-} from "@/styles";
+import { clickable, FlexColumnLeftStart, FlexRowSpaceBetween } from "@/styles";
 import Copy from "@/assets/icons/copy.svg";
 import OpenModal from "@/assets/icons/openModal.svg";
 import TextareaAutosize from "react-textarea-autosize";
@@ -64,7 +59,7 @@ export const CopyButton = styled(Copy)`
 interface AddMemoButtonProps {
   $isEmpty?: boolean;
 }
-export const AddMemoButton = styled.button<AddMemoButtonProps>`
+export const AddMemoButtonContainer = styled.button<AddMemoButtonProps>`
   ${clickable}
   position: fixed;
   left: calc(50% - 88.5px);
@@ -130,72 +125,4 @@ export const MemoUpdatedDate = styled.div`
   font-weight: 400;
   line-height: 100%;
   color: ${({ theme }) => theme.color.gray300};
-`;
-export const MemoModalContainer = styled.div`
-  ${FlexColumnCenter}
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
-  padding: 16px;
-  gap: 0px;
-  transition: all 0.3s;
-  background-color: ${({ theme }) => theme.color.white};
-  border: 1px solid ${({ theme }) => theme.color.gray200};
-  border-radius: 8px;
-
-  button {
-    ${clickable}
-    flex-shrink: 0;
-    padding: 0px 8px;
-    height: 24px;
-
-    font-size: 14px;
-    font-weight: 500;
-    background: none;
-    border: none;
-
-    color: ${({ theme }) => theme.color.gray300};
-    &:hover {
-      color: ${({ theme }) => theme.color.orange400};
-    }
-  }
-
-  ${MemoHeader} {
-    gap: 4px;
-  }
-  ${MemoTitle} {
-    font-size: 18px;
-    padding: 8px 8px;
-    color: ${({ theme }) => theme.color.black};
-    flex-wrap: wrap;
-    overflow-x: scroll;
-  }
-
-  ${MemoContent} {
-    overflow-y: scroll;
-    color: ${({ theme }) => theme.color.gray900};
-    max-height: 80vh;
-    font-size: 16px;
-    line-height: 160%;
-    padding: 0px 8px;
-  }
-
-  ${MemoUpdatedDate} {
-    align-self: center;
-    flex-shrink: 0;
-    font-size: 14px;
-  }
-`;
-
-export const MemoModalButtonContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-`;
-
-export const MemoModalBottom = styled.div`
-  ${FlexRowSpaceBetween}
-  width: 100%;
-  padding: 8px;
-  border-top: 1px solid ${({ theme }) => theme.color.gray200};
 `;

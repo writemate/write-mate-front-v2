@@ -1,9 +1,9 @@
 "use Client";
 import { DashboardContext } from "@/hooks/dashboard/dashboard";
 import { LoadingMessage } from "@/styles/dashboard/Loading";
-import { AddMemoButton } from "@/styles/dashboard/MCharacter/MCharacterList";
 import { TMCharacter } from "@/utils/APIs/types";
 import { useContext } from "react";
+import { AddMCharacterButton } from "@/components/dashboard/IdeaBox/AddMemoButton";
 
 export default function CharacterList() {
   const { memoCharacterList, error, isLoading } =
@@ -19,8 +19,7 @@ export default function CharacterList() {
         .map((memo) => (
           <MemoItem key={memo.id} character={memo} />
         ))}
-      <AddMemo />
-      {memoCharacterList.length === 0 && <AddMemo />}
+      <AddMCharacterButton />
     </div>
   );
 }
@@ -61,27 +60,6 @@ function MemoItem({ character }: { character: TMCharacter }) {
       <p>이미지: {getImg()}</p>
       <p>이름: {getName()}</p>
     </div>
-  );
-}
-
-function AddMemo() {
-  const { memoCharacterList, getNewlyCreatedMCharacter } =
-    useContext(DashboardContext).ideaBoxMCharacter;
-  const { onClickMCharacterDescription } =
-    useContext(DashboardContext).memoCharacterModal;
-  const onClickAddMemo = async () => {
-    const newMemo = await getNewlyCreatedMCharacter();
-    if (!newMemo) return;
-    onClickMCharacterDescription(newMemo)();
-  };
-
-  return (
-    <AddMemoButton
-      $isEmpty={memoCharacterList.length === 0}
-      onClick={onClickAddMemo}
-    >
-      인물 메모 추가
-    </AddMemoButton>
   );
 }
 

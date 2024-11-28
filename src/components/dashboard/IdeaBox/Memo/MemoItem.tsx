@@ -6,7 +6,7 @@ import {
   MemoHeader,
   MemoTitle,
   MemoUpdatedDate,
-} from "@/styles/dashboard/Memo/MemoList";
+} from "@/styles/dashboard/IdeaBox/Memo/MemoList";
 import { useContext } from "react";
 
 export default function MemoItem({ memoId }: { memoId: string }) {

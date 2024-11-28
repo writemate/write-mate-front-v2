@@ -1,12 +1,10 @@
 "use client";
-import {
-  MemoListContainer,
-  AddMemoButton,
-} from "@/styles/dashboard/Memo/MemoList";
+import { MemoListContainer } from "@/styles/dashboard/IdeaBox/Memo/MemoList";
 import { useContext } from "react";
-import MemoItem from "@/components/dashboard/Memo/MemoItem";
+import MemoItem from "@/components/dashboard/IdeaBox/Memo/MemoItem";
 import { DashboardContext } from "@/hooks/dashboard/dashboard";
 import { LoadingMessage } from "@/styles/dashboard/Loading";
+import { AddMemoButton } from "@/components/dashboard/IdeaBox/AddMemoButton";
 
 export default function MemoList() {
   const { memoList, error, isLoading } =
@@ -22,26 +20,8 @@ export default function MemoList() {
         .map((memo) => (
           <MemoItem key={memo.id} memoId={memo.id} />
         ))}
-      <AddMemo />
-      {memoList.length === 0 && <AddMemo />}
+      <AddMemoButton />
     </MemoListContainer>
-  );
-}
-
-function AddMemo() {
-  const { memoList, getNewlyCreatedMemo } =
-    useContext(DashboardContext).ideaBoxMemo;
-  const { onClickMemoContent } = useContext(DashboardContext).memoModal;
-  const onClickAddMemo = async () => {
-    const newMemo = await getNewlyCreatedMemo();
-    if (!newMemo) return;
-    onClickMemoContent(newMemo)();
-  };
-
-  return (
-    <AddMemoButton $isEmpty={memoList.length === 0} onClick={onClickAddMemo}>
-      메모 추가
-    </AddMemoButton>
   );
 }
 

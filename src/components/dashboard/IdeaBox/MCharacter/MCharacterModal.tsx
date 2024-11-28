@@ -3,7 +3,6 @@ import { useContext } from "react";
 import React from "react";
 import Modal from "@/components/Modal";
 import { DashboardContext } from "@/hooks/dashboard/dashboard";
-import TextareaAutosize from "react-textarea-autosize";
 
 export default function MCharacterModal() {
   const { isOpenEditModal, closeEditModal } =
@@ -14,10 +13,10 @@ export default function MCharacterModal() {
       {isOpenEditModal && (
         <Modal closeModal={closeEditModal} maxWidth="600px">
           <div style={{ background: "#ffffff" }}>
-            <CharacterName />
             <CharacterImage />
-            <CharacterDescription />
+            <CharacterName />
             <BirthAndGender />
+            <Characterisitc />
             <DateAndButtonList />
           </div>
         </Modal>
@@ -75,28 +74,6 @@ function CharacterImage() {
   );
 }
 
-function CharacterDescription() {
-  const { selectedMCharacter, onChangeSelectedMCharacterDescription } =
-    useContext(DashboardContext).memoCharacterModal;
-  if (!selectedMCharacter) {
-    return null;
-  }
-
-  return (
-    <>
-      <p>인물 설명</p>
-      <TextareaAutosize
-        className="memo-modal-description"
-        defaultValue={selectedMCharacter.description}
-        onChange={onChangeSelectedMCharacterDescription}
-        cacheMeasurements
-        minRows={10}
-        placeholder="인물에 대한 설명을 입력하세요"
-      />
-    </>
-  );
-}
-
 function BirthAndGender() {
   const {
     selectedMCharacter,
@@ -124,6 +101,36 @@ function BirthAndGender() {
         placeholder="인물의 성별을 입력하세요."
       />
     </div>
+  );
+}
+
+function Characterisitc() {
+  const { selectedMCharacter } =
+    useContext(DashboardContext).memoCharacterModal;
+  if (!selectedMCharacter) {
+    return null;
+  }
+
+  return (
+    <>
+      <p>특징</p>
+      {selectedMCharacter.characteristic &&
+        selectedMCharacter.characteristic.map((characteristic, index) => (
+          <>
+            <input
+              key={index}
+              defaultValue={characteristic.title}
+              placeholder="인물의 특징명을 입력하세요."
+            />
+            <input
+              key={index}
+              defaultValue={characteristic.content}
+              placeholder="인물의 특징을 입력하세요."
+            />
+          </>
+        ))}
+      <button>특징 추가</button>
+    </>
   );
 }
 
