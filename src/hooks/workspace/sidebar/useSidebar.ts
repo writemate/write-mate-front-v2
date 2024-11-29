@@ -2,57 +2,65 @@
 import { useState, useEffect } from 'react';
 import { workspaceQueryKeys } from "@/utils/APIs/queryKeys";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { createPlot, getPlotFolderList, updatePlotFolder, createScript, getScriptFolderList, updateScriptFolder } from "@/utils/APIs/workspace";
+import { createPlot, getPlotFolderList, updatePlotFolder, createScript, getScriptFolderList, updateScriptFolder, updatePlotName, updateScriptName, setMainPlot, deletePlot, setMainScript, deleteScript } from "@/utils/APIs/workspace";
 import { useParams } from "next/navigation";
 import { TFileWithOptions, TFolderWithOptions } from '@/utils/APIs/types';
-import { recursiveFolderAddOptions, recursiveUnselect, currentFileSelect, getSelectedFolder, recursiveFileUnpin, recursiveFindParent } from '@/utils/controlFolders';
+import { recursiveFolderAddOptions, recursiveUnselect, isExistEditing, getSelectedFolder, recursiveFileUnpin, recursiveFindParent, isExistSelect } from '@/utils/controlFolders';
 
 const getAPIFunctionsAndQueryKey = (type: "plot" | "script") => {
   if(type === "plot") return {
     getFolderList: getPlotFolderList,
-    updateFolder: updatePlotFolder,
     create: createPlot,
+    updateFolder: updatePlotFolder,
+    updateName: updatePlotName,
+    setMain: setMainPlot,
+    deleteItem: deletePlot,
     queryKey: workspaceQueryKeys.plotSidebar,
   };
   return {
     getFolderList: getScriptFolderList,
-    updateFolder: updateScriptFolder,
     create: createScript,
+    updateFolder: updateScriptFolder,
+    updateName: updateScriptName,
+    setMain: setMainScript,
+    deleteItem: deleteScript,
     queryKey: workspaceQueryKeys.scriptSidebar,
   };
 }
 
 export default function usePlotSidebar(type: "plot" | "script") {
-  const { getFolderList, updateFolder, create, queryKey } = getAPIFunctionsAndQueryKey(type);
-  const { workspace_id, plot_id } = useParams<{ workspace_id: string, plot_id?: string }>();
+  const { getFolderList, updateFolder, create, queryKey, updateName, setMain, deleteItem } = getAPIFunctionsAndQueryKey(type);
+  const { workspace_id } = useParams<{ workspace_id: string, plot_id?: string }>();
   const [rootFolder, setRootFolder] = useState<TFolderWithOptions|null>(null);
   const { data, error, isLoading } = useQuery({
     queryKey: queryKey(workspace_id),
     queryFn: getFolderList(workspace_id),
   });
   const [draggingItem, setDraggingItem] = useState<TFileWithOptions|TFolderWithOptions|null>(null);
+  const queryClient = useQueryClient();
 
-  const { mutate } = useMutation({ mutationFn: updateFolder });
-
+  const { mutate: mutateFolder, mutateAsync: mutateFolderAsync } = useMutation({ mutationFn: updateFolder(workspace_id) });
   const { mutateAsync: addItem, isPending } = useMutation({mutationFn: create(workspace_id)});
+  const { mutate: mutateName } = useMutation({mutationFn: updateName,
+    onSuccess: (data, { id }) => {
+      queryClient.invalidateQueries({queryKey: workspaceQueryKeys.plot(workspace_id, id)});
+    }
+  });
+  const { mutate: mutateSetMain } = useMutation({mutationFn: setMain});
+  const { mutate: mutateDelete } = useMutation({mutationFn: deleteItem});
+
+  const isSelectedFolderExist =
+    rootFolder !== null
+    && (isExistSelect(rootFolder)
+    ||isExistEditing(rootFolder));
 
   useEffect(() => {
     if (data) {
       const rootFolder = recursiveFolderAddOptions(data);
-      rootFolder.isSelect = true;
-      if (plot_id) currentFileSelect(rootFolder, plot_id);
       setRootFolder(rootFolder);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
-
-  useEffect(() => {
-    if (!rootFolder) return;
-    if (plot_id) currentFileSelect(rootFolder, plot_id);
-    else recursiveUnselect(rootFolder);
-    setRootFolder({...rootFolder});
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [plot_id]);
 
   const toggleFolder = (folder: TFolderWithOptions) => (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -74,7 +82,6 @@ export default function usePlotSidebar(type: "plot" | "script") {
   //드래그 앤 드롭을 위한 폴더 열기 함수(선택은 하지 않음)
   const openFolderForDrag = (folder: TFolderWithOptions) => {
     if(rootFolder === null) return;
-    //폴더를 열면 나머지 폴더와 파일들의 선택을 해제하고 해당 폴더를 선택한다.
     folder.isOpen = true;
     setRootFolder({...rootFolder});
   };
@@ -83,16 +90,15 @@ export default function usePlotSidebar(type: "plot" | "script") {
     if(e.target !== e.currentTarget) return;
     if(rootFolder === null) return;
     //사이드바에서 빈 곳을 클릭하면 모든 선택을 해제한다.(현재 접속 중인 파일이 있을 경우 해당 파일을 선택한다).
-    if(plot_id) currentFileSelect(rootFolder, plot_id);
-    else recursiveUnselect(rootFolder);
-    rootFolder.isSelect = true;
+    recursiveUnselect(rootFolder);
     setRootFolder({...rootFolder});
   }
 
   const createFolder = () => {
     if(rootFolder === null) return;
-    const selectedFolder = getSelectedFolder(rootFolder);
-    if (!selectedFolder) return;
+    let selectedFolder = getSelectedFolder(rootFolder);
+    if (selectedFolder === null) 
+      selectedFolder = rootFolder;
     //폴더를 생성하면 나머지 폴더와 파일들의 선택을 해제하고 새로 생성한 폴더를 선택한다.
     recursiveUnselect(rootFolder);
     selectedFolder.files.push({
@@ -107,67 +113,63 @@ export default function usePlotSidebar(type: "plot" | "script") {
     //이름 변경 완료 시 서버에 폴더 구조 반영 => 여기에서 mutate를 호출할 필요가 없다.
   };
 
+  const [isCreatingFile, setIsCreatingFile] = useState(false);
   const createFile = async () => {
     if(rootFolder === null) return;
-    const selectedFolder = getSelectedFolder(rootFolder);
-    if (!selectedFolder) return;
-    //파일을 생성하면 나머지 폴더와 파일들의 선택을 해제하고 새로 생성한 파일을 선택한다.
-    recursiveUnselect(rootFolder);
+    if(isCreatingFile) return;
+    setIsCreatingFile(true);
+    let selectedFolder = getSelectedFolder(rootFolder);
+    if (selectedFolder === null) 
+      selectedFolder = rootFolder;
     const newFile: TFileWithOptions = {
-      _id: await addItem(),
+      id: await addItem(),
       isFolder: false,
       file_name: "새 파일",
-      isSelect: true,
       isEditing: true,
       isPinned: false,
     };
     selectedFolder.files.push(newFile);
+    await mutateFolderAsync(rootFolder);
     setRootFolder({...rootFolder});
-    //일단 폴더랑 똑같이 처리중이긴한데, 파일의 경우 서버에 파일 생성 요청을 보내야 하므로 추후 수정이 필요하다.
+    setIsCreatingFile(false);
   };
 
-  const onChange = (folderOrfile: TFolderWithOptions|TFileWithOptions) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    if(rootFolder === null) return;
-    if(folderOrfile.isFolder)
-      folderOrfile.folder_name = e.target.value;
-    else
-      folderOrfile.file_name = e.target.value;
-    setRootFolder({...rootFolder});
-  }
-
-  const applyChange = (folderOrfile: TFolderWithOptions|TFileWithOptions) => {
+  const applyChangeName = (folderOrfile: TFolderWithOptions|TFileWithOptions, name: string) => {
     if(rootFolder === null) return;
     folderOrfile.isEditing = false;
     if(folderOrfile.isFolder)
-      folderOrfile.folder_name = folderOrfile.folder_name.trim();
+      folderOrfile.folder_name = name.trim();
     else {
-      folderOrfile.file_name = folderOrfile.file_name.trim();
-      //파일 이름 변경 완료 시 해당 파일의 선택을 해제한다(현재 접속 중인 파일이 있을 경우 해당 파일을 선택한다).
+      folderOrfile.file_name = name.trim();
       //만약 이름 변경 시 해당 파일로 이동해야 한다면 이 부분을 수정해야 한다.
-      if(plot_id) currentFileSelect(rootFolder, plot_id);
-      recursiveUnselect(rootFolder);
+      mutateName({id: folderOrfile.id, name});
     }
     setRootFolder({...rootFolder});
-    mutate({ workId: workspace_id, folder: rootFolder });
+    mutateFolder(rootFolder);
   }
 
-  const onBlur = (folderOrfile: TFolderWithOptions|TFileWithOptions) => () => applyChange(folderOrfile);
+  const onBlur = (folderOrfile: TFolderWithOptions|TFileWithOptions) => (e: React.FocusEvent<HTMLInputElement>) => {
+    applyChangeName(folderOrfile, e.target.value);
+  }
 
-  const onKeyDown = (folderOrfile: TFolderWithOptions|TFileWithOptions) => (e: React.KeyboardEvent) => {
+  const onKeyDown = (folderOrfile: TFolderWithOptions|TFileWithOptions) => (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      applyChange(folderOrfile);
+      applyChangeName(folderOrfile, e.currentTarget.value);
     }
   }
 
-  const changeName = (folderOrfile: TFolderWithOptions|TFileWithOptions) => () => {
+  const changeName = (folderOrfile: TFolderWithOptions|TFileWithOptions) => (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
     if(rootFolder === null) return;
     recursiveUnselect(rootFolder);
-    folderOrfile.isSelect = true;
     folderOrfile.isEditing = true;
     setRootFolder({...rootFolder});
   }
 
-  const deleteFolderOrFile = (folderOrfile: TFolderWithOptions|TFileWithOptions) => () => {
+  const deleteFolderOrFile = (folderOrfile: TFolderWithOptions|TFileWithOptions) => (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
     if(rootFolder === null) return;
     if(confirm(`정말 ${folderOrfile.isFolder? `폴더 "${folderOrfile.folder_name}"` : `파일 "${folderOrfile.file_name}"`}을 삭제하시겠습니까?`) === false) return;
     const parent = recursiveFindParent(rootFolder, folderOrfile);
@@ -176,8 +178,10 @@ export default function usePlotSidebar(type: "plot" | "script") {
     parent.files.splice(index, 1);
     setRootFolder({...rootFolder});
     //서버에 폴더 구조 반영
-    mutate({ workId: workspace_id, folder: rootFolder });
+    mutateFolder(rootFolder);
     //TODO: 서버에 파일 삭제 반영
+    if(folderOrfile.isFolder) return;
+    mutateDelete(folderOrfile.id);
   }
 
   const setMainPlot = (file: TFileWithOptions) => () => {
@@ -185,7 +189,8 @@ export default function usePlotSidebar(type: "plot" | "script") {
     recursiveFileUnpin(rootFolder);
     file.isPinned = true;
     setRootFolder({...rootFolder});
-    mutate({ workId: workspace_id, folder: rootFolder });
+    mutateFolder(rootFolder);
+    mutateSetMain(file.id);
   }
 
   const changeOrderItem = (getIndex:(index:number)=>number) => (file: TFileWithOptions|TFolderWithOptions) => {
@@ -207,7 +212,7 @@ export default function usePlotSidebar(type: "plot" | "script") {
     const targetIndex = targetParent.files.indexOf(file);
     targetParent.files.splice(getIndex(targetIndex), 0, draggingItem);
     setRootFolder({...rootFolder});
-    mutate({ workId: workspace_id, folder: rootFolder });
+    mutateFolder(rootFolder);
   }
 
   const changeOrderAfterItem = changeOrderItem((index) => index + 1);
@@ -230,7 +235,7 @@ export default function usePlotSidebar(type: "plot" | "script") {
     targetParent.files.push(draggingItem);
     targetParent.isOpen = true;
     setRootFolder({...rootFolder});
-    mutate({ workId: workspace_id, folder: rootFolder });
+    mutateFolder(rootFolder);
   }
 
   return {
@@ -239,13 +244,13 @@ export default function usePlotSidebar(type: "plot" | "script") {
     isLoading,
     isPending,
     error,
+    isSelectedFolderExist,
     openFolder,
     openFolderForDrag,
     toggleFolder,
     clearSelect,
     createFolder,
     createFile,
-    onChange,
     onBlur,
     onKeyDown,
     changeName,

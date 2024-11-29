@@ -1,5 +1,3 @@
-import { memo } from "react";
-
 /**
  * 유저 타입
  */
@@ -40,7 +38,7 @@ export type TMCharacter = {
 };
 
 export interface TFile {
-  _id: string;
+  id: string;
   isFolder: false;
   file_name: string;
   isPinned: boolean;
@@ -53,7 +51,6 @@ export interface TFolder {
 }
 
 export interface TFileWithOptions extends TFile {
-  isSelect: boolean;
   isEditing: boolean;
 }
 
@@ -72,7 +69,7 @@ export type TWorkInfo = {
   title: string;
   genre: string;
   logline: string;
-  expectedQuantity: number;
+  quantity: number;
   grade: null | "전체 이용가" | "12세 이용가" | "15세 이용가" | "19세 이용가";
   introduction: string;
 };
@@ -81,7 +78,7 @@ export type TWorkInfo = {
  * 키워드 타입
  */
 export type TKeyword = {
-  _id: string;
+  id: string;
   keyword_name: string;
   darkColor: string;
   lightColor: string;
@@ -91,7 +88,7 @@ export type TKeyword = {
  * 인물 타입
  */
 export type TCharacter = {
-  _id: string;
+  id: string;
   ch_name: string;
   ch_image: string;
   description: string;
@@ -100,51 +97,45 @@ export type TCharacter = {
   birthday: string;
   gender: string;
   characteristic: Array<{ title: string; content: string }>;
+  keyword: TKeyword[];
+  relatedEvent: TPlotEvent[];
+};
+
+export type TSimpleCharacter = {
+  id: string;
+  ch_name: string;
+};
+
+export type TCharacterOfList = {
+  id: string;
+  ch_name: string;
+  ch_image: string;
+  description: string;
   keyword: string[];
-  relatedEvent: string[];
 };
 
 /**
  * 플롯 타입
  */
 export type TPlot = {
-  _id: string;
+  id: string;
   plot_name: string;
-  plot_description: string;
-  order: number;
-  pevent: TPlotEvent[];
-  is_starred: boolean;
+  chapter_list: TChapter[];
+};
+
+export type TChapter = {
+  id: string;
+  chapter_name: string;
+  chapter_description: string;
+  pevent_list: TPlotEvent[];
   is_folded: boolean;
 };
 
-/**
- * 플롯 이벤트 타입
- */
 export type TPlotEvent = {
-  _id: string;
-  event_description: string;
-  event_name: string;
-  plot_id: string;
-  order: number;
-  author: string;
-  work_id: string;
-  last_modify_date: string;
-  pevent_character: TPlotEventCharacter[];
-};
-
-/**
- * 플롯 이벤트 연관 인물 타입
- */
-export type TPlotEventCharacter = {
-  _id: string;
-  ch_image: string;
-  is_starred: boolean;
-  author: string;
-  work_id: string;
-  last_modify_date: string;
-  created_at: string;
-  ch_name: string;
   id: string;
+  event_name: string;
+  event_description: string;
+  character_list: TCharacter[];
 };
 
 /**

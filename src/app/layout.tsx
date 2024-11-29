@@ -8,6 +8,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { colorSystem } from '@/styles/colorSystem';
 import { GlobalStyles } from '@/styles/GlobalStyles';
 import { ThemeProvider } from 'styled-components';
+import { ToastContainer } from "react-toastify";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +42,7 @@ export default function RootLayout({
           <ThemeProvider theme={{color:colorSystem}}>
             <QueryClientProvider client={queryClient}>
               {children}
+              <ToastContainer/>
             </QueryClientProvider>
           </ThemeProvider>
         </StyledComponentsRegistry>

@@ -5,7 +5,6 @@ import Cover from '@/components/workspace/info/Cover';
 import Introduction from '@/components/workspace/info/Introduction';
 import ExpectedQuantity from '@/components/workspace/info/ExpectedQuantity';
 import MainCharacter from '@/components/workspace/info/MainCharacter';
-import Keyword from '@/components/workspace/info/Keyword';
 import MainPlot from '@/components/workspace/info/MainPlot';
 import { useInfo, InfoContext } from '@/hooks/workspace/info';
 

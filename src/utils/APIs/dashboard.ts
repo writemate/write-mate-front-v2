@@ -1,10 +1,7 @@
-import exp from "constants";
 import axiosInstance from "./axiosInstance";
 import { DOMAIN } from "./domain";
 import { TWork } from "./types";
 import { workspaceCategory } from "./types";
-import { fileURLToPath } from "url";
-import { resolve } from "path";
 
 export const getWorkStudio =
   (category: (typeof workspaceCategory)[keyof typeof workspaceCategory]) =>

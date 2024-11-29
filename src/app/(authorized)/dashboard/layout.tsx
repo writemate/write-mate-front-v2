@@ -60,7 +60,6 @@ export default function WorkspaceLayout({
       <MemoEditModal />
       <MemoCharacterEditModal />
       <DeleteModal />
-      <ToastContainer />
     </DashboardContext.Provider>
   );
 }

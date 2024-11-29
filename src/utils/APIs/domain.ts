@@ -9,14 +9,33 @@ export const DOMAIN = {
   ) => `/api/works?category=${category}`,
   CREATE_WORK: "/api/works",
   GET_WORK: (workId: string) => `/api/works/${workId}`,
+  DELETE_WORK: (workId: string) => `/api/works/${workId}`,
   UPDATE_WORK_CATEGORY: (workId: string) => `/api/works/${workId}/category`,
   UPDATE_WORK_TITLE: (workId: string) => `/api/works/${workId}/title`,
   UPDATE_WORK_COVER: (workId: string) => `/api/works/${workId}/cover`,
-  DELETE_WORK: (workId: string) => `/api/works/${workId}`,
+  UPDATE_WORK_LOGLINE: (workId: string) => `/api/works/${workId}/logline`,
+  UPDATE_WORK_GENRE: (workId: string) => `/api/works/${workId}/genre`,
+  UPDATE_WORK_QUANTITY: (workId: string) => `/api/works/${workId}/quantity`,
+  UPDATE_WORK_INTRODUCTION: (workId: string) => `/api/works/${workId}/introduction`,
+  UPDATE_WORK_GRADE: (workId: string) => `/api/works/${workId}/grade`,
 
-  GET_PLOT: (workId: string) => `/api/works/${workId}/plots`,
+  GET_PLOT_LIST: (workId: string) => `/api/works/${workId}/plotlist`,
+  UPDATE_PLOT_LIST: (workId: string) => `/api/works/${workId}/plotlist`,
+  GET_SCRIPT_LIST: (workId: string) => `/api/works/${workId}/scriptlist`,
+  UPDATE_SCRIPT_LIST: (workId: string) => `/api/works/${workId}/scriptlist`,
 
-  CREATE_CHAPTER: (plotId: string) => `/api/plots/${plotId}/plots`,
+  CREATE_PLOT: (workId: string) => `/api/plots?workId=${workId}`,
+  DELETE_PLOT: (plotId: string) => `/api/plots/${plotId}`,
+  UPDATE_PLOT_NAME: (plotId: string) => `/api/plots/${plotId}/name`,
+  SET_MAIN_PLOT: (plotId: string) => `/api/plots/${plotId}/main`,
+
+  CREATE_SCRIPT: (workId: string) => `/api/scripts?workId=${workId}`,
+  DELETE_SCRIPT: (scriptId: string) => `/api/scripts/${scriptId}`,
+  UPDATE_SCRIPT_NAME: (scriptId: string) => `/api/scripts/${scriptId}/name`,
+  SET_MAIN_SCRIPT: (scriptId: string) => `/api/scripts/${scriptId}/main`,
+  
+  GET_CHAPTER_LIST_WITH_EVENTS: (plotId: string) => `/api/plots/${plotId}`,
+  CREATE_CHAPTER: (plotId: string) => `/api/plots/${plotId}/chapters`,
   DELETE_CHAPTER: (plotId: string, chapterId: string) =>
     `/api/plots/${plotId}/chapters/${chapterId}`,
   UPDATE_CHAPTER_NAME: (plotId: string, chapterId: string) =>
@@ -29,14 +48,15 @@ export const DOMAIN = {
     `/api/plots/${plotId}/chapters/${chapterId}/folded`,
 
   CREATE_EVENT: (chapterId: string) => `/api/chapters/${chapterId}/pevents`,
-  DELETE_EVENT: (peventId: string) => `/api/pevents/${peventId}`,
-  UPDATE_EVENT_NAME: (peventId: string) => `/api/pevents/${peventId}/name`,
-  UPDATE_EVENT_DESCRIPTION: (peventId: string) =>
-    `/api/pevents/${peventId}/description`,
-  UPDATE_EVENT_ORDER: (peventId: string) => `/api/pevents/${peventId}/order`,
+  DELETE_EVENT: (chapterId: string, peventId: string) => `/api/chapters/${chapterId}/pevents/${peventId}`,
+  UPDATE_EVENT_NAME: (chapterId: string, peventId: string) => `/api/chapters/${chapterId}/pevents/${peventId}/name`,
+  UPDATE_EVENT_DESCRIPTION: (chapterId: string, peventId: string) => `/api/chapters/${chapterId}/pevents/${peventId}/description`,
+  UPDATE_EVENT_ORDER: (chapterId: string, peventId: string) => `/api/chapters/${chapterId}/pevents/${peventId}/order`,
 
-  UPDATE_EVENT_CHARACTER: (peventId: string, characterId: string) =>
-    `/api/pevents/${peventId}/character/${characterId}`,
+  ADD_EVENT_CHARACTER: (chapterId: string, peventId: string, characterId: string) =>
+    `/api/chapters/${chapterId}/pevents/${peventId}/character/${characterId}`,
+  DELETE_EVENT_CHARACTER: (chapterId: string, peventId: string, characterId: string) =>
+    `/api/chapters/${chapterId}/pevents/${peventId}/character/${characterId}`,
 
   GET_MEMO_LIST: `/api/memos`,
   CREATE_MEMO: `/api/memos`,

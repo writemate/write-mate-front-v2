@@ -31,7 +31,6 @@ export default function Sidebar({type}: {type: "plot" | "script"}) {
             }
             return <File key={file.file_name} file={file} type={type} />;
           })}
-          
           <DropLine $active={isDragOver} />
         </SidebarContentsContainer>
       </SidebarContainer>
