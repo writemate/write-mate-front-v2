@@ -22,7 +22,9 @@ interface EventProps {
   eventName: string;
   eventDescription: string;
   eventCharacter: PlotCharacterType[];
-  onDelete: (peventId: string) => void;
+  mutateDeleteE: (peventId: string) => void;
+  mutateEventName: ({peventId, event_name}: {peventId: string; event_name: string}) => void;
+  mutateEventD: ({peventId, event_description}: {peventId: string; event_description: string}) => void;
 }
 
 export default function Event({
@@ -30,7 +32,9 @@ export default function Event({
   eventName,
   eventDescription,
   eventCharacter,
-  onDelete,
+  mutateDeleteE,
+  mutateEventName,
+  mutateEventD
 }: EventProps) {
   const [modal, setModal] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -40,8 +44,6 @@ export default function Event({
 
   const [title, setTitle] = useState<string>(eventName);
   const [content, setContent] = useState<string>(eventDescription);
-
-  const { mutateEventName, mutateEventD } = useEventList();
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -57,7 +59,7 @@ export default function Event({
 
   // 사건 삭제
   const deleteEvent = () => {
-    onDelete(eventId);
+    mutateDeleteE(eventId);
   };
 
   return (
@@ -96,7 +98,7 @@ export default function Event({
             </EventDeleteBtn>
           </div>
           <EventTitle
-            value={eventName}
+            value={title}
             onChange={handleNameChange}
             placeholder="사건 제목을 적어주세요."
           />

@@ -13,7 +13,6 @@ import ToggleIcon from "@/assets/workspace/plot/toggle.svg";
 import CopyIcon from "@/assets/workspace/plot/copy.svg";
 import DragDrop from "@/assets/workspace/plot/dragdrop.svg";
 import ToggleFold from "@/assets/workspace/plot/toggleFold.svg";
-import { PlotEventType } from "@/utils/APIs/mock/plot";
 import AutoResizeInput from "./AutoResizeInput";
 import useChapterList from "@/hooks/workspace/plot/useChapterList";
 import { TPlotEvent } from "@/utils/APIs/types";
@@ -91,7 +90,7 @@ export default function Chapter({
         />
         {localIsFolded && (
           <OpenContainer>
-            {/* <EventList pevent={pevent} /> */}
+            <EventList pevent={pevent} chapterId={chapterId} />
           </OpenContainer>
         )}
       </ChapterMargin>

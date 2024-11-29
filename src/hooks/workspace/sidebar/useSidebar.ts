@@ -37,10 +37,15 @@ export default function usePlotSidebar(type: "plot" | "script") {
     queryFn: getFolderList(workspace_id),
   });
   const [draggingItem, setDraggingItem] = useState<TFileWithOptions|TFolderWithOptions|null>(null);
+  const queryClient = useQueryClient();
 
   const { mutate: mutateFolder, mutateAsync: mutateFolderAsync } = useMutation({ mutationFn: updateFolder(workspace_id) });
   const { mutateAsync: addItem, isPending } = useMutation({mutationFn: create(workspace_id)});
-  const { mutate: mutateName } = useMutation({mutationFn: updateName});
+  const { mutate: mutateName } = useMutation({mutationFn: updateName,
+    onSuccess: (data, { id }) => {
+      queryClient.invalidateQueries({queryKey: workspaceQueryKeys.plot(workspace_id, id)});
+    }
+  });
   const { mutate: mutateSetMain } = useMutation({mutationFn: setMain});
   const { mutate: mutateDelete } = useMutation({mutationFn: deleteItem});
 

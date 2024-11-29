@@ -5,47 +5,20 @@ import { PlotEventType } from "@/utils/APIs/mock/plot";
 import useEventList from "@/hooks/workspace/plot/useEventList";
 import Add from "@/assets/workspace/plot/add.svg";
 import { AddButton } from "@/styles/workspace/plot/Chapter.styles";
+import { TPlotEvent } from "@/utils/APIs/types";
 
 interface EventListProps {
-  pevent: PlotEventType[];
+  pevent: TPlotEvent[];
+  chapterId: string;
 }
 
-export const EventList = ({ pevent }: EventListProps) => {
-  const { mutateCreateE, mutateDeleteE, mutateEventO } = useEventList();
-
-  const {
-    items: eventList,
-    setItems: setEventList,
-    handleDragAndDrop,
-  } = useDragAndDrop<PlotEventType>({
-    mutationOrderFn: async ({ itemId, pre_idx, next_idx }) =>
-      mutateEventO({ peventId: itemId, pre_idx, next_idx }),
-  });
-
-  // 사건 추가
-  const handleAddEvent = () => {
-    // mock
-    const mockEvent: PlotEventType = {
-      id: "",
-      event_description: "",
-      event_name: "",
-      order: eventList.length,
-      createdAt: Date.now().toString(),
-      updatedAt: Date.now().toString(),
-      character_list: [],
-    };
-    setEventList((prevEvent) => [...prevEvent, mockEvent]);
-
-    mutateCreateE();
-  };
-
-  // 사건 삭제
-  const handleDeleteEvent = (peventId: string) => {
-    setEventList((prevEvents) =>
-      prevEvents.filter((event) => event.id !== peventId)
-    );
-    mutateDeleteE(peventId);
-  };
+export const EventList = ({ pevent,chapterId }: EventListProps) => {
+  const { mutateCreateE,
+    mutateDeleteE,
+    mutateEventName,
+    mutateEventD,
+    mutateEventO,
+    handleDragAndDrop, eventList } = useEventList(chapterId, pevent);
 
   return (
     <>
@@ -70,7 +43,7 @@ export const EventList = ({ pevent }: EventListProps) => {
                         eventCharacter={event.character_list}
                         eventName={event.event_name}
                         eventDescription={event.event_description}
-                        onDelete={handleDeleteEvent}
+                        {...{mutateEventName, mutateEventD, mutateDeleteE}}
                       />
                     </div>
                   )}
@@ -82,7 +55,7 @@ export const EventList = ({ pevent }: EventListProps) => {
         </Droppable>
       </DragDropContext>
 
-      <AddButton type="button" onClick={handleAddEvent}>
+      <AddButton type="button" onClick={()=>mutateCreateE()}>
         <Add />
       </AddButton>
     </>

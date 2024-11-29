@@ -7,9 +7,9 @@ import { useParams } from "next/navigation";
 import { createContext } from "react";
 
 const usePlot = () => {
-  const { work_id, plot_id } = useParams<{ work_id: string; plot_id: string }>();
+  const { workspace_id, plot_id } = useParams<{ workspace_id: string; plot_id: string }>();
   const { data: plot } = useQuery({
-    queryKey: workspaceQueryKeys.plot(work_id, plot_id),
+    queryKey: workspaceQueryKeys.plot(workspace_id, plot_id),
     queryFn: getPlotInfo(plot_id),
   });
 

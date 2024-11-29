@@ -48,16 +48,15 @@ export const DOMAIN = {
     `/api/plots/${plotId}/chapters/${chapterId}/folded`,
 
   CREATE_EVENT: (chapterId: string) => `/api/chapters/${chapterId}/pevents`,
-  DELETE_EVENT: (peventId: string) => `/api/pevents/${peventId}`,
-  UPDATE_EVENT_NAME: (peventId: string) => `/api/pevents/${peventId}/name`,
-  UPDATE_EVENT_DESCRIPTION: (peventId: string) =>
-    `/api/pevents/${peventId}/description`,
-  UPDATE_EVENT_ORDER: (peventId: string) => `/api/pevents/${peventId}/order`,
+  DELETE_EVENT: (chapterId: string, peventId: string) => `/api/chapters/${chapterId}/pevents/${peventId}`,
+  UPDATE_EVENT_NAME: (chapterId: string, peventId: string) => `/api/chapters/${chapterId}/pevents/${peventId}/name`,
+  UPDATE_EVENT_DESCRIPTION: (chapterId: string, peventId: string) => `/api/chapters/${chapterId}/pevents/${peventId}/description`,
+  UPDATE_EVENT_ORDER: (chapterId: string, peventId: string) => `/api/chapters/${chapterId}/pevents/${peventId}/order`,
 
-  ADD_EVENT_CHARACTER: (peventId: string, characterId: string) =>
-    `/api/pevents/${peventId}/character/${characterId}`,
-  DELETE_EVENT_CHARACTER: (peventId: string, characterId: string) =>
-    `/api/pevents/${peventId}/character/${characterId}`,
+  ADD_EVENT_CHARACTER: (chapterId: string, peventId: string, characterId: string) =>
+    `/api/chapters/${chapterId}/pevents/${peventId}/character/${characterId}`,
+  DELETE_EVENT_CHARACTER: (chapterId: string, peventId: string, characterId: string) =>
+    `/api/chapters/${chapterId}/pevents/${peventId}/character/${characterId}`,
 
   GET_MEMO_LIST: `/api/memos`,
   CREATE_MEMO: `/api/memos`,

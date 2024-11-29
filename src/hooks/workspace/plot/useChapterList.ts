@@ -20,7 +20,7 @@ import { TChapter } from "@/utils/APIs/types";
 
 const useChapterList = () => {
   const queryClient = useQueryClient();
-  const { work_id, plot_id } = useParams<{ work_id: string; plot_id: string }>();
+  const { workspace_id, plot_id } = useParams<{ workspace_id: string; plot_id: string }>();
 
   const chapterListFromServer = useContext(PlotContext);
   const [chapterList, setChapterList] = useState([] as TChapter[]);
@@ -35,18 +35,18 @@ const useChapterList = () => {
     mutationFn: createChapter(plot_id),
     onMutate: async () => {
       await queryClient.cancelQueries({
-        queryKey: workspaceQueryKeys.plot(work_id, plot_id),
+        queryKey: workspaceQueryKeys.plot(workspace_id, plot_id),
       });
 
       const previousChapters = queryClient.getQueryData<PlotChapterType[]>(
-        workspaceQueryKeys.plot(work_id, plot_id)
+        workspaceQueryKeys.plot(workspace_id, plot_id)
       );
 
       return { previousChapters };
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: workspaceQueryKeys.plot(work_id, plot_id),
+        queryKey: workspaceQueryKeys.plot(workspace_id, plot_id),
       });
     },
   });
@@ -61,7 +61,7 @@ const useChapterList = () => {
       notifySuccess("챕터가 삭제되었습니다.");
 
       queryClient.invalidateQueries({
-        queryKey: workspaceQueryKeys.plot(work_id, plot_id),
+        queryKey: workspaceQueryKeys.plot(workspace_id, plot_id),
       });
     },
   });
@@ -71,7 +71,7 @@ const useChapterList = () => {
     mutationFn: updateChapterName(plot_id),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: workspaceQueryKeys.plot(work_id, plot_id),
+        queryKey: workspaceQueryKeys.plot(workspace_id, plot_id),
       });
     },
   });
@@ -81,7 +81,7 @@ const useChapterList = () => {
     mutationFn: updateChapterDescription(plot_id),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: workspaceQueryKeys.plot(work_id, plot_id),
+        queryKey: workspaceQueryKeys.plot(workspace_id, plot_id),
       });
     },
   });
@@ -92,9 +92,28 @@ const useChapterList = () => {
     mutationFn: updateChapterOrder(plot_id),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: workspaceQueryKeys.plot(work_id, plot_id),
+        queryKey: workspaceQueryKeys.plot(workspace_id, plot_id),
       });
     },
+    // onMutate: ({ chapterId, pre_idx, next_idx }) => {
+    //   console.log("onMutate");
+
+    //   const previousChapters = queryClient.getQueryData<PlotChapterType[]>(
+    //     workspaceQueryKeys.plot(work_id, plot_id)
+    //   );
+    //   if(!previousChapters) return;
+
+    //   const newChapters = [...previousChapters];
+    //   const movedChapter = newChapters.splice(pre_idx, 1)[0];
+    //   newChapters.splice(next_idx, 0, movedChapter);
+
+    //   queryClient.setQueryData<PlotChapterType[]>(
+    //     workspaceQueryKeys.plot(work_id, plot_id),
+    //     newChapters
+    //   );
+
+    //   return { previousChapters };
+    // }
   });
 
   // 챕터 접힘 여부 수정하기
@@ -102,7 +121,7 @@ const useChapterList = () => {
     mutationFn: updateChapterFold(plot_id),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: workspaceQueryKeys.plot(work_id, plot_id),
+        queryKey: workspaceQueryKeys.plot(workspace_id, plot_id),
       });
     },
   });

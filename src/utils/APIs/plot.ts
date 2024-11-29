@@ -108,8 +108,8 @@ export const updateChapterFold = ( plotId: string ) =>
  * @param chapterId
  * @returns id
  */
-export const createEvent = async (plotId: string): Promise<TPlot> => {
-  const response = await axiosInstance.post<TPlot>(DOMAIN.CREATE_EVENT(plotId));
+export const createEvent = (chapterId: string) => async () => {
+  const response = await axiosInstance.post<TPlot>(DOMAIN.CREATE_EVENT(chapterId));
 
   return response.data;
 };
@@ -119,9 +119,9 @@ export const createEvent = async (plotId: string): Promise<TPlot> => {
  * @param peventId
  * @returns
  */
-export const deleteEvent = async (peventId: string): Promise<void> => {
+export const deleteEvent = (chapterId: string) => async (peventId: string) => {
   const response = await axiosInstance.delete<void>(
-    DOMAIN.DELETE_EVENT(peventId)
+    DOMAIN.DELETE_EVENT(chapterId, peventId)
   );
 
   return response.data;
@@ -132,12 +132,10 @@ export const deleteEvent = async (peventId: string): Promise<void> => {
  * @param peventId
  * @param event_name
  */
-export const updateEventName = async (
-  peventId: string,
-  event_name: string
-): Promise<void> => {
+export const updateEventName = (chapterId: string) =>
+  async ({ peventId, event_name }: { peventId: string; event_name: string }) => {
   const response = await axiosInstance.patch<void>(
-    DOMAIN.UPDATE_EVENT_NAME(peventId),
+    DOMAIN.UPDATE_EVENT_NAME(chapterId, peventId),
     { event_name }
   );
 
@@ -149,12 +147,10 @@ export const updateEventName = async (
  * @param pevntId
  * @param event_description
  */
-export const updateEventDescription = async (
-  peventId: string,
-  event_description: string
-): Promise<void> => {
+export const updateEventDescription = (chapterId: string) =>
+  async ({ peventId, event_description }: { peventId: string; event_description: string }) => {
   const response = await axiosInstance.patch<void>(
-    DOMAIN.UPDATE_EVENT_DESCRIPTION(peventId),
+    DOMAIN.UPDATE_EVENT_DESCRIPTION(chapterId, peventId),
     { event_description }
   );
 
@@ -167,13 +163,10 @@ export const updateEventDescription = async (
  * @param pre_idx 현재 idx
  * @param next_idx 바꿀 idx
  */
-export const updateEventOrder = async (
-  pevntId: string,
-  pre_idx: number,
-  next_idx: number
-): Promise<void> => {
+export const updateEventOrder = (chapterId: string) => 
+  async ({ pre_idx, next_idx, peventId }: { pre_idx: number; next_idx: number; peventId: string }) => {
   const response = await axiosInstance.patch<void>(
-    DOMAIN.UPDATE_EVENT_ORDER(pevntId),
+    DOMAIN.UPDATE_EVENT_ORDER(chapterId, peventId),
     { pre_idx, next_idx }
   );
 
@@ -183,12 +176,10 @@ export const updateEventOrder = async (
 /**
  * 사건에 인물 수동 할당하기
  */
-export const addCharacter = async (
-  peventId: string,
-  characterId: string
-): Promise<PlotCharacterType> => {
+export const addCharacter = (chapterId: string) =>
+  async ({peventId, characterId}: {peventId: string; characterId: string}) => {
   const response = await axiosInstance.patch<PlotCharacterType>(
-    DOMAIN.ADD_EVENT_CHARACTER(peventId, characterId)
+    DOMAIN.ADD_EVENT_CHARACTER(chapterId, peventId, characterId)
   );
 
   return response.data;
@@ -197,12 +188,10 @@ export const addCharacter = async (
 /**
  * 사건에 인물 할당 해제하기
  */
-export const deleteCharacter = async (
-  peventId: string,
-  characterId: string
-): Promise<void> => {
+export const deleteCharacter = (chapterId: string) =>
+  async ({peventId, characterId}: {peventId: string; characterId: string}) => {
   const response = await axiosInstance.delete<void>(
-    DOMAIN.DELETE_EVENT_CHARACTER(peventId, characterId)
+    DOMAIN.DELETE_EVENT_CHARACTER(chapterId, peventId, characterId)
   );
 
   return response.data;

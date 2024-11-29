@@ -9,7 +9,6 @@ import { useParams } from "next/navigation";
 
 
 export default function ChapterList() {
-  const { plotId } = useParams<{ plotId: string }>();
   const { chapterList, handleDragAndDrop, areAllChaptersFolded, toggleAllChapters,
     mutateCreate, mutateDelete, mutateChapterOrder, mutateChapterFold } =
     useChapterList();
