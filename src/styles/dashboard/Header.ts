@@ -26,8 +26,7 @@ export const HeaderLeftButton = styled.button`
   border: none;
 
   &:hover {
-    transform: scale(1.05); /* 살짝 확대 효과 */
-    filter: brightness(105%);
+    filter: brightness(95%);
   }
 
   p {
@@ -70,7 +69,6 @@ export const HeaderRightButton = styled.button`
   border: none;
 
   &:hover {
-    transform: scale(1.05); /* 살짝 확대 효과 */
     outline: 1px solid ${({ theme }) => theme.color.orange300};
   }
 `;
@@ -95,7 +93,6 @@ export const HearderProfileButton = styled.button`
   border: none;
 
   &:hover {
-    transform: scale(1.05); /* 살짝 확대 효과 */
     outline: 1px solid ${({ theme }) => theme.color.orange300};
   }
 `;

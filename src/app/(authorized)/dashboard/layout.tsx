@@ -15,10 +15,13 @@ import {
 import DeleteModal from "@/components/DeleteModal";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import MemoEditModal from "@/components/dashboard/MemoModal";
-import useIdeaBox from "@/hooks/dashboard/useIdeaBox";
-import useOpenAndCloseDeleteConfirmation from "@/hooks/dashboard/useDeleteModal";
+import MemoCharacterEditModal from "@/components/dashboard/IdeaBox/MCharacter/MCharacterModal";
+import MemoEditModal from "@/components/dashboard/IdeaBox/Memo/MemoModal";
+import useIdeaBoxMemo from "@/hooks/dashboard/useIdeaBoxMemo";
+import useOpenAndCloseDeleteConfirmation from "@/hooks/dashboard/useDeleteConfirmModal";
 import useMemoModal from "@/hooks/dashboard/useMemoModal";
+import useIdeaBoxMemoCharacter from "@/hooks/dashboard/useIdeaBoxMCharacter";
+import useMemoCharacterModal from "@/hooks/dashboard/useMCharacterModal";
 
 export default function WorkspaceLayout({
   children,
@@ -26,14 +29,18 @@ export default function WorkspaceLayout({
   children: React.ReactNode;
 }) {
   const dashboardValue = useWorkstudioAndTrash();
-  const ideaBoxValue = useIdeaBox();
-  const deleteModalValue = useOpenAndCloseDeleteConfirmation();
+  const ideaBoxMemoValue = useIdeaBoxMemo();
+  const ideaBoxMemoCharacterValue = useIdeaBoxMemoCharacter();
   const memoModalValue = useMemoModal();
+  const memoCharacterModalValue = useMemoCharacterModal();
+  const deleteConfirmModalValue = useOpenAndCloseDeleteConfirmation();
   const contextValue = {
     workstudioAndTrash: dashboardValue,
-    ideaBox: ideaBoxValue,
-    removeConfirmationModal: deleteModalValue,
+    ideaBoxMemo: ideaBoxMemoValue,
+    ideaBoxMCharacter: ideaBoxMemoCharacterValue,
+    removeConfirmationModal: deleteConfirmModalValue,
     memoModal: memoModalValue,
+    memoCharacterModal: memoCharacterModalValue,
   };
 
   return (
@@ -51,6 +58,7 @@ export default function WorkspaceLayout({
         </HeaderAndMainContainer>
       </DashboardContainer>
       <MemoEditModal />
+      <MemoCharacterEditModal />
       <DeleteModal />
     </DashboardContext.Provider>
   );

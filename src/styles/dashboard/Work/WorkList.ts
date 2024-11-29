@@ -2,7 +2,7 @@
 import { FlexRowLeftStart, clickable, FlexColumnCenter } from "@/styles";
 import Link from "next/link";
 import { styled } from "styled-components";
-import { HighlghtCssForHoberAfter } from ".";
+import { HighlghtCssForHoberAfter } from "..";
 
 export const TitleAndWorkListContainer = styled.div`
   ${FlexColumnCenter}

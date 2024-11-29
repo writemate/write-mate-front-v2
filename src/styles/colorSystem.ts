@@ -34,5 +34,5 @@ export const colorSystem = {
   black: "#191919",
   white: "#FFFFFF",
 
-  dangerRed: "#F22828",
+  dangerRed: "#E04C4C",
 };

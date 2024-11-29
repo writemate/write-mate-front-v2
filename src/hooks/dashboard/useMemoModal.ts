@@ -8,11 +8,12 @@ import { memoQueryKeys } from "@/utils/APIs/queryKeys";
 import { TMemo } from "@/utils/APIs/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useState } from "react";
+import { notifySuccess, notifyWarning, notifyError } from "@/utils/showToast";
 
 export default function useMemoModal() {
   const queryClient = useQueryClient();
 
-  const [openEditModal, setOpenEditModal] = useState(false);
+  const [isOpenEditModal, setIsOpenEditModal] = useState(false);
   const [selectedMemo, setSelectedMemo] = useState<TMemo | null>(null);
   const nameRef = document.getElementsByClassName("memo-modal-name");
   const descriptionRef = document.getElementsByClassName(
@@ -39,23 +40,23 @@ export default function useMemoModal() {
   });
 
   const debounceUpdateMemoName = useCallback(
-    debounce(updateMemoNameMutation, 500),
+    debounce(updateMemoNameMutation, 100),
     [selectedMemo]
   );
   const debounceUpdateMemoDescription = useCallback(
-    debounce(updateMemoDescriptionMutation, 500),
+    debounce(updateMemoDescriptionMutation, 100),
     [selectedMemo]
   );
 
   const onClickMemoTitle = (memo: TMemo) => () => {
     setSelectedMemo(memo);
     focusInput(nameRef);
-    setOpenEditModal(true);
+    setIsOpenEditModal(true);
   };
   const onClickMemoContent = (memo: TMemo) => () => {
     setSelectedMemo(memo);
     focusInput(descriptionRef);
-    setOpenEditModal(true);
+    setIsOpenEditModal(true);
   };
 
   const onChangeSelectedMemoName = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,9 +66,6 @@ export default function useMemoModal() {
         memo_name: e.target.value,
       });
     }
-    setSelectedMemo((old) =>
-      old ? { ...old, memo_name: e.target.value } : null
-    );
   };
   const onChangeSelectedMemoDescription = (
     e: React.ChangeEvent<HTMLTextAreaElement>
@@ -78,9 +76,6 @@ export default function useMemoModal() {
         memo_description: e.target.value,
       });
     }
-    setSelectedMemo((old) =>
-      old ? { ...old, memo_description: e.target.value } : null
-    );
   };
 
   const onKeyDownTitle = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -101,30 +96,34 @@ export default function useMemoModal() {
     }, 0);
   }
   function closeMemoModal() {
-    setOpenEditModal(false);
+    notifySuccess("변경사항이 저장되었습니다.");
+    setIsOpenEditModal(false);
     setSelectedMemo(null);
   }
-  function openNewMemoEditModal() {
-    const memoList = queryClient.getQueryData<TMemo[]>(
-      memoQueryKeys.memoList()
-    );
-    if (!memoList) return;
-    const memo = memoList[0];
-    setSelectedMemo(memo);
-    focusInput(descriptionRef);
-    setOpenEditModal(true);
+  function rollbackMemoAndCloseModal() {
+    notifySuccess("변경사항이 저장되지 않았습니다.");
+    if (selectedMemo) {
+      debounceUpdateMemoName({
+        id: selectedMemo.id,
+        memo_name: selectedMemo.memo_name,
+      });
+      debounceUpdateMemoDescription({
+        id: selectedMemo.id,
+        memo_description: selectedMemo.memo_description,
+      });
+    }
+    closeMemoModal();
   }
-
   return {
-    openEditModal,
+    isOpenEditModal,
     selectedMemo,
     onClickMemoTitle,
     onClickMemoContent,
-    closeEditModal: closeMemoModal,
+    closeMemoModal,
     onChangeSelectedMemoName,
     onChangeSelectedMemoDescription,
     onKeyDownTitle,
-    openNewMemoEditModal,
     onDeleteMemo,
+    rollbackMemoAndCloseModal,
   };
 }

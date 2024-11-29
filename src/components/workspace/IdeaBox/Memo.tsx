@@ -7,7 +7,7 @@ import {
   CopyButton,
   AddButton,
 } from "@/styles/workspace/IdeaBox.styles";
-import useIdeaBox from "@/hooks/dashboard/useIdeaBox";
+import useIdeaBoxMemo from "@/hooks/dashboard/useIdeaBoxMemo";
 import { copy } from "@/utils/copy";
 
 export default function Memo() {
@@ -21,7 +21,7 @@ export default function Memo() {
     onClickDeleteMemo,
     onChangeMemoName,
     onChangeMemoDescription,
-  } = useIdeaBox();
+  } = useIdeaBoxMemo();
 
   if (isLoading) return <div>메모를 불러오는 중...</div>;
   if (error) return <div>메모를 불러오는 중 에러가 발생했습니다.</div>;
