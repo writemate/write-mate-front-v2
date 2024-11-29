@@ -4,7 +4,7 @@ import { useContext } from "react";
 import MemoItem from "@/components/dashboard/IdeaBox/Memo/MemoItem";
 import { DashboardContext } from "@/hooks/dashboard/dashboard";
 import { LoadingMessage } from "@/styles/dashboard/Loading";
-import { AddMemoButton } from "@/components/dashboard/IdeaBox/AddMemoButton";
+import { AddMemoButton } from "@/components/dashboard/IdeaBox/AddButton";
 
 export default function MemoList() {
   const { memoList, error, isLoading } =

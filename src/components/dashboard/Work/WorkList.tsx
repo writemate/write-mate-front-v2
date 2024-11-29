@@ -5,9 +5,9 @@ import {
 } from "@/styles/dashboard/Work/WorkList";
 import { useContext } from "react";
 import { DashboardContext } from "@/hooks/dashboard/dashboard";
-import WorkButton from "./Work/WorkItem";
+import WorkButton from "./WorkItem";
 import { workspaceCategory } from "@/utils/APIs/types";
-import { AddWork } from "./Work/AddWorkButton";
+import { AddWork } from "./AddWorkButton";
 import { LoadingMessage } from "@/styles/dashboard/Loading";
 
 export default function WorkList() {
