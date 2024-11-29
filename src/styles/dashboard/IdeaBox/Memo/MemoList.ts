@@ -1,17 +1,12 @@
 "use client";
 import { styled } from "styled-components";
-import {
-  clickable,
-  FlexColumnCenter,
-  FlexColumnLeftStart,
-  FlexRowSpaceBetween,
-} from "@/styles";
+import { clickable, FlexColumnLeftStart, FlexRowSpaceBetween } from "@/styles";
 import Copy from "@/assets/icons/copy.svg";
 import OpenModal from "@/assets/icons/openModal.svg";
 import TextareaAutosize from "react-textarea-autosize";
 
 interface MemoCardProps {
-  isSelected?: boolean;
+  $isSelected?: boolean;
 }
 
 export const MemoCard = styled.div<MemoCardProps>`
@@ -22,7 +17,7 @@ export const MemoCard = styled.div<MemoCardProps>`
   box-shadow: 2px 2px 12px 0px rgba(19, 19, 19, 0.06);
   margin-bottom: 6px;
   padding: 8px;
-  visibility: ${({ isSelected }) => (isSelected ? "hidden" : "visible")};
+  visibility: ${({ $isSelected }) => ($isSelected ? "hidden" : "visible")};
 `;
 
 export const MemoHeader = styled.div`
@@ -61,11 +56,14 @@ export const CopyButton = styled(Copy)`
   ${clickable}
 `;
 
-export const AddMemoButton = styled.button`
+interface AddMemoButtonProps {
+  $isEmpty?: boolean;
+}
+export const AddMemoButtonContainer = styled.button<AddMemoButtonProps>`
   ${clickable}
   position: fixed;
   left: calc(50% - 88.5px);
-  bottom: 50px;
+  bottom: ${({ $isEmpty }) => ($isEmpty ? "calc(50% - 120px)" : "50px")};
 
   width: 100%;
   padding: 12px;
@@ -74,8 +72,6 @@ export const AddMemoButton = styled.button`
   border-radius: 100px;
   background: ${({ theme }) => theme.color.gray300};
   border: none;
-
-  box-shadow: 0px 0px 8px 0px rgba(255, 84, 0, 0.2);
 
   color: ${({ theme }) => theme.color.white};
   font-family: Pretendard;
@@ -87,8 +83,7 @@ export const AddMemoButton = styled.button`
   max-width: 177px;
 
   &:hover {
-    transform: scale(1.05);
-    filter: brightness(105%);
+    filter: brightness(95%);
   }
 `;
 
@@ -98,9 +93,11 @@ export const OpenButton = styled(OpenModal)`
 `;
 
 export const MemoListContainer = styled.div`
+  position: relative;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   align-items: start;
+  justify-content: start;
   gap: 16px;
   padding: 16px;
   padding-bottom: 100px;
@@ -128,68 +125,4 @@ export const MemoUpdatedDate = styled.div`
   font-weight: 400;
   line-height: 100%;
   color: ${({ theme }) => theme.color.gray300};
-`;
-export const MemoModalContainer = styled.div`
-  ${FlexColumnCenter}
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
-  padding: 16px;
-  gap: 0px;
-  transition: all 0.3s;
-  background-color: ${({ theme }) => theme.color.white};
-  border: 1px solid ${({ theme }) => theme.color.gray200};
-  border-radius: 8px;
-
-  button {
-    ${clickable}
-    flex-shrink: 0;
-    padding: 0px 8px;
-    height: 24px;
-
-    font-size: 14px;
-    font-weight: 500;
-    background: none;
-    border: none;
-
-    color: ${({ theme }) => theme.color.gray300};
-    &:hover {
-      color: ${({ theme }) => theme.color.orange400};
-    }
-  }
-
-  ${MemoHeader} {
-    gap: 4px;
-  }
-  ${MemoTitle} {
-    font-size: 18px;
-    padding: 8px 8px;
-    color: ${({ theme }) => theme.color.black};
-    flex-wrap: wrap;
-    overflow-x: scroll;
-  }
-
-  ${MemoContent} {
-    overflow-y: scroll;
-    color: ${({ theme }) => theme.color.gray900};
-    max-height: 80vh;
-    font-size: 16px;
-    line-height: 160%;
-    padding: 0px 8px;
-  }
-
-  ${MemoUpdatedDate} {
-    align-self: center;
-    flex-shrink: 0;
-    font-size: 14px;
-    padding: 8px 8px;
-  }
-`;
-
-export const MemoModalButtonContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  width: 100%;
-  padding: 8px;
 `;

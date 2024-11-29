@@ -42,7 +42,7 @@ export function WorkStudioTitleAndNavigationBar() {
 
 export function IdeaBoxTitleAndNavigationBar() {
   const { ideaCategory, handleIdeaCategoryChange } =
-    useContext(DashboardContext).ideaBox;
+    useContext(DashboardContext).ideaBoxMemo;
 
   return (
     <TitleAndNavigationBar>

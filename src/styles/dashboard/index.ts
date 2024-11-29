@@ -7,7 +7,7 @@ export const HighlghtCssForHoberAfter = css<{ $isActivated?: boolean }>`
   position: absolute;
   background-color: ${({ $isActivated, theme }) =>
     $isActivated ? theme.color.orange200 : theme.color.gray200};
-  opacity: 0.2;
+  opacity: 0.3;
   border-radius: 9999px;
   width: 100%;
   height: 100%;

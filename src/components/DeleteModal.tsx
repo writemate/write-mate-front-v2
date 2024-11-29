@@ -10,17 +10,47 @@ import { useContext } from "react";
 import useWork from "@/hooks/dashboard/useWork";
 import Modal from "@/components/Modal";
 
-function ConfirmMoveToTrash({ closeModal }: { closeModal: () => void }) {
-  const { selectedWorkForDelete } =
+export default function DeleteModal() {
+  const {
+    isOpenDeleteModal,
+    selectedWorkForDelete,
+    isDeleteMemo,
+    isDeleteMemoCharacter,
+    isPermanentDelete,
+    closeConfirmModal,
+  } = useContext(DashboardContext).removeConfirmationModal;
+
+  return (
+    <>
+      {isOpenDeleteModal && (
+        <Modal closeModal={closeConfirmModal} maxWidth="450px">
+          <>
+            {selectedWorkForDelete != "" && !isPermanentDelete && (
+              <ConfirmMoveToTrash />
+            )}
+            {selectedWorkForDelete != "" && isPermanentDelete && (
+              <ConfirmDeleteWorkInTrashModal />
+            )}
+            {isDeleteMemo && <ConfirmDeleteMemoModal />}
+            {isDeleteMemoCharacter && <ConfirmDeleteMemoCharacterModal />}
+          </>
+        </Modal>
+      )}
+    </>
+  );
+}
+
+function ConfirmMoveToTrash() {
+  const { selectedWorkForDelete, closeConfirmModal } =
     useContext(DashboardContext).removeConfirmationModal;
   const { onChangeCategory } = useWork(selectedWorkForDelete);
 
   const onClickConfrimMove = () => {
     onChangeCategory("trash");
-    closeModal();
+    closeConfirmModal();
   };
   const onClickCancel = () => {
-    closeModal();
+    closeConfirmModal();
   };
 
   return (
@@ -43,21 +73,19 @@ function ConfirmMoveToTrash({ closeModal }: { closeModal: () => void }) {
   );
 }
 
-function ConfirmDeleteWorkInTrashModal({
-  closeModal,
-}: {
-  closeModal: () => void;
-}) {
+function ConfirmDeleteWorkInTrashModal() {
+  const { closeConfirmModal } =
+    useContext(DashboardContext).removeConfirmationModal;
   const { selectedWorkForDelete } =
     useContext(DashboardContext).removeConfirmationModal;
   const { onDeleteWork } = useWork(selectedWorkForDelete);
 
   const onClickConfirmDelete = () => {
     onDeleteWork();
-    closeModal();
+    closeConfirmModal();
   };
   const onClickCancel = () => {
-    closeModal();
+    closeConfirmModal();
   };
 
   return (
@@ -80,17 +108,19 @@ function ConfirmDeleteWorkInTrashModal({
   );
 }
 
-function ConfirmDeleteMemoModal({ closeModal }: { closeModal: () => void }) {
-  const { onDeleteMemo, closeEditModal } =
+function ConfirmDeleteMemoModal() {
+  const { closeConfirmModal } =
+    useContext(DashboardContext).removeConfirmationModal;
+  const { onDeleteMemo, closeMemoModal } =
     useContext(DashboardContext).memoModal;
 
   const onClickConfirmDelete = () => {
     onDeleteMemo();
-    closeEditModal();
-    closeModal();
+    closeConfirmModal();
+    closeMemoModal();
   };
   const onClickCancel = () => {
-    closeModal();
+    closeConfirmModal();
   };
 
   return (
@@ -113,40 +143,37 @@ function ConfirmDeleteMemoModal({ closeModal }: { closeModal: () => void }) {
   );
 }
 
-export default function DeleteModal() {
-  const {
-    openDeleteModal,
-    selectedWorkForDelete,
-    selectedMemoForDelete,
-    setOpenDeleteModal,
-    setSelectedWorkForDelete,
-    setSelectedMemoForDelete,
-    isPermanentDelete,
-  } = useContext(DashboardContext).removeConfirmationModal;
+function ConfirmDeleteMemoCharacterModal() {
+  const { closeConfirmModal } =
+    useContext(DashboardContext).removeConfirmationModal;
+  const { onDeleteMemo, closeEditModal } =
+    useContext(DashboardContext).memoCharacterModal;
 
-  const closeModal = () => {
-    setOpenDeleteModal(false);
-    setSelectedWorkForDelete("");
-    setSelectedMemoForDelete("");
+  const onClickConfirmDelete = () => {
+    onDeleteMemo();
+    closeConfirmModal();
+    closeEditModal();
+  };
+  const onClickCancel = () => {
+    closeConfirmModal();
   };
 
   return (
-    <>
-      {openDeleteModal && (
-        <Modal closeModal={closeModal} maxWidth="450px">
-          <>
-            {selectedWorkForDelete != "" && !isPermanentDelete && (
-              <ConfirmMoveToTrash closeModal={closeModal} />
-            )}
-            {selectedWorkForDelete != "" && isPermanentDelete && (
-              <ConfirmDeleteWorkInTrashModal closeModal={closeModal} />
-            )}
-            {selectedMemoForDelete != "" && (
-              <ConfirmDeleteMemoModal closeModal={closeModal} />
-            )}
-          </>
-        </Modal>
-      )}
-    </>
+    <ModalContainer>
+      <DangerIcon />
+      <p>
+        해당 인물 메모를 삭제하시겠습니까?
+        <br />
+        삭제된 데이터는 복구가 어렵습니다.
+      </p>
+      <ButtonContainer>
+        <ModalButton $isDanger={true} onClick={onClickConfirmDelete}>
+          삭제
+        </ModalButton>
+        <ModalButton $isDanger={false} onClick={onClickCancel}>
+          취소
+        </ModalButton>
+      </ButtonContainer>
+    </ModalContainer>
   );
 }
