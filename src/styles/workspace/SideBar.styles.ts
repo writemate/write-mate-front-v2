@@ -12,7 +12,7 @@ import Link from "next/link";
 
 export const SidebarContainer = styled.div`
   ${FlexColumnCenter}
-  width: 258px;
+  width: 258px; //수정 시 workspace/index.ts의 MainContainer padding-left 수정 필요
   height: 100%;
   border-radius: 0 8px 8px 0;
   padding: 20px 12px 18px;

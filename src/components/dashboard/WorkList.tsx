@@ -4,19 +4,25 @@ import {
   EmptyListDiscription,
 } from "@/styles/dashboard/WorkList";
 import { useContext } from "react";
-import { DashboardContext } from "@/hooks/dashboard/workStudioAndTrash";
-import WorkButton from "./WorkButton";
+import { DashboardContext } from "@/hooks/dashboard/dashboard";
+import WorkButton from "./WorkItem";
 import { workspaceCategory } from "@/utils/APIs/types";
-import { AddWork } from "./ColoredRoundButtons";
+import { AddWork } from "./ReusedButtons";
+import { LoadingMessage } from "@/styles/dashboard/Loading";
 
 export default function WorkList() {
   const { data, error, isLoading, onClickAddWorkspace, workCategory } =
-    useContext(DashboardContext);
+    useContext(DashboardContext).workstudioAndTrash;
 
   return (
     <>
-      {isLoading && <div>로딩중...</div>}
-      {error && <div>에러 발생</div>}
+      {isLoading && <LoadingMessage>로딩중...</LoadingMessage>}
+      {error && (
+        <LoadingMessage>
+          에러가 발생했습니다. 새로고침을 하시거나, 채팅 버튼을 이용해
+          문의해주세요.
+        </LoadingMessage>
+      )}
       {data && (
         <WorkButtonList>
           {data.length === 0 && workCategory !== workspaceCategory.trash && (
@@ -35,9 +41,7 @@ export default function WorkList() {
             </>
           )}
           {!isLoading &&
-            data.map((work, i) => (
-              <WorkButton workValue={work} key={work.id} />
-            ))}
+            data.map((work) => <WorkButton key={work.id} workId={work.id} />)}
         </WorkButtonList>
       )}
     </>

@@ -1,6 +1,5 @@
 "use client";
-import { DashboardContext } from "@/hooks/dashboard/workStudioAndTrash";
-import { IdeaBoxContext } from "@/hooks/dashboard/ideaBox";
+import { DashboardContext } from "@/hooks/dashboard/dashboard";
 import {
   Title,
   NavigationBar,
@@ -9,11 +8,11 @@ import {
 } from "@/styles/dashboard/TitleAndNavigationBar";
 import { workspaceCategory } from "@/utils/APIs/types";
 import { ideaBoxCategory } from "@/utils/APIs/types";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 
 export function WorkStudioTitleAndNavigationBar() {
   const { workCategory, handleWorkCategoryChange } =
-    useContext(DashboardContext);
+    useContext(DashboardContext).workstudioAndTrash;
 
   return (
     <TitleAndNavigationBar>
@@ -42,7 +41,8 @@ export function WorkStudioTitleAndNavigationBar() {
 }
 
 export function IdeaBoxTitleAndNavigationBar() {
-  const { ideaCategory, handleIdeaCategoryChange } = useContext(IdeaBoxContext);
+  const { ideaCategory, handleIdeaCategoryChange } =
+    useContext(DashboardContext).ideaBox;
 
   return (
     <TitleAndNavigationBar>
@@ -71,7 +71,7 @@ export function IdeaBoxTitleAndNavigationBar() {
 
 export function TrashTitleAndNavigationBar() {
   const { workCategory, handleWorkCategoryChange } =
-    useContext(DashboardContext);
+    useContext(DashboardContext).workstudioAndTrash;
 
   return (
     <TitleAndNavigationBar>

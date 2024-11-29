@@ -15,65 +15,65 @@ import {
   TPatchUpdateENameRequest,
   TPatchUpdateEORequest,
 } from "@/utils/APIs/mock/plot";
+import { useEffect, useState } from "react";
+import useDragAndDrop from "./useDragAndDrop";
+import { TPlotEvent } from "@/utils/APIs/types";
 
-const useEventList = () => {
+const useEventList = (chapterId: string, eventListFromServer: TPlotEvent[]) => {
   const queryClient = useQueryClient();
-  const { plot_id } = useParams<{ plot_id: string }>();
+  const { workspace_id, plot_id } = useParams<{ workspace_id: string; plot_id: string }>();
+
+  const [eventList, setEventList] = useState(eventListFromServer);
+  useEffect(() => {
+    setEventList(eventListFromServer);
+  }, [eventListFromServer]);
 
   // 사건 추가하기 (만들기)
   const { mutate: mutateCreateE } = useMutation({
-    mutationFn: () => createEvent(plot_id),
-    onMutate: async () => {
-      await queryClient.cancelQueries({
-        queryKey: workspaceQueryKeys.eventList(plot_id),
-      });
-
-      const previousEvents = queryClient.getQueryData<PlotEventType[]>(
-        workspaceQueryKeys.eventList(plot_id)
-      );
-
-      return { previousEvents };
+    mutationFn: createEvent(chapterId),
+    onError: () => {
+      showToastMessage("사건 추가에 실패했습니다.", "error");
     },
     onSuccess: () => {
+      showToastMessage("사건이 추가되었습니다.", "success");
+
       queryClient.invalidateQueries({
-        queryKey: workspaceQueryKeys.eventList(plot_id),
+        queryKey: workspaceQueryKeys.plot(workspace_id, plot_id),
       });
-    },
+    }
   });
 
   // 사건 삭제하기
   const { mutate: mutateDeleteE } = useMutation({
-    mutationFn: (peventId: string) => deleteEvent(peventId),
-    onError: (err, newTodo, context) => {
+    mutationFn: deleteEvent(plot_id),
+    onError: () => {
       showToastMessage("사건 삭제에 실패했습니다.", "error");
     },
     onSuccess: () => {
       showToastMessage("사건이 삭제되었습니다.", "success");
 
       queryClient.invalidateQueries({
-        queryKey: workspaceQueryKeys.eventList(plot_id),
+        queryKey: workspaceQueryKeys.plot(workspace_id, plot_id),
       });
     },
   });
 
   // 사건 이름 수정하기
   const { mutate: mutateEventName } = useMutation({
-    mutationFn: ({ peventId, event_name }: TPatchUpdateENameRequest) =>
-      updateEventName(peventId, event_name),
-    onSuccess: (data, { peventId }) => {
+    mutationFn: updateEventName(chapterId),
+    onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: workspaceQueryKeys.event(peventId),
+        queryKey: workspaceQueryKeys.plot(workspace_id, plot_id),
       });
     },
   });
 
   // 사건 설명 수정하기
   const { mutate: mutateEventD } = useMutation({
-    mutationFn: ({ peventId, event_description }: TPatchUpdateEDRequest) =>
-      updateEventDescription(peventId, event_description),
-    onSuccess: (data, { peventId }) => {
+    mutationFn: updateEventDescription(chapterId),
+    onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: workspaceQueryKeys.event(peventId),
+        queryKey: workspaceQueryKeys.plot(workspace_id, plot_id),
       });
     },
   });
@@ -81,17 +81,18 @@ const useEventList = () => {
   // 사건 순서 수정하기
   // todo: 테스트 후 toast 지우기
   const { mutate: mutateEventO } = useMutation({
-    mutationFn: ({ peventId, pre_idx, next_idx }: TPatchUpdateEORequest) =>
-      updateEventOrder(peventId, pre_idx, next_idx),
-    onError: () => {
-      showToastMessage("사건 순서 변경에 실패했습니다.", "error");
-    },
-    onSuccess: (data, { peventId }) => {
-      showToastMessage("사건 순서 변경에 성공했습니다.", "success");
+    mutationFn: updateEventOrder(chapterId),
+    onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: workspaceQueryKeys.chapter(peventId),
+        queryKey: workspaceQueryKeys.plot(workspace_id, plot_id),
       });
     },
+  });
+
+  const { handleDragAndDrop } = useDragAndDrop({
+    mutationOrderFn: ({ itemId, pre_idx, next_idx }) =>
+      mutateEventO({ peventId: itemId, pre_idx, next_idx }),
+    item: eventList,
   });
 
   return {
@@ -100,6 +101,8 @@ const useEventList = () => {
     mutateEventName,
     mutateEventD,
     mutateEventO,
+    handleDragAndDrop,
+    eventList
   };
 };
 
