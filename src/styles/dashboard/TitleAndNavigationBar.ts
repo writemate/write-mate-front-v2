@@ -5,7 +5,7 @@ import {
   FlexColumnCenter,
   Button,
 } from "@/styles";
-import { styled, css } from "styled-components";
+import { styled } from "styled-components";
 import { HighlghtCssForHoberAfter } from ".";
 
 export const TitleAndNavigationBar = styled.div`

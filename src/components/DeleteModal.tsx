@@ -1,5 +1,5 @@
 "use client";
-import { DashboardContext } from "@/hooks/dashboard/workStudioAndTrash";
+import { DashboardContext } from "@/hooks/dashboard/dashboard";
 import {
   ButtonContainer,
   DangerIcon,
@@ -7,15 +7,19 @@ import {
   ModalContainer,
 } from "@/styles/DeleteModal";
 import { useContext } from "react";
-import { useWork } from "@/hooks/dashboard/useWork";
+import useWork from "@/hooks/dashboard/useWork";
 import Modal from "@/components/Modal";
 
-function TrashContent({ closeModal }: { closeModal: () => void }) {
-  const { isDeleting } = useContext(DashboardContext);
-  const { onChangeCategory } = useWork(isDeleting);
+function ConfirmMoveToTrash({ closeModal }: { closeModal: () => void }) {
+  const { selectedWorkForDelete } =
+    useContext(DashboardContext).removeConfirmationModal;
+  const { onChangeCategory } = useWork(selectedWorkForDelete);
 
-  const handleDelete = () => {
+  const onClickConfrimMove = () => {
     onChangeCategory("trash");
+    closeModal();
+  };
+  const onClickCancel = () => {
     closeModal();
   };
 
@@ -23,15 +27,15 @@ function TrashContent({ closeModal }: { closeModal: () => void }) {
     <ModalContainer>
       <DangerIcon />
       <p>
-        휴지통으로 옮기시겠습니까?
+        해당 작품을 휴지통으로 옮기시겠습니까?
         <br />
-        30일 뒤에 자동으로 삭제됩니다.
+        휴지통의 데이터는 보관 후 30일까지 보관됩니다.
       </p>
       <ButtonContainer>
-        <ModalButton $isDanger={true} onClick={handleDelete}>
+        <ModalButton $isDanger={true} onClick={onClickConfrimMove}>
           휴지통으로 옮기기
         </ModalButton>
-        <ModalButton $isDanger={false} onClick={closeModal}>
+        <ModalButton $isDanger={false} onClick={onClickCancel}>
           취소
         </ModalButton>
       </ButtonContainer>
@@ -39,12 +43,20 @@ function TrashContent({ closeModal }: { closeModal: () => void }) {
   );
 }
 
-function DeleteContent({ closeModal }: { closeModal: () => void }) {
-  const { isDeleting } = useContext(DashboardContext);
-  const { onDeleteWork } = useWork(isDeleting);
+function ConfirmDeleteWorkInTrashModal({
+  closeModal,
+}: {
+  closeModal: () => void;
+}) {
+  const { selectedWorkForDelete } =
+    useContext(DashboardContext).removeConfirmationModal;
+  const { onDeleteWork } = useWork(selectedWorkForDelete);
 
-  const handleDelete = () => {
+  const onClickConfirmDelete = () => {
     onDeleteWork();
+    closeModal();
+  };
+  const onClickCancel = () => {
     closeModal();
   };
 
@@ -52,15 +64,48 @@ function DeleteContent({ closeModal }: { closeModal: () => void }) {
     <ModalContainer>
       <DangerIcon />
       <p>
-        작품을 영구적으로 삭제하시겠습니까?
+        해당 작품를 삭제하시겠습니까?
         <br />
-        복구가 불가능합니다.
+        삭제된 데이터는 복구가 어렵습니다.
       </p>
       <ButtonContainer>
-        <ModalButton $isDanger={true} onClick={handleDelete}>
+        <ModalButton $isDanger={true} onClick={onClickConfirmDelete}>
           삭제
         </ModalButton>
-        <ModalButton $isDanger={false} onClick={closeModal}>
+        <ModalButton $isDanger={false} onClick={onClickCancel}>
+          취소
+        </ModalButton>
+      </ButtonContainer>
+    </ModalContainer>
+  );
+}
+
+function ConfirmDeleteMemoModal({ closeModal }: { closeModal: () => void }) {
+  const { onDeleteMemo, closeEditModal } =
+    useContext(DashboardContext).memoModal;
+
+  const onClickConfirmDelete = () => {
+    onDeleteMemo();
+    closeEditModal();
+    closeModal();
+  };
+  const onClickCancel = () => {
+    closeModal();
+  };
+
+  return (
+    <ModalContainer>
+      <DangerIcon />
+      <p>
+        해당 메모를 삭제하시겠습니까?
+        <br />
+        삭제된 데이터는 복구가 어렵습니다.
+      </p>
+      <ButtonContainer>
+        <ModalButton $isDanger={true} onClick={onClickConfirmDelete}>
+          삭제
+        </ModalButton>
+        <ModalButton $isDanger={false} onClick={onClickCancel}>
           취소
         </ModalButton>
       </ButtonContainer>
@@ -71,23 +116,34 @@ function DeleteContent({ closeModal }: { closeModal: () => void }) {
 export default function DeleteModal() {
   const {
     openDeleteModal,
+    selectedWorkForDelete,
+    selectedMemoForDelete,
     setOpenDeleteModal,
-    setIsDeleting,
+    setSelectedWorkForDelete,
+    setSelectedMemoForDelete,
     isPermanentDelete,
-  } = useContext(DashboardContext);
+  } = useContext(DashboardContext).removeConfirmationModal;
 
   const closeModal = () => {
     setOpenDeleteModal(false);
-    setIsDeleting("");
+    setSelectedWorkForDelete("");
+    setSelectedMemoForDelete("");
   };
 
   return (
     <>
       {openDeleteModal && (
-        <Modal closeModal={closeModal} maxWidth="600px" maxHeight="200px">
+        <Modal closeModal={closeModal} maxWidth="450px">
           <>
-            {isPermanentDelete && <DeleteContent closeModal={closeModal} />}
-            {!isPermanentDelete && <TrashContent closeModal={closeModal} />}
+            {selectedWorkForDelete != "" && !isPermanentDelete && (
+              <ConfirmMoveToTrash closeModal={closeModal} />
+            )}
+            {selectedWorkForDelete != "" && isPermanentDelete && (
+              <ConfirmDeleteWorkInTrashModal closeModal={closeModal} />
+            )}
+            {selectedMemoForDelete != "" && (
+              <ConfirmDeleteMemoModal closeModal={closeModal} />
+            )}
           </>
         </Modal>
       )}

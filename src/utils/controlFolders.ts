@@ -12,7 +12,6 @@ export const recursiveFolderAddOptions = (folder: TFolder): TFolderWithOptions =
       }
       return ({
         ...file,
-        isSelect: false,
         isEditing: false,
       });
     }),
@@ -20,23 +19,21 @@ export const recursiveFolderAddOptions = (folder: TFolder): TFolderWithOptions =
 };
 
 export const recursiveUnselect = (folder: TFolderWithOptions|TFileWithOptions) => {
-  folder.isSelect = false;
   if(!folder.isFolder) return;
+  folder.isSelect = false;
   folder.files.forEach((file) => {
     recursiveUnselect(file);
   });
 };
 
-export const currentFileSelect = (folderOrFile: TFolderWithOptions|TFileWithOptions, fileId: string) => {
-  folderOrFile.isSelect = false;
-  if(!folderOrFile.isFolder && folderOrFile._id === fileId){
-    folderOrFile.isSelect = true;
-  }
-  if(!folderOrFile.isFolder) return;
-  folderOrFile.files.forEach((file) => {
-    currentFileSelect(file, fileId);
-  });
-};
+export const isExistSelect = (folder: TFolderWithOptions): boolean => {
+  if(folder.isSelect) return true;
+  return folder.files.reduce((acc, file) => {
+    if(acc) return acc;
+    if(!file.isFolder) return false;
+    return isExistSelect(file);
+  }, false);
+}
 
 export const recursiveFileUnpin = (folderOrFile: TFolderWithOptions|TFileWithOptions) => {
   if(!folderOrFile.isFolder){
@@ -73,3 +70,12 @@ export const getSelectedFolder = (folder: TFolderWithOptions): TFolderWithOption
     return null;
   }, null as TFolderWithOptions | null);
 };
+
+export const isExistEditing = (folder: TFolderWithOptions): boolean => {
+  if(folder.isEditing) return true;
+  return folder.files.reduce((acc, file) => {
+    if(acc) return acc;
+    if(file.isFolder) return isExistEditing(file);
+    return file.isEditing;
+  }, false);
+}

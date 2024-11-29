@@ -16,8 +16,8 @@ export const ToggleSlider = styled.span`
   cursor: pointer;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
+  width: 100%;
+  height: 100%;
   background-color: #ccc;
   -webkit-transition: 0.4s;
   transition: 0.4s;
@@ -34,10 +34,9 @@ export const ToggleSlider = styled.span`
     border-radius: 50%;
 
     position: absolute;
-    left: 0%;
-    right: 59.18%;
-    top: 0%;
-    bottom: 1px;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
 
     box-shadow: 2px 1px 4px rgba(52, 55, 61, 0.35);
   }
@@ -57,8 +56,6 @@ export const CheckBox = styled.input`
   }
 
   &:checked + ${ToggleSlider}:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
+    transform: translateX(26px) translateY(-50%);
   }
 `;
