@@ -3,7 +3,7 @@ import { DashboardContext } from "@/hooks/dashboard/dashboard";
 import { LoadingMessage } from "@/styles/dashboard/Loading";
 import { TMCharacter } from "@/utils/APIs/types";
 import { useContext } from "react";
-import { AddMCharacterButton } from "@/components/dashboard/IdeaBox/AddMemoButton";
+import { AddMCharacterButton } from "@/components/dashboard/IdeaBox/AddButton";
 
 export default function CharacterList() {
   const { memoCharacterList, error, isLoading } =
