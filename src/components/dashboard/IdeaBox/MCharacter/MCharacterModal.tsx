@@ -5,10 +5,18 @@ import Modal from "@/components/Modal";
 import { DashboardContext } from "@/hooks/dashboard/dashboard";
 import Footer from "@/components/dashboard/IdeaBox/MCharacter/ModalFooter";
 import {
-  ModalContentAndFooterContainer,
-  ModalContentContainer,
-  ImgAndNameAndDescriptionContainer,
-  NameAndDescriptionContainer,
+  ModalContainer,
+  ModalTitle,
+  AddCharacteristicButton,
+  ImageBackgoundContainer,
+  NameContainer,
+  ImageContainer,
+  BirthAndGenderContainer,
+  CharacteristicContainer,
+  ImgAndNameAndBirthAndGenderContainer,
+  NameAndBirthAndGenderContainer,
+  BirthContainer,
+  GenderContainer,
 } from "@/styles/dashboard/IdeaBox/Modal";
 import Image from "@/components/dashboard/IdeaBox/MCharacter/Image";
 import Name from "@/components/dashboard/IdeaBox/MCharacter/Name";
@@ -24,24 +32,164 @@ export default function MCharacterModal() {
   return (
     <>
       {isOpenEditModal && (
-        <Modal closeModal={closeEditModal} maxWidth="700px">
-          <ModalContentAndFooterContainer>
-            <ModalContentContainer>
-              <ImgAndNameAndDescriptionContainer>
-                <Image />
-                <NameAndDescriptionContainer>
-                  <Name />
-                  <Role />
-                </NameAndDescriptionContainer>
-              </ImgAndNameAndDescriptionContainer>
-              <BirthAndGender />
-              <Description />
-              <Characteristic />
-            </ModalContentContainer>
-            <Footer />
-          </ModalContentAndFooterContainer>
+        <Modal closeModal={closeEditModal} maxWidth="600px">
+          <ModalContainer>
+            <ImgAndNameAndBirthAndGenderContainer>
+              <Image />
+              <NameAndBirthAndGenderContainer>
+                <Name />
+                <BirthAndGender />
+              </NameAndBirthAndGenderContainer>
+            </ImgAndNameAndBirthAndGenderContainer>
+            <Characterisitc />
+            <ModalFooter />
+          </ModalContainer>
         </Modal>
       )}
     </>
+  );
+}
+
+function Name() {
+  const { selectedMCharacter, onChangeSelectedMCharacterName, onKeyDownName } =
+    useContext(DashboardContext).memoCharacterModal;
+  if (!selectedMCharacter) {
+    return null;
+  }
+
+  return (
+    <NameContainer>
+      <p>인물 이름</p>
+      <ModalTitle
+        className="memo-modal-name"
+        defaultValue={selectedMCharacter.ch_name}
+        onChange={onChangeSelectedMCharacterName}
+        placeholder="인물의 이름을 입력하세요."
+      />
+    </NameContainer>
+  );
+}
+
+function Image() {
+  const { selectedMCharacter } =
+    useContext(DashboardContext).memoCharacterModal;
+  if (!selectedMCharacter) {
+    return null;
+  }
+
+  return (
+    <ImageContainer>
+      <p>인물 이미지</p>
+      <ImageBackgoundContainer>
+        <input
+          className="memo-modal-image"
+          type="file"
+          placeholder="인물 이미지 URL을 입력하세요."
+        />
+        {selectedMCharacter.ch_image && (
+          <img
+            src={selectedMCharacter.ch_image}
+            alt={selectedMCharacter.ch_name}
+          />
+        )}
+        {!selectedMCharacter.ch_image && <p>{selectedMCharacter.ch_name[0]}</p>}
+      </ImageBackgoundContainer>
+    </ImageContainer>
+  );
+}
+
+function BirthAndGender() {
+  const {
+    selectedMCharacter,
+    onChangeSelectedMCharacterBirthday,
+    onChangeSelectedMCharacterGender,
+  } = useContext(DashboardContext).memoCharacterModal;
+  if (!selectedMCharacter) {
+    return null;
+  }
+
+  return (
+    <BirthAndGenderContainer>
+      <BirthContainer>
+        <p>생년월일</p>
+        <ModalTitle
+          className="memo-modal-birth"
+          defaultValue={selectedMCharacter.birthday}
+          onChange={onChangeSelectedMCharacterBirthday}
+          placeholder="인물의 생년월일을 입력하세요."
+        />
+      </BirthContainer>
+      <GenderContainer>
+        <p>성별</p>
+        <ModalTitle
+          className="memo-modal-gender"
+          defaultValue={selectedMCharacter.gender}
+          onChange={onChangeSelectedMCharacterGender}
+          placeholder="인물의 성별을 입력하세요."
+        />
+      </GenderContainer>
+    </BirthAndGenderContainer>
+  );
+}
+
+function Characterisitc() {
+  const { selectedMCharacter } =
+    useContext(DashboardContext).memoCharacterModal;
+  if (!selectedMCharacter) {
+    return null;
+  }
+
+  return (
+    <CharacteristicContainer>
+      <p>특징</p>
+      <>
+        {selectedMCharacter.characteristic &&
+          selectedMCharacter.characteristic.map((characteristic, index) => (
+            <>
+              <input
+                key={index}
+                defaultValue={characteristic.title}
+                placeholder="인물의 특징명을 입력하세요."
+              />
+              <input
+                key={index}
+                defaultValue={characteristic.content}
+                placeholder="인물의 특징을 입력하세요."
+              />
+            </>
+          ))}
+
+        <AddCharacteristicButton>특징 추가</AddCharacteristicButton>
+      </>
+    </CharacteristicContainer>
+  );
+}
+
+function DateAndButtonList() {
+  const { selectedMCharacter, closeEditModal } =
+    useContext(DashboardContext).memoCharacterModal;
+  const { onClickDeleteMCharacter } =
+    useContext(DashboardContext).removeConfirmationModal;
+  if (!selectedMCharacter) {
+    return null;
+  }
+
+  return (
+    <div>
+      <div>
+        {"수정일 : " +
+          new Date(selectedMCharacter.updatedAt).toLocaleString("ko-KR", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+          })}
+      </div>
+      <div>
+        <button onClick={onClickDeleteMCharacter}>삭제</button>
+        <button onClick={closeEditModal}>저장</button>
+      </div>
+    </div>
   );
 }

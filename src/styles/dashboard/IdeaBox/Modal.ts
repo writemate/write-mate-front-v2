@@ -4,8 +4,7 @@ import { styled, css } from "styled-components";
 import TextareaAutosize from "react-textarea-autosize";
 import TrashCan from "@/assets/icons/trashcan.svg";
 
-/* Css */
-export const InputBoxContainer = css`
+export const ModalContainer = styled.div`
   width: 100%;
   display: flex;
   padding: 12px 12px;
@@ -38,8 +37,7 @@ export const FlexColumn = css`
   position: relative;
   display: flex;
   flex-direction: column;
-  height: 100%;
-  width: 100%;
+  padding: 16px;
   gap: 12px;
 `;
 
@@ -65,13 +63,21 @@ export const ModalContentAndFooterContainer = styled.div`
   }
 `;
 
-/* Content */
-export const ModalContentContainer = styled.div`
-  ${FlexColumn}
-  padding: 12px;
-  gap: 16px;
-  overflow: auto;
-  max-height: 70vh;
+export const InputBoxContainer = css`
+  width: 100%;
+  display: flex;
+  padding: 12px 12px;
+  align-items: center;
+  border-radius: 8px;
+  border: 1px solid ${({ theme }) => theme.color.gray200};
+  background: ${({ theme }) => theme.color.white};
+  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.1);
+  &:focus {
+    outline: 1px solid ${({ theme }) => theme.color.orange300};
+  }
+  &::placeholder {
+    color: ${({ theme }) => theme.color.gray200};
+  }
 `;
 
 /* Input */
@@ -290,4 +296,71 @@ export const AddCharacteristicButton = styled(defaultButton)`
   background: none;
   border: none;
   color: ${({ theme }) => theme.color.orange400};
+`;
+
+export const FlexRow = css`
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  gap: 8px;
+`;
+
+export const FlexColumn = css`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  gap: 8px;
+`;
+
+export const ImgAndNameAndBirthAndGenderContainer = styled.div`
+  ${FlexRow}
+  height: 160px;
+  gap: 16px;
+`;
+export const ImageContainer = styled.div`
+  flex: 1;
+  ${FlexColumn}
+`;
+export const ImageBackgoundContainer = styled.div`
+  ${FlexRow}
+  background: ${({ theme }) => theme.color.gray100};
+  border-radius: 8px;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.1);
+
+  input {
+    visibility: hidden;
+    position: absolute;
+  }
+
+  p {
+    color: ${({ theme }) => theme.color.gray400};
+    font-size: 48px;
+    user-select: none;
+  }
+`;
+export const NameAndBirthAndGenderContainer = styled.div`
+  flex: 3;
+  ${FlexColumn}
+  justify-content: space-between;
+`;
+export const NameContainer = styled.div`
+  ${FlexColumn}
+`;
+export const BirthAndGenderContainer = styled.div`
+  ${FlexRow}
+`;
+export const BirthContainer = styled.div`
+  ${FlexColumn}
+`;
+export const GenderContainer = styled.div`
+  ${FlexColumn}
+`;
+export const CharacteristicContainer = styled.div`
+  ${FlexColumn}
 `;
