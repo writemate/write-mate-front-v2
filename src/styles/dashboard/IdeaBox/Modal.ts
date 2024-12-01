@@ -2,12 +2,11 @@
 import { styled, css } from "styled-components";
 import TextareaAutosize from "react-textarea-autosize";
 
-export const MemoModalContainer = styled.div`
+export const ModalContainer = styled.div`
   width: 100%;
   max-height: 90vh;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   padding: 16px;
   gap: 12px;
   transition: all 0.3s;
@@ -21,20 +20,19 @@ export const MemoModalContainer = styled.div`
     font-size: 14px;
     font-style: normal;
     font-weight: 700;
-    line-height: 150%; /* 30px */
+    line-height: 150%;
   }
 `;
 
 export const InputBoxContainer = css`
   width: 100%;
   display: flex;
-  padding: 13px 20px;
+  padding: 12px 12px;
   align-items: center;
-  align-self: stretch;
-  border-radius: 12px;
+  border-radius: 8px;
   border: 1px solid ${({ theme }) => theme.color.gray200};
-  background: var(--white, #fff);
-  box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.1);
+  background: ${({ theme }) => theme.color.white};
+  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.1);
   &:focus {
     outline: 1px solid ${({ theme }) => theme.color.orange300};
   }
@@ -115,38 +113,69 @@ export const AddCharacteristicButton = styled(defaultButton)`
   color: ${({ theme }) => theme.color.orange400};
 `;
 
-export const FlexRow = styled.div`
+export const FlexRow = css`
+  position: relative;
   display: flex;
-  gap: 12px;
+  flex-direction: row;
   width: 100%;
-  align-items: center;
-  justify-content: space-between;
+  height: 100%;
+  gap: 8px;
 `;
 
-export const FlexColumn = styled.div`
+export const FlexColumn = css`
+  position: relative;
   display: flex;
   flex-direction: column;
   height: 100%;
-  gap: 12px;
+  width: 100%;
+  gap: 8px;
 `;
 
-export const ImgContainer = styled.div`
-  width: 160px;
-  height: 140px;
-  display: flex;
-  background: ${({ theme }) => theme.color.gray300};
+export const ImgAndNameAndBirthAndGenderContainer = styled.div`
+  ${FlexRow}
+  height: 160px;
+  gap: 16px;
+`;
+export const ImageContainer = styled.div`
+  flex: 1;
+  ${FlexColumn}
+`;
+export const ImageBackgoundContainer = styled.div`
+  ${FlexRow}
+  background: ${({ theme }) => theme.color.gray100};
   border-radius: 8px;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.1);
+
   input {
     visibility: hidden;
     position: absolute;
   }
-`;
 
+  p {
+    color: ${({ theme }) => theme.color.gray400};
+    font-size: 48px;
+    user-select: none;
+  }
+`;
+export const NameAndBirthAndGenderContainer = styled.div`
+  flex: 3;
+  ${FlexColumn}
+  justify-content: space-between;
+`;
+export const NameContainer = styled.div`
+  ${FlexColumn}
+`;
+export const BirthAndGenderContainer = styled.div`
+  ${FlexRow}
+`;
+export const BirthContainer = styled.div`
+  ${FlexColumn}
+`;
+export const GenderContainer = styled.div`
+  ${FlexColumn}
+`;
 export const CharacteristicContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
+  ${FlexColumn}
 `;

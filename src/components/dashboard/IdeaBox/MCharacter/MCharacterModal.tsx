@@ -5,15 +5,18 @@ import Modal from "@/components/Modal";
 import { DashboardContext } from "@/hooks/dashboard/dashboard";
 import { ModalFooter } from "@/components/dashboard/IdeaBox/ModalFooter";
 import {
-  MemoModalContainer,
-  InputBoxContainer,
+  ModalContainer,
   ModalTitle,
-  ModalContent,
   AddCharacteristicButton,
-  FlexRow,
-  FlexColumn,
-  ImgContainer,
+  ImageBackgoundContainer,
+  NameContainer,
+  ImageContainer,
+  BirthAndGenderContainer,
   CharacteristicContainer,
+  ImgAndNameAndBirthAndGenderContainer,
+  NameAndBirthAndGenderContainer,
+  BirthContainer,
+  GenderContainer,
 } from "@/styles/dashboard/IdeaBox/Modal";
 
 export default function MCharacterModal() {
@@ -24,24 +27,24 @@ export default function MCharacterModal() {
     <>
       {isOpenEditModal && (
         <Modal closeModal={closeEditModal} maxWidth="600px">
-          <MemoModalContainer>
-            <FlexRow>
-              <CharacterImage />
-              <FlexColumn>
-                <CharacterName />
+          <ModalContainer>
+            <ImgAndNameAndBirthAndGenderContainer>
+              <Image />
+              <NameAndBirthAndGenderContainer>
+                <Name />
                 <BirthAndGender />
-              </FlexColumn>
-            </FlexRow>
+              </NameAndBirthAndGenderContainer>
+            </ImgAndNameAndBirthAndGenderContainer>
             <Characterisitc />
             <ModalFooter />
-          </MemoModalContainer>
+          </ModalContainer>
         </Modal>
       )}
     </>
   );
 }
 
-function CharacterName() {
+function Name() {
   const { selectedMCharacter, onChangeSelectedMCharacterName, onKeyDownName } =
     useContext(DashboardContext).memoCharacterModal;
   if (!selectedMCharacter) {
@@ -49,20 +52,19 @@ function CharacterName() {
   }
 
   return (
-    <>
+    <NameContainer>
       <p>인물 이름</p>
       <ModalTitle
         className="memo-modal-name"
         defaultValue={selectedMCharacter.ch_name}
         onChange={onChangeSelectedMCharacterName}
         placeholder="인물의 이름을 입력하세요."
-        onKeyDown={onKeyDownName}
       />
-    </>
+    </NameContainer>
   );
 }
 
-function CharacterImage() {
+function Image() {
   const { selectedMCharacter } =
     useContext(DashboardContext).memoCharacterModal;
   if (!selectedMCharacter) {
@@ -70,25 +72,23 @@ function CharacterImage() {
   }
 
   return (
-    <FlexColumn>
+    <ImageContainer>
       <p>인물 이미지</p>
-      <ImgContainer>
+      <ImageBackgoundContainer>
         <input
           className="memo-modal-image"
           type="file"
           placeholder="인물 이미지 URL을 입력하세요."
         />
-        {/* <div>
-          {selectedMCharacter.ch_image && (
-            <img
-              src={selectedMCharacter.ch_image}
-              alt={selectedMCharacter.ch_name}
-            />
-          )}
-          {!selectedMCharacter.ch_image && <p>이미지가 없습니다.</p>}
-        </div> */}
-      </ImgContainer>
-    </FlexColumn>
+        {selectedMCharacter.ch_image && (
+          <img
+            src={selectedMCharacter.ch_image}
+            alt={selectedMCharacter.ch_name}
+          />
+        )}
+        {!selectedMCharacter.ch_image && <p>{selectedMCharacter.ch_name[0]}</p>}
+      </ImageBackgoundContainer>
+    </ImageContainer>
   );
 }
 
@@ -103,8 +103,8 @@ function BirthAndGender() {
   }
 
   return (
-    <FlexRow>
-      <FlexColumn>
+    <BirthAndGenderContainer>
+      <BirthContainer>
         <p>생년월일</p>
         <ModalTitle
           className="memo-modal-birth"
@@ -112,8 +112,8 @@ function BirthAndGender() {
           onChange={onChangeSelectedMCharacterBirthday}
           placeholder="인물의 생년월일을 입력하세요."
         />
-      </FlexColumn>
-      <FlexColumn>
+      </BirthContainer>
+      <GenderContainer>
         <p>성별</p>
         <ModalTitle
           className="memo-modal-gender"
@@ -121,8 +121,8 @@ function BirthAndGender() {
           onChange={onChangeSelectedMCharacterGender}
           placeholder="인물의 성별을 입력하세요."
         />
-      </FlexColumn>
-    </FlexRow>
+      </GenderContainer>
+    </BirthAndGenderContainer>
   );
 }
 
@@ -134,9 +134,9 @@ function Characterisitc() {
   }
 
   return (
-    <>
+    <CharacteristicContainer>
       <p>특징</p>
-      <CharacteristicContainer>
+      <>
         {selectedMCharacter.characteristic &&
           selectedMCharacter.characteristic.map((characteristic, index) => (
             <>
@@ -154,8 +154,8 @@ function Characterisitc() {
           ))}
 
         <AddCharacteristicButton>특징 추가</AddCharacteristicButton>
-      </CharacteristicContainer>
-    </>
+      </>
+    </CharacteristicContainer>
   );
 }
 
