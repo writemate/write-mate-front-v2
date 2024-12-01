@@ -5,7 +5,7 @@ import Modal from "@/components/Modal";
 import {
   ModalContent,
   ModalTitle,
-  MemoModalContainer,
+  ModalContainer,
 } from "@/styles/dashboard/IdeaBox/Modal";
 import { DashboardContext } from "@/hooks/dashboard/dashboard";
 import { ModalFooter } from "@/components/dashboard/IdeaBox/ModalFooter";
@@ -35,7 +35,7 @@ function Memo() {
   return (
     <>
       {selectedMemo && (
-        <MemoModalContainer>
+        <ModalContainer>
           <p>메모 이름</p>
           <ModalTitle
             className="memo-modal-name"
@@ -54,7 +54,7 @@ function Memo() {
             placeholder="메모 내용을 입력하세요"
           />
           <ModalFooter />
-        </MemoModalContainer>
+        </ModalContainer>
       )}
     </>
   );
