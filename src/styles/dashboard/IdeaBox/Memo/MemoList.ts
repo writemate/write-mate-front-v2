@@ -85,6 +85,11 @@ export const AddMemoButtonContainer = styled.button<AddMemoButtonProps>`
   &:hover {
     filter: brightness(95%);
   }
+
+  @media (max-width: 400px) {
+    scale: 0.9;
+    bottom: 15px;
+  }
 `;
 
 export const OpenButton = styled(OpenModal)`
@@ -116,6 +121,10 @@ export const MemoListContainer = styled.div`
   }
   ${MemoContent} {
     min-height: calc(14px * 1.5 * 6);
+  }
+
+  @media (max-width: 400px) {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   }
 `;
 export const MemoUpdatedDate = styled.div`
