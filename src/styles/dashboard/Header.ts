@@ -8,11 +8,16 @@ export const HeaderContainer = styled.div`
   width: 100%;
   padding-left: 20px;
   margin-bottom: 60px;
+
+  @media (max-width: 400px) {
+    display: none;
+  }
 `;
 
 export const HeaderLeftButton = styled.button`
   display: flex;
-  height: 44px;
+  height: fit-content;
+  weight: fit-content;
   padding: 11.5px 12px;
   align-items: center;
   flex-shrink: 0;
@@ -34,11 +39,9 @@ export const HeaderLeftButton = styled.button`
     font-size: 14px;
     font-style: normal;
     font-weight: 350;
-    line-height: 21px; /* 
+    line-height: 21px;
     letter-spacing: -0.16px;
-  };
-
-  
+  }
 `;
 
 export const HeaderRightButtonList = styled.div`
