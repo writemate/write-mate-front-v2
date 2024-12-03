@@ -21,6 +21,10 @@ export const Title = styled.div`
   font-weight: 700;
   color: ${({ theme }) => theme.color.gray900};
   margin-bottom: 48px;
+
+  @media (max-width: 400px) {
+    display: none;
+  }
 `;
 
 // NavigationBar
@@ -61,5 +65,13 @@ export const NavigationButton = styled(Button)<{ $isActivated?: boolean }>`
       $isActivated ? theme.color.orange400 : "transparent"};
     border-radius: 10px;
     transition: background-color 0.1s;
+  }
+  @media (max-width: 400px) {
+    margin-left: 0;
+    scale: 0.9;
+
+    &::before {
+      bottom: -4px;
+    }
   }
 `;

@@ -11,6 +11,10 @@ export const TitleAndWorkListContainer = styled.div`
   width: 100%;
   position: relative;
   overflow-y: auto;
+
+  @media (max-width: 400px) {
+    padding-top: 16px;
+  }
 `;
 
 export const WorkButtonList = styled.div`
@@ -23,6 +27,10 @@ export const WorkButtonList = styled.div`
   flex-wrap: wrap;
   gap: 16px;
   align-items: flex-start;
+
+  @media (max-width: 400px) {
+    gap: 8px;
+  }
 `;
 
 export const EmptyListDiscription = styled.div`
@@ -53,11 +61,16 @@ export const WorkButtonContainer = styled(Link)`
   &:hover {
     outline: 1px solid ${({ theme }) => theme.color.orange400};
   }
+
+  @media (max-width: 400px) {
+    width: 150px;
+    height: 240px;
+  }
 `;
 
 export const WorkButtonImage = styled.img`
   width: 100%;
-  height: 256px;
+  height: 80%;
   flex-shrink: 0;
   margin-bottom: 12px;
 
@@ -74,6 +87,12 @@ export const TitleAndDateAndKebab = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-shrink: 0;
+
+  @media (max-width: 400px) {
+    transform: scale(0.8);
+    transform-origin: top left;
+  }
+}
 `;
 
 export const TitleAndDate = styled.div`
@@ -90,7 +109,6 @@ export const WorkButtonTitle = styled.div`
   color: var(--Main-Color-Point-Color, var(--writemate-gray-900, #353535));
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-family: Pretendard;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
@@ -103,7 +121,7 @@ export const WorkButtonTitle = styled.div`
     padding: 0px;
     border-radius: 3px;
     border: 1px solid transparent;
-    box-shadow: 0 0 12px 0 #0000001a;
+    box-shadow: 0 0 12px 0 #000000;
     font-family: Pretendard;
     font-size: 14px;
     font-style: normal;
@@ -116,6 +134,7 @@ export const WorkButtonTitle = styled.div`
       box-shadow: none;
       border: 1px solid ${({ theme }) => theme.color.orange400};
   }
+
 `;
 
 export const WorkButtonDate = styled.div`

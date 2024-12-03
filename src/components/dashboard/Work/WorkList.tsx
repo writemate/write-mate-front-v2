@@ -42,6 +42,7 @@ export default function WorkList() {
           )}
           {!isLoading &&
             data.map((work) => <WorkButton key={work.id} workId={work.id} />)}
+          <AddWork actfunction={onClickAddWorkspace} />
         </WorkButtonList>
       )}
     </>
