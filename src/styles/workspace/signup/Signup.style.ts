@@ -138,11 +138,7 @@ export const Divider = styled.div`
   align-items: center;
   justify-content: center;
   gap: 1.25rem;
-  width: 300px;
-
-  @media (min-width: 1024px) {
-    width: 55%;
-  }
+  width: 270px;
 `;
 
 export const LoginLine = styled.hr`
@@ -155,17 +151,13 @@ export const LoginButton = styled.button`
   justify-content: center;
   gap: 1.5rem;
   height: 3.5rem;
-  width: 300px;
+  width: 270px;
   border: 1px solid #e6e6e9;
   background-color: white;
   color: black;
   border-radius: 0.25rem;
   margin-top: 1rem;
   box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.07);
-
-  @media (min-width: 1024px) {
-    width: 55%;
-  }
 `;
 
 export const LoginText = styled.div`
