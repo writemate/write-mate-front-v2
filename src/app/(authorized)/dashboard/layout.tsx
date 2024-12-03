@@ -22,6 +22,7 @@ import useOpenAndCloseDeleteConfirmation from "@/hooks/dashboard/useDeleteConfir
 import useMemoModal from "@/hooks/dashboard/useMemoModal";
 import useIdeaBoxMemoCharacter from "@/hooks/dashboard/useIdeaBoxMCharacter";
 import useMemoCharacterModal from "@/hooks/dashboard/useMCharacterModal";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 export default function WorkspaceLayout({
   children,
@@ -60,6 +61,7 @@ export default function WorkspaceLayout({
       <MemoEditModal />
       <MemoCharacterEditModal />
       <DeleteModal />
+      <ReactQueryDevtools />
     </DashboardContext.Provider>
   );
 }
