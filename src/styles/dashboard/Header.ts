@@ -10,7 +10,7 @@ export const HeaderContainer = styled.div`
   padding-left: 20px;
   margin-bottom: 60px;
 
-  ${media.tablet} {
+  @media (max-width: 400px) {
     display: none;
   }
 `;

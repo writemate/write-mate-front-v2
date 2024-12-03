@@ -59,10 +59,8 @@ export default function WorkspaceLayout({
           {children}
         </HeaderAndMainContainer>
       </DashboardContainer>
-      <MemoEditModal />
-      <MemoCharacterEditModal />
-      <DeleteModal />
-      <ReactQueryDevtools />
+      <Modal />
+      <DevTool />
     </DashboardContext.Provider>
   );
 }
