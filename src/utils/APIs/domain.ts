@@ -128,10 +128,19 @@ export const DOMAIN = {
     `/api/memos/characters/${memoCharacterId}/image`,
   CREATE_MEMO_CHARACTER_CHARACTERISTIC: (memoCharacterId: string) =>
     `/api/memos/characters/${memoCharacterId}/characteristic`,
-  DELETE_MEMO_CHARACTER_CHARACTERISTIC: (memoCharacterId: string) =>
-    `/api/memos/characters/${memoCharacterId}/characteristic`,
-  UPDATE_MEMO_CHARACTER_CHARACTERISTIC_TITLE: (memoCharacterId: string) =>
-    `/api/memos/characters/${memoCharacterId}/characteristic/title`,
-  UPDATE_MEMO_CHARACTER_CHARACTERISTIC_CONTENT: (memoCharacterId: string) =>
-    `/api/memos/characters/${memoCharacterId}/characteristic/content`,
+  DELETE_MEMO_CHARACTER_CHARACTERISTIC: (
+    memoCharacterId: string,
+    characteristicId: string
+  ) =>
+    `/api/memos/characters/${memoCharacterId}/characteristic/${characteristicId}`,
+  UPDATE_MEMO_CHARACTER_CHARACTERISTIC_TITLE: (
+    memoCharacterId: string,
+    characteristicId: string
+  ) =>
+    `/api/memos/characters/${memoCharacterId}/characteristic/${characteristicId}/title`,
+  UPDATE_MEMO_CHARACTER_CHARACTERISTIC_CONTENT: (
+    memoCharacterId: string,
+    characteristicId: string
+  ) =>
+    `/api/memos/characters/${memoCharacterId}/characteristic/${characteristicId}/content`,
 };

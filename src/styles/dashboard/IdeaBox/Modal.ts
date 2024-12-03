@@ -4,7 +4,8 @@ import { styled, css } from "styled-components";
 import TextareaAutosize from "react-textarea-autosize";
 import TrashCan from "@/assets/icons/trashcan.svg";
 
-export const ModalContainer = styled.div`
+/* Css */
+export const InputBoxContainer = css`
   width: 100%;
   display: flex;
   padding: 12px 12px;
@@ -26,9 +27,9 @@ export const FlexRow = css`
   flex-direction: row;
   width: 100%;
   height: 100%;
-  gap: 24px;
+  gap: 8px;
 
-  ${media.tablet} {
+  @media (max-width: 400px) {
     flex-direction: column;
   }
 `;
@@ -37,8 +38,9 @@ export const FlexColumn = css`
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 16px;
-  gap: 12px;
+  height: 100%;
+  width: 100%;
+  gap: 8px;
 `;
 
 /* Modal */
@@ -47,7 +49,7 @@ export const ModalContentAndFooterContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 18px;
+  padding: 12px;
   transition: all 0.3s;
   background-color: ${({ theme }) => theme.color.white};
   border: 1px solid ${({ theme }) => theme.color.gray200};
@@ -63,21 +65,13 @@ export const ModalContentAndFooterContainer = styled.div`
   }
 `;
 
-export const InputBoxContainer = css`
-  width: 100%;
-  display: flex;
-  padding: 12px 12px;
-  align-items: center;
-  border-radius: 8px;
-  border: 1px solid ${({ theme }) => theme.color.gray200};
-  background: ${({ theme }) => theme.color.white};
-  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.1);
-  &:focus {
-    outline: 1px solid ${({ theme }) => theme.color.orange300};
-  }
-  &::placeholder {
-    color: ${({ theme }) => theme.color.gray200};
-  }
+/* Content */
+export const ModalContentContainer = styled.div`
+  ${FlexColumn}
+  padding: 12px;
+  gap: 12px;
+  overflow: auto;
+  max-height: 70vh;
 `;
 
 /* Input */
@@ -92,7 +86,7 @@ export const Input = styled.input`
   outline: none;
 `;
 
-export const TextArea = styled(TextareaAutosize)`
+export const Textarea = styled(TextareaAutosize)`
   ${InputBoxContainer}
   font-size: 14px;
   font-style: normal;
@@ -108,11 +102,7 @@ export const TextArea = styled(TextareaAutosize)`
 export const ImgAndNameAndDescriptionContainer = styled.div`
   ${FlexRow}
   height: auto;
-  align-items: flex-end;
-  flex-shrink: 0;
-  ${media.tablet} {
-    align-items: center;
-  }
+  gap: 16px;
 `;
 
 export const ImageContainer = styled.div`
@@ -123,10 +113,11 @@ export const ImageContainer = styled.div`
   justify-content: center;
   align-items: center;
   box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.1);
-  width: 180px;
+  width: 160px;
 
   p {
-    height: 220px;
+    width: 160px;
+    height: 160px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -161,14 +152,13 @@ export const ImageButtonContainer = styled.div`
 /* Name and Role, Birth, Gender, Description */
 export const NameAndDescriptionContainer = styled.div`
   ${FlexColumn}
+  justify-content: space-between;
 `;
 export const RoleContainer = styled.div`
   ${FlexColumn}
-  justify-content: center;
 `;
 export const NameContainer = styled.div`
   ${FlexColumn}
-  justify-content: center;
 `;
 export const DescriptionContainer = styled.div`
   ${FlexColumn}
@@ -191,50 +181,14 @@ export const CharacteristicListContainer = styled.div`
   ${FlexColumn}
   align-items: center;
 `;
-
-export const CharacteristicCard = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-self: stretch;
-  justify-content: flex-end;
-
-  height: fit-content;
-  width: 100%;
-  padding: 13px 13px;
-  gap: 4px;
+export const CharacteristicItemContainer = styled.div`
+  ${FlexColumn}
+  padding: 13px 0px;
+  gap: 12px;
 
   border-radius: 8px;
-  background: var(--white, #fff);
-  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.1);
-
-  ${TextArea} {
-    padding: 4px;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 150%;
-    box-shadow: none;
-  }
-`;
-
-export const CharateristicHeader = styled.div`
-  display: flex;
-  gap: 4px;
-  align-items: center;
-
-  ${Input} {
-    padding: 4px;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 150%;
-    box-shadow: none;
-  }
-`;
-
-export const Delete = styled(TrashCan)`
-  cursor: pointer;
-  transform: scale(0.7);
+  background: ${({ theme }) => theme.color.white};
+  box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.1);
 `;
 
 /* Footer */
@@ -242,9 +196,9 @@ export const Delete = styled(TrashCan)`
 export const FooterContainer = styled.div`
   ${FlexRow}
   justify-content: space-between;
-  padding: 4px 12px;
+  padding: 12px;
 
-  ${media.tablet} {
+  @media (max-width: 400px) {
     flex-direction: row;
   }
 `;
@@ -274,7 +228,7 @@ export const DeleteButton = styled(defaultButton)`
 export const RightButtonContainer = styled.div`
   ${FlexRow}
   width: fit-content;
-  ${media.tablet} {
+  @media (max-width: 400px) {
     flex-direction: row;
   }
 `;
@@ -296,71 +250,4 @@ export const AddCharacteristicButton = styled(defaultButton)`
   background: none;
   border: none;
   color: ${({ theme }) => theme.color.orange400};
-`;
-
-export const FlexRow = css`
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  height: 100%;
-  gap: 8px;
-`;
-
-export const FlexColumn = css`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
-  gap: 8px;
-`;
-
-export const ImgAndNameAndBirthAndGenderContainer = styled.div`
-  ${FlexRow}
-  height: 160px;
-  gap: 16px;
-`;
-export const ImageContainer = styled.div`
-  flex: 1;
-  ${FlexColumn}
-`;
-export const ImageBackgoundContainer = styled.div`
-  ${FlexRow}
-  background: ${({ theme }) => theme.color.gray100};
-  border-radius: 8px;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.1);
-
-  input {
-    visibility: hidden;
-    position: absolute;
-  }
-
-  p {
-    color: ${({ theme }) => theme.color.gray400};
-    font-size: 48px;
-    user-select: none;
-  }
-`;
-export const NameAndBirthAndGenderContainer = styled.div`
-  flex: 3;
-  ${FlexColumn}
-  justify-content: space-between;
-`;
-export const NameContainer = styled.div`
-  ${FlexColumn}
-`;
-export const BirthAndGenderContainer = styled.div`
-  ${FlexRow}
-`;
-export const BirthContainer = styled.div`
-  ${FlexColumn}
-`;
-export const GenderContainer = styled.div`
-  ${FlexColumn}
-`;
-export const CharacteristicContainer = styled.div`
-  ${FlexColumn}
 `;

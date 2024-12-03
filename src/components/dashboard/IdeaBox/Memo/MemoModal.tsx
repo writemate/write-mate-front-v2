@@ -3,9 +3,10 @@ import { useContext } from "react";
 import React from "react";
 import Modal from "@/components/Modal";
 import {
-  ModalContent,
-  ModalTitle,
-  ModalContainer,
+  Textarea,
+  Input,
+  ModalContentAndFooterContainer,
+  ModalContentContainer,
 } from "@/styles/dashboard/IdeaBox/Modal";
 import { DashboardContext } from "@/hooks/dashboard/dashboard";
 import { ModalFooter } from "@/components/dashboard/IdeaBox/Memo/ModalFooter";
@@ -35,26 +36,28 @@ function Memo() {
   return (
     <>
       {selectedMemo && (
-        <ModalContainer>
-          <p>메모 이름</p>
-          <ModalTitle
-            className="memo-modal-name"
-            defaultValue={selectedMemo.memo_name}
-            onChange={onChangeSelectedMemoName}
-            placeholder="메모 이름을 입력하세요"
-            onKeyDown={onKeyDownTitle}
-          />
-          <p>내용</p>
-          <ModalContent
-            className="memo-modal-description"
-            defaultValue={selectedMemo.memo_description}
-            onChange={onChangeSelectedMemoDescription}
-            cacheMeasurements
-            minRows={10}
-            placeholder="메모 내용을 입력하세요"
-          />
+        <ModalContentAndFooterContainer>
+          <ModalContentContainer>
+            <p>제목</p>
+            <Input
+              className="memo-modal-name"
+              defaultValue={selectedMemo.memo_name}
+              onChange={onChangeSelectedMemoName}
+              placeholder="메모 이름을 입력하세요"
+              onKeyDown={onKeyDownTitle}
+            />
+            <p>내용</p>
+            <Textarea
+              className="memo-modal-description"
+              defaultValue={selectedMemo.memo_description}
+              onChange={onChangeSelectedMemoDescription}
+              cacheMeasurements
+              minRows={10}
+              placeholder="메모 내용을 입력하세요"
+            />
+          </ModalContentContainer>
           <ModalFooter />
-        </ModalContainer>
+        </ModalContentAndFooterContainer>
       )}
     </>
   );
