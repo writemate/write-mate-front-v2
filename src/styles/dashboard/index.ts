@@ -79,6 +79,7 @@ export const HeaderAndMainContainer = styled.div`
 
   @media (max-width: 400px) {
     width: 100%;
+    height: calc(100% - 60px);
     border-radius: 0;
     padding: 0;
   }

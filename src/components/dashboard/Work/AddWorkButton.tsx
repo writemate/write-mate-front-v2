@@ -1,6 +1,6 @@
 "use client";
 
-import { AddWorkspaceButton } from "@/styles/dashboard/Work/AddWorkButton";
+import { AddMemoButtonContainer } from "@/styles/dashboard/IdeaBox/Memo/MemoList";
 
 interface AddButtonProps {
   actfunction: () => void;
@@ -8,12 +8,12 @@ interface AddButtonProps {
 
 export function AddWork({ actfunction }: AddButtonProps) {
   return (
-    <AddWorkspaceButton
+    <AddMemoButtonContainer
       onClick={() => {
         actfunction();
       }}
     >
       새 작품 집필하기
-    </AddWorkspaceButton>
+    </AddMemoButtonContainer>
   );
 }
