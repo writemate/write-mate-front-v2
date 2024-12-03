@@ -16,7 +16,8 @@ export const DOMAIN = {
   UPDATE_WORK_LOGLINE: (workId: string) => `/api/works/${workId}/logline`,
   UPDATE_WORK_GENRE: (workId: string) => `/api/works/${workId}/genre`,
   UPDATE_WORK_QUANTITY: (workId: string) => `/api/works/${workId}/quantity`,
-  UPDATE_WORK_INTRODUCTION: (workId: string) => `/api/works/${workId}/introduction`,
+  UPDATE_WORK_INTRODUCTION: (workId: string) =>
+    `/api/works/${workId}/introduction`,
   UPDATE_WORK_GRADE: (workId: string) => `/api/works/${workId}/grade`,
 
   GET_PLOT_LIST: (workId: string) => `/api/works/${workId}/plotlist`,
@@ -33,7 +34,7 @@ export const DOMAIN = {
   DELETE_SCRIPT: (scriptId: string) => `/api/scripts/${scriptId}`,
   UPDATE_SCRIPT_NAME: (scriptId: string) => `/api/scripts/${scriptId}/name`,
   SET_MAIN_SCRIPT: (scriptId: string) => `/api/scripts/${scriptId}/main`,
-  
+
   GET_CHAPTER_LIST_WITH_EVENTS: (plotId: string) => `/api/plots/${plotId}`,
   CREATE_CHAPTER: (plotId: string) => `/api/plots/${plotId}/chapters`,
   DELETE_CHAPTER: (plotId: string, chapterId: string) =>
@@ -50,14 +51,26 @@ export const DOMAIN = {
     `/api/plots/${plotId}/chapters/${chapterId}/folded`,
 
   CREATE_EVENT: (chapterId: string) => `/api/chapters/${chapterId}/pevents`,
-  DELETE_EVENT: (chapterId: string, peventId: string) => `/api/chapters/${chapterId}/pevents/${peventId}`,
-  UPDATE_EVENT_NAME: (chapterId: string, peventId: string) => `/api/chapters/${chapterId}/pevents/${peventId}/name`,
-  UPDATE_EVENT_DESCRIPTION: (chapterId: string, peventId: string) => `/api/chapters/${chapterId}/pevents/${peventId}/description`,
-  UPDATE_EVENT_ORDER: (chapterId: string, peventId: string) => `/api/chapters/${chapterId}/pevents/${peventId}/order`,
+  DELETE_EVENT: (chapterId: string, peventId: string) =>
+    `/api/chapters/${chapterId}/pevents/${peventId}`,
+  UPDATE_EVENT_NAME: (chapterId: string, peventId: string) =>
+    `/api/chapters/${chapterId}/pevents/${peventId}/name`,
+  UPDATE_EVENT_DESCRIPTION: (chapterId: string, peventId: string) =>
+    `/api/chapters/${chapterId}/pevents/${peventId}/description`,
+  UPDATE_EVENT_ORDER: (chapterId: string, peventId: string) =>
+    `/api/chapters/${chapterId}/pevents/${peventId}/order`,
 
-  ADD_EVENT_CHARACTER: (chapterId: string, peventId: string, characterId: string) =>
+  ADD_EVENT_CHARACTER: (
+    chapterId: string,
+    peventId: string,
+    characterId: string
+  ) =>
     `/api/chapters/${chapterId}/pevents/${peventId}/character/${characterId}`,
-  DELETE_EVENT_CHARACTER: (chapterId: string, peventId: string, characterId: string) =>
+  DELETE_EVENT_CHARACTER: (
+    chapterId: string,
+    peventId: string,
+    characterId: string
+  ) =>
     `/api/chapters/${chapterId}/pevents/${peventId}/character/${characterId}`,
 
   GET_CHARACTER_LIST: (workId: string) => `/api/works/${workId}/characters`,
@@ -92,19 +105,42 @@ export const DOMAIN = {
   CREATE_MEMO: `/api/memos`,
   DELETE_MEMO: (memoId: string) => `/api/memos/${memoId}`,
   UPDATE_MEMO_NAME: (memoId: string) => `/api/memos/${memoId}/name`,
-  UPDATE_MEMO_DESCRIPTION: (memoId: string) => `/api/memos/${memoId}/description`,
+  UPDATE_MEMO_DESCRIPTION: (memoId: string) =>
+    `/api/memos/${memoId}/description`,
 
   GET_MEMO_CHARACTER_LIST: `/api/memos/characters`,
+  GET_MEMO_CHARACTER: (memoCharacterId: string) =>
+    `/api/memos/characters/${memoCharacterId}`,
   CREATE_MEMO_CHARACTER: `/api/memos/characters`,
-  DELETE_MEMO_CHARACTER: (memoCharacterId: string) => `/api/memos/characters/${memoCharacterId}`,
-  UPDATE_MEMO_CHARACTER_NAME: (memoCharacterId: string) => `/api/memos/characters/${memoCharacterId}/name`,
-  UPDATE_MEMO_CHARACTER_ROLE: (memoCharacterId: string) => `/api/memos/characters/${memoCharacterId}/role`,
-  UPDATE_MEMO_CHARACTER_GENDER: (memoCharacterId: string) => `/api/memos/characters/${memoCharacterId}/gender`,
-  UPDATE_MEMO_CHARACTER_DESCRIPTION: (memoCharacterId: string) => `/api/memos/characters/${memoCharacterId}/description`,
-  UPDATE_MEMO_CHARACTER_BIRTHDAY: (memoCharacterId: string) => `/api/memos/characters/${memoCharacterId}/birthday`,
-  UPDATE_MEMO_CHARACTER_IMAGE: (memoCharacterId: string) => `/api/memos/characters/${memoCharacterId}/image`,
-  CREATE_MEMO_CHARACTER_CHARACTERISTIC: (memoCharacterId: string) => `/api/memos/characters/${memoCharacterId}/characteristic`,
-  DELETE_MEMO_CHARACTER_CHARACTERISTIC: (memoCharacterId: string, characteristicId: string) => `/api/memos/characters/${memoCharacterId}/characteristic/${characteristicId}`,
-  UPDATE_MEMO_CHARACTER_CHARACTERISTIC_TITLE: (memoCharacterId: string, characteristicId: string) => `/api/memos/characters/${memoCharacterId}/characteristic/${characteristicId}/title`,
-  UPDATE_MEMO_CHARACTER_CHARACTERISTIC_CONTENT: (memoCharacterId: string, characteristicId: string) => `/api/memos/characters/${memoCharacterId}/characteristic/${characteristicId}/content`,
+  DELETE_MEMO_CHARACTER: (memoCharacterId: string) =>
+    `/api/memos/characters/${memoCharacterId}`,
+  UPDATE_MEMO_CHARACTER_NAME: (memoCharacterId: string) =>
+    `/api/memos/characters/${memoCharacterId}/name`,
+  UPDATE_MEMO_CHARACTER_ROLE: (memoCharacterId: string) =>
+    `/api/memos/characters/${memoCharacterId}/role`,
+  UPDATE_MEMO_CHARACTER_GENDER: (memoCharacterId: string) =>
+    `/api/memos/characters/${memoCharacterId}/gender`,
+  UPDATE_MEMO_CHARACTER_DESCRIPTION: (memoCharacterId: string) =>
+    `/api/memos/characters/${memoCharacterId}/description`,
+  UPDATE_MEMO_CHARACTER_BIRTHDAY: (memoCharacterId: string) =>
+    `/api/memos/characters/${memoCharacterId}/birthday`,
+  UPDATE_MEMO_CHARACTER_IMAGE: (memoCharacterId: string) =>
+    `/api/memos/characters/${memoCharacterId}/image`,
+  CREATE_MEMO_CHARACTER_CHARACTERISTIC: (memoCharacterId: string) =>
+    `/api/memos/characters/${memoCharacterId}/characteristic`,
+  DELETE_MEMO_CHARACTER_CHARACTERISTIC: (
+    memoCharacterId: string,
+    characteristicId: string
+  ) =>
+    `/api/memos/characters/${memoCharacterId}/characteristic/${characteristicId}`,
+  UPDATE_MEMO_CHARACTER_CHARACTERISTIC_TITLE: (
+    memoCharacterId: string,
+    characteristicId: string
+  ) =>
+    `/api/memos/characters/${memoCharacterId}/characteristic/${characteristicId}/title`,
+  UPDATE_MEMO_CHARACTER_CHARACTERISTIC_CONTENT: (
+    memoCharacterId: string,
+    characteristicId: string
+  ) =>
+    `/api/memos/characters/${memoCharacterId}/characteristic/${characteristicId}/content`,
 };

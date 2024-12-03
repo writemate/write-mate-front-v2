@@ -1,7 +1,6 @@
 "use client";
 import { TitleAndWorkListContainer } from "@/styles/dashboard/Work/WorkList";
 import { IdeaBoxTitleAndNavigationBar } from "@/components/dashboard/TitleAndNavigationBar";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import MemoList from "@/components/dashboard/IdeaBox/Memo/MemoList";
 import { useContext } from "react";
 import { DashboardContext } from "@/hooks/dashboard/dashboard";
@@ -12,7 +11,6 @@ export default function Dashboard() {
 
   return (
     <TitleAndWorkListContainer>
-      <ReactQueryDevtools />
       <IdeaBoxTitleAndNavigationBar />
       {ideaCategory == "memo" && <MemoList />}
       {ideaCategory == "character" && <CharacterList />}

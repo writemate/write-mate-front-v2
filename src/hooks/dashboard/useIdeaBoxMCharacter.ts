@@ -127,6 +127,7 @@ export default function useIdeaBoxMCharacter() {
         )
       );
     };
+
   async function getNewlyCreatedMCharacter() {
     const createdId = await createMCharacterMutateAsync();
     if (!createdId) return null;
