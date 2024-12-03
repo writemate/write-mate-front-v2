@@ -23,7 +23,7 @@ export const Title = styled.div`
   color: ${({ theme }) => theme.color.gray900};
   margin-bottom: 48px;
 
-  ${media.tablet} {
+  @media (max-width: 400px) {
     display: none;
   }
 `;
@@ -67,7 +67,7 @@ export const NavigationButton = styled(Button)<{ $isActivated?: boolean }>`
     border-radius: 10px;
     transition: background-color 0.1s;
   }
-  ${media.tablet} {
+  @media (max-width: 400px) {
     margin-left: 0;
     scale: 0.9;
 

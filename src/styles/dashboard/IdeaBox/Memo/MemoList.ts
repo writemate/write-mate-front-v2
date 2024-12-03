@@ -101,6 +101,12 @@ export const AddMemoButtonContainer = styled.button<AddMemoButtonProps>`
     filter: brightness(95%);
   }
 
+  @media (max-width: 400px) {
+    scale: 0.9;
+    bottom: 15px;
+  }
+`;
+
   ${media.tablet} {
     scale: 0.9;
     bottom: 15px;
@@ -133,7 +139,15 @@ export const MemoListContainer = styled.div`
     min-height: calc(14px * 1.5 * 6);
   }
 
-  ${media.tablet} {
+  @media (max-width: 400px) {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   }
+`;
+export const MemoUpdatedDate = styled.div`
+  align-self: flex-end;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 100%;
+  color: ${({ theme }) => theme.color.gray300};
 `;
