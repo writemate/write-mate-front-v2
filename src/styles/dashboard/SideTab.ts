@@ -13,15 +13,46 @@ export const SideTabContainer = styled.div`
   filter: drop-shadow(-2px 2px 5px rgba(0, 0, 0, 0.08));
   border-radius: 12px 0px 0px 12px;
   padding: 31px;
+
+  @media (max-width: 400px) {
+    width: 100%;
+    height: fit-content;
+    align-items: flex-start;
+    padding: 15px;
+    border-radius: 0;
+  }
 `;
+
 export const SideTabMenu = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   margin-bottom: 240px;
+
+  @media (max-width: 400px) {
+    width: 100%;
+    flex-direction: row;
+    margin: 0;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
+  }
 `;
+
 export const LogoLink = styled(Link)`
   margin-bottom: 88px;
+
+  @media (max-width: 400px) {
+    display: block;
+    align-self: center;
+    padding: 0;
+    margin: 0;
+    scale: 0.8;
+
+    svg {
+      width: 40px;
+    }
+  }
 `;
 
 const SideTabSVG = css<{ $isActivated?: boolean }>`
@@ -40,6 +71,9 @@ export const SideTabLink = styled(Link)<{ $isActivated?: boolean }>`
   ${SideTabSVG}
   margin-bottom: 10px;
   padding: 5px;
+  align-item: center;
+  justify-content: center;
+  flex-wrap: wrap;
 
   &:hover::after {
     ${HighlghtCssForHoberAfter}
@@ -47,6 +81,26 @@ export const SideTabLink = styled(Link)<{ $isActivated?: boolean }>`
     width: 105%;
     height: 100%;
     z-index: -1;
+  }
+
+  @media (max-width: 400px) {
+    scale: 0.9;
+    width: fit-content;
+    margin-bottom: 0;
+    word-break: keep-all;
+    text-align: center;
+
+    svg {
+      display: none;
+    }
+
+    &:hover::after {
+      display: none;
+    }
+
+    &:hover {
+      color: ${({ theme }) => theme.color.orange400};
+    }
   }
 `;
 
@@ -72,5 +126,9 @@ export const AddWorkspaceButton = styled.button`
 
   &:hover {
     filter: brightness(95%);
+  }
+
+  @media (max-width: 400px) {
+    display: none;
   }
 `;
