@@ -44,6 +44,12 @@ export const updateMemoDescription = async ({
 /*
  * 메모 캐릭터
  */
+export const getMCharacter = (id: string) => async () => {
+  const response = await axiosInstance.get<TMCharacter>(
+    DOMAIN.GET_MEMO_CHARACTER(id)
+  );
+  return response.data;
+};
 
 export const getMCharacterList = async () => {
   const response = await axiosInstance.get<TMCharacter[]>(

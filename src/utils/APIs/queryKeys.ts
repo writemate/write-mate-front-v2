@@ -1,4 +1,3 @@
-import { all } from "axios";
 export const dashboardQueryKeys = {
   all: ["dashboard"] as const,
   workStudio: () => [...dashboardQueryKeys.all, "workStudio"] as const,
@@ -14,34 +13,48 @@ export const userQueryKeys = {
 };
 
 export const workspaceQueryKeys = {
-  all: (workId: string) => ["workspace",workId] as const,
-  workName: (workId: string) => [...workspaceQueryKeys.all(workId), "name"] as const,
+  all: (workId: string) => ["workspace", workId] as const,
+  workName: (workId: string) =>
+    [...workspaceQueryKeys.all(workId), "name"] as const,
 
-  sidebar: (workId: string) => [...workspaceQueryKeys.all(workId), "sidebar"] as const,
+  sidebar: (workId: string) =>
+    [...workspaceQueryKeys.all(workId), "sidebar"] as const,
   plotSidebar: (workId: string) =>
     [...workspaceQueryKeys.sidebar(workId), "plot"] as const,
   scriptSidebar: (workId: string) =>
     [...workspaceQueryKeys.sidebar(workId), "event"] as const,
 
-  info: (workId: string) => [...workspaceQueryKeys.all(workId), "info"] as const,
+  info: (workId: string) =>
+    [...workspaceQueryKeys.all(workId), "info"] as const,
   mainCharacter: (workId: string) =>
     [...workspaceQueryKeys.info(workId), "mainCharacter"] as const,
   mainPlot: (workId: string) =>
     [...workspaceQueryKeys.info(workId), "mainPlot"] as const,
 
-  character: (workId:string) => [...workspaceQueryKeys.all(workId), 'character'] as const,
-  characterList: (workId:string) => [...workspaceQueryKeys.character(workId), 'list'] as const,
-  characterKeywordList: (workId:string) => [...workspaceQueryKeys.character(workId), 'keyword'] as const,
-  characterDetail: (workId:string, characterId:string) => [...workspaceQueryKeys.character(workId), characterId] as const,
-  characterRelation: (workId:string) => [...workspaceQueryKeys.character(workId), 'relation'] as const,
+  character: (workId: string) =>
+    [...workspaceQueryKeys.all(workId), "character"] as const,
+  characterList: (workId: string) =>
+    [...workspaceQueryKeys.character(workId), "list"] as const,
+  characterKeywordList: (workId: string) =>
+    [...workspaceQueryKeys.character(workId), "keyword"] as const,
+  characterDetail: (workId: string, characterId: string) =>
+    [...workspaceQueryKeys.character(workId), characterId] as const,
+  characterRelation: (workId: string) =>
+    [...workspaceQueryKeys.character(workId), "relation"] as const,
 
-  plot: (workId: string, plotId: string) => [...workspaceQueryKeys.all(workId), "plot", plotId] as const,
+  plot: (workId: string, plotId: string) =>
+    [...workspaceQueryKeys.all(workId), "plot", plotId] as const,
 
-  characterModal: (workId: string) => [...workspaceQueryKeys.all(workId)] as const,
+  characterModal: (workId: string) =>
+    [...workspaceQueryKeys.all(workId)] as const,
 };
 
 export const memoQueryKeys = {
-  all: ['memo'] as const,
-  memoList: () => [...memoQueryKeys.all, 'memoList'] as const,
-  memoCharacterList: () => [...memoQueryKeys.all, 'memoCharacterList'] as const,
-}
+  all: ["memo"] as const,
+  memoList: () => [...memoQueryKeys.all, "memoList"] as const,
+  memoCharacterList: () => [...memoQueryKeys.all, "memoCharacterList"] as const,
+};
+
+export const mCharacterQueryKeys = {
+  all: (mCharacterId: string) => ["mCharacter", mCharacterId] as const,
+};

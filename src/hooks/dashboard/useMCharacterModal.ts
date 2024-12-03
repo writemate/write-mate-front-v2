@@ -10,22 +10,45 @@ import {
   updateMCharacterCharacteristicContent,
   deleteMCharacterCharacteristic,
   deleteMCharacter,
+  getMCharacter,
 } from "@/utils/APIs/memo";
-import { memoQueryKeys } from "@/utils/APIs/queryKeys";
+import { mCharacterQueryKeys, memoQueryKeys } from "@/utils/APIs/queryKeys";
 import { TMCharacter } from "@/utils/APIs/types";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useCallback, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { use, useCallback, useEffect, useState } from "react";
 
 export default function useMCharacterModal() {
   const queryClient = useQueryClient();
 
   const [isOpenEditModal, setIsOpenEditModal] = useState(false);
-  const [selectedMCharacter, setSelectedMCharacter] =
-    useState<TMCharacter | null>(null);
+  const [selectedMCharacter, setSelectedMCharacter] = useState<TMCharacter>({
+    id: "",
+    ch_name: "",
+    ch_image: "",
+    description: "",
+    role: "",
+    gender: "",
+    birthday: "",
+    characteristic: [],
+    updatedAt: "",
+  });
+
   const nameRef = document.getElementsByClassName("memo-modal-name");
   const descriptionRef = document.getElementsByClassName(
     "memo-modal-description"
   );
+
+  const { data: mCharacter } = useQuery({
+    queryKey: mCharacterQueryKeys.all(selectedMCharacter.id),
+    enabled: selectedMCharacter.id !== "",
+    queryFn: getMCharacter(selectedMCharacter.id),
+  });
+
+  useEffect(() => {
+    if (selectedMCharacter.id !== "" && mCharacter) {
+      setSelectedMCharacter(mCharacter);
+    }
+  }, [mCharacter]);
 
   const { mutate: updateMCharacterNameMutation } = useMutation({
     mutationFn: updateMCharacterName,
@@ -33,6 +56,11 @@ export default function useMCharacterModal() {
       queryClient.invalidateQueries({
         queryKey: memoQueryKeys.memoCharacterList(),
       });
+      if (selectedMCharacter) {
+        queryClient.invalidateQueries({
+          queryKey: mCharacterQueryKeys.all(selectedMCharacter.id),
+        });
+      }
     },
   });
   const { mutate: updateMCharacterDescriptionMutation } = useMutation({
@@ -41,31 +69,42 @@ export default function useMCharacterModal() {
       queryClient.invalidateQueries({
         queryKey: memoQueryKeys.memoCharacterList(),
       });
+      if (selectedMCharacter) {
+        queryClient.invalidateQueries({
+          queryKey: mCharacterQueryKeys.all(selectedMCharacter.id),
+        });
+      }
     },
   });
   const { mutate: updateMCharacterBirthdayMutation } = useMutation({
     mutationFn: updateMCharacterBirthday,
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: memoQueryKeys.memoCharacterList(),
-      });
+      if (selectedMCharacter) {
+        queryClient.invalidateQueries({
+          queryKey: mCharacterQueryKeys.all(selectedMCharacter.id),
+        });
+      }
     },
   });
   const { mutate: updateMCharacterRoleMutation } = useMutation({
     mutationFn: updateMCharacterRole,
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: memoQueryKeys.memoCharacterList(),
-      });
+      if (selectedMCharacter) {
+        queryClient.invalidateQueries({
+          queryKey: mCharacterQueryKeys.all(selectedMCharacter.id),
+        });
+      }
     },
   });
 
   const { mutate: deleteMCharacterMutation } = useMutation({
     mutationFn: deleteMCharacter,
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: memoQueryKeys.memoCharacterList(),
-      });
+      if (selectedMCharacter) {
+        queryClient.invalidateQueries({
+          queryKey: mCharacterQueryKeys.all(selectedMCharacter.id),
+        });
+      }
     },
   });
 
@@ -80,6 +119,10 @@ export default function useMCharacterModal() {
   );
   const debounceUpdateMCharacterBirthday = useCallback(
     debounce(updateMCharacterBirthdayMutation, 500),
+    [selectedMCharacter]
+  );
+  const debounceUpdateMCharacterRole = useCallback(
+    debounce(updateMCharacterRoleMutation, 500),
     [selectedMCharacter]
   );
   const debounceUpdateMCharacterGender = useCallback(
@@ -105,6 +148,14 @@ export default function useMCharacterModal() {
     focusInput(descriptionRef);
     setIsOpenEditModal(true);
   };
+  const onClickAddCharacteristic = () => {
+    if (selectedMCharacter) {
+      createMCharacterCharacteristic({
+        id: selectedMCharacter.id,
+        characteristic: [{ title: "", content: "" }],
+      });
+    }
+  };
 
   const onChangeSelectedMCharacterName = (
     e: React.ChangeEvent<HTMLInputElement>
@@ -115,9 +166,18 @@ export default function useMCharacterModal() {
         ch_name: e.target.value,
       });
     }
-    setSelectedMCharacter((old) =>
-      old ? { ...old, memo_name: e.target.value } : null
-    );
+    setSelectedMCharacter((old) => ({ ...old, ch_name: e.target.value }));
+  };
+  const onChangeSelectedMCharacterRole = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    if (selectedMCharacter) {
+      debounceUpdateMCharacterRole({
+        id: selectedMCharacter.id,
+        role: e.target.value,
+      });
+    }
+    setSelectedMCharacter((old) => ({ ...old, role: e.target.value }));
   };
   const onChangeSelectedMCharacterDescription = (
     e: React.ChangeEvent<HTMLTextAreaElement>
@@ -128,9 +188,7 @@ export default function useMCharacterModal() {
         description: e.target.value,
       });
     }
-    setSelectedMCharacter((old) =>
-      old ? { ...old, description: e.target.value } : null
-    );
+    setSelectedMCharacter((old) => ({ ...old, description: e.target.value }));
   };
   const onChangeSelectedMCharacterBirthday = (
     e: React.ChangeEvent<HTMLInputElement>
@@ -141,9 +199,7 @@ export default function useMCharacterModal() {
         birthday: e.target.value,
       });
     }
-    setSelectedMCharacter((old) =>
-      old ? { ...old, birthday: e.target.value } : null
-    );
+    setSelectedMCharacter((old) => ({ ...old, birthday: e.target.value }));
   };
   const onChangeSelectedMCharacterGender = (
     e: React.ChangeEvent<HTMLInputElement>
@@ -154,9 +210,7 @@ export default function useMCharacterModal() {
         gender: e.target.value,
       });
     }
-    setSelectedMCharacter((old) =>
-      old ? { ...old, gender: e.target.value } : null
-    );
+    setSelectedMCharacter((old) => ({ ...old, gender: e.target.value }));
   };
 
   const onKeyDownName = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -178,7 +232,17 @@ export default function useMCharacterModal() {
   }
   function closeMemoModal() {
     setIsOpenEditModal(false);
-    setSelectedMCharacter(null);
+    setSelectedMCharacter({
+      id: "",
+      ch_name: "",
+      ch_image: "",
+      description: "",
+      role: "",
+      gender: "",
+      birthday: "",
+      characteristic: [],
+      updatedAt: "",
+    });
   }
 
   return {
@@ -187,7 +251,9 @@ export default function useMCharacterModal() {
     closeEditModal: closeMemoModal,
     onClickMCharacterName,
     onClickMCharacterDescription,
+    onClickAddCharacteristic,
     onChangeSelectedMCharacterName,
+    onChangeSelectedMCharacterRole,
     onChangeSelectedMCharacterDescription,
     onChangeSelectedMCharacterBirthday,
     onChangeSelectedMCharacterGender,

@@ -6,6 +6,7 @@ import {
   DeleteButton,
   FooterContainer,
   SaveButton,
+  RightButtonContainer,
 } from "@/styles/dashboard/IdeaBox/Modal";
 
 export function ModalFooter() {
@@ -16,10 +17,10 @@ export function ModalFooter() {
   return (
     <FooterContainer>
       <DeleteButton onClick={onClickDeleteMemo}>삭제</DeleteButton>
-      <div>
+      <RightButtonContainer>
         <CancelButton onClick={rollbackMemoAndCloseModal}>취소</CancelButton>
         <SaveButton onClick={closeMemoModal}>저장</SaveButton>
-      </div>
+      </RightButtonContainer>
     </FooterContainer>
   );
 }
