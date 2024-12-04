@@ -20,6 +20,7 @@ export const SideTabContainer = styled.div`
     align-items: flex-start;
     padding: 15px;
     border-radius: 0;
+    background-color: ${({ theme }) => theme.color.orange100};
   }
 `;
 

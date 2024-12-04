@@ -61,6 +61,10 @@ export const ModalContentAndFooterContainer = styled.div`
     font-weight: 700;
     line-height: 150%;
   }
+
+  @media (max-width: 400px) {
+    padding: 0;
+  }
 `;
 
 /* Content */
