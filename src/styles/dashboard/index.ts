@@ -81,7 +81,7 @@ export const HeaderAndMainContainer = styled.div`
   @media (max-width: 400px) {
     width: 100%;
     height: calc(100% - 60px);
-    border-radius: 0;
+    border-radius: 12px 12px 0px 0px;
     padding: 0;
   }
 `;
