@@ -1,8 +1,9 @@
 "use client";
 import { styled } from "styled-components";
+import { media } from "@/styles/media";
 import { clickable, FlexColumnLeftStart, FlexRowSpaceBetween } from "@/styles";
-import Copy from "@/assets/icons/copy.svg";
 import OpenModal from "@/assets/icons/openModal.svg";
+import Copy from "@/assets/icons/copy.svg";
 import TextareaAutosize from "react-textarea-autosize";
 
 interface MemoCardProps {
@@ -56,6 +57,20 @@ export const CopyButton = styled(Copy)`
   ${clickable}
 `;
 
+export const OpenButton = styled(OpenModal)`
+  ${clickable}
+  width: 18px;
+`;
+
+export const MemoUpdatedDate = styled.div`
+  align-self: flex-end;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 100%;
+  color: ${({ theme }) => theme.color.gray300};
+`;
+
 interface AddMemoButtonProps {
   $isEmpty?: boolean;
 }
@@ -86,15 +101,10 @@ export const AddMemoButtonContainer = styled.button<AddMemoButtonProps>`
     filter: brightness(95%);
   }
 
-  @media (max-width: 400px) {
+  ${media.tablet} {
     scale: 0.9;
     bottom: 15px;
   }
-`;
-
-export const OpenButton = styled(OpenModal)`
-  ${clickable}
-  width: 18px;
 `;
 
 export const MemoListContainer = styled.div`
@@ -123,15 +133,7 @@ export const MemoListContainer = styled.div`
     min-height: calc(14px * 1.5 * 6);
   }
 
-  @media (max-width: 400px) {
+  ${media.tablet} {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   }
-`;
-export const MemoUpdatedDate = styled.div`
-  align-self: flex-end;
-  font-size: 10px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 100%;
-  color: ${({ theme }) => theme.color.gray300};
 `;

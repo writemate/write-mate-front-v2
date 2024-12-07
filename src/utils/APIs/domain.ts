@@ -100,17 +100,14 @@ export const DOMAIN = {
     `/api/memos/characters/${memoCharacterId}/characteristic`,
   DELETE_MEMO_CHARACTER_CHARACTERISTIC: (
     memoCharacterId: string,
-    characteristicId: string
-  ) =>
-    `/api/memos/characters/${memoCharacterId}/characteristic/${characteristicId}`,
+    idx: number
+  ) => `/api/memos/characters/${memoCharacterId}/characteristic/${idx}`,
   UPDATE_MEMO_CHARACTER_CHARACTERISTIC_TITLE: (
     memoCharacterId: string,
-    characteristicId: string
-  ) =>
-    `/api/memos/characters/${memoCharacterId}/characteristic/${characteristicId}/title`,
+    idx: number
+  ) => `/api/memos/characters/${memoCharacterId}/characteristic/${idx}/title`,
   UPDATE_MEMO_CHARACTER_CHARACTERISTIC_CONTENT: (
     memoCharacterId: string,
-    characteristicId: string
-  ) =>
-    `/api/memos/characters/${memoCharacterId}/characteristic/${characteristicId}/content`,
+    idx: number
+  ) => `/api/memos/characters/${memoCharacterId}/characteristic/${idx}/content`,
 };

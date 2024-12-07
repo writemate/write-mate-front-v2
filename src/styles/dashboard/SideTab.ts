@@ -1,4 +1,5 @@
 "use client";
+import { media } from "@/styles/media";
 import { clickable } from "@/styles";
 import { styled, css } from "styled-components";
 import Link from "next/link";
@@ -14,10 +15,12 @@ export const SideTabContainer = styled.div`
   border-radius: 12px 0px 0px 12px;
   padding: 31px;
 
-  @media (max-width: 400px) {
+  ${media.tablet} {
+    flex-direction: row;
     width: 100%;
     height: fit-content;
     align-items: flex-start;
+    justify-content: space-between;
     padding: 15px;
     border-radius: 0;
     background-color: ${({ theme }) => theme.color.orange100};
@@ -30,12 +33,11 @@ export const SideTabMenu = styled.div`
   align-items: flex-start;
   margin-bottom: 240px;
 
-  @media (max-width: 400px) {
+  ${media.tablet} {
     width: 100%;
     flex-direction: row;
     margin: 0;
     align-items: center;
-    justify-content: space-between;
     gap: 4px;
   }
 `;
@@ -43,13 +45,12 @@ export const SideTabMenu = styled.div`
 export const LogoLink = styled(Link)`
   margin-bottom: 88px;
 
-  @media (max-width: 400px) {
+  ${media.tablet} {
     display: block;
     align-self: center;
     padding: 0;
     margin: 0;
     scale: 0.8;
-
     svg {
       width: 40px;
     }
@@ -73,18 +74,18 @@ export const SideTabLink = styled(Link)<{ $isActivated?: boolean }>`
   margin-bottom: 10px;
   padding: 5px;
   align-item: center;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
 
   &:hover::after {
     ${HighlghtCssForHoberAfter}
     left: -5%;
-    width: 105%;
+    width: 110%;
     height: 100%;
     z-index: -1;
   }
 
-  @media (max-width: 400px) {
+  ${media.tablet} {
     scale: 0.9;
     width: fit-content;
     margin-bottom: 0;
@@ -129,7 +130,7 @@ export const AddWorkspaceButton = styled.button`
     filter: brightness(95%);
   }
 
-  @media (max-width: 400px) {
+  ${media.tablet} {
     display: none;
   }
 `;

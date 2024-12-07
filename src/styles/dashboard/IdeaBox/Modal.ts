@@ -1,4 +1,5 @@
 "use client";
+import { media } from "@/styles/media";
 import { styled, css } from "styled-components";
 import TextareaAutosize from "react-textarea-autosize";
 
@@ -27,7 +28,7 @@ export const FlexRow = css`
   height: 100%;
   gap: 8px;
 
-  @media (max-width: 400px) {
+  ${media.tablet} {
     flex-direction: column;
   }
 `;
@@ -60,10 +61,6 @@ export const ModalContentAndFooterContainer = styled.div`
     font-style: normal;
     font-weight: 700;
     line-height: 150%;
-  }
-
-  @media (max-width: 400px) {
-    padding: 0;
   }
 `;
 
@@ -105,6 +102,9 @@ export const ImgAndNameAndDescriptionContainer = styled.div`
   ${FlexRow}
   height: auto;
   gap: 16px;
+  ${media.tablet} {
+    align-items: center;
+  }
 `;
 
 export const ImageContainer = styled.div`
@@ -200,7 +200,7 @@ export const FooterContainer = styled.div`
   justify-content: space-between;
   padding: 12px;
 
-  @media (max-width: 400px) {
+  ${media.tablet} {
     flex-direction: row;
   }
 `;
@@ -230,7 +230,7 @@ export const DeleteButton = styled(defaultButton)`
 export const RightButtonContainer = styled.div`
   ${FlexRow}
   width: fit-content;
-  @media (max-width: 400px) {
+  ${media.tablet} {
     flex-direction: row;
   }
 `;

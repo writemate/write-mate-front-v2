@@ -146,11 +146,11 @@ function ConfirmDeleteMemoModal() {
 function ConfirmDeleteMemoCharacterModal() {
   const { closeConfirmModal } =
     useContext(DashboardContext).removeConfirmationModal;
-  const { onDeleteMemo, closeEditModal } =
+  const { onDeleteMCharacter, closeEditModal } =
     useContext(DashboardContext).memoCharacterModal;
 
   const onClickConfirmDelete = () => {
-    onDeleteMemo();
+    onDeleteMCharacter();
     closeConfirmModal();
     closeEditModal();
   };

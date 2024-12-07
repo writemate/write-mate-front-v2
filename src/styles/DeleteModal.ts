@@ -1,4 +1,5 @@
 "use client";
+import { media } from "@/styles/media";
 import { styled } from "styled-components";
 import { Button, FlexColumnCenter } from "@/styles";
 import Danger from "@/assets/icons/danger.svg";
@@ -22,7 +23,7 @@ export const ModalContainer = styled.div`
     line-height: 160%;
   }
 
-  @media (max-width: 400px) {
+  ${media.mobile} {
     scale: 0.9;
     p {
       font-size: 14px;
@@ -64,7 +65,7 @@ export const ModalButton = styled(Button)<{ $isDanger?: boolean }>`
     filter: brightness(105%);
   }
 
-  @media (max-width: 400px) {
+  ${media.mobile} {
     padding: 8px 14px;
     font-size: 14px;
   }
