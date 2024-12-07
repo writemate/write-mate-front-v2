@@ -1,4 +1,5 @@
 "use client";
+import { media } from "@/styles/media";
 import { styled } from "styled-components";
 
 export const HeaderContainer = styled.div`
@@ -9,7 +10,7 @@ export const HeaderContainer = styled.div`
   padding-left: 20px;
   margin-bottom: 60px;
 
-  @media (max-width: 400px) {
+  ${media.tablet} {
     display: none;
   }
 `;

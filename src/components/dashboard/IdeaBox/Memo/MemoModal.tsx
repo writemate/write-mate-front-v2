@@ -9,7 +9,7 @@ import {
   ModalContentContainer,
 } from "@/styles/dashboard/IdeaBox/Modal";
 import { DashboardContext } from "@/hooks/dashboard/dashboard";
-import { ModalFooter } from "@/components/dashboard/IdeaBox/ModalFooter";
+import { ModalFooter } from "@/components/dashboard/IdeaBox/MemoModalFooter";
 
 export default function MemoModal() {
   const { isOpenEditModal, closeMemoModal } =

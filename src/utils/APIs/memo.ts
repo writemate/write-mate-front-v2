@@ -137,54 +137,69 @@ export const updateMCharacterBirthday = async ({
 
 export const createMCharacterCharacteristic = async ({
   id,
-  characteristic,
+  title,
+  content,
 }: {
   id: string;
-  characteristic: Array<{ title: string; content: string }>;
+  title: string;
+  content: string;
 }) => {
-  await axiosInstance.patch(DOMAIN.CREATE_MEMO_CHARACTER_CHARACTERISTIC(id), {
-    characteristic,
-  });
+  console.log({
+    title,
+    content,
+  }); // 요청 데이터 확인
+  await axiosInstance.patch(
+    DOMAIN.CREATE_MEMO_CHARACTER_CHARACTERISTIC(id),
+    {
+      title,
+      content,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
 };
 
 export const deleteMCharacterCharacteristic = async ({
   id,
-  characteristicId,
+  idx,
 }: {
   id: string;
-  characteristicId: string;
+  idx: number;
 }) => {
   await axiosInstance.delete(
-    DOMAIN.DELETE_MEMO_CHARACTER_CHARACTERISTIC(id, characteristicId)
+    DOMAIN.DELETE_MEMO_CHARACTER_CHARACTERISTIC(id, idx)
   );
 };
 
 export const updateMCharacterCharacteristicTitle = async ({
   id,
-  characteristicId,
+  idx,
   title,
 }: {
   id: string;
-  characteristicId: string;
+  idx: number;
   title: string;
 }) => {
   await axiosInstance.patch(
-    DOMAIN.UPDATE_MEMO_CHARACTER_CHARACTERISTIC_TITLE(id, characteristicId),
+    DOMAIN.UPDATE_MEMO_CHARACTER_CHARACTERISTIC_TITLE(id, idx),
     { title }
   );
 };
 
 export const updateMCharacterCharacteristicContent = async ({
   id,
-  characteristicId,
+  idx,
   content,
 }: {
   id: string;
-  characteristicId: string;
+  idx: number;
   content: string;
 }) => {
   await axiosInstance.patch(
-    DOMAIN.UPDATE_MEMO_CHARACTER_CHARACTERISTIC_CONTENT(id, characteristicId),
+    DOMAIN.UPDATE_MEMO_CHARACTER_CHARACTERISTIC_CONTENT(id, idx),
     { content }
   );
 };
