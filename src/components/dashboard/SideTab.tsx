@@ -25,10 +25,11 @@ export default function SideTab() {
   return (
     <>
       <SideTabContainer>
+        <LogoLink href="/dashboard">
+          <Logo />
+        </LogoLink>
+
         <SideTabMenu>
-          <LogoLink href="/dashboard">
-            <Logo />
-          </LogoLink>
           <SideTabLink
             href="/dashboard"
             $isActivated={usePathname() === "/dashboard"}

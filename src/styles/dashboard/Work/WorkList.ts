@@ -1,4 +1,5 @@
 "use client";
+import { media } from "@/styles/media";
 import { FlexRowLeftStart, clickable, FlexColumnCenter } from "@/styles";
 import Link from "next/link";
 import { styled } from "styled-components";
@@ -12,7 +13,7 @@ export const TitleAndWorkListContainer = styled.div`
   position: relative;
   overflow-y: auto;
 
-  @media (max-width: 400px) {
+  ${media.tablet} {
     padding-top: 16px;
   }
 `;
@@ -27,8 +28,9 @@ export const WorkButtonList = styled.div`
   flex-wrap: wrap;
   gap: 16px;
   align-items: flex-start;
+  align-content: flex-start;
 
-  @media (max-width: 400px) {
+  ${media.tablet} {
     gap: 8px;
   }
 `;
@@ -62,7 +64,7 @@ export const WorkButtonContainer = styled(Link)`
     outline: 1px solid ${({ theme }) => theme.color.orange400};
   }
 
-  @media (max-width: 400px) {
+  ${media.tablet} {
     width: 150px;
     height: 240px;
   }
@@ -70,7 +72,7 @@ export const WorkButtonContainer = styled(Link)`
 
 export const WorkButtonImage = styled.img`
   width: 100%;
-  height: 80%;
+  height: 83%;
   flex-shrink: 0;
   margin-bottom: 12px;
 
@@ -88,7 +90,7 @@ export const TitleAndDateAndKebab = styled.div`
   align-items: center;
   flex-shrink: 0;
 
-  @media (max-width: 400px) {
+  ${media.tablet}  {
     transform: scale(0.8);
     transform-origin: top left;
   }
@@ -106,7 +108,6 @@ export const WorkButtonTitle = styled.div`
   width: 140px;
   height: 18px;
   overflow: hidden;
-  color: var(--Main-Color-Point-Color, var(--writemate-gray-900, #353535));
   text-overflow: ellipsis;
   white-space: nowrap;
   font-size: 14px;
@@ -120,13 +121,13 @@ export const WorkButtonTitle = styled.div`
   input {
     padding: 0px;
     border-radius: 3px;
-    border: 1px solid transparent;
-    box-shadow: 0 0 12px 0 #000000;
     font-family: Pretendard;
     font-size: 14px;
     font-style: normal;
     font-weight: 600;
     overflow: visible;
+    border: none;
+    outline: none;
 
     &:focus { 
       width: 100%;
