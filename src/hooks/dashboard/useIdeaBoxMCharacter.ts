@@ -51,31 +51,6 @@ export default function useIdeaBoxMCharacter() {
     if (!window.confirm("정말로 삭제하시겠습니까?")) return;
     deleteMCharacterMutation(id);
   };
-  const onChangeMCharacterName =
-    (id: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      debounceUpdateMCharacterName({ id, ch_name: e.target.value });
-      setMCharacterList((old) =>
-        old.map((memoCharacter) =>
-          memoCharacter.id === id
-            ? { ...memoCharacter, ch_name: e.target.value }
-            : memoCharacter
-        )
-      );
-    };
-  const onChangeMCharacterDescription =
-    (id: string) => (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-      debounceUpdateMCharacterDescription({
-        id,
-        description: e.target.value,
-      });
-      setMCharacterList((old) =>
-        old.map((memoCharacter) =>
-          memoCharacter.id === id
-            ? { ...memoCharacter, description: e.target.value }
-            : memoCharacter
-        )
-      );
-    };
 
   async function getNewlyCreatedMCharacter() {
     const createdId = await createMCharacterMutateAsync();

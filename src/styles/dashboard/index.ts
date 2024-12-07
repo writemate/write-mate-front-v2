@@ -24,7 +24,7 @@ export const DashboardContainer = styled.div`
   background-color: ${({ theme }) => theme.color.orange100};
   z-index: 0;
 
-  @media (max-width: 400px) {
+  ${media.tablet} {
     flex-direction: column;
     padding: 0;
   }
@@ -37,7 +37,7 @@ export const SideTabAndFooterContainer = styled.div`
   justify-content: space-between;
   height: 100%;
 
-  @media (max-width: 400px) {
+  ${media.tablet} {
     width: 100%;
     height: fit-content;
   }
@@ -62,7 +62,7 @@ export const FooterContainer = styled.div<{ $isActivated?: boolean }>`
     z-index: -1;
   }
 
-  @media (max-width: 400px) {
+  ${media.tablet} {
     display: none;
   }
 `;
@@ -78,7 +78,7 @@ export const HeaderAndMainContainer = styled.div`
   padding: 17px 20px;
   z-index: 0;
 
-  @media (max-width: 400px) {
+  ${media.tablet} {
     width: 100%;
     height: calc(100% - 60px);
     border-radius: 12px 12px 0px 0px;

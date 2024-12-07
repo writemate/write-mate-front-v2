@@ -169,9 +169,9 @@ export const deleteMCharacterCharacteristic = async ({
   id: string;
   idx: number;
 }) => {
-  await axiosInstance.delete(DOMAIN.DELETE_MEMO_CHARACTER_CHARACTERISTIC(id), {
-    params: { idx },
-  });
+  await axiosInstance.delete(
+    DOMAIN.DELETE_MEMO_CHARACTER_CHARACTERISTIC(id, idx)
+  );
 };
 
 export const updateMCharacterCharacteristicTitle = async ({
@@ -184,14 +184,8 @@ export const updateMCharacterCharacteristicTitle = async ({
   title: string;
 }) => {
   await axiosInstance.patch(
-    DOMAIN.UPDATE_MEMO_CHARACTER_CHARACTERISTIC_TITLE(id),
-    { title },
-    {
-      params: { idx },
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
+    DOMAIN.UPDATE_MEMO_CHARACTER_CHARACTERISTIC_TITLE(id, idx),
+    { title }
   );
 };
 
@@ -205,13 +199,7 @@ export const updateMCharacterCharacteristicContent = async ({
   content: string;
 }) => {
   await axiosInstance.patch(
-    DOMAIN.UPDATE_MEMO_CHARACTER_CHARACTERISTIC_CONTENT(id),
-    { content },
-    {
-      params: { idx },
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
+    DOMAIN.UPDATE_MEMO_CHARACTER_CHARACTERISTIC_CONTENT(id, idx),
+    { content }
   );
 };

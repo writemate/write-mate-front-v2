@@ -3,7 +3,7 @@ import { useContext } from "react";
 import React from "react";
 import Modal from "@/components/Modal";
 import { DashboardContext } from "@/hooks/dashboard/dashboard";
-import Footer from "@/components/dashboard/IdeaBox/MCharacter/ModalFooter";
+import { ModalFooter } from "@/components/dashboard/IdeaBox/MChacterModalFooter";
 import {
   ModalContentAndFooterContainer,
   ModalContentContainer,
@@ -81,12 +81,13 @@ function Image() {
       {!selectedMCharacter.ch_image && selectedMCharacter.ch_name && (
         <p>{selectedMCharacter.ch_name[0]}</p>
       )}
+      {!selectedMCharacter.ch_image && !selectedMCharacter.ch_name && <p> </p>}
     </ImageContainer>
   );
 }
 
 function Name() {
-  const { selectedMCharacter, onChangeSelectedMCharacterName, onKeyDownName } =
+  const { selectedMCharacter, onChangeSelectedMCharacterName } =
     useContext(DashboardContext).memoCharacterModal;
   if (!selectedMCharacter) {
     return null;
@@ -193,12 +194,12 @@ function Characterisitc() {
             <div key={index}>
               <input
                 defaultValue={characteristic.title}
-                placeholder="인물의 특징명을 입력하세요."
+                placeholder="설정 종류을 입력하세요."
               />
               <button>삭제</button>
               <input
                 defaultValue={characteristic.content}
-                placeholder="인물의 특징을 입력하세요."
+                placeholder="설정을 입력하세요."
               />
             </div>
           ))}

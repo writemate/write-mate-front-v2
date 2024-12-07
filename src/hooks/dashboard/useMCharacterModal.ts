@@ -15,7 +15,7 @@ import {
 import { mCharacterQueryKeys, memoQueryKeys } from "@/utils/APIs/queryKeys";
 import { TMCharacter } from "@/utils/APIs/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { use, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export default function useMCharacterModal() {
   const queryClient = useQueryClient();
@@ -98,14 +98,34 @@ export default function useMCharacterModal() {
     },
   });
 
-  const { mutate: deleteMCharacterMutation } = useMutation({
-    mutationFn: deleteMCharacter,
+  const { mutate: createMCharacterCharacteristicMutation } = useMutation({
+    mutationFn: createMCharacterCharacteristic,
     onSuccess: () => {
       if (selectedMCharacter) {
         queryClient.invalidateQueries({
           queryKey: mCharacterQueryKeys.all(selectedMCharacter.id),
         });
       }
+    },
+  });
+
+  const { mutate: deleteMCharacterCharacteristicMutation } = useMutation({
+    mutationFn: deleteMCharacterCharacteristic,
+    onSuccess: () => {
+      if (selectedMCharacter) {
+        queryClient.invalidateQueries({
+          queryKey: mCharacterQueryKeys.all(selectedMCharacter.id),
+        });
+      }
+    },
+  });
+
+  const { mutate: deleteMCharacterMutation } = useMutation({
+    mutationFn: deleteMCharacter,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: memoQueryKeys.memoCharacterList(),
+      });
     },
   });
 
@@ -151,9 +171,10 @@ export default function useMCharacterModal() {
   };
   const onClickAddCharacteristic = () => {
     if (selectedMCharacter) {
-      createMCharacterCharacteristic({
+      createMCharacterCharacteristicMutation({
         id: selectedMCharacter.id,
-        characteristic: [{ title: "", content: "" }],
+        title: " ", // 빈문자열로 바꾸어야 함
+        content: " ", // 빈문자열로 바꾸어야 함
       });
     }
   };
@@ -287,23 +308,10 @@ export default function useMCharacterModal() {
     }
   };
 
-  const onDeleteMCharacterCharacteristic = (
-    selectedCharacteristicIdx: number
-  ) => {
+  const onDeleteMCharacterCharacteristic = (idx: number) => () => {
     deleteMCharacterCharacteristicMutation({
       id: selectedMCharacter.id,
-      idx: selectedCharacteristicIdx,
-    });
-
-    setSelectedMCharacter((old) => {
-      const updatedCharacteristics = old.characteristic.filter(
-        (_, idx) => idx !== selectedCharacteristicIdx
-      );
-      console.log("After deletion:", updatedCharacteristics);
-      return {
-        ...old,
-        characteristic: updatedCharacteristics,
-      };
+      idx: idx,
     });
   };
 
@@ -331,6 +339,31 @@ export default function useMCharacterModal() {
       characteristic: [],
       updatedAt: "",
     });
+  }
+  function rollbackMCharacterAndCloseModal() {
+    if (selectedMCharacter) {
+      debounceUpdateMCharacterName({
+        id: selectedMCharacter.id,
+        ch_name: selectedMCharacter.ch_name,
+      });
+      debounceUpdateMCharacterRole({
+        id: selectedMCharacter.id,
+        role: selectedMCharacter.role,
+      });
+      debounceUpdateMCharacterDescription({
+        id: selectedMCharacter.id,
+        description: selectedMCharacter.description,
+      });
+      debounceUpdateMCharacterGender({
+        id: selectedMCharacter.id,
+        gender: selectedMCharacter.gender,
+      });
+      debounceUpdateMCharacterBirthday({
+        id: selectedMCharacter.id,
+        birthday: selectedMCharacter.birthday,
+      });
+    }
+    closeMemoModal();
   }
 
   return {
