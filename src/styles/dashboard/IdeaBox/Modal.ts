@@ -80,12 +80,12 @@ export const Input = styled.input`
   font-style: normal;
   font-weight: 500;
   line-height: 150%;
-  color: ${({ theme }) => theme.color.gray900};
+  color: ${({ theme }) => theme.color.gray700};
   border: none;
   outline: none;
 `;
 
-export const Textarea = styled(TextareaAutosize)`
+export const TextArea = styled(TextareaAutosize)`
   ${InputBoxContainer}
   font-size: 14px;
   font-style: normal;

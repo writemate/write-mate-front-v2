@@ -1,13 +1,20 @@
-'use client';
-import { styled } from 'styled-components';
-import { Button, clickable, FlexColumnCenter, FlexColumnLeftStart, FlexRowCenter, FlexRowLeftStart } from '..';
-import Link from 'next/link';
+"use client";
+import { styled } from "styled-components";
+import {
+  Button,
+  clickable,
+  FlexColumnCenter,
+  FlexColumnLeftStart,
+  FlexRowCenter,
+  FlexRowLeftStart,
+} from "..";
+import Link from "next/link";
 
 export const TabContainer = styled.div`
   ${FlexRowLeftStart};
   margin-top: 45px;
   width: 100%;
-  border-bottom: 1px solid #CACDDA;
+  border-bottom: 1px solid #cacdda;
   height: 29px;
   gap: 48px;
   padding-left: 18px;
@@ -19,11 +26,14 @@ export const TabButton = styled.div<{ $isSelected: boolean }>`
   align-items: flex-start;
   ${clickable};
   font-weight: 400;
-  color: ${({ $isSelected, theme }) => ($isSelected ? theme.color.orange400 : theme.color.gray300)};
+  color: ${({ $isSelected, theme }) =>
+    $isSelected ? theme.color.orange400 : theme.color.gray300};
   font-size: 18px;
   height: 100%;
   position: relative;
-  ${({ $isSelected, theme }) => $isSelected && `
+  ${({ $isSelected, theme }) =>
+    $isSelected &&
+    `
     &::after {
       content: '';
       display: block;
@@ -73,24 +83,29 @@ export const KeywordListContainer = styled.div`
   line-height: 21px;
 `;
 
-export const KeywordListContainerForCharacterCard = styled(KeywordListContainer)`
+export const KeywordListContainerForCharacterCard = styled(
+  KeywordListContainer
+)`
   margin-top: 0;
   font-size: 12px;
   line-height: 18px;
 `;
 
-export const KeywordContainer = styled.div<{ $lightColor?: string, $darkColor?: string }>`
+export const KeywordContainer = styled.div<{
+  $lightColor?: string;
+  $darkColor?: string;
+}>`
   ${FlexRowCenter};
   ${clickable};
   gap: 6px;
   padding: 6px 10px;
   border-radius: 30px;
-  background-color: ${({ $lightColor="transparent" }) => $lightColor};
-  color: ${({ theme, $darkColor}) => $darkColor ?? theme.color.gray400};
+  background-color: ${({ $lightColor = "transparent" }) => $lightColor};
+  color: ${({ theme, $darkColor }) => $darkColor ?? theme.color.gray400};
   font-weight: 600;
-  border: 1px solid ${({ theme, $darkColor}) => $darkColor ?? theme.color.gray400};
+  border: 1px solid
+    ${({ theme, $darkColor }) => $darkColor ?? theme.color.gray400};
 `;
-
 
 export const CharacterListContainer = styled.div`
   ${FlexRowLeftStart};
@@ -113,7 +128,7 @@ export const CharacterCard = styled(Link)`
 export const CharacterCardTitle = styled.div`
   ${FlexRowLeftStart};
   width: 100%;
-  &>*:last-child {
+  & > *:last-child {
     margin-left: auto;
     flex-shrink: 0;
   }
@@ -125,7 +140,7 @@ export const CharacterImage = styled.div<{ $src: string }>`
   height: 48px;
   border-radius: 100%;
   background-color: ${({ theme }) => theme.color.gray200};
-  box-shadow: 2px 2px 8px #323F4D33;
+  box-shadow: 2px 2px 8px #323f4d33;
   border: 2px solid #fff;
   flex-shrink: 0;
   margin-right: 12px;
@@ -181,7 +196,7 @@ export const CreateRelationButton = styled(CreateCharacterButton)`
   transform: translateX(-50%);
 `;
 
-export const MiniModal = styled.div<{$left: number }>`
+export const MiniModal = styled.div<{ $left: number }>`
   ${FlexRowCenter};
   position: absolute;
   top: 20px;
@@ -192,12 +207,12 @@ export const MiniModal = styled.div<{$left: number }>`
   z-index: 100;
   padding: 9px;
   box-shadow: 0px 0px 12px #00000033;
-  &>input {
+  & > input {
     padding-right: 43px;
     box-shadow: none;
     border: 1px solid ${({ theme }) => theme.color.gray75};
   }
-  &>button {
+  & > button {
     ${clickable};
     position: absolute;
     right: 14px;
@@ -212,11 +227,10 @@ export const MiniModal = styled.div<{$left: number }>`
 `;
 
 export const CharacteristicListContainer = styled.div`
-  ${FlexColumnLeftStart};
+  ${FlexColumnCenter};
   width: 100%;
   gap: 12px;
 `;
-
 
 export const CharacteristicContainer = styled.div`
   ${FlexRowLeftStart};
@@ -225,9 +239,9 @@ export const CharacteristicContainer = styled.div`
   padding: 26px 20px;
   background-color: #fff;
   border-radius: 8px;
-  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.10);
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.1);
   gap: 6px;
-`
+`;
 export const CharacteristicTitle = styled.input`
   flex-grow: 1;
   border: none;
@@ -236,7 +250,7 @@ export const CharacteristicTitle = styled.input`
   font-style: normal;
   font-weight: 600;
   line-height: 150%;
-`
+`;
 export const CharacteristicContent = styled.textarea`
   width: 100%;
   border: none;
@@ -246,7 +260,7 @@ export const CharacteristicContent = styled.textarea`
   font-style: normal;
   font-weight: 500;
   line-height: 150%;
-`
+`;
 
 export const CharacteristicAdd = styled.button`
   ${clickable};
@@ -264,24 +278,24 @@ export const CharacteristicAdd = styled.button`
   line-height: 21px; /* 150% */
   letter-spacing: -0.16px;
   color: ${({ theme }) => theme.color.orange400};
-`
+`;
 
 export const EditRelationContainer = styled.div`
   ${FlexColumnCenter};
   width: 100%;
   height: 100%;
-  background-color: #FFF;
+  background-color: #fff;
   padding: 30px;
   border-radius: 12px;
   gap: 16px;
-  &>hr{
+  & > hr {
     width: 100%;
-    background: #BBB;
+    background: #bbb;
     height: 1px;
     border: none;
     flex-shrink: 0;
   }
-`
+`;
 
 export const RelationTitle = styled.div`
   font-size: 36px;
@@ -300,7 +314,7 @@ export const RelationContentsContainer = styled.div`
   max-width: 760px;
 `;
 
-export  const RelationCharacterContainer = styled.div`
+export const RelationCharacterContainer = styled.div`
   ${FlexColumnCenter};
   gap: 14px;
   flex-grow: 0;
@@ -312,14 +326,14 @@ export const RelationCharacterImage = styled.div<{ $src?: string }>`
   border-radius: 8px;
   box-shadow: 2px 2px 12px 0px rgba(19, 19, 19, 0.12);
   background: url(${({ $src }) => $src}) lightgray 50% / cover no-repeat;
-`
+`;
 export const RelationCharacterName = styled.div`
   font-size: 16px;
   font-style: normal;
   font-weight: 700;
   line-height: 100%;
   color: ${({ theme }) => theme.color.red400};
-`
+`;
 
 export const RelationCharacterDescription = styled.div`
   width: 150px;
@@ -336,13 +350,13 @@ export const RelationArrowContainer = styled.div`
   gap: 29px;
   flex-grow: 1;
   width: 100%;
-  &>div{
+  & > div {
     ${FlexRowCenter};
     width: 100%;
-    &>*:not(input){
+    & > *:not(input) {
       flex-shrink: 0;
     }
-    &>input{
+    & > input {
       width: 100%;
       padding: 7px 15px;
       text-align: center;
@@ -353,23 +367,27 @@ export const RelationArrowContainer = styled.div`
       border: ${({ theme }) => theme.color.orange400} 1px solid;
       border-radius: 100px;
       outline: none;
-      background-color: #FFF;
+      background-color: #fff;
       flex-grow: 1;
     }
   }
-`
+`;
 
 export const RelationFooter = styled.div`
   ${FlexRowCenter};
   width: 100%;
   gap: 12px;
-`
+`;
 
-export const CancelButton = styled(Button).attrs(props=>({$border: true}))`
+export const CancelButton = styled(Button).attrs((props) => ({
+  $border: true,
+}))`
   margin-left: auto;
 `;
 
-export const SaveButton = styled(styled(Button)<{ $isSavalble: boolean }>``).attrs(props=>({
-  $background: props.$isSavalble ? props.theme.color.gray900 : '#CDCDCD',
+export const SaveButton = styled(
+  styled(Button)<{ $isSavalble: boolean }>``
+).attrs((props) => ({
+  $background: props.$isSavalble ? props.theme.color.gray900 : "#CDCDCD",
   $color: "#fff",
 }))``;
