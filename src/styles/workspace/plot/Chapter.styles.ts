@@ -1,5 +1,6 @@
 import { colorSystem } from "@/styles/colorSystem";
 import styled from "styled-components";
+import TextareaAutosize from "react-textarea-autosize";
 
 export const ChapterContainer = styled.form<{ isOpenAlone: boolean }>`
   width: 100%;
@@ -67,6 +68,21 @@ export const TitleInput = styled.input`
   margin-bottom: 8px;
 
   color: ${colorSystem.gray900};
+`;
+
+export const MemoContent = styled(TextareaAutosize)`
+  width: 100%;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  color: ${({ theme }) => theme.color.gray300};
+  border: none;
+  outline: none;
+  resize: none;
+  &::placeholder {
+    color: ${({ theme }) => theme.color.gray200};
+  }
 `;
 
 export const ContentTextArea = styled.textarea<{

@@ -1,12 +1,6 @@
 import {
-  PlotChapterType,
-} from "@/utils/APIs/mock/plot";
-import {
   createChapter,
-  deleteChapter,
-  updateChapterDescription,
   updateChapterFold,
-  updateChapterName,
   updateChapterOrder,
 } from "@/utils/APIs/plot";
 import { workspaceQueryKeys } from "@/utils/APIs/queryKeys";
@@ -54,41 +48,6 @@ const useChapterList = () => {
     onError: (err, newTodo, context) => {
       notifyError("챕터 추가에 실패했습니다.");
     }
-  });
-
-  // 챕터 삭제하기
-  const { mutate: mutateDelete } = useMutation({
-    mutationFn: deleteChapter(plot_id),
-    onError: (err, newTodo, context) => {
-      notifyError("챕터 삭제에 실패했습니다.");
-    },
-    onSuccess: () => {
-      notifySuccess("챕터가 삭제되었습니다.");
-
-      queryClient.invalidateQueries({
-        queryKey: workspaceQueryKeys.plot(workspace_id, plot_id),
-      });
-    },
-  });
-
-  // 챕터 이름 수정하기
-  const { mutate: mutateChapterName } = useMutation({
-    mutationFn: updateChapterName(plot_id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: workspaceQueryKeys.plot(workspace_id, plot_id),
-      });
-    },
-  });
-
-  // 챕터 설명 수정하기
-  const { mutate: mutateChapterDescription } = useMutation({
-    mutationFn: updateChapterDescription(plot_id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: workspaceQueryKeys.plot(workspace_id, plot_id),
-      });
-    },
   });
 
   // 챕터 순서 수정하기
@@ -154,20 +113,8 @@ const useChapterList = () => {
     });
   };
 
-  const handleLocalFold = (id: string, isFolded: boolean) => {
-    setChapterList((prevChapters) =>
-      prevChapters.map((chapter) =>
-        chapter.id === id ? { ...chapter, is_folded: isFolded } : chapter
-      )
-    );
-    mutateChapterFold({ chapterId: id, is_folded: isFolded });
-  };
-
   return {
     mutateCreate,
-    mutateDelete,
-    mutateChapterName,
-    mutateChapterDescription,
     mutateChapterOrder,
     mutateChapterFold,
     chapterList,

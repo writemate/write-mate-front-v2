@@ -30,7 +30,7 @@ export const createChapter = (plotId: string) => async () => {
  * @param chapterId
  * @returns
  */
-export const deleteChapter = ( plotId: string ) => async ( chapterId: string) => {
+export const deleteChapter = ( plotId: string, chapterId: string ) => async ( ) => {
   const response = await axiosInstance.delete<void>(
     DOMAIN.DELETE_CHAPTER(plotId, chapterId)
   );
@@ -44,8 +44,8 @@ export const deleteChapter = ( plotId: string ) => async ( chapterId: string) =>
  * @param chapterId
  * @param chapter_name
  */
-export const updateChapterName = ( plotId: string ) => 
-  async ({ chapterId, chapter_name }: { chapterId: string; chapter_name: string }) => {
+export const updateChapterName = ( plotId: string, chapterId: string ) => 
+  async (chapter_name: string ) => {
   const response = await axiosInstance.patch<void>(
     DOMAIN.UPDATE_CHAPTER_NAME(plotId, chapterId),
     { chapter_name }
@@ -60,8 +60,8 @@ export const updateChapterName = ( plotId: string ) =>
  * @param chapterId
  * @param chapter_description
  */
-export const updateChapterDescription = ( plotId: string ) =>
-  async ({chapterId, chapter_description}: {chapterId: string, chapter_description: string}) => {
+export const updateChapterDescription = ( plotId: string, chapterId: string ) =>
+  async (chapter_description: string) => {
   const response = await axiosInstance.patch<void>(
     DOMAIN.UPDATE_CHAPTER_DESCRIPTION(plotId, chapterId),
     { chapter_description }
@@ -95,6 +95,22 @@ export const updateChapterOrder = ( plotId: string) =>
  */
 export const updateChapterFold = ( plotId: string ) =>
   async ({ chapterId, is_folded }: { chapterId: string; is_folded: boolean }) => {
+  const response = await axiosInstance.patch<void>(
+    DOMAIN.UPDATE_CHAPTER_FOLD(plotId, chapterId),
+    { is_folded }
+  );
+
+  return response.data;
+};
+
+/**
+ * 챕터 접힘 여부 수정하기
+ * @param plotId
+ * @param chapterId
+ * @param is_folded
+ */
+export const updateChapterFoldForLocal = ( plotId: string, chapterId:string ) =>
+  async (is_folded: boolean ) => {
   const response = await axiosInstance.patch<void>(
     DOMAIN.UPDATE_CHAPTER_FOLD(plotId, chapterId),
     { is_folded }

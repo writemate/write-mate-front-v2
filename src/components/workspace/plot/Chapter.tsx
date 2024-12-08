@@ -3,6 +3,7 @@ import {
   ChapterDragWrap,
   ChapterMargin,
   IconButton,
+  MemoContent,
   OpenContainer,
   TitleInput,
 } from "@/styles/workspace/plot/Chapter.styles";
@@ -14,52 +15,21 @@ import CopyIcon from "@/assets/workspace/plot/copy.svg";
 import DragDrop from "@/assets/workspace/plot/dragdrop.svg";
 import ToggleFold from "@/assets/workspace/plot/toggleFold.svg";
 import AutoResizeInput from "./AutoResizeInput";
-import useChapterList from "@/hooks/workspace/plot/useChapterList";
-import { TPlotEvent } from "@/utils/APIs/types";
-
-interface ChapterProps {
-  chapterId: string;
-  chapterName: string;
-  chapterDescription: string;
-  pevent: TPlotEvent[];
-  isFolded: boolean;
-}
+import useChapter from "@/hooks/workspace/plot/useChapter";
+import { TChapter } from "@/utils/APIs/types";
 
 export default function Chapter({
-  chapterId,
-  chapterName,
-  chapterDescription,
-  pevent,
-  isFolded,
-}: ChapterProps) {
-  const [title, setTitle] = useState<string>(chapterName);
-  const [content, setContent] = useState<string>(chapterDescription);
-  const { mutateChapterName, mutateChapterDescription } = useChapterList();
+  id: chapterId,
+  chapter_name: chapterName,
+  chapter_description: chapterDescription,
+  pevent_list: pevent,
+  is_folded: isFolded,
+}: TChapter) {
 
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setTitle(value);
-    mutateChapterName({ chapterId, chapter_name: value });
-  };
-
-  const handleContentChange = (value: string) => {
-    setContent(value);
-    mutateChapterDescription({ chapterId, chapter_description: value });
-  };
-
-  const [localIsFolded, setLocalIsFolded] = useState(isFolded);
-
-  useEffect(() => {
-    setLocalIsFolded(isFolded);
-  }, [isFolded]);
-
-  const toggleChapter = () => {
-    const newFoldedState = !localIsFolded;
-    setLocalIsFolded(newFoldedState);
-  };
+  const { onChapterNameChange, onChapterDescriptionChange, mutateChapterFold } = useChapter(chapterId);
 
   return (
-    <ChapterContainer isOpenAlone={localIsFolded}>
+    <ChapterContainer isOpenAlone={isFolded}>
       <ChapterDragWrap>
         <DragDrop />
       </ChapterDragWrap>
@@ -67,14 +37,14 @@ export default function Chapter({
       <ChapterMargin>
         <div>
           <TitleInput
-            value={title}
-            onChange={handleNameChange}
+            defaultValue={chapterName}
+            onChange={onChapterNameChange}
             placeholder="챕터 제목을 적어주세요."
           />
-          <IconButton type="button" onClick={toggleChapter}>
+          {/* <IconButton type="button" onClick={toggleChapter}>
             {localIsFolded && <ToggleIcon style={{ marginBottom: "10%" }} />}
             {!localIsFolded && <ToggleFold style={{ marginBottom: "11%" }} />}
-          </IconButton>
+          </IconButton> */}
           <IconButton type="button">
             <CopyIcon />
           </IconButton>
@@ -82,13 +52,12 @@ export default function Chapter({
             <DeleteIcon />
           </IconButton>
         </div>
-        <AutoResizeInput
-          isFolded={localIsFolded}
-          value={content}
-          onChange={handleContentChange}
+        <MemoContent
+          defaultValue={chapterDescription}
+          onChange={onChapterDescriptionChange}
           placeholder="챕터 내용을 적어주세요."
         />
-        {localIsFolded && (
+        {true && (
           <OpenContainer>
             <EventList pevent={pevent} chapterId={chapterId} />
           </OpenContainer>
