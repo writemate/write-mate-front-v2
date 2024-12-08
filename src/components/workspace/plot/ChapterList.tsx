@@ -1,11 +1,9 @@
 "use client";
-
 import Chapter from "./Chapter";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import ToggleBtn from "./ToggleBtn";
 import { AddChapterButton } from "@/styles/workspace/plot/ChapterList.styles";
 import useChapterList from "@/hooks/workspace/plot/useChapterList";
-import { useParams } from "next/navigation";
 
 
 export default function ChapterList() {
