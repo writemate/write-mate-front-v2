@@ -15,7 +15,8 @@ import {
 import { mCharacterQueryKeys, memoQueryKeys } from "@/utils/APIs/queryKeys";
 import { TMCharacter } from "@/utils/APIs/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
+import { DashboardContext } from "./dashboard";
 
 export default function useMCharacterModal() {
   const queryClient = useQueryClient();
@@ -32,6 +33,8 @@ export default function useMCharacterModal() {
     characteristic: [],
     updatedAt: "",
   });
+  const [selectedCharacteristicIdx, setSelectedCharacteristicIdx] =
+    useState<number>(0);
 
   const nameRef = document.getElementsByClassName("memo-modal-name");
   const descriptionRef = document.getElementsByClassName(
@@ -178,6 +181,10 @@ export default function useMCharacterModal() {
       });
     }
   };
+  const onClickDeleteCharacteristic = (idx: number) => () => {
+    setSelectedCharacteristicIdx(idx);
+    openDeleteConfirmModal();
+  };
 
   const { onChange: onChangeSelectedMCharacterName } = useUpdate({
     updateFn: updateMCharacterName,
@@ -308,10 +315,10 @@ export default function useMCharacterModal() {
     }
   };
 
-  const onDeleteMCharacterCharacteristic = (idx: number) => () => {
+  const onDeleteMCharacterCharacteristic = () => {
     deleteMCharacterCharacteristicMutation({
       id: selectedMCharacter.id,
-      idx: idx,
+      idx: selectedCharacteristicIdx,
     });
   };
 
@@ -374,16 +381,21 @@ export default function useMCharacterModal() {
     onClickMCharacterName,
     onClickMCharacterDescription,
     onClickAddCharacteristic,
+    onClickDeleteCharacteristic,
     onChangeSelectedMCharacterName,
     onChangeSelectedMCharacterRole,
     onChangeSelectedMCharacterDescription,
     onChangeSelectedMCharacterBirthday,
     onChangeSelectedMCharacterGender,
-    onChangeSelectedMCharacterCharacteristicTitle,
-    onChangeSelectedMCharacterCharacteristicContent,
     onDeleteMCharacterCharacteristic,
     onKeyDownName,
     onDeleteMCharacter,
     rollbackMCharacterAndCloseModal,
   };
+}
+
+function openDeleteConfirmModal() {
+  const { onClickDeleteMCharacterCharacteristic } =
+    useContext(DashboardContext).removeConfirmationModal;
+  onClickDeleteMCharacterCharacteristic();
 }

@@ -86,7 +86,7 @@ export const Input = styled.input`
   outline: none;
 `;
 
-export const Textarea = styled(TextareaAutosize)`
+export const TextArea = styled(TextareaAutosize)`
   ${InputBoxContainer}
   font-size: 14px;
   font-style: normal;
