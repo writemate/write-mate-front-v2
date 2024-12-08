@@ -8,8 +8,7 @@ import useChapterList from "@/hooks/workspace/plot/useChapterList";
 
 export default function ChapterList() {
   const { chapterList, handleDragAndDrop, areAllChaptersFolded, toggleAllChapters,
-    mutateCreate, mutateDelete, mutateChapterOrder, mutateChapterFold } =
-    useChapterList();
+    mutateCreate } = useChapterList();
 
   return (
     <>
@@ -39,11 +38,7 @@ export default function ChapterList() {
                         {...provided.dragHandleProps}
                       >
                         <Chapter
-                          chapterId={chapter.id}
-                          chapterName={chapter.chapter_name}
-                          chapterDescription={chapter.chapter_description}
-                          pevent={chapter.pevent_list}
-                          isFolded={chapter.is_folded}
+                          {...chapter}
                         />
                       </div>
                     )}
