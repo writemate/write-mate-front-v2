@@ -17,6 +17,7 @@ import { PlotContext } from "./usePlot";
 import { useContext, useEffect, useState } from "react";
 import useDragAndDrop from "./useDragAndDrop";
 import { TChapter } from "@/utils/APIs/types";
+import { useSaveLoading } from "@/stores/useSaveLoading";
 
 const useChapterList = () => {
   const queryClient = useQueryClient();
@@ -24,6 +25,8 @@ const useChapterList = () => {
 
   const chapterListFromServer = useContext(PlotContext);
   const [chapterList, setChapterList] = useState([] as TChapter[]);
+  const addSaving = useSaveLoading((state) => state.add);
+  const removeSaving = useSaveLoading((state) => state.remove);
 
   useEffect(() => {
     if(!chapterListFromServer) return;
@@ -34,21 +37,23 @@ const useChapterList = () => {
   const { mutate: mutateCreate } = useMutation({
     mutationFn: createChapter(plot_id),
     onMutate: async () => {
+      const savingSymbol = addSaving("챕터 추가 중");
       await queryClient.cancelQueries({
         queryKey: workspaceQueryKeys.plot(workspace_id, plot_id),
       });
-
-      const previousChapters = queryClient.getQueryData<PlotChapterType[]>(
-        workspaceQueryKeys.plot(workspace_id, plot_id)
-      );
-
-      return { previousChapters };
+      return { savingSymbol };
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: workspaceQueryKeys.plot(workspace_id, plot_id),
       });
     },
+    onSettled: (_, __, ___, context) => {
+      removeSaving(context!.savingSymbol);
+    },
+    onError: (err, newTodo, context) => {
+      notifyError("챕터 추가에 실패했습니다.");
+    }
   });
 
   // 챕터 삭제하기
