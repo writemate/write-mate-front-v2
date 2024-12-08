@@ -9,7 +9,7 @@ import {
   RightButtonContainer,
 } from "@/styles/dashboard/IdeaBox/Modal";
 
-export function ModalFooter() {
+export default function ModalFooter() {
   const { closeEditModal, rollbackMCharacterAndCloseModal } =
     useContext(DashboardContext).memoCharacterModal;
   const { onClickDeleteMCharacter } =
