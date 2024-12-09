@@ -1,4 +1,3 @@
-import useDragAndDrop from "@/hooks/workspace/plot/useDragAndDrop";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import Event from "./Event";
 import { PlotEventType } from "@/utils/APIs/mock/plot";

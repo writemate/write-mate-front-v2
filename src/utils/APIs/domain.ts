@@ -44,6 +44,8 @@ export const DOMAIN = {
     `/api/plots/${plotId}/chapters/${chapterId}/description`,
   UPDATE_CHAPTER_ORDER: (plotId: string, chapterId: string) =>
     `/api/plots/${plotId}/chapters/${chapterId}/order`,
+  UPDATE_CHAPTER_FOLD_All: (plotId: string) =>
+    `/api/plots/${plotId}/chapters/folded`,
   UPDATE_CHAPTER_FOLD: (plotId: string, chapterId: string) =>
     `/api/plots/${plotId}/chapters/${chapterId}/folded`,
 

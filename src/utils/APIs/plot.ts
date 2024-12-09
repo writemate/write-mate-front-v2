@@ -93,10 +93,10 @@ export const updateChapterOrder = ( plotId: string) =>
  * @param chapterId
  * @param is_folded
  */
-export const updateChapterFold = ( plotId: string ) =>
-  async ({ chapterId, is_folded }: { chapterId: string; is_folded: boolean }) => {
+export const updateChapterFoldAll = ( plotId: string ) =>
+  async ( is_folded: boolean ) => {
   const response = await axiosInstance.patch<void>(
-    DOMAIN.UPDATE_CHAPTER_FOLD(plotId, chapterId),
+    DOMAIN.UPDATE_CHAPTER_FOLD_All(plotId),
     { is_folded }
   );
 
