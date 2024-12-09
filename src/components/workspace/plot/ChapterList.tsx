@@ -8,7 +8,7 @@ import useChapterList from "@/hooks/workspace/plot/useChapterList";
 
 export default function ChapterList() {
   const { chapterList, handleDragAndDrop, areAllChaptersFolded, toggleAllChapters,
-    mutateCreate } = useChapterList();
+    onClickCreate } = useChapterList();
 
   return (
     <>
@@ -50,7 +50,7 @@ export default function ChapterList() {
         </Droppable>
       </DragDropContext>
 
-      <AddChapterButton onClick={()=>mutateCreate()}>
+      <AddChapterButton onClick={onClickCreate}>
         챕터 추가하기
       </AddChapterButton>
     </>

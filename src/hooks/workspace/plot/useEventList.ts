@@ -16,7 +16,7 @@ import {
   TPatchUpdateEORequest,
 } from "@/utils/APIs/mock/plot";
 import { useEffect, useState } from "react";
-import useDragAndDrop from "./useDragAndDrop";
+import { getHandleDragAndDropFunctionForReorder } from "@/utils/getReorderFunction";
 import { TPlotEvent } from "@/utils/APIs/types";
 
 const useEventList = (chapterId: string, eventListFromServer: TPlotEvent[]) => {
@@ -89,7 +89,7 @@ const useEventList = (chapterId: string, eventListFromServer: TPlotEvent[]) => {
     },
   });
 
-  const { handleDragAndDrop } = useDragAndDrop({
+  const handleDragAndDrop = getHandleDragAndDropFunctionForReorder({
     mutationOrderFn: ({ itemId, pre_idx, next_idx }) =>
       mutateEventO({ peventId: itemId, pre_idx, next_idx }),
     item: eventList,
