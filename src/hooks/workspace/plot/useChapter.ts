@@ -11,6 +11,7 @@ import { notifySuccess, notifyError } from "@/utils/showToast";
 import { useSaveLoading } from "@/stores/useSaveLoading";
 import { debounce } from "@/utils";
 import { useRef } from "react";
+import { useInputLiveUpdate } from "@/hooks/common/useInputLiveUpdate";
 
 const useChapter = (chapterId: string) => {
   const queryClient = useQueryClient();
@@ -34,46 +35,8 @@ const useChapter = (chapterId: string) => {
     },
   });
 
-  const changingNameSymbol = useRef<Symbol | null>(null);
-  // 챕터 이름 수정하기
-  const { mutate: mutateChapterName } = useMutation({
-    mutationFn: updateChapterName(plot_id, chapterId),
-    onMutate: (newName) => {
-      console.log("onMutate", newName);
-    },
-    onSettled: () => {
-      if(changingNameSymbol.current) {
-        removeSaving(changingNameSymbol.current);
-        changingNameSymbol.current = null;
-      }
-    },
-    onError: (err, newTodo, context) => {
-      notifyError("챕터 이름 저장에 실패했습니다.");
-    },
-  });
-
-  const debounceChapterName = debounce(mutateChapterName, 500);
-  const onChapterNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    debounceChapterName(e.target.value);
-    console.log(changingNameSymbol.current);
-    if(changingNameSymbol.current) return;
-    changingNameSymbol.current = addSaving("챕터 이름 저장 중...");
-  }
-
-  // 챕터 설명 수정하기
-  const { mutate: mutateChapterDescription } = useMutation({
-    mutationFn: updateChapterDescription(plot_id, chapterId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: workspaceQueryKeys.plot(workspace_id, plot_id),
-      });
-    },
-  });
-
-  const debounceChapterDescription = debounce(mutateChapterDescription, 500);
-  const onChapterDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    debounceChapterDescription(e.target.value);
-  }
+  const onChapterNameChange = useInputLiveUpdate(updateChapterName(plot_id, chapterId), "챕터 이름", "챕터 이름 저장에 실패했습니다.");
+  const onChapterDescriptionChange = useInputLiveUpdate(updateChapterDescription(plot_id, chapterId), "챕터 설명", "챕터 설명 저장에 실패했습니다.");
 
   // 챕터 접힘 여부 수정하기
   const { mutate: mutateChapterFold } = useMutation({
