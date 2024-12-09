@@ -49,6 +49,12 @@ const useChapterList = () => {
     }
   });
 
+  const handleDragAndDrop = getHandleDragAndDropFunctionForReorder({
+    mutationOrderFn: ({ itemId, pre_idx, next_idx }) =>
+      mutateChapterOrder({ chapterId: itemId, pre_idx, next_idx }),
+    item: chapterList,
+  });
+
   // 챕터 접힘 여부 수정하기
   const mutateChapterFold = useOnClickUpdate({
     mutationFn: updateChapterFoldAll(plot_id),
@@ -77,15 +83,7 @@ const useChapterList = () => {
     (chapter) => chapter.is_folded
   );
 
-  const toggleAllChapters = () => mutateChapterFold(!areAllChaptersFolded);
-
-  const handleDragAndDrop = getHandleDragAndDropFunctionForReorder({
-    mutationOrderFn: ({ itemId, pre_idx, next_idx }) =>
-      mutateChapterOrder({ chapterId: itemId, pre_idx, next_idx }),
-    item: chapterList,
-  });
-
-  
+  const toggleAllChapters = () => mutateChapterFold(!areAllChaptersFolded);  
 
   return {
     onClickCreate,
