@@ -1,6 +1,7 @@
 import { colorSystem } from "@/styles/colorSystem";
 import styled from "styled-components";
 import TextareaAutosize from "react-textarea-autosize";
+import { FlexRowLeftStart } from "@/styles";
 
 export const ChapterContainer = styled.form<{ isOpenAlone: boolean }>`
   width: 100%;
@@ -21,9 +22,10 @@ export const ChapterDragWrap = styled.div`
   top: 45%;
 `;
 
-export const ChapterMargin = styled.div`
+export const ChapterCard = styled.div`
   margin: 16px 20px 0 40px;
 `;
+
 
 export const OpenContainer = styled.div`
   display: grid;
@@ -32,12 +34,19 @@ export const OpenContainer = styled.div`
 `;
 
 export const IconButton = styled.button`
-  width: 32px;
+  flex: 0 0 auto;
   font-size: 18px;
   background: transparent;
   border: none;
   color: ${colorSystem.gray300};
   cursor: pointer;
+  display: flex;
+`;
+
+export const ChapterHeader = styled.div`
+  ${FlexRowLeftStart}
+  width: 100%;
+  padding-bottom: 8px;
 `;
 
 export const AddButton = styled.button`
@@ -57,16 +66,15 @@ export const AddButton = styled.button`
 export const TitleInput = styled.input`
   height: 36px;
   text-overflow: clip;
-  width: 89%;
+  width: 100%;
+  flex-shrink: 1;
   border: none;
+  outline: none;
 
   font-weight: 700;
   font-size: 24px;
   line-height: 150%;
   display: inline-block;
-
-  margin-bottom: 8px;
-
   color: ${colorSystem.gray900};
 `;
 

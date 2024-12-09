@@ -6,12 +6,12 @@ import {
 import { workspaceQueryKeys } from "@/utils/APIs/queryKeys";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
-import { notifySuccess, notifyError } from "@/utils/showToast";
 import { PlotContext } from "./usePlot";
 import { useContext, useEffect, useState } from "react";
 import useDragAndDrop from "./useDragAndDrop";
-import { TChapter } from "@/utils/APIs/types";
+import { TChapter, TPlot } from "@/utils/APIs/types";
 import { useSaveLoading } from "@/stores/useSaveLoading";
+import { useOnClickUpdate } from "@/hooks/common/useOnClickUpdate";
 
 const useChapterList = () => {
   const queryClient = useQueryClient();
@@ -27,28 +27,12 @@ const useChapterList = () => {
     setChapterList(chapterListFromServer);
   }, [chapterListFromServer]);
 
-  // 챕터 추가하기 (만들기)
-  const { mutate: mutateCreate } = useMutation({
+  const mutateCreate = useOnClickUpdate({
     mutationFn: createChapter(plot_id),
-    onMutate: async () => {
-      const savingSymbol = addSaving("챕터 추가 중");
-      await queryClient.cancelQueries({
-        queryKey: workspaceQueryKeys.plot(workspace_id, plot_id),
-      });
-      return { savingSymbol };
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: workspaceQueryKeys.plot(workspace_id, plot_id),
-      });
-    },
-    onSettled: (_, __, ___, context) => {
-      removeSaving(context!.savingSymbol);
-    },
-    onError: (err, newTodo, context) => {
-      notifyError("챕터 추가에 실패했습니다.");
-    }
-  });
+    queryKey: workspaceQueryKeys.plot(workspace_id, plot_id),
+    savingMessage: "챕터 추가",
+    errorMessage: "챕터 추가에 실패했습니다."
+  })();
 
   // 챕터 순서 수정하기
   // todo: 테스트 후 toast 지우기
@@ -81,13 +65,27 @@ const useChapterList = () => {
   });
 
   // 챕터 접힘 여부 수정하기
-  const { mutate: mutateChapterFold } = useMutation({
+  const mutateChapterFold = useOnClickUpdate({
     mutationFn: updateChapterFold(plot_id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: workspaceQueryKeys.plot(workspace_id, plot_id),
-      });
-    },
+    queryKey: workspaceQueryKeys.plot(workspace_id, plot_id),
+    savingMessage: "챕터 접힘 여부 수정",
+    errorMessage: "챕터 접힘 여부 수정에 실패했습니다.",
+    // onMutate: ({ chapterId, is_folded }) => {
+    //   const previousPlot = queryClient.getQueryData<TPlot>(workspaceQueryKeys.plot(workspace_id, plot_id));
+    //   const previousChapters = previousPlot?.chapter_list;
+    //   if(!previousChapters) return;
+
+    //   const newChapters = previousChapters.map((chapter) => {
+    //     if(chapter.id === chapterId) {
+    //       return { ...chapter, is_folded };
+    //     }
+    //     return chapter;
+    //   });
+
+    //   queryClient.setQueryData<TPlot>(workspaceQueryKeys.plot(workspace_id, plot_id), {...previousPlot, chapter_list: newChapters});
+
+    //   return { previousChapters };
+    // }
   });
 
   const { handleDragAndDrop } = useDragAndDrop({
@@ -102,14 +100,8 @@ const useChapterList = () => {
 
   const toggleAllChapters = () => {
     const newFoldedState = !areAllChaptersFolded;
-    setChapterList((prevChapters) =>
-      prevChapters.map((chapter) => ({
-        ...chapter,
-        is_folded: newFoldedState,
-      }))
-    );
     chapterList.forEach((chapter) => {
-      mutateChapterFold({ chapterId: chapter.id, is_folded: newFoldedState });
+      mutateChapterFold({ chapterId: chapter.id, is_folded: newFoldedState })();
     });
   };
 

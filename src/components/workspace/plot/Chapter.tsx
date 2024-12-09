@@ -1,11 +1,12 @@
 import {
   ChapterContainer,
   ChapterDragWrap,
-  ChapterMargin,
+  ChapterCard,
   IconButton,
   MemoContent,
   OpenContainer,
   TitleInput,
+  ChapterHeader,
 } from "@/styles/workspace/plot/Chapter.styles";
 import { EventList } from "./EventList";
 import { useEffect, useState } from "react";
@@ -26,7 +27,7 @@ export default function Chapter({
   is_folded: isFolded,
 }: TChapter) {
 
-  const { onChapterNameChange, onChapterDescriptionChange, mutateChapterFold } = useChapter(chapterId);
+  const { onChapterDeleteClick, onChapterNameChange, onChapterDescriptionChange, toggleChapterFold } = useChapter(chapterId,isFolded);
 
   return (
     <ChapterContainer isOpenAlone={isFolded}>
@@ -34,24 +35,24 @@ export default function Chapter({
         <DragDrop />
       </ChapterDragWrap>
 
-      <ChapterMargin>
-        <div>
+      <ChapterCard>
+        <ChapterHeader>
           <TitleInput
             defaultValue={chapterName}
             onChange={onChapterNameChange}
             placeholder="챕터 제목을 적어주세요."
           />
-          {/* <IconButton type="button" onClick={toggleChapter}>
-            {localIsFolded && <ToggleIcon style={{ marginBottom: "10%" }} />}
-            {!localIsFolded && <ToggleFold style={{ marginBottom: "11%" }} />}
-          </IconButton> */}
+          <IconButton type="button" onClick={toggleChapterFold}>
+            {isFolded && <ToggleIcon/>}
+            {!isFolded && <ToggleFold/>}
+          </IconButton>
           <IconButton type="button">
             <CopyIcon />
           </IconButton>
-          <IconButton type="button" onClick={()=>{}}>
+          <IconButton type="button" onClick={onChapterDeleteClick}>
             <DeleteIcon />
           </IconButton>
-        </div>
+        </ChapterHeader>
         <MemoContent
           defaultValue={chapterDescription}
           onChange={onChapterDescriptionChange}
@@ -62,7 +63,7 @@ export default function Chapter({
             <EventList pevent={pevent} chapterId={chapterId} />
           </OpenContainer>
         )}
-      </ChapterMargin>
+      </ChapterCard>
     </ChapterContainer>
   );
 }
