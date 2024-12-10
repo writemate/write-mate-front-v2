@@ -6,10 +6,10 @@ import {
   CharateristicHeader,
   Input,
   TextArea,
+  Delete,
 } from "@/styles/dashboard/IdeaBox/Modal";
 import { CharacteristicListContainer } from "@/styles/dashboard/IdeaBox/Modal";
 import { useContext } from "react";
-import TrashCan from "@/assets/icons/trashcan.svg";
 
 export default function Characterisitc() {
   const {
@@ -37,7 +37,7 @@ export default function Characterisitc() {
                     index
                   )}
                 />
-                <TrashCan
+                <Delete
                   onClick={onClickDeleteMCharacterCharacteristic(index)}
                 />
               </CharateristicHeader>
