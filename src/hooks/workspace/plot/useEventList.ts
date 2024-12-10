@@ -1,15 +1,10 @@
 import {
   createEvent,
-  deleteEvent,
-  updateEventDescription,
-  updateEventName,
   updateEventOrder,
 } from "@/utils/APIs/plot";
 import { workspaceQueryKeys } from "@/utils/APIs/queryKeys";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
-import showToastMessage from "./showToastMessage";
-import { useEffect, useState } from "react";
 import { getHandleDragAndDropFunctionForReorder } from "@/utils/getReorderFunction";
 import { useOnClickUpdate } from "@/hooks/common/useOnClickUpdate";
 import { TPlot } from "@/utils/APIs/types";
