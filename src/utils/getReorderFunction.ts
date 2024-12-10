@@ -1,25 +1,23 @@
 import { DropResult } from "react-beautiful-dnd";
 
-interface DragAndDropProps<T extends { id: string }> {
+interface DragAndDropProps{
   mutationOrderFn: (params: {
     itemId: string;
     pre_idx: number;
     next_idx: number;
   }) => () => void;
-  item: Array<T>;
 }
 
 export const getHandleDragAndDropFunctionForReorder =
-  <T extends { id: string }>({ mutationOrderFn, item }: DragAndDropProps<T>) =>
+ ({ mutationOrderFn }: DragAndDropProps) =>
     (result: DropResult) => {
-      const { destination, source } = result;
+      const { destination, source, draggableId } = result;
 
       if (!destination) return;
       if (destination.index === source.index) return;
-      const movedItem = item[source.index];
 
       mutationOrderFn({
-        itemId: movedItem.id,
+        itemId: draggableId,
         pre_idx: source.index,
         next_idx: destination.index,
       })();

@@ -7,9 +7,9 @@ import { workspaceQueryKeys } from "@/utils/APIs/queryKeys";
 import { useQueryClient } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { PlotContext } from "./usePlot";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { getHandleDragAndDropFunctionForReorder } from "@/utils/getReorderFunction";
-import { TChapter, TPlot } from "@/utils/APIs/types";
+import { TPlot } from "@/utils/APIs/types";
 import { useOnClickUpdate } from "@/hooks/common/useOnClickUpdate";
 
 const useChapterList = () => {
@@ -52,7 +52,6 @@ const useChapterList = () => {
   const handleDragAndDrop = getHandleDragAndDropFunctionForReorder({
     mutationOrderFn: ({ itemId, pre_idx, next_idx }) =>
       mutateChapterOrder({ chapterId: itemId, pre_idx, next_idx }),
-    item: chapterList,
   });
 
   // 챕터 접힘 여부 수정하기

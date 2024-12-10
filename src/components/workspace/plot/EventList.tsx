@@ -12,12 +12,7 @@ interface EventListProps {
 }
 
 export const EventList = ({ pevent,chapterId }: EventListProps) => {
-  const { mutateCreateE,
-    mutateDeleteE,
-    mutateEventName,
-    mutateEventD,
-    mutateEventO,
-    handleDragAndDrop, eventList } = useEventList(chapterId, pevent);
+  const { onClickCreate, handleDragAndDrop } = useEventList(chapterId);
 
   return (
     <>
@@ -29,7 +24,7 @@ export const EventList = ({ pevent,chapterId }: EventListProps) => {
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
-              {eventList.map((event, index) => (
+              {pevent.map((event, index) => (
                 <Draggable key={event.id} draggableId={event.id} index={index}>
                   {(provided) => (
                     <div
@@ -37,13 +32,7 @@ export const EventList = ({ pevent,chapterId }: EventListProps) => {
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                     >
-                      <Event
-                        eventId={event.id}
-                        eventCharacter={event.character_list}
-                        eventName={event.event_name}
-                        eventDescription={event.event_description}
-                        {...{mutateEventName, mutateEventD, mutateDeleteE}}
-                      />
+                      {/* <Event {...event}/> */}
                     </div>
                   )}
                 </Draggable>
@@ -54,7 +43,7 @@ export const EventList = ({ pevent,chapterId }: EventListProps) => {
         </Droppable>
       </DragDropContext>
 
-      <AddButton type="button" onClick={()=>mutateCreateE()}>
+      <AddButton type="button" onClick={onClickCreate}>
         <Add />
       </AddButton>
     </>
