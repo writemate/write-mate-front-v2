@@ -3,7 +3,7 @@ import { useContext } from "react";
 import React from "react";
 import Modal from "@/components/Modal";
 import {
-  Textarea,
+  TextArea,
   Input,
   ModalContentAndFooterContainer,
   ModalContentContainer,
@@ -47,7 +47,7 @@ function Memo() {
               onKeyDown={onKeyDownTitle}
             />
             <p>내용</p>
-            <Textarea
+            <TextArea
               className="memo-modal-description"
               defaultValue={selectedMemo.memo_description}
               onChange={onChangeSelectedMemoDescription}

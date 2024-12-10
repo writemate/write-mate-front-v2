@@ -183,14 +183,45 @@ export const CharacteristicListContainer = styled.div`
   ${FlexColumn}
   align-items: center;
 `;
-export const CharacteristicItemContainer = styled.div`
-  ${FlexColumn}
-  padding: 13px 0px;
-  gap: 12px;
+
+export const CharacteristicCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  justify-content: flex-end;
+
+  height: fit-content;
+  width: 100%;
+  padding: 13px 13px;
+  gap: 4px;
 
   border-radius: 8px;
-  background: ${({ theme }) => theme.color.white};
-  box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.1);
+  background: var(--white, #fff);
+  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.1);
+
+  ${TextArea} {
+    padding: 4px;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 150%;
+    box-shadow: none;
+  }
+`;
+
+export const CharateristicHeader = styled.div`
+  display: flex;
+  gap: 4px;
+  align-items: center;
+
+  ${Input} {
+    padding: 4px;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 150%;
+    box-shadow: none;
+  }
 `;
 
 /* Footer */
@@ -248,6 +279,7 @@ export const SaveButton = styled(defaultButton)`
 `;
 
 export const AddCharacteristicButton = styled(defaultButton)`
+  padding: 4px 4px;
   background: none;
   border: none;
   color: ${({ theme }) => theme.color.orange400};
