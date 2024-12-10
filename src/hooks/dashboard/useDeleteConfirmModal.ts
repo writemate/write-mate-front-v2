@@ -2,6 +2,8 @@ import { useState } from "react";
 
 export default function useOpenAndCloseDeleteConfirmation() {
   const [selectedWorkForDelete, setSelectedWorkForDelete] = useState("");
+  const [selectedCharacteristicIdx, setSelectedCharacteristicIdx] =
+    useState(-1);
   const [isPermanentDelete, setIsPermanentDelete] = useState(false);
   const [isDeleteMemo, setIsDeleteMemo] = useState(false);
   const [isDeleteMemoCharacter, setIsDeleteMemoCharacter] = useState(false);
@@ -36,7 +38,10 @@ export default function useOpenAndCloseDeleteConfirmation() {
     openDeleteConfirmModal();
   }
 
-  function openConfirmModalDeleteMCharacterCharacteristic() {
+  function openConfirmModalDeleteMCharacterCharacteristic(
+    characteristicIdx: number
+  ) {
+    setSelectedCharacteristicIdx(characteristicIdx);
     setIsDeleteMCharacterCharacteristic(true);
     openDeleteConfirmModal();
   }
@@ -65,9 +70,12 @@ export default function useOpenAndCloseDeleteConfirmation() {
     openConfirmModalDeleteMCharacter();
   };
 
-  const onClickDeleteMCharacterCharacteristic = () => {
-    openConfirmModalDeleteMCharacterCharacteristic();
-  };
+  const onClickDeleteMCharacterCharacteristic =
+    (characteristicIdx: number) =>
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      openConfirmModalDeleteMCharacterCharacteristic(characteristicIdx);
+    };
 
   const closeConfirmModal = () => {
     setIsOpenDeleteModal(false);
@@ -80,6 +88,7 @@ export default function useOpenAndCloseDeleteConfirmation() {
 
   return {
     selectedWorkForDelete,
+    selectedCharacteristicIdx,
     isDeleteMemo,
     isDeleteMemoCharacter,
     isPermanentDelete,

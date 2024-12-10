@@ -1,35 +1,54 @@
 import { DashboardContext } from "@/hooks/dashboard/dashboard";
-import { AddCharacteristicButton } from "@/styles/dashboard/IdeaBox/Modal";
+
+import {
+  AddCharacteristicButton,
+  CharacteristicCard,
+  CharateristicHeader,
+  Input,
+  TextArea,
+} from "@/styles/dashboard/IdeaBox/Modal";
 import { CharacteristicListContainer } from "@/styles/dashboard/IdeaBox/Modal";
 import { useContext } from "react";
+import TrashCan from "@/assets/icons/trashcan.svg";
 
 export default function Characterisitc() {
   const {
-    selectedMCharacter,
+    characteristicList,
     onClickAddCharacteristic,
-    onClickDeleteCharacteristic,
+    onChangeSelectedMCharacterCharacteristicTitle,
+    onChangeSelectedMCharacterCharacteristicContent,
   } = useContext(DashboardContext).memoCharacterModal;
-  if (selectedMCharacter.id === "") {
-    return null;
-  }
+
+  const { onClickDeleteMCharacterCharacteristic } =
+    useContext(DashboardContext).removeConfirmationModal;
 
   return (
     <>
       <p>설정</p>
       <CharacteristicListContainer>
-        {selectedMCharacter.characteristic &&
-          selectedMCharacter.characteristic.map((characteristic, index) => (
-            <div key={index}>
-              <input
-                defaultValue={characteristic.title}
-                placeholder="설정 종류을 입력하세요."
+        {characteristicList &&
+          characteristicList.map((characteristic, index) => (
+            <CharacteristicCard key={index}>
+              <CharateristicHeader>
+                <Input
+                  value={characteristic.title}
+                  placeholder="특징을 적어주세요."
+                  onChange={onChangeSelectedMCharacterCharacteristicTitle(
+                    index
+                  )}
+                />
+                <TrashCan
+                  onClick={onClickDeleteMCharacterCharacteristic(index)}
+                />
+              </CharateristicHeader>
+              <TextArea
+                value={characteristic.content}
+                placeholder="성격이나, 외향적 특징, 출생의 비밀 등 세부 내용을 적어주세요."
+                onChange={onChangeSelectedMCharacterCharacteristicContent(
+                  index
+                )}
               />
-              <button onClick={onClickDeleteCharacteristic(index)}>삭제</button>
-              <input
-                defaultValue={characteristic.content}
-                placeholder="설정을 입력하세요."
-              />
-            </div>
+            </CharacteristicCard>
           ))}
         <AddCharacteristicButton onClick={onClickAddCharacteristic}>
           특징 추가
