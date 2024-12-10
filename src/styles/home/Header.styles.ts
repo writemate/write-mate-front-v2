@@ -28,13 +28,6 @@ export const RightMenuButton = styled.button`
   &:hover {
     font-weight: 700;
   }
-  &::after {
-    content: attr(title);
-    display: block;
-    font-wight: 700;
-    height: 0;
-    visibility: hidden;
-  }
 `;
 
 export const StartButton = styled(GtagForClick)`
