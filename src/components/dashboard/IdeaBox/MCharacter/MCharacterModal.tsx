@@ -24,7 +24,7 @@ export default function MCharacterModal() {
   return (
     <>
       {isOpenEditModal && (
-        <Modal closeModal={closeEditModal} maxWidth="600px">
+        <Modal closeModal={closeEditModal} maxWidth="700px">
           <ModalContentAndFooterContainer>
             <ModalContentContainer>
               <ImgAndNameAndDescriptionContainer>
