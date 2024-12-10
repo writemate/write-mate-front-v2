@@ -183,13 +183,13 @@ function ConfirmDeleteMemoCharacterModal() {
 }
 
 function ConfirmDeleteMCharacterCharacteristicModal() {
-  const { closeConfirmModal } =
+  const { closeConfirmModal, selectedCharacteristicIdx } =
     useContext(DashboardContext).removeConfirmationModal;
   const { onDeleteMCharacterCharacteristic } =
     useContext(DashboardContext).memoCharacterModal;
 
   const onClickConfirmDelete = () => {
-    onDeleteMCharacterCharacteristic();
+    onDeleteMCharacterCharacteristic(selectedCharacteristicIdx);
     closeConfirmModal();
   };
   const onClickCancel = () => {

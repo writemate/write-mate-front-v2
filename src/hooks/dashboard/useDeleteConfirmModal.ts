@@ -38,7 +38,10 @@ export default function useOpenAndCloseDeleteConfirmation() {
     openDeleteConfirmModal();
   }
 
-  function openConfirmModalDeleteMCharacterCharacteristic() {
+  function openConfirmModalDeleteMCharacterCharacteristic(
+    characteristicIdx: number
+  ) {
+    setSelectedCharacteristicIdx(characteristicIdx);
     setIsDeleteMCharacterCharacteristic(true);
     openDeleteConfirmModal();
   }
@@ -67,9 +70,12 @@ export default function useOpenAndCloseDeleteConfirmation() {
     openConfirmModalDeleteMCharacter();
   };
 
-  const onClickDeleteMCharacterCharacteristic = () => {
-    openConfirmModalDeleteMCharacterCharacteristic();
-  };
+  const onClickDeleteMCharacterCharacteristic =
+    (characteristicIdx: number) =>
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      openConfirmModalDeleteMCharacterCharacteristic(characteristicIdx);
+    };
 
   const onClickDeleteMCharacterCharacteristic =
     (characteristicIdx: number) =>
