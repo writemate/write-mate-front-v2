@@ -135,7 +135,7 @@ export const createEvent = (chapterId: string) => async () => {
  * @param peventId
  * @returns
  */
-export const deleteEvent = (chapterId: string) => async (peventId: string) => {
+export const deleteEvent = (chapterId: string, peventId: string) => async () => {
   const response = await axiosInstance.delete<void>(
     DOMAIN.DELETE_EVENT(chapterId, peventId)
   );
@@ -148,8 +148,8 @@ export const deleteEvent = (chapterId: string) => async (peventId: string) => {
  * @param peventId
  * @param event_name
  */
-export const updateEventName = (chapterId: string) =>
-  async ({ peventId, event_name }: { peventId: string; event_name: string }) => {
+export const updateEventName = (chapterId: string, peventId: string) =>
+  async (event_name: string) => {
   const response = await axiosInstance.patch<void>(
     DOMAIN.UPDATE_EVENT_NAME(chapterId, peventId),
     { event_name }
@@ -163,8 +163,8 @@ export const updateEventName = (chapterId: string) =>
  * @param pevntId
  * @param event_description
  */
-export const updateEventDescription = (chapterId: string) =>
-  async ({ peventId, event_description }: { peventId: string; event_description: string }) => {
+export const updateEventDescription = (chapterId: string, peventId: string) =>
+  async (event_description: string) => {
   const response = await axiosInstance.patch<void>(
     DOMAIN.UPDATE_EVENT_DESCRIPTION(chapterId, peventId),
     { event_description }

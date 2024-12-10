@@ -32,7 +32,7 @@ export const EventList = ({ pevent,chapterId }: EventListProps) => {
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                     >
-                      {/* <Event {...event}/> */}
+                      <Event {...event} chapterId={chapterId} />
                     </div>
                   )}
                 </Draggable>
