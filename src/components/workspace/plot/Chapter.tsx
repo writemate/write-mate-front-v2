@@ -14,7 +14,6 @@ import ToggleIcon from "@/assets/workspace/plot/toggle.svg";
 import CopyIcon from "@/assets/workspace/plot/copy.svg";
 import DragDrop from "@/assets/workspace/plot/dragdrop.svg";
 import ToggleFold from "@/assets/workspace/plot/toggleFold.svg";
-import AutoResizeInput from "./AutoResizeInput";
 import useChapter from "@/hooks/workspace/plot/useChapter";
 import { TChapter } from "@/utils/APIs/types";
 

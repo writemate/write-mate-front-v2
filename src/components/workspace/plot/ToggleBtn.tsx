@@ -4,7 +4,6 @@ import {
   ToggleSlider,
   ToggleSwitch,
 } from "@/styles/workspace/plot/ToggleBtn.styles";
-import { useState } from "react";
 
 interface ToggleBtnProps {
   isOpen: boolean;

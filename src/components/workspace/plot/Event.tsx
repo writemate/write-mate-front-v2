@@ -1,4 +1,4 @@
-import CharacterModal from "./CharacterModal";
+import CharacterModal from "./SelectCharacterModal";
 import DragDrop from "@/assets/workspace/plot/dragdropE.svg";
 import ChooseCharacter from "@/assets/workspace/plot/choosecharacter.svg";
 import {
@@ -10,9 +10,7 @@ import {
   EventHeader,
   EventTitle,
 } from "@/styles/workspace/plot/Event.styles";
-import UpdateModal from "./UpdateModal";
 import { TPlotEvent } from "@/utils/APIs/types";
-import { Description } from "@/styles/workspace/plot/Chapter.styles";
 import useEvent from "@/hooks/workspace/plot/useEvent";
 
 export default function Event({
@@ -70,12 +68,7 @@ export default function Event({
           placeholder="사건 내용을 적어주세요."
         />
       </EventColumnContainer>
-      {editCharacterModal !== null && (
-        <UpdateModal
-          onClose={closeEditCharacterModal}
-          characterId={editCharacterModal}
-        />
-      )}
+      {/* {editCharacterModal} */}
     </>
   );
 }
