@@ -65,6 +65,7 @@ export const EventTitle = styled.input`
   display: flex;
   align-items: center;
   border: none;
+  outline: none;
 
   color: rgba(0, 0, 0, 0.87);
 
