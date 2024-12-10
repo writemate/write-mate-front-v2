@@ -191,3 +191,32 @@ export const CounterContainer = styled.div`
     gap: 0.5rem;
   }
 `;
+
+export const NavigationButton = styled.div`
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  z-index: 50;
+  transform: translateY(-50%);
+  border: 2px solid #6b7280;
+  border-radius: 50%;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &.swiper-button-prev {
+    left: 4rem;
+    transform: rotate(180deg);
+  }
+  &.swiper-button-next {
+    right: 4rem;
+    margin-top: 1rem;
+  }
+
+  svg {
+    fill: #6b7280;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+`;
