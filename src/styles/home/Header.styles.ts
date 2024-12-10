@@ -1,11 +1,14 @@
-'use client';
-import { styled } from 'styled-components';
-import { clickable } from '@/styles';
-import { GtagForClick } from '@/utils/GtagForClick';
+"use client";
+import { styled } from "styled-components";
+import { clickable } from "@/styles";
+import { GtagForClick } from "@/utils/GtagForClick";
 
 export const HeaderContainer = styled.header`
+  position: fixed;
+  z-index: 99;
+  background-color: rgb(255, 255, 255, 0.95);
   padding: 20px max(calc(50% - 600px), 20px);
-  width: 100%;
+  width: 98.5%;
   display: flex;
   align-items: center;
   user-select: none;
@@ -17,7 +20,7 @@ export const RightMenuButton = styled.button`
   padding: 10px;
   text-align: center;
   margin-left: auto;
-  transition: font-weight 0.15s cubic-bezier(.4,0,.2,1);
+  transition: font-weight 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   font-size: 1rem;
   font-weight: 400;
   background: none;
@@ -39,7 +42,7 @@ export const StartButton = styled(GtagForClick)`
   padding: 10px;
   text-align: center;
   margin-left: 20px;
-  transition: all 0.15s cubic-bezier(.4,0,.2,1);
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   font-size: 1rem;
   border-radius: 5px;
   font-weight: 600;
