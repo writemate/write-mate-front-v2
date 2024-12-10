@@ -1,44 +1,35 @@
-import { colorSystem } from "@/styles/colorSystem";
 import styled from "styled-components";
 import TextareaAutosize from "react-textarea-autosize";
-import { FlexRowLeftStart } from "@/styles";
+import { FlexColumnCenter, FlexRowCenter, FlexRowLeftStart } from "@/styles";
 
-export const ChapterContainer = styled.form<{ isOpenAlone: boolean }>`
+export const ChapterContainer = styled.section`
+  ${FlexRowLeftStart};
   width: 100%;
-  position: relative;
   background: #ffffff;
-  border: 1px solid #f49661;
+  border: 1px solid ${({ theme }) => theme.color.orange400};
   margin-bottom: 18.18px;
-
-  flex-wrap: wrap;
+  padding: 20px 20px 20px 0;
   box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
 `;
 
 export const ChapterDragWrap = styled.div`
-  float: left;
-  padding-left: 17px;
-  position: absolute;
-  top: 45%;
+  ${FlexRowCenter};
+  padding: 10px;
+  height: 100%;
+  width: 40px;
+  flex-shrink: 0;
 `;
 
 export const ChapterCard = styled.div`
-  margin: 16px 20px 0 40px;
-`;
-
-
-export const OpenContainer = styled.div`
-  display: grid;
-  justify-items: center;
-  margin: 20px 0px;
+  ${FlexColumnCenter};
+  width: 100%;
 `;
 
 export const IconButton = styled.button`
   flex: 0 0 auto;
-  font-size: 18px;
-  background: transparent;
+  background: none;
   border: none;
-  color: ${colorSystem.gray300};
   cursor: pointer;
   display: flex;
 `;
@@ -47,20 +38,6 @@ export const ChapterHeader = styled.div`
   ${FlexRowLeftStart}
   width: 100%;
   padding-bottom: 8px;
-`;
-
-export const AddButton = styled.button`
-  cursor: pointer;
-  padding: 4.46538px;
-  width: 23.82px;
-  height: 23.82px;
-  border: none;
-  margin-top: 8px;
-
-  background: ${colorSystem.orange400};
-  box-shadow: 0px 0.992308px 2.97692px rgba(0, 0, 0, 0.1),
-    0px 0.992308px 1.98462px -0.992308px rgba(0, 0, 0, 0.1);
-  border-radius: 50%;
 `;
 
 export const TitleInput = styled.input`
@@ -75,41 +52,20 @@ export const TitleInput = styled.input`
   font-size: 24px;
   line-height: 150%;
   display: inline-block;
-  color: ${colorSystem.gray900};
+  color: ${({ theme }) => theme.color.gray900};
 `;
 
-export const MemoContent = styled(TextareaAutosize)`
+export const Description = styled(TextareaAutosize)`
   width: 100%;
-  font-size: 14px;
+  font-size: 16px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 600;
   line-height: 150%;
-  color: ${({ theme }) => theme.color.gray300};
+  color: ${({ theme }) => theme.color.gray900};
   border: none;
   outline: none;
   resize: none;
   &::placeholder {
-    color: ${({ theme }) => theme.color.gray200};
+    color: ${({ theme }) => theme.color.gray300};
   }
-`;
-
-export const ContentTextArea = styled.textarea<{
-  isEvent: boolean;
-  isFolded: boolean;
-}>`
-  border: none;
-  height: 24px;
-  resize: none;
-  width: 95%;
-  margin-bottom: ${(props) => props.isFolded && !props.isEvent && "24px"};
-  background: ${(props) => (props.isEvent ? `${colorSystem.gray25}` : "white")};
-
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 150%;
-
-  display: flex;
-  align-items: center;
-
-  color: ${colorSystem.gray900};
 `;
