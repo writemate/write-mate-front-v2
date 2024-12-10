@@ -2,6 +2,7 @@
 import { media } from "@/styles/media";
 import { styled, css } from "styled-components";
 import TextareaAutosize from "react-textarea-autosize";
+import TrashCan from "@/assets/icons/trashcan.svg";
 
 /* Css */
 export const InputBoxContainer = css`
@@ -26,7 +27,7 @@ export const FlexRow = css`
   flex-direction: row;
   width: 100%;
   height: 100%;
-  gap: 8px;
+  gap: 24px;
 
   ${media.tablet} {
     flex-direction: column;
@@ -39,7 +40,7 @@ export const FlexColumn = css`
   flex-direction: column;
   height: 100%;
   width: 100%;
-  gap: 8px;
+  gap: 12px;
 `;
 
 /* Modal */
@@ -48,7 +49,7 @@ export const ModalContentAndFooterContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 24px;
+  padding: 18px;
   transition: all 0.3s;
   background-color: ${({ theme }) => theme.color.white};
   border: 1px solid ${({ theme }) => theme.color.gray200};
@@ -68,7 +69,7 @@ export const ModalContentAndFooterContainer = styled.div`
 export const ModalContentContainer = styled.div`
   ${FlexColumn}
   padding: 12px;
-  gap: 12px;
+  gap: 16px;
   overflow: auto;
   max-height: 70vh;
 `;
@@ -101,7 +102,8 @@ export const TextArea = styled(TextareaAutosize)`
 export const ImgAndNameAndDescriptionContainer = styled.div`
   ${FlexRow}
   height: auto;
-  gap: 16px;
+  align-items: flex-end;
+  flex-shrink: 0;
   ${media.tablet} {
     align-items: center;
   }
@@ -115,11 +117,10 @@ export const ImageContainer = styled.div`
   justify-content: center;
   align-items: center;
   box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.1);
-  width: 160px;
+  width: 180px;
 
   p {
-    width: 160px;
-    height: 160px;
+    height: 220px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -154,13 +155,14 @@ export const ImageButtonContainer = styled.div`
 /* Name and Role, Birth, Gender, Description */
 export const NameAndDescriptionContainer = styled.div`
   ${FlexColumn}
-  justify-content: space-between;
 `;
 export const RoleContainer = styled.div`
   ${FlexColumn}
+  justify-content: center;
 `;
 export const NameContainer = styled.div`
   ${FlexColumn}
+  justify-content: center;
 `;
 export const DescriptionContainer = styled.div`
   ${FlexColumn}
@@ -224,12 +226,17 @@ export const CharateristicHeader = styled.div`
   }
 `;
 
+export const Delete = styled(TrashCan)`
+  cursor: pointer;
+  transform: scale(0.7);
+`;
+
 /* Footer */
 
 export const FooterContainer = styled.div`
   ${FlexRow}
   justify-content: space-between;
-  padding: 0px;
+  padding: 4px 12px;
 
   ${media.tablet} {
     flex-direction: row;
