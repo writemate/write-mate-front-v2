@@ -48,7 +48,7 @@ export const ModalContentAndFooterContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 12px;
+  padding: 24px;
   transition: all 0.3s;
   background-color: ${({ theme }) => theme.color.white};
   border: 1px solid ${({ theme }) => theme.color.gray200};
@@ -229,7 +229,7 @@ export const CharateristicHeader = styled.div`
 export const FooterContainer = styled.div`
   ${FlexRow}
   justify-content: space-between;
-  padding: 12px;
+  padding: 0px;
 
   ${media.tablet} {
     flex-direction: row;
