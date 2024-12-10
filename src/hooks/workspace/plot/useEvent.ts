@@ -52,8 +52,8 @@ const useEvent = (eventId: string, chapterId: string) => {
     }
   })();
 
-  const onEventNameChange = useInputLiveUpdate(updateEventName(plot_id, chapterId), "사건 제목", "사건 제목 저장에 실패했습니다.");
-  const onEventDescriptionChange = useInputLiveUpdate(updateEventDescription(plot_id, chapterId), "사건 설명", "사건 설명 저장에 실패했습니다.");
+  const onEventNameChange = useInputLiveUpdate(updateEventName(chapterId,eventId), "사건 제목", "사건 제목 저장에 실패했습니다.");
+  const onEventDescriptionChange = useInputLiveUpdate(updateEventDescription(chapterId,eventId), "사건 설명", "사건 설명 저장에 실패했습니다.");
 
   return {
     selectCharacterModal,

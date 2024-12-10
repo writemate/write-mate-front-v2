@@ -3,8 +3,7 @@ import {
   ChapterDragWrap,
   ChapterCard,
   IconButton,
-  MemoContent,
-  OpenContainer,
+  Description,
   TitleInput,
   ChapterHeader,
 } from "@/styles/workspace/plot/Chapter.styles";
@@ -30,7 +29,7 @@ export default function Chapter({
   const { onChapterDeleteClick, onChapterNameChange, onChapterDescriptionChange, toggleChapterFold } = useChapter(chapterId,isFolded);
 
   return (
-    <ChapterContainer isOpenAlone={isFolded}>
+    <ChapterContainer>
       <ChapterDragWrap>
         <DragDrop />
       </ChapterDragWrap>
@@ -43,8 +42,8 @@ export default function Chapter({
             placeholder="챕터 제목을 적어주세요."
           />
           <IconButton type="button" onClick={toggleChapterFold}>
-            {isFolded && <ToggleIcon/>}
-            {!isFolded && <ToggleFold/>}
+            {isFolded && <ToggleFold/>}
+            {!isFolded && <ToggleIcon/>}
           </IconButton>
           <IconButton type="button">
             <CopyIcon />
@@ -53,15 +52,13 @@ export default function Chapter({
             <DeleteIcon />
           </IconButton>
         </ChapterHeader>
-        <MemoContent
+        <Description
           defaultValue={chapterDescription}
           onChange={onChapterDescriptionChange}
           placeholder="챕터 내용을 적어주세요."
         />
-        {true && (
-          <OpenContainer>
-            <EventList pevent={pevent} chapterId={chapterId} />
-          </OpenContainer>
+        {!isFolded && (
+          <EventList pevent={pevent} chapterId={chapterId} />
         )}
       </ChapterCard>
     </ChapterContainer>

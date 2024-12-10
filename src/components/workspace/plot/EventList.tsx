@@ -1,10 +1,9 @@
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import Event from "./Event";
-import { PlotEventType } from "@/utils/APIs/mock/plot";
 import useEventList from "@/hooks/workspace/plot/useEventList";
 import Add from "@/assets/workspace/plot/add.svg";
-import { AddButton } from "@/styles/workspace/plot/Chapter.styles";
 import { TPlotEvent } from "@/utils/APIs/types";
+import { EventContainer, EventListContainer } from "@/styles/workspace/plot/Event.styles";
 
 interface EventListProps {
   pevent: TPlotEvent[];
@@ -19,33 +18,29 @@ export const EventList = ({ pevent,chapterId }: EventListProps) => {
       <DragDropContext onDragEnd={handleDragAndDrop}>
         <Droppable droppableId="eventList">
           {(provided) => (
-            <div
-              style={{ width: "100%" }}
+            <EventListContainer
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
               {pevent.map((event, index) => (
                 <Draggable key={event.id} draggableId={event.id} index={index}>
                   {(provided) => (
-                    <div
+                    <EventContainer
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                     >
                       <Event {...event} chapterId={chapterId} />
-                    </div>
+                    </EventContainer>
                   )}
                 </Draggable>
               ))}
               {provided.placeholder}
-            </div>
+            </EventListContainer>
           )}
         </Droppable>
       </DragDropContext>
-
-      <AddButton type="button" onClick={onClickCreate}>
-        <Add />
-      </AddButton>
+      <Add onClick={onClickCreate}/>
     </>
   );
 };
