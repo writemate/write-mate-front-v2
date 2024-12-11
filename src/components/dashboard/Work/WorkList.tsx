@@ -7,11 +7,14 @@ import { useContext } from "react";
 import { DashboardContext } from "@/hooks/dashboard/dashboard";
 import WorkButton from "./WorkItem";
 import { workspaceCategory } from "@/utils/APIs/types";
-import { AddWork } from "./AddWorkButton";
+import {
+  AddWork,
+  MoveToOngoing,
+} from "@/components/dashboard/Work/AddWorkButton";
 import { LoadingMessage } from "@/styles/dashboard/Loading";
 
 export default function WorkList() {
-  const { data, error, isLoading, onClickAddWorkspace, workCategory } =
+  const { data, error, isLoading, workCategory } =
     useContext(DashboardContext).workstudioAndTrash;
 
   return (
@@ -25,24 +28,28 @@ export default function WorkList() {
       )}
       {data && (
         <WorkButtonList>
-          {data.length === 0 && workCategory !== workspaceCategory.trash && (
-            <>
-              <EmptyListDiscription>
-                새로운 작품을 집필해보세요!
-                <AddWork actfunction={onClickAddWorkspace} />
-              </EmptyListDiscription>
-            </>
+          {data.length === 0 && workCategory === workspaceCategory.ongoing && (
+            <EmptyListDiscription>
+              새로운 작품을 집필해보세요!
+              <AddWork />
+            </EmptyListDiscription>
           )}
-          {data.length === 0 && workCategory === workspaceCategory.trash && (
-            <>
+          {data.length === 0 &&
+            workCategory === workspaceCategory.completed && (
               <EmptyListDiscription>
-                삭제된 작품이 없습니다.
+                완료된 작품이 없습니다. 새로운 작품을 집필해보세요!
+                <MoveToOngoing />
               </EmptyListDiscription>
-            </>
+            )}
+          {data.length === 0 && workCategory === workspaceCategory.trash && (
+            <EmptyListDiscription>
+              삭제된 작품이 없습니다.
+              <MoveToOngoing />
+            </EmptyListDiscription>
           )}
           {!isLoading &&
             data.map((work) => <WorkButton key={work.id} workId={work.id} />)}
-          <AddWork actfunction={onClickAddWorkspace} />
+          {workCategory === workspaceCategory.ongoing && <AddWork />}
         </WorkButtonList>
       )}
     </>

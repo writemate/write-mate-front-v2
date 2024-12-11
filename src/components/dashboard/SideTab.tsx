@@ -64,21 +64,22 @@ export default function SideTab() {
             <p>휴지통</p>
           </SideTabLink>
         </SideTabMenu>
-        {isAdding && <p>작업실 추가 중...</p>}
-        {!isAdding && <AddWork actfunction={onClickAddWorkspace} />}
+        <AddWork />
       </SideTabContainer>
     </>
   );
 }
+export function AddWork() {
+  const { onClickAddWorkspace } =
+    useContext(DashboardContext).workstudioAndTrash;
 
-function AddWork({ actfunction }: { actfunction: () => void }) {
   return (
-    <AddWorkspaceButton
-      onClick={() => {
-        actfunction();
-      }}
-    >
+    <AddWorkspaceButton onClick={onClickAddWorkspace}>
       새 작품 집필하기
     </AddWorkspaceButton>
   );
+}
+
+export function WaitingAddWork() {
+  return <AddWorkspaceButton>작품 생성 중입니다...</AddWorkspaceButton>;
 }
