@@ -15,7 +15,7 @@ export const MemoCard = styled.div<MemoCardProps>`
   width: 100%;
   background-color: ${({ theme }) => theme.color.white};
   border-radius: 8px;
-  box-shadow: 2px 2px 12px 0px rgba(19, 19, 19, 0.06);
+  box-shadow: 2px 2px 12px 0px rgba(18, 18, 18, 0.12);
   margin-bottom: 6px;
   padding: 8px;
   visibility: ${({ $isSelected }) => ($isSelected ? "hidden" : "visible")};
@@ -80,7 +80,7 @@ export const AddMemoButtonContainer = styled.button<AddMemoButtonProps>`
   left: calc(50% - 88.5px);
   bottom: ${({ $isEmpty }) => ($isEmpty ? "calc(50% - 120px)" : "50px")};
 
-  width: 100%;
+  width: 200px;
   padding: 12px;
   justify-content: center;
   align-items: center;
@@ -95,7 +95,6 @@ export const AddMemoButtonContainer = styled.button<AddMemoButtonProps>`
   font-weight: 800;
   line-height: 100%;
   letter-spacing: 0.32px;
-  max-width: 177px;
 
   &:hover {
     filter: brightness(95%);

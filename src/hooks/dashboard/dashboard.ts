@@ -3,7 +3,7 @@ import { dashboardQueryKeys } from "@/utils/APIs/queryKeys";
 import { getWorkStudio, addWorkStudio } from "@/utils/APIs/dashboard";
 import { createContext, useEffect, useState } from "react";
 import { workspaceCategory } from "@/utils/APIs/types";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { notifySuccess } from "@/utils/showToast";
 import useIdeaBoxMemo from "@/hooks/dashboard/useIdeaBoxMemo";
 import useOpenAndCloseDeleteConfirmation from "./useDeleteConfirmModal";
@@ -12,6 +12,7 @@ import useIdeaBoxMemoCharacter from "./useIdeaBoxMCharacter";
 import useMemoCharacterModal from "./useMCharacterModal";
 
 export function useWorkstudioAndTrash() {
+  const router = useRouter();
   const queryClient = useQueryClient();
   const pathname = usePathname();
   const [isKebabMenuOpenWork, setIsKebabMenuOpenWork] = useState(""); // 어떤 케밥이 열려있는지 확인용
@@ -31,7 +32,7 @@ export function useWorkstudioAndTrash() {
     queryKey: [dashboardQueryKeys.workStudio(), workCategory],
     queryFn: getWorkStudio(workCategory),
   });
-  const { mutate: onClickAddWorkspace, isPending: isAdding } = useMutation({
+  const { mutate: addWorkStudioMutate, isPending: isAdding } = useMutation({
     mutationFn: addWorkStudio,
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -40,6 +41,15 @@ export function useWorkstudioAndTrash() {
       notifySuccess("작품이 추가되었습니다.");
     },
   });
+
+  const onClickAddWorkspace = () => {
+    addWorkStudioMutate();
+  };
+  const onClickMoveToOngoing = () => {
+    router.push("/dashboard"); // 내부 라우터 경로로 이동
+
+    setWorkCategory("ongoing");
+  };
 
   function handleWorkCategoryChange(category: keyof typeof workspaceCategory) {
     setWorkCategory(category);
@@ -82,6 +92,7 @@ export function useWorkstudioAndTrash() {
     handleKebabMenuOpenWork,
     handleEditing,
     onClickAddWorkspace,
+    onClickMoveToOngoing,
   };
 }
 

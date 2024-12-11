@@ -45,7 +45,7 @@ export const EmptyListDiscription = styled.div`
   gap: 16px;
 `;
 
-export const WorkButtonContainer = styled(Link)`
+export const WorkCard = styled(Link)`
   border: none;
   display: flex;
   width: 200px;
@@ -58,7 +58,7 @@ export const WorkButtonContainer = styled(Link)`
   background: var(--white, #fff);
 
   /* Carditem shadow */
-  box-shadow: 2px 2px 12px 0px rgba(19, 19, 19, 0.12);
+  box-shadow: 2px 2px 12px 0px rgba(18, 18, 18, 0.12);
 
   &:hover {
     outline: 1px solid ${({ theme }) => theme.color.orange400};
