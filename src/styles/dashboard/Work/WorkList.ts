@@ -46,6 +46,7 @@ export const EmptyListDiscription = styled.div`
 `;
 
 export const WorkCard = styled(Link)`
+  -webkit-user-drag: none;
   border: none;
   display: flex;
   width: 200px;
@@ -106,7 +107,7 @@ export const TitleAndDate = styled.div`
 
 export const WorkButtonTitle = styled.div`
   width: 140px;
-  height: 18px;
+  height: fit-content;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -116,7 +117,6 @@ export const WorkButtonTitle = styled.div`
   line-height: 120%;
 
   margin-bottom: 4px;
-  z-index: 100;    
 
   input {
     padding: 0px;
@@ -126,13 +126,11 @@ export const WorkButtonTitle = styled.div`
     font-style: normal;
     font-weight: 600;
     overflow: visible;
-    border: none;
+    border: 1px solid ${({ theme }) => theme.color.white};;
     outline: none;
 
     &:focus { 
       width: 100%;
-      outline: none;
-      box-shadow: none;
       border: 1px solid ${({ theme }) => theme.color.orange400};
   }
 
