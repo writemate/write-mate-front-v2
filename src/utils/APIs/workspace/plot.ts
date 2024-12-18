@@ -1,7 +1,6 @@
 import { TPlot } from "../types";
 import axiosInstance from "../axiosInstance";
 import { DOMAIN } from "../domain";
-import { PlotCharacterType } from "../mock/plot";
 
 export const getPlotInfo = (plotId: string) => async ()=> {
   const response = await axiosInstance.get<TPlot>(
@@ -194,7 +193,7 @@ export const updateEventOrder = (chapterId: string) =>
  */
 export const addCharacter = (chapterId: string, peventId: string) =>
   async (characterId: string) => {
-  const response = await axiosInstance.patch<PlotCharacterType>(
+  const response = await axiosInstance.patch<void>(
     DOMAIN.ADD_EVENT_CHARACTER(chapterId, peventId, characterId)
   );
 

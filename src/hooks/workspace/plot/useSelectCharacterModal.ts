@@ -1,10 +1,8 @@
 import { addCharacter, deleteCharacter } from "@/utils/APIs/workspace/plot";
 import { workspaceQueryKeys } from "@/utils/APIs/queryKeys";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import showToastMessage from "./showToastMessage";
+import { useQueryClient } from "@tanstack/react-query";
 import { TPlot, TSimpleCharacter } from "@/utils/APIs/types";
 import { useCharacterList } from "../character/useCharacterList";
-import { mockCharacterList } from "@/utils/APIs/mock/plot";
 import { useOnClickUpdate } from "@/hooks/common/useOnClickUpdate";
 import { useParams } from "next/navigation";
 
