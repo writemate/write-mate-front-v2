@@ -192,8 +192,8 @@ export const updateEventOrder = (chapterId: string) =>
 /**
  * 사건에 인물 수동 할당하기
  */
-export const addCharacter = (chapterId: string) =>
-  async ({peventId, characterId}: {peventId: string; characterId: string}) => {
+export const addCharacter = (chapterId: string, peventId: string) =>
+  async (characterId: string) => {
   const response = await axiosInstance.patch<PlotCharacterType>(
     DOMAIN.ADD_EVENT_CHARACTER(chapterId, peventId, characterId)
   );
@@ -204,8 +204,8 @@ export const addCharacter = (chapterId: string) =>
 /**
  * 사건에 인물 할당 해제하기
  */
-export const deleteCharacter = (chapterId: string) =>
-  async ({peventId, characterId}: {peventId: string; characterId: string}) => {
+export const deleteCharacter = (chapterId: string, peventId: string) =>
+  async (characterId: string) => {
   const response = await axiosInstance.delete<void>(
     DOMAIN.DELETE_EVENT_CHARACTER(chapterId, peventId, characterId)
   );
