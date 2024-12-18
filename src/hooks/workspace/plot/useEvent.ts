@@ -2,7 +2,7 @@ import {
   deleteEvent,
   updateEventDescription,
   updateEventName,
-} from "@/utils/APIs/plot";
+} from "@/utils/APIs/workspace/plot";
 import { workspaceQueryKeys } from "@/utils/APIs/queryKeys";
 import { useQueryClient } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
