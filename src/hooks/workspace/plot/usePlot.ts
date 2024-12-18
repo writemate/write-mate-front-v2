@@ -1,6 +1,6 @@
 'use client';
 
-import { getPlotInfo } from "@/utils/APIs/plot";
+import { getPlotInfo } from "@/utils/APIs/workspace/plot";
 import { workspaceQueryKeys } from "@/utils/APIs/queryKeys";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";

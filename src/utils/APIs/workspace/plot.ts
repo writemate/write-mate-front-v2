@@ -1,7 +1,7 @@
-import { TPlot } from "./types";
-import axiosInstance from "./axiosInstance";
-import { DOMAIN } from "./domain";
-import { PlotCharacterType } from "./mock/plot";
+import { TPlot } from "../types";
+import axiosInstance from "../axiosInstance";
+import { DOMAIN } from "../domain";
+import { PlotCharacterType } from "../mock/plot";
 
 export const getPlotInfo = (plotId: string) => async ()=> {
   const response = await axiosInstance.get<TPlot>(
