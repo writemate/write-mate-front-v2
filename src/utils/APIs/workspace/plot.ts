@@ -193,7 +193,7 @@ export const updateEventOrder = (chapterId: string) =>
  */
 export const addCharacter = (chapterId: string, peventId: string) =>
   async (characterId: string) => {
-  const response = await axiosInstance.patch<void>(
+  const response = await axiosInstance.post<void>(
     DOMAIN.ADD_EVENT_CHARACTER(chapterId, peventId, characterId)
   );
 
