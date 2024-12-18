@@ -11,8 +11,7 @@ import { useParams } from "next/navigation";
 const useSelectCharacterModal = (chapterId:string, eventId: string, selectedCharacterList: TSimpleCharacter[]) => {
   const { workspace_id, plot_id } = useParams<{ workspace_id: string; plot_id: string }>();
   const queryClient = useQueryClient();
-  //const { characterList } = useCharacterList();
-  const characterList =  mockCharacterList;
+  const { characterList } = useCharacterList();
 
   const onSelectCharacterClick = useOnClickUpdate({
     mutationFn: addCharacter(chapterId, eventId),
@@ -26,7 +25,7 @@ const useSelectCharacterModal = (chapterId:string, eventId: string, selectedChar
       const previousChracaters = previousEvents?.find((event) => event.id === eventId)?.character_list!;
       if(!previousChracaters) return;
 
-      const newCharacters = [...previousChracaters, characterList.find((character) => character.id === characterId)!];
+      const newCharacters = [...previousChracaters, characterList!.find((character) => character.id === characterId)!];
       queryClient.setQueryData<TPlot>(workspaceQueryKeys.plot(workspace_id, plot_id), {...previousPlot, chapter_list: previousChapters.map((chapter) => {
         if(chapter.id === chapterId) {
           return {...chapter, pevent_list: previousEvents?.map((event) => {
@@ -76,7 +75,7 @@ const useSelectCharacterModal = (chapterId:string, eventId: string, selectedChar
     }
   });
 
-  const remainingCharacters = characterList.filter(
+  const remainingCharacters = (characterList??[]).filter(
     (character) =>
       !selectedCharacterList.some((selected) => selected.id === character.id)
   );
