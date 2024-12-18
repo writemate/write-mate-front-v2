@@ -104,6 +104,7 @@ export type TCharacter = {
 export type TSimpleCharacter = {
   id: string;
   ch_name: string;
+  ch_image: string;
 };
 
 export type TCharacterOfList = {
@@ -135,7 +136,7 @@ export type TPlotEvent = {
   id: string;
   event_name: string;
   event_description: string;
-  character_list: TCharacter[];
+  character_list: TSimpleCharacter[];
 };
 
 /**

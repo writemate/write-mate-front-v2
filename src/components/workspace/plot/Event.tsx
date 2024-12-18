@@ -1,4 +1,4 @@
-import CharacterModal from "./SelectCharacterModal";
+import SelectCharacterModal from "./SelectCharacterModal";
 import DragDrop from "@/assets/workspace/plot/dragdropE.svg";
 import ChooseCharacter from "@/assets/workspace/plot/choosecharacter.svg";
 import {
@@ -24,10 +24,9 @@ export default function Event({
   const {
     selectCharacterModal,
     openSelectCharacterModal,
-    closeSelectCharacterModal,
     editCharacterModal,
+    selectModalRef,
     openEditCharacterModal,
-    closeEditCharacterModal,
     onEventDeleteClick,
     onEventNameChange,
     onEventDescriptionChange,
@@ -41,6 +40,14 @@ export default function Event({
       <EventColumnContainer>
         <EventHeader>
           <ChooseCharacter onClick={openSelectCharacterModal}/>
+          {selectCharacterModal && (
+            <SelectCharacterModal
+              chapterId={chapterId}
+              eventId={eventId}
+              selectedCharacterList={characterList}
+              modalRef={selectModalRef}
+            />
+          )}
           {characterList.map((character) => (
             <CharacterImg
               key={character.id}
@@ -49,13 +56,6 @@ export default function Event({
             />
           ))}
           <EventDeleteBtn onClick={onEventDeleteClick} width="24px" height="24px" viewBox="0 0 32 32"/>
-          {selectCharacterModal && (
-            <CharacterModal
-              eventId={eventId}
-              character={characterList}
-              onClose={closeSelectCharacterModal}
-            />
-          )}
         </EventHeader>
         <EventTitle
           defaultValue={eventName}
