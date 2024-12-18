@@ -2,7 +2,7 @@
 import { useState, useRef, RefObject } from 'react';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { workspaceQueryKeys } from "@/utils/APIs/queryKeys";
-import { getCharacterKeywordList, getCharacterList, createCharacter, createCharacterKeyword, setMainCharacter, removeMainCharacter } from '@/utils/APIs/workspace';
+import { getKeywordList, getCharacterList, createCharacter, createKeyword, setMainCharacter, unsetMainCharacter } from '@/utils/APIs/workspace/character';
 import { useParams } from 'next/navigation';
 
 //키워드 입력창(position:absolute)이 부모요소를 넘어가지 않도록 위치를 조정
@@ -21,7 +21,7 @@ export const useCharacterList = () => {
   const { workspace_id } = useParams<{ workspace_id: string }>();
   const { data: keywordList, isLoading: isKeywordsLoading } = useQuery({
     queryKey: workspaceQueryKeys.characterKeywordList(workspace_id),
-    queryFn: getCharacterKeywordList(workspace_id),
+    queryFn: getKeywordList(workspace_id),
   });
 
   const { data: characterList, isLoading: isCharactersLoading } = useQuery({
@@ -37,7 +37,7 @@ export const useCharacterList = () => {
   });
 
   const { mutate: addKeyword, isPending: isAddingKeyword } = useMutation({
-    mutationFn: createCharacterKeyword(workspace_id),
+    mutationFn: createKeyword(workspace_id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: workspaceQueryKeys.characterKeywordList(workspace_id) });
     },
@@ -51,7 +51,7 @@ export const useCharacterList = () => {
     onMutate: async (characterId: string) => {
       queryClient.setQueryData(workspaceQueryKeys.characterList(workspace_id), (oldData: Awaited<ReturnType<ReturnType<typeof getCharacterList>>>) => {
         return oldData.map((character) => {
-          if (character._id === characterId) {
+          if (character.id === characterId) {
             return { ...character, isMain: true };
           }
           return character;
@@ -61,14 +61,14 @@ export const useCharacterList = () => {
   });
 
   const { mutate: removeMainCharacterMutation } = useMutation({
-    mutationFn: removeMainCharacter(workspace_id),
+    mutationFn: unsetMainCharacter(workspace_id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: workspaceQueryKeys.characterList(workspace_id) });
     },
     onMutate: async (characterId: string) => {
       queryClient.setQueryData(workspaceQueryKeys.characterList(workspace_id), (oldData: Awaited<ReturnType<ReturnType<typeof getCharacterList>>>) => {
         return oldData.map((character) => {
-          if (character._id === characterId) {
+          if (character.id === characterId) {
             return { ...character, isMain: false };
           }
           return character;
@@ -94,7 +94,7 @@ export const useCharacterList = () => {
 
   //선택된 키워드가 하나라도 있는 character만 불러오기
   const selectedCharacter = characterList?.filter((character) => {
-    return selectedKeywords.some((keywordId) => character.keyword.includes(keywordId));
+    return selectedKeywords.some((keywordId) => character.keyword.some(({id}) => id === keywordId));
   });
 
   const realCharacterList = selectedKeywords.length === 0 ? characterList : selectedCharacter;
@@ -117,7 +117,7 @@ export const useCharacterList = () => {
 
   const addKeywordWithRandomColor = () => {
     if(miniKeywordInput === '') return;
-    addKeyword({ keyword_name: miniKeywordInput});
+    addKeyword({ word: miniKeywordInput});
     setMiniKeywordInput('');
     setMiniModalOpen(false);
   }

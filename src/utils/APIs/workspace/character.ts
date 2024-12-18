@@ -24,8 +24,8 @@ export const getKeywordList = (workspaceId: string) => async () => {
   const response = await axiosInstance.get<TKeyword[]>(DOMAIN.GET_KEYWORD_LIST(workspaceId));
   return response.data;
 }
-export const createKeyword = (workspaceId: string) => async ({ keyword_name, color }: { keyword_name: string, color: string }) => {
-  const response = await axiosInstance.post<string>(DOMAIN.CREATE_KEYWORD(workspaceId),{ keyword_name, color });
+export const createKeyword = (workspaceId: string) => async ({ word, color }: { word: string, color?: string }) => {
+  const response = await axiosInstance.post<string>(DOMAIN.CREATE_KEYWORD(workspaceId),{ word, color });
   return response.data;
 }
 export const deleteKeyword = (workspaceId: string) => async (keywordId: string) => {
