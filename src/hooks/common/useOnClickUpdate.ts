@@ -3,10 +3,11 @@ import { notifyError } from "@/utils/showToast";
 import { useSaveLoading } from "@/stores/useSaveLoading";
 
 export const useOnClickUpdate = <T,C extends Object,U = void,>(
-  {mutationFn, onMutate, onError, queryKey, savingMessage, errorMessage}: {
+  {mutationFn, onMutate, onError, onSuccess, queryKey, savingMessage, errorMessage}: {
     mutationFn: MutationFunction<T, U>,
     onMutate?: (variables: U) => Promise<C | undefined> | C | undefined,
     onError?: (error: Error, variables: U, context: C | undefined) => Promise<void> | void,
+    onSuccess?: (data: T, variables: U, context: C | undefined) => Promise<void> | void,
     queryKey: any,
     savingMessage: string,
     errorMessage: string
@@ -25,8 +26,9 @@ export const useOnClickUpdate = <T,C extends Object,U = void,>(
       const insertedResult = await onMutate?.(data);
       return { ...insertedResult, savingSymbol };
     },
-    onSuccess: () => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({queryKey});
+      onSuccess?.(data, variables, context as unknown as C);
     },
     onSettled: (_, __, ___, context) => {
       removeSaving(context!.savingSymbol);

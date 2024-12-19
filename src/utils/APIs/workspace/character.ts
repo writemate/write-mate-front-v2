@@ -104,15 +104,15 @@ export const addCharacterCharacteristic = (workspaceId: string, characterId: str
   return response.data;
 }
 
-export const updateCharacterCharacteristicTitle = (workspaceId: string, characterId: string) => async ({index,title}:{index: string, title: string}) => {
+export const updateCharacterCharacteristicTitle = (workspaceId: string, characterId: string) => async ({index,title}:{index: number, title: string}) => {
   const response = await axiosInstance.patch<void>(DOMAIN.UPDATE_CHARACTER_CHARACTERISTIC_TITLE(workspaceId, characterId, index), { title });
   return response.data;
 }
-export const updateCharacterCharacteristicContent = (workspaceId: string, characterId: string) => async ({index, content}:{index: string, content: string}) => {
+export const updateCharacterCharacteristicContent = (workspaceId: string, characterId: string) => async ({index, content}:{index: number, content: string}) => {
   const response = await axiosInstance.patch<void>(DOMAIN.UPDATE_CHARACTER_CHARACTERISTIC_CONTENT(workspaceId, characterId, index), { content });
   return response.data;
 }
-export const removeCharacterCharacteristic = (workspaceId: string, characterId: string) => async (index: string) => {
+export const removeCharacterCharacteristic = (workspaceId: string, characterId: string) => async (index: number) => {
   const response = await axiosInstance.delete<void>(DOMAIN.DELETE_CHARACTER_CHARACTERISTIC(workspaceId, characterId, index));
   return response.data;
 }
