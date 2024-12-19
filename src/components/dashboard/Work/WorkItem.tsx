@@ -1,6 +1,6 @@
 "use client";
 import {
-  WorkButtonContainer,
+  WorkCard,
   WorkButtonImage,
   WorkButtonTitle,
   WorkButtonDate,
@@ -21,7 +21,7 @@ export default function WorkItem({ workId }: { workId: string }) {
   return (
     <>
       {work && (
-        <WorkButtonContainer href={`/${work.id}/info`} passHref>
+        <WorkCard href={`/${work.id}/info`} passHref>
           <WorkButtonImage src={work.cover} alt={work.title} />
           <TitleAndDateAndKebab>
             <TitleAndDate>
@@ -53,7 +53,7 @@ export default function WorkItem({ workId }: { workId: string }) {
             </TitleAndDate>
             <Kebab workValue={work} inputRef={inputRef} />
           </TitleAndDateAndKebab>
-        </WorkButtonContainer>
+        </WorkCard>
       )}
     </>
   );

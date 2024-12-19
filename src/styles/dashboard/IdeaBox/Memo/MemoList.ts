@@ -1,8 +1,9 @@
 "use client";
 import { styled } from "styled-components";
+import { media } from "@/styles/media";
 import { clickable, FlexColumnLeftStart, FlexRowSpaceBetween } from "@/styles";
-import Copy from "@/assets/icons/copy.svg";
 import OpenModal from "@/assets/icons/openModal.svg";
+import Copy from "@/assets/icons/copy.svg";
 import TextareaAutosize from "react-textarea-autosize";
 
 interface MemoCardProps {
@@ -14,7 +15,7 @@ export const MemoCard = styled.div<MemoCardProps>`
   width: 100%;
   background-color: ${({ theme }) => theme.color.white};
   border-radius: 8px;
-  box-shadow: 2px 2px 12px 0px rgba(19, 19, 19, 0.06);
+  box-shadow: 2px 2px 12px 0px rgba(18, 18, 18, 0.12);
   margin-bottom: 6px;
   padding: 8px;
   visibility: ${({ $isSelected }) => ($isSelected ? "hidden" : "visible")};
@@ -56,6 +57,20 @@ export const CopyButton = styled(Copy)`
   ${clickable}
 `;
 
+export const OpenButton = styled(OpenModal)`
+  ${clickable}
+  width: 18px;
+`;
+
+export const MemoUpdatedDate = styled.div`
+  align-self: flex-end;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 100%;
+  color: ${({ theme }) => theme.color.gray300};
+`;
+
 interface AddMemoButtonProps {
   $isEmpty?: boolean;
 }
@@ -65,7 +80,7 @@ export const AddMemoButtonContainer = styled.button<AddMemoButtonProps>`
   left: calc(50% - 88.5px);
   bottom: ${({ $isEmpty }) => ($isEmpty ? "calc(50% - 120px)" : "50px")};
 
-  width: 100%;
+  width: 200px;
   padding: 12px;
   justify-content: center;
   align-items: center;
@@ -80,16 +95,15 @@ export const AddMemoButtonContainer = styled.button<AddMemoButtonProps>`
   font-weight: 800;
   line-height: 100%;
   letter-spacing: 0.32px;
-  max-width: 177px;
 
   &:hover {
     filter: brightness(95%);
   }
-`;
 
-export const OpenButton = styled(OpenModal)`
-  ${clickable}
-  width: 18px;
+  ${media.tablet} {
+    scale: 0.9;
+    bottom: 15px;
+  }
 `;
 
 export const MemoListContainer = styled.div`
@@ -117,12 +131,8 @@ export const MemoListContainer = styled.div`
   ${MemoContent} {
     min-height: calc(14px * 1.5 * 6);
   }
-`;
-export const MemoUpdatedDate = styled.div`
-  align-self: flex-end;
-  font-size: 10px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 100%;
-  color: ${({ theme }) => theme.color.gray300};
+
+  ${media.tablet} {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
 `;

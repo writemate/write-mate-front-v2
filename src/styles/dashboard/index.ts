@@ -1,4 +1,5 @@
 "use client";
+import { media } from "@/styles/media";
 import { FlexRowLeftStart, clickable, FlexColumnCenter } from "@/styles";
 import { styled, css } from "styled-components";
 
@@ -13,7 +14,7 @@ export const HighlghtCssForHoberAfter = css<{ $isActivated?: boolean }>`
   height: 100%;
 `;
 
-// DashboardContainer
+/* Dashboard */
 export const DashboardContainer = styled.div`
   ${FlexRowLeftStart}
   align-items: flex-start;
@@ -22,14 +23,24 @@ export const DashboardContainer = styled.div`
   height: 100%;
   background-color: ${({ theme }) => theme.color.orange100};
   z-index: 0;
+
+  ${media.tablet} {
+    flex-direction: column;
+    padding: 0;
+  }
 `;
 
-// SideTabAndFooterContainer
+/* SideTab And Footer (FlexColumn)*/
 export const SideTabAndFooterContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+
+  ${media.tablet} {
+    width: 100%;
+    height: fit-content;
+  }
 `;
 
 export const FooterContainer = styled.div<{ $isActivated?: boolean }>`
@@ -50,9 +61,13 @@ export const FooterContainer = styled.div<{ $isActivated?: boolean }>`
     width: 50%;
     z-index: -1;
   }
+
+  ${media.tablet} {
+    display: none;
+  }
 `;
 
-// HeaderAndMainContainer
+/* Header And Main (FlexColumn)*/
 export const HeaderAndMainContainer = styled.div`
   ${FlexColumnCenter}
   flex-grow: 1;
@@ -62,13 +77,11 @@ export const HeaderAndMainContainer = styled.div`
   border-radius: 0px 12px 12px 12px;
   padding: 17px 20px;
   z-index: 0;
-`;
 
-export const HeaderContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding-left: 20px;
-  margin-bottom: 60px;
+  ${media.tablet} {
+    width: 100%;
+    height: calc(100% - 60px);
+    border-radius: 12px 12px 0px 0px;
+    padding: 0;
+  }
 `;

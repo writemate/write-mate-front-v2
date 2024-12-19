@@ -1,4 +1,5 @@
 "use client";
+import { media } from "@/styles/media";
 import { styled } from "styled-components";
 import { Button, FlexColumnCenter } from "@/styles";
 import Danger from "@/assets/icons/danger.svg";
@@ -21,16 +22,25 @@ export const ModalContainer = styled.div`
     font-weight: 500;
     line-height: 160%;
   }
+
+  ${media.mobile} {
+    scale: 0.9;
+    p {
+      font-size: 14px;
+      word-break: keep-all;
+    }
+  }
 `;
 
 export const DangerIcon = styled(Danger)`
-  margin-top: 20px;
+  margin-top: 10px;
+  margin-bottom: 5px;
 `;
 
 export const ButtonContainer = styled.div`
   display: flex;
   gap: 12px;
-  justify-content: flex-end;
+  justify-content: space-between;
   width: 100%;
 `;
 
@@ -53,5 +63,10 @@ export const ModalButton = styled(Button)<{ $isDanger?: boolean }>`
   &:hover {
     transform: scale(1.05); /* 살짝 확대 효과 */
     filter: brightness(105%);
+  }
+
+  ${media.mobile} {
+    padding: 8px 14px;
+    font-size: 14px;
   }
 `;

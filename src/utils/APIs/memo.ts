@@ -44,6 +44,12 @@ export const updateMemoDescription = async ({
 /*
  * 메모 캐릭터
  */
+export const getMCharacter = (id: string) => async () => {
+  const response = await axiosInstance.get<TMCharacter>(
+    DOMAIN.GET_MEMO_CHARACTER(id)
+  );
+  return response.data;
+};
 
 export const getMCharacterList = async () => {
   const response = await axiosInstance.get<TMCharacter[]>(
@@ -131,54 +137,81 @@ export const updateMCharacterBirthday = async ({
 
 export const createMCharacterCharacteristic = async ({
   id,
-  characteristic,
+  title,
+  content,
 }: {
   id: string;
-  characteristic: Array<{ title: string; content: string }>;
+  title: string;
+  content: string;
 }) => {
-  await axiosInstance.patch(DOMAIN.CREATE_MEMO_CHARACTER_CHARACTERISTIC(id), {
-    characteristic,
-  });
+  console.log({
+    title,
+    content,
+  }); // 요청 데이터 확인
+  await axiosInstance.patch(
+    DOMAIN.CREATE_MEMO_CHARACTER_CHARACTERISTIC(id),
+    {
+      title,
+      content,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
 };
 
 export const deleteMCharacterCharacteristic = async ({
   id,
-  characteristicId,
+  idx,
 }: {
   id: string;
-  characteristicId: string;
+  idx: number;
 }) => {
-  await axiosInstance.delete(
-    DOMAIN.DELETE_MEMO_CHARACTER_CHARACTERISTIC(id, characteristicId)
-  );
+  await axiosInstance.delete(DOMAIN.DELETE_MEMO_CHARACTER_CHARACTERISTIC(id), {
+    params: { idx },
+  });
 };
 
 export const updateMCharacterCharacteristicTitle = async ({
   id,
-  characteristicId,
+  idx,
   title,
 }: {
   id: string;
-  characteristicId: string;
+  idx: number;
   title: string;
 }) => {
   await axiosInstance.patch(
-    DOMAIN.UPDATE_MEMO_CHARACTER_CHARACTERISTIC_TITLE(id, characteristicId),
-    { title }
+    DOMAIN.UPDATE_MEMO_CHARACTER_CHARACTERISTIC_TITLE(id),
+    { title },
+    {
+      params: { idx },
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
   );
 };
 
 export const updateMCharacterCharacteristicContent = async ({
   id,
-  characteristicId,
+  idx,
   content,
 }: {
   id: string;
-  characteristicId: string;
+  idx: number;
   content: string;
 }) => {
   await axiosInstance.patch(
-    DOMAIN.UPDATE_MEMO_CHARACTER_CHARACTERISTIC_CONTENT(id, characteristicId),
-    { content }
+    DOMAIN.UPDATE_MEMO_CHARACTER_CHARACTERISTIC_CONTENT(id),
+    { content },
+    {
+      params: { idx },
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
   );
 };

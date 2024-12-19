@@ -1,19 +1,26 @@
 "use client";
 
-import { AddWorkspaceButton } from "@/styles/dashboard/Work/AddWorkButton";
+import { DashboardContext } from "@/hooks/dashboard/dashboard";
+import { AddMemoButtonContainer } from "@/styles/dashboard/IdeaBox/Memo/MemoList";
+import { useContext } from "react";
 
-interface AddButtonProps {
-  actfunction: () => void;
-}
+export function AddWork() {
+  const { onClickAddWorkspace } =
+    useContext(DashboardContext).workstudioAndTrash;
 
-export function AddWork({ actfunction }: AddButtonProps) {
   return (
-    <AddWorkspaceButton
-      onClick={() => {
-        actfunction();
-      }}
-    >
+    <AddMemoButtonContainer onClick={onClickAddWorkspace}>
       새 작품 집필하기
-    </AddWorkspaceButton>
+    </AddMemoButtonContainer>
+  );
+}
+export function MoveToOngoing() {
+  const { onClickMoveToOngoing } =
+    useContext(DashboardContext).workstudioAndTrash;
+
+  return (
+    <AddMemoButtonContainer onClick={onClickMoveToOngoing}>
+      집필 중인 작품 보러가기
+    </AddMemoButtonContainer>
   );
 }

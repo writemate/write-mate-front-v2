@@ -1,4 +1,5 @@
 "use client";
+import { media } from "@/styles/media";
 import { FlexRowLeftStart, clickable, FlexColumnCenter } from "@/styles";
 import Link from "next/link";
 import { styled } from "styled-components";
@@ -11,6 +12,10 @@ export const TitleAndWorkListContainer = styled.div`
   width: 100%;
   position: relative;
   overflow-y: auto;
+
+  ${media.tablet} {
+    padding-top: 16px;
+  }
 `;
 
 export const WorkButtonList = styled.div`
@@ -23,6 +28,11 @@ export const WorkButtonList = styled.div`
   flex-wrap: wrap;
   gap: 16px;
   align-items: flex-start;
+  align-content: flex-start;
+
+  ${media.tablet} {
+    gap: 8px;
+  }
 `;
 
 export const EmptyListDiscription = styled.div`
@@ -35,7 +45,8 @@ export const EmptyListDiscription = styled.div`
   gap: 16px;
 `;
 
-export const WorkButtonContainer = styled(Link)`
+export const WorkCard = styled(Link)`
+  -webkit-user-drag: none;
   border: none;
   display: flex;
   width: 200px;
@@ -48,16 +59,21 @@ export const WorkButtonContainer = styled(Link)`
   background: var(--white, #fff);
 
   /* Carditem shadow */
-  box-shadow: 2px 2px 12px 0px rgba(19, 19, 19, 0.12);
+  box-shadow: 2px 2px 12px 0px rgba(18, 18, 18, 0.12);
 
   &:hover {
     outline: 1px solid ${({ theme }) => theme.color.orange400};
+  }
+
+  ${media.tablet} {
+    width: 150px;
+    height: 240px;
   }
 `;
 
 export const WorkButtonImage = styled.img`
   width: 100%;
-  height: 256px;
+  height: 83%;
   flex-shrink: 0;
   margin-bottom: 12px;
 
@@ -74,6 +90,12 @@ export const TitleAndDateAndKebab = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-shrink: 0;
+
+  ${media.tablet}  {
+    transform: scale(0.8);
+    transform-origin: top left;
+  }
+}
 `;
 
 export const TitleAndDate = styled.div`
@@ -85,37 +107,33 @@ export const TitleAndDate = styled.div`
 
 export const WorkButtonTitle = styled.div`
   width: 140px;
-  height: 18px;
+  height: fit-content;
   overflow: hidden;
-  color: var(--Main-Color-Point-Color, var(--writemate-gray-900, #353535));
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-family: Pretendard;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
   line-height: 120%;
 
   margin-bottom: 4px;
-  z-index: 100;    
 
   input {
     padding: 0px;
     border-radius: 3px;
-    border: 1px solid transparent;
-    box-shadow: 0 0 12px 0 #0000001a;
     font-family: Pretendard;
     font-size: 14px;
     font-style: normal;
     font-weight: 600;
     overflow: visible;
+    border: 1px solid ${({ theme }) => theme.color.white};;
+    outline: none;
 
     &:focus { 
       width: 100%;
-      outline: none;
-      box-shadow: none;
       border: 1px solid ${({ theme }) => theme.color.orange400};
   }
+
 `;
 
 export const WorkButtonDate = styled.div`

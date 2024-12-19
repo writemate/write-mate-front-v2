@@ -17,6 +17,7 @@ export default function DeleteModal() {
     isDeleteMemo,
     isDeleteMemoCharacter,
     isPermanentDelete,
+    isDeleteMCharacterCharacteristic,
     closeConfirmModal,
   } = useContext(DashboardContext).removeConfirmationModal;
 
@@ -33,6 +34,9 @@ export default function DeleteModal() {
             )}
             {isDeleteMemo && <ConfirmDeleteMemoModal />}
             {isDeleteMemoCharacter && <ConfirmDeleteMemoCharacterModal />}
+            {isDeleteMCharacterCharacteristic && (
+              <ConfirmDeleteMCharacterCharacteristicModal />
+            )}
           </>
         </Modal>
       )}
@@ -146,11 +150,11 @@ function ConfirmDeleteMemoModal() {
 function ConfirmDeleteMemoCharacterModal() {
   const { closeConfirmModal } =
     useContext(DashboardContext).removeConfirmationModal;
-  const { onDeleteMemo, closeEditModal } =
+  const { onDeleteMCharacter, closeEditModal } =
     useContext(DashboardContext).memoCharacterModal;
 
   const onClickConfirmDelete = () => {
-    onDeleteMemo();
+    onDeleteMCharacter();
     closeConfirmModal();
     closeEditModal();
   };
@@ -163,6 +167,40 @@ function ConfirmDeleteMemoCharacterModal() {
       <DangerIcon />
       <p>
         해당 인물 메모를 삭제하시겠습니까?
+        <br />
+        삭제된 데이터는 복구가 어렵습니다.
+      </p>
+      <ButtonContainer>
+        <ModalButton $isDanger={true} onClick={onClickConfirmDelete}>
+          삭제
+        </ModalButton>
+        <ModalButton $isDanger={false} onClick={onClickCancel}>
+          취소
+        </ModalButton>
+      </ButtonContainer>
+    </ModalContainer>
+  );
+}
+
+function ConfirmDeleteMCharacterCharacteristicModal() {
+  const { closeConfirmModal, selectedCharacteristicIdx } =
+    useContext(DashboardContext).removeConfirmationModal;
+  const { onDeleteMCharacterCharacteristic } =
+    useContext(DashboardContext).memoCharacterModal;
+
+  const onClickConfirmDelete = () => {
+    onDeleteMCharacterCharacteristic(selectedCharacteristicIdx);
+    closeConfirmModal();
+  };
+  const onClickCancel = () => {
+    closeConfirmModal();
+  };
+
+  return (
+    <ModalContainer>
+      <DangerIcon />
+      <p>
+        해당 설정을 삭제하시겠습니까?
         <br />
         삭제된 데이터는 복구가 어렵습니다.
       </p>

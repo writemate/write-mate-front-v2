@@ -4,6 +4,7 @@ import {
   LogoLink,
   SideTabLink,
   SideTabMenu,
+  AddWorkspaceButton,
 } from "@/styles/dashboard/SideTab";
 import Logo from "@/assets/dashboard/sideTab/logo.svg";
 import ActiveArtStudio from "@/assets/dashboard/sideTab/active/artStudio.svg";
@@ -16,7 +17,6 @@ import InactiveTrash from "@/assets/dashboard/sideTab/inactive/trash.svg";
 import { DashboardContext } from "@/hooks/dashboard/dashboard";
 import { usePathname } from "next/navigation";
 import { useContext } from "react";
-import { AddWork } from "./Work/AddWorkButton";
 
 export default function SideTab() {
   const { onClickAddWorkspace, isAdding } =
@@ -25,10 +25,11 @@ export default function SideTab() {
   return (
     <>
       <SideTabContainer>
+        <LogoLink href="/dashboard">
+          <Logo />
+        </LogoLink>
+
         <SideTabMenu>
-          <LogoLink href="/dashboard">
-            <Logo />
-          </LogoLink>
           <SideTabLink
             href="/dashboard"
             $isActivated={usePathname() === "/dashboard"}
@@ -38,7 +39,7 @@ export default function SideTab() {
             ) : (
               <InactiveArtStudio />
             )}
-            작품 스튜디오
+            <p>작품 스튜디오</p>
           </SideTabLink>
           <SideTabLink
             href="/dashboard/ideaBox"
@@ -49,7 +50,7 @@ export default function SideTab() {
             ) : (
               <InactiveIdeaBox />
             )}
-            아이디어 보관함
+            <p>아이디어 보관함</p>
           </SideTabLink>
           <SideTabLink
             href="/dashboard/trash"
@@ -60,12 +61,25 @@ export default function SideTab() {
             ) : (
               <InactiveTrash />
             )}
-            휴지통
+            <p>휴지통</p>
           </SideTabLink>
         </SideTabMenu>
-        {isAdding && <p>작업실 추가 중...</p>}
-        {!isAdding && <AddWork actfunction={onClickAddWorkspace} />}
+        <AddWork />
       </SideTabContainer>
     </>
   );
+}
+export function AddWork() {
+  const { onClickAddWorkspace } =
+    useContext(DashboardContext).workstudioAndTrash;
+
+  return (
+    <AddWorkspaceButton onClick={onClickAddWorkspace}>
+      새 작품 집필하기
+    </AddWorkspaceButton>
+  );
+}
+
+export function WaitingAddWork() {
+  return <AddWorkspaceButton>작품 생성 중입니다...</AddWorkspaceButton>;
 }

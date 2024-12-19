@@ -7,7 +7,6 @@ import WorkList from "@/components/dashboard/Work/WorkList";
 export default function Dashboard() {
   return (
     <TitleAndWorkListContainer>
-      <ReactQueryDevtools />
       <TrashTitleAndNavigationBar />
       <WorkList />
     </TitleAndWorkListContainer>

@@ -1,4 +1,5 @@
 "use client";
+import { media } from "@/styles/media";
 import {
   FlexRowLeftStart,
   clickable,
@@ -21,6 +22,10 @@ export const Title = styled.div`
   font-weight: 700;
   color: ${({ theme }) => theme.color.gray900};
   margin-bottom: 48px;
+
+  ${media.tablet} {
+    display: none;
+  }
 `;
 
 // NavigationBar
@@ -61,5 +66,13 @@ export const NavigationButton = styled(Button)<{ $isActivated?: boolean }>`
       $isActivated ? theme.color.orange400 : "transparent"};
     border-radius: 10px;
     transition: background-color 0.1s;
+  }
+  ${media.tablet} {
+    margin-left: 0;
+    scale: 0.9;
+
+    &::before {
+      bottom: -4px;
+    }
   }
 `;

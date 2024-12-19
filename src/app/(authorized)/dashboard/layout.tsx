@@ -13,7 +13,6 @@ import {
   useWorkstudioAndTrash,
 } from "@/hooks/dashboard/dashboard";
 import DeleteModal from "@/components/DeleteModal";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import MemoCharacterEditModal from "@/components/dashboard/IdeaBox/MCharacter/MCharacterModal";
 import MemoEditModal from "@/components/dashboard/IdeaBox/Memo/MemoModal";
@@ -23,6 +22,7 @@ import useMemoModal from "@/hooks/dashboard/useMemoModal";
 import useIdeaBoxMemoCharacter from "@/hooks/dashboard/useIdeaBoxMCharacter";
 import useMemoCharacterModal from "@/hooks/dashboard/useMCharacterModal";
 import { useLogin } from "@/stores/useLogin";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 export default function WorkspaceLayout({
   children,
@@ -60,9 +60,22 @@ export default function WorkspaceLayout({
           {children}
         </HeaderAndMainContainer>
       </DashboardContainer>
+      <Modal />
+      <DevTool />
+    </DashboardContext.Provider>
+  );
+}
+
+function Modal() {
+  return (
+    <>
       <MemoEditModal />
       <MemoCharacterEditModal />
       <DeleteModal />
-    </DashboardContext.Provider>
+    </>
   );
+}
+
+function DevTool() {
+  return <ReactQueryDevtools />;
 }
