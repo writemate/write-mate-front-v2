@@ -79,7 +79,7 @@ export type TWorkInfo = {
  */
 export type TKeyword = {
   id: string;
-  keyword_name: string;
+  word: string;
   darkColor: string;
   lightColor: string;
 };

@@ -36,7 +36,7 @@ export default function CharacterList() {
             $lightColor={isSelectedKeyword(keyword.id) ? keyword.lightColor : undefined}
             $darkColor={isSelectedKeyword(keyword.id) ? keyword.darkColor : undefined}
           >
-            <span>{keyword.keyword_name}</span>
+            <span>{keyword.word}</span>
             {isSelectedKeyword(keyword.id) && <KeywordCancel onClick={(e: React.MouseEvent) => {
               e.stopPropagation();
               removeSelectedKeyword(keyword.id);
@@ -77,7 +77,7 @@ export default function CharacterList() {
                     $lightColor={isSelected ? keyword.lightColor : undefined}
                     $darkColor={isSelected ? keyword.darkColor : undefined}
                   >
-                    <span>{keyword.keyword_name}</span>
+                    <span>{keyword.word}</span>
                   </KeywordContainer>
                 );
               })}

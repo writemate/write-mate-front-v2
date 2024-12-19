@@ -72,9 +72,9 @@ export const DOMAIN = {
   UPDATE_CHARACTER_GENDER: (workId: string, characterId: string) => `/api/works/${workId}/characters/${characterId}/gender`,
   UPDATE_CHARACTER_IMAGE: (workId: string, characterId: string) => `/api/works/${workId}/characters/${characterId}/image`,
   ADD_CHARACTER_CHARACTERISTIC: (workId: string, characterId: string) => `/api/works/${workId}/characters/${characterId}/characteristic`,
-  DELETE_CHARACTER_CHARACTERISTIC: (workId: string, characterId: string, index: string) => `/api/works/${workId}/characters/${characterId}/characteristic?idx=${index}`,
-  UPDATE_CHARACTER_CHARACTERISTIC_TITLE: (workId: string, characterId: string, index: string) => `/api/works/${workId}/characters/${characterId}/characteristic/title?idx=${index}`,
-  UPDATE_CHARACTER_CHARACTERISTIC_CONTENT: (workId: string, characterId: string, index: string) => `/api/works/${workId}/characters/${characterId}characteristic/content?idx=${index}`,
+  DELETE_CHARACTER_CHARACTERISTIC: (workId: string, characterId: string, index: number) => `/api/works/${workId}/characters/${characterId}/characteristic?idx=${index}`,
+  UPDATE_CHARACTER_CHARACTERISTIC_TITLE: (workId: string, characterId: string, index: number) => `/api/works/${workId}/characters/${characterId}/characteristic/title?idx=${index}`,
+  UPDATE_CHARACTER_CHARACTERISTIC_CONTENT: (workId: string, characterId: string, index: number) => `/api/works/${workId}/characters/${characterId}/characteristic/content?idx=${index}`,
   ADD_CHARACTER_KEYWORD: (workId: string, characterId: string, keywordId: string) => `/api/works/${workId}/characters/${characterId}/keywords/${keywordId}`,
   DELETE_CHARACTER_KEYWORD: (workId: string, characterId: string, keywordId: string) => `/api/works/${workId}/characters/${characterId}/keywords/${keywordId}`,
 
