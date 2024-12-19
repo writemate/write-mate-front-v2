@@ -45,6 +45,8 @@ export const DOMAIN = {
     `/api/plots/${plotId}/chapters/${chapterId}/description`,
   UPDATE_CHAPTER_ORDER: (plotId: string, chapterId: string) =>
     `/api/plots/${plotId}/chapters/${chapterId}/order`,
+  UPDATE_CHAPTER_FOLD_All: (plotId: string) =>
+    `/api/plots/${plotId}/chapters/folded`,
   UPDATE_CHAPTER_FOLD: (plotId: string, chapterId: string) =>
     `/api/plots/${plotId}/chapters/${chapterId}/folded`,
 
@@ -70,6 +72,34 @@ export const DOMAIN = {
     characterId: string
   ) =>
     `/api/chapters/${chapterId}/pevents/${peventId}/character/${characterId}`,
+
+  GET_CHARACTER_LIST: (workId: string) => `/api/works/${workId}/characters`,
+  CREATE_CHARACTER: (workId: string) => `/api/works/${workId}/characters`,
+  GET_CHARACTER_DETAIL: (workId: string, characterId: string) => `/api/works/${workId}/characters/${characterId}`,
+  DELETE_CHARACTER: (workId: string, characterId: string) => `/api/works/${workId}/characters/${characterId}`,
+  UPDATE_CHARACTER_NAME: (workId: string, characterId: string) => `/api/works/${workId}/characters/${characterId}/name`,
+  UPDATE_CHARACTER_MAIN: (workId: string, characterId: string) => `/api/works/${workId}/characters/${characterId}/main`,
+  UPDATE_CHARACTER_BIRTHDAY: (workId: string, characterId: string) => `/api/works/${workId}/characters/${characterId}/birthday`,
+  UPDATE_CHARACTER_DESCRIPTION: (workId: string, characterId: string) => `/api/works/${workId}/characters/${characterId}/description`,
+  UPDATE_CHARACTER_ROLE: (workId: string, characterId: string) => `/api/works/${workId}/characters/${characterId}/role`,
+  UPDATE_CHARACTER_GENDER: (workId: string, characterId: string) => `/api/works/${workId}/characters/${characterId}/gender`,
+  UPDATE_CHARACTER_IMAGE: (workId: string, characterId: string) => `/api/works/${workId}/characters/${characterId}/image`,
+  ADD_CHARACTER_CHARACTERISTIC: (workId: string, characterId: string) => `/api/works/${workId}/characters/${characterId}/characteristic`,
+  DELETE_CHARACTER_CHARACTERISTIC: (workId: string, characterId: string, index: number) => `/api/works/${workId}/characters/${characterId}/characteristic?idx=${index}`,
+  UPDATE_CHARACTER_CHARACTERISTIC_TITLE: (workId: string, characterId: string, index: number) => `/api/works/${workId}/characters/${characterId}/characteristic/title?idx=${index}`,
+  UPDATE_CHARACTER_CHARACTERISTIC_CONTENT: (workId: string, characterId: string, index: number) => `/api/works/${workId}/characters/${characterId}/characteristic/content?idx=${index}`,
+  ADD_CHARACTER_KEYWORD: (workId: string, characterId: string, keywordId: string) => `/api/works/${workId}/characters/${characterId}/keywords/${keywordId}`,
+  DELETE_CHARACTER_KEYWORD: (workId: string, characterId: string, keywordId: string) => `/api/works/${workId}/characters/${characterId}/keywords/${keywordId}`,
+
+  GET_KEYWORD_LIST: (workId: string) => `/api/works/${workId}/keywords`,
+  CREATE_KEYWORD: (workId: string) => `/api/works/${workId}/keywords`,
+  DELETE_KEYWORD: (workId: string, keywordId: string) => `/api/works/${workId}/keywords/${keywordId}`,
+
+  GET_RELATION_LIST: (workId: string) => `/api/works/${workId}/arrows`,
+  CREATE_RELATION: (workId: string) => `/api/works/${workId}/arrows`,
+  DELETE_RELATION: (workId: string, arrowId: string) => `/api/works/${workId}/arrows/${arrowId}`,
+  UPDATE_RELATION: (workId: string, arrowId: string) => `/api/works/${workId}/arrows/${arrowId}`,
+
 
   GET_MEMO_LIST: `/api/memos`,
   CREATE_MEMO: `/api/memos`,

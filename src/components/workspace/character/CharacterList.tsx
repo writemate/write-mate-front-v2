@@ -32,14 +32,14 @@ export default function CharacterList() {
       <KeywordListContainer ref={keywordListRef}>
         {isKeywordsLoading && <div>키워드 로딩중...</div>}
         {keywordList && keywordList.map((keyword, index) => (
-          <KeywordContainer key={index} onClick={selectKeyword(keyword._id)}
-            $lightColor={isSelectedKeyword(keyword._id) ? keyword.lightColor : undefined}
-            $darkColor={isSelectedKeyword(keyword._id) ? keyword.darkColor : undefined}
+          <KeywordContainer key={index} onClick={selectKeyword(keyword.id)}
+            $lightColor={isSelectedKeyword(keyword.id) ? keyword.lightColor : undefined}
+            $darkColor={isSelectedKeyword(keyword.id) ? keyword.darkColor : undefined}
           >
-            <span>{keyword.keyword_name}</span>
-            {isSelectedKeyword(keyword._id) && <KeywordCancel onClick={(e: React.MouseEvent) => {
+            <span>{keyword.word}</span>
+            {isSelectedKeyword(keyword.id) && <KeywordCancel onClick={(e: React.MouseEvent) => {
               e.stopPropagation();
-              removeSelectedKeyword(keyword._id);
+              removeSelectedKeyword(keyword.id);
             }} />}
           </KeywordContainer>
         ))}
@@ -58,27 +58,26 @@ export default function CharacterList() {
       <CharacterListContainer>
         {(isKeywordsLoading || isCharactersLoading) && <div>캐릭터 로딩중...</div>}
         {characterList && keywordList && characterList.map((character, index) => (
-          <CharacterCard key={index+1} href={`/${workspace_id}/character/${character._id}`}>
+          <CharacterCard key={index+1} href={`/${workspace_id}/character/${character.id}`}>
             <CharacterCardTitle>
               <CharacterImage $src={character.ch_image} />
               <div>
                 <CharacterName>{character.ch_name}</CharacterName>
                 <CharacterRole>{character.role}</CharacterRole>
               </div>
-              {character.isMain && <StarActive onClick={removeMainCharacter(character._id)} />}
-              {!character.isMain && <StarInactive onClick={setMainCharacter(character._id)} />}
+              {character.isMain && <StarActive onClick={removeMainCharacter(character.id)} />}
+              {!character.isMain && <StarInactive onClick={setMainCharacter(character.id)} />}
             </CharacterCardTitle>
             <CharacterDescription>{character.description}</CharacterDescription>
             <KeywordListContainerForCharacterCard>
-              {character.keyword.map((id, index) => {
-                const selectedKeyword = keywordList.find((k) => k._id === id)!;
-                const isSelected = isSelectedKeyword(selectedKeyword._id);
-                return selectedKeyword && (
+              {character.keyword.map((keyword, index) => {
+                const isSelected = isSelectedKeyword(keyword.id);
+                return (
                   <KeywordContainer key={index}
-                    $lightColor={isSelected ? selectedKeyword.lightColor : undefined}
-                    $darkColor={isSelected ? selectedKeyword.darkColor : undefined}
+                    $lightColor={isSelected ? keyword.lightColor : undefined}
+                    $darkColor={isSelected ? keyword.darkColor : undefined}
                   >
-                    <span>{selectedKeyword.keyword_name}</span>
+                    <span>{keyword.word}</span>
                   </KeywordContainer>
                 );
               })}

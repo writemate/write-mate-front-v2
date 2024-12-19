@@ -1,17 +1,14 @@
 "use client";
-
 import Chapter from "./Chapter";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import ToggleBtn from "./ToggleBtn";
 import { AddChapterButton } from "@/styles/workspace/plot/ChapterList.styles";
 import useChapterList from "@/hooks/workspace/plot/useChapterList";
-import { useParams } from "next/navigation";
 
 
 export default function ChapterList() {
   const { chapterList, handleDragAndDrop, areAllChaptersFolded, toggleAllChapters,
-    mutateCreate, mutateDelete, mutateChapterOrder, mutateChapterFold } =
-    useChapterList();
+    onClickCreate } = useChapterList();
 
   return (
     <>
@@ -41,11 +38,7 @@ export default function ChapterList() {
                         {...provided.dragHandleProps}
                       >
                         <Chapter
-                          chapterId={chapter.id}
-                          chapterName={chapter.chapter_name}
-                          chapterDescription={chapter.chapter_description}
-                          pevent={chapter.pevent_list}
-                          isFolded={chapter.is_folded}
+                          {...chapter}
                         />
                       </div>
                     )}
@@ -57,7 +50,7 @@ export default function ChapterList() {
         </Droppable>
       </DragDropContext>
 
-      <AddChapterButton onClick={()=>mutateCreate()}>
+      <AddChapterButton onClick={onClickCreate}>
         챕터 추가하기
       </AddChapterButton>
     </>

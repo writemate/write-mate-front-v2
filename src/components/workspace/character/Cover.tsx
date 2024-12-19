@@ -6,13 +6,13 @@ import { Input, ButtonWithHoverAnimation } from "@/styles";
 import { CharacterContext } from "@/hooks/workspace/character/character";
 
 export default function Cover() {
-    const { data, isLoading, deleteCharacter, onChangeName, onChangeRole} = useContext(CharacterContext);
+    const { data, isLoading, onClickDeleteCharacter, onChangeName, onChangeRole} = useContext(CharacterContext);
     const { ch_name, role } = data??{};
     return (
         <CoverContainer>
             <CoverImageBox/>
             <CoverContentsContainer>
-                <ButtonWithHoverAnimation onClick={()=>deleteCharacter()} style={{marginLeft:"auto",marginBottom:"auto"}}>삭제</ButtonWithHoverAnimation>
+                <ButtonWithHoverAnimation onClick={onClickDeleteCharacter} style={{marginLeft:"auto",marginBottom:"auto"}}>삭제</ButtonWithHoverAnimation>
                 <SubTitle>인물 이름</SubTitle>
                 <Input type="text" placeholder="인물의 이름을 적어주세요" onChange={onChangeName} defaultValue={ch_name} disabled={isLoading}/>
                 <SubTitle style={{marginTop:46}}>작품 속 역할</SubTitle>

@@ -1,170 +1,91 @@
 import {
-  PlotChapterType,
-} from "@/utils/APIs/mock/plot";
-import {
   createChapter,
-  deleteChapter,
-  updateChapterDescription,
-  updateChapterFold,
-  updateChapterName,
+  updateChapterFoldAll,
   updateChapterOrder,
-} from "@/utils/APIs/plot";
+} from "@/utils/APIs/workspace/plot";
 import { workspaceQueryKeys } from "@/utils/APIs/queryKeys";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
-import { notifySuccess, notifyError } from "@/utils/showToast";
 import { PlotContext } from "./usePlot";
-import { useContext, useEffect, useState } from "react";
-import useDragAndDrop from "./useDragAndDrop";
-import { TChapter } from "@/utils/APIs/types";
+import { useContext } from "react";
+import { getHandleDragAndDropFunctionForReorder } from "@/utils/getReorderFunction";
+import { TPlot } from "@/utils/APIs/types";
+import { useOnClickUpdate } from "@/hooks/common/useOnClickUpdate";
 
 const useChapterList = () => {
   const queryClient = useQueryClient();
   const { workspace_id, plot_id } = useParams<{ workspace_id: string; plot_id: string }>();
 
-  const chapterListFromServer = useContext(PlotContext);
-  const [chapterList, setChapterList] = useState([] as TChapter[]);
+  const chapterList = useContext(PlotContext) ?? [];
 
-  useEffect(() => {
-    if(!chapterListFromServer) return;
-    setChapterList(chapterListFromServer);
-  }, [chapterListFromServer]);
-
-  // 챕터 추가하기 (만들기)
-  const { mutate: mutateCreate } = useMutation({
+  const onClickCreate = useOnClickUpdate({
     mutationFn: createChapter(plot_id),
-    onMutate: async () => {
-      await queryClient.cancelQueries({
-        queryKey: workspaceQueryKeys.plot(workspace_id, plot_id),
-      });
-
-      const previousChapters = queryClient.getQueryData<PlotChapterType[]>(
-        workspaceQueryKeys.plot(workspace_id, plot_id)
-      );
-
-      return { previousChapters };
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: workspaceQueryKeys.plot(workspace_id, plot_id),
-      });
-    },
-  });
-
-  // 챕터 삭제하기
-  const { mutate: mutateDelete } = useMutation({
-    mutationFn: deleteChapter(plot_id),
-    onError: (err, newTodo, context) => {
-      notifyError("챕터 삭제에 실패했습니다.");
-    },
-    onSuccess: () => {
-      notifySuccess("챕터가 삭제되었습니다.");
-
-      queryClient.invalidateQueries({
-        queryKey: workspaceQueryKeys.plot(workspace_id, plot_id),
-      });
-    },
-  });
-
-  // 챕터 이름 수정하기
-  const { mutate: mutateChapterName } = useMutation({
-    mutationFn: updateChapterName(plot_id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: workspaceQueryKeys.plot(workspace_id, plot_id),
-      });
-    },
-  });
-
-  // 챕터 설명 수정하기
-  const { mutate: mutateChapterDescription } = useMutation({
-    mutationFn: updateChapterDescription(plot_id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: workspaceQueryKeys.plot(workspace_id, plot_id),
-      });
-    },
-  });
+    queryKey: workspaceQueryKeys.plot(workspace_id, plot_id),
+    savingMessage: "챕터 추가",
+    errorMessage: "챕터 추가에 실패했습니다."
+  })();
 
   // 챕터 순서 수정하기
-  // todo: 테스트 후 toast 지우기
-  const { mutate: mutateChapterOrder } = useMutation({
+  const mutateChapterOrder  = useOnClickUpdate({
     mutationFn: updateChapterOrder(plot_id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: workspaceQueryKeys.plot(workspace_id, plot_id),
-      });
+    queryKey: workspaceQueryKeys.plot(workspace_id, plot_id),
+    savingMessage: "챕터 순서 수정",
+    errorMessage: "챕터 순서 수정에 실패했습니다.",
+    onMutate: ({ chapterId, pre_idx, next_idx }) => {
+      const previousPlot = queryClient.getQueryData<TPlot>(workspaceQueryKeys.plot(workspace_id, plot_id));
+      const previousChapters = previousPlot?.chapter_list;
+      if(!previousChapters) return;
+
+      const newChapters = [...previousChapters];
+      const movedChapter = newChapters.splice(pre_idx, 1)[0];
+      newChapters.splice(next_idx, 0, movedChapter);
+
+      queryClient.setQueryData<TPlot>(workspaceQueryKeys.plot(workspace_id, plot_id), {...previousPlot, chapter_list: newChapters});
+
+      return { previousPlot };
     },
-    // onMutate: ({ chapterId, pre_idx, next_idx }) => {
-    //   console.log("onMutate");
+    onError: (error, _, context) => {
+      queryClient.setQueryData(workspaceQueryKeys.plot(workspace_id, plot_id), context?.previousPlot);
+    }
+  });
 
-    //   const previousChapters = queryClient.getQueryData<PlotChapterType[]>(
-    //     workspaceQueryKeys.plot(work_id, plot_id)
-    //   );
-    //   if(!previousChapters) return;
-
-    //   const newChapters = [...previousChapters];
-    //   const movedChapter = newChapters.splice(pre_idx, 1)[0];
-    //   newChapters.splice(next_idx, 0, movedChapter);
-
-    //   queryClient.setQueryData<PlotChapterType[]>(
-    //     workspaceQueryKeys.plot(work_id, plot_id),
-    //     newChapters
-    //   );
-
-    //   return { previousChapters };
-    // }
+  const handleDragAndDrop = getHandleDragAndDropFunctionForReorder({
+    mutationOrderFn: ({ itemId, pre_idx, next_idx }) =>
+      mutateChapterOrder({ chapterId: itemId, pre_idx, next_idx }),
   });
 
   // 챕터 접힘 여부 수정하기
-  const { mutate: mutateChapterFold } = useMutation({
-    mutationFn: updateChapterFold(plot_id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: workspaceQueryKeys.plot(workspace_id, plot_id),
-      });
-    },
-  });
+  const mutateChapterFold = useOnClickUpdate({
+    mutationFn: updateChapterFoldAll(plot_id),
+    queryKey: workspaceQueryKeys.plot(workspace_id, plot_id),
+    savingMessage: "챕터 접힘 여부 수정",
+    errorMessage: "챕터 접힘 여부 수정에 실패했습니다.",
+    onMutate: (is_folded) => {
+      const previousPlot = queryClient.getQueryData<TPlot>(workspaceQueryKeys.plot(workspace_id, plot_id));
+      const previousChapters = previousPlot?.chapter_list;
+      if(!previousChapters) return;
 
-  const { handleDragAndDrop } = useDragAndDrop({
-    mutationOrderFn: ({ itemId, pre_idx, next_idx }) =>
-      mutateChapterOrder({ chapterId: itemId, pre_idx, next_idx }),
-    item: chapterList,
+      const newChapters = previousChapters.map((chapter) => {
+          return { ...chapter, is_folded };
+      });
+
+      queryClient.setQueryData<TPlot>(workspaceQueryKeys.plot(workspace_id, plot_id), {...previousPlot, chapter_list: newChapters});
+
+      return { previousPlot };
+    },
+    onError: (error, _, context) => {
+      queryClient.setQueryData(workspaceQueryKeys.plot(workspace_id, plot_id), context?.previousPlot);
+    }
   });
 
   const areAllChaptersFolded = chapterList.every(
     (chapter) => chapter.is_folded
   );
 
-  const toggleAllChapters = () => {
-    const newFoldedState = !areAllChaptersFolded;
-    setChapterList((prevChapters) =>
-      prevChapters.map((chapter) => ({
-        ...chapter,
-        is_folded: newFoldedState,
-      }))
-    );
-    chapterList.forEach((chapter) => {
-      mutateChapterFold({ chapterId: chapter.id, is_folded: newFoldedState });
-    });
-  };
-
-  const handleLocalFold = (id: string, isFolded: boolean) => {
-    setChapterList((prevChapters) =>
-      prevChapters.map((chapter) =>
-        chapter.id === id ? { ...chapter, is_folded: isFolded } : chapter
-      )
-    );
-    mutateChapterFold({ chapterId: id, is_folded: isFolded });
-  };
+  const toggleAllChapters = () => mutateChapterFold(!areAllChaptersFolded);  
 
   return {
-    mutateCreate,
-    mutateDelete,
-    mutateChapterName,
-    mutateChapterDescription,
-    mutateChapterOrder,
-    mutateChapterFold,
+    onClickCreate,
     chapterList,
     handleDragAndDrop,
     areAllChaptersFolded,

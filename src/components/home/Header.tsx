@@ -16,9 +16,9 @@ export default function Header() {
       <Link href="/">
         <Logo width={150} />
       </Link>
-      <RightMenuButton title="서비스 소개">서비스 소개</RightMenuButton>
+      <RightMenuButton>서비스 소개</RightMenuButton>
       {isLogin && (
-        <RightMenuButton title="로그아웃" onClick={logout}>
+        <RightMenuButton onClick={logout} style={{ marginLeft: "20px" }}>
           로그아웃
         </RightMenuButton>
       )}

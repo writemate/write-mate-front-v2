@@ -1,25 +1,46 @@
 import { colorSystem } from "@/styles/colorSystem";
 import styled from "styled-components";
 import { ChapterDragWrap, IconButton } from "./Chapter.styles";
+import { FlexColumnLeftStart, FlexRowLeftStart } from "@/styles";
+import DeleteIcon from "@/assets/workspace/plot/delete.svg";
+import TextareaAutosize from "react-textarea-autosize";
 
-export const EventDeleteBtn = styled(IconButton)`
-  font-size: 14.88px;
-  float: right;
-  margin-right: 20px;
+export const EventListContainer = styled.div`
+  ${FlexColumnLeftStart};
+  width: 100%;
+  gap: 12px;
+  margin: 20px 0;
+`;
+
+export const EventContainer = styled.div`
+  ${FlexRowLeftStart};
+  padding: 20px 20px 20px 0;
+  width: 100%;
+  margin-bottom: 12px;
+
+  background: ${colorSystem.gray25};
+  border: 1px solid #d7ddea;
+  border-radius: 8px;
 `;
 
 export const EventDragWrap = styled(ChapterDragWrap)`
-  padding-left: 12px;
+  width: 31px;
+  padding: 10px 6px;
 `;
 
-export const CharacterModalBtn = styled.button`
-  width: 24px;
-  height: 24px;
-  border: none;
-  background: transparent;
+export const EventHeader = styled.div`
+  ${FlexRowLeftStart};
+  width: 100%;
+  gap: 4px;
+  position: relative;
+`;
+
+export const EventDeleteBtn = styled(DeleteIcon)`
   cursor: pointer;
-  display: inline-block;
-  margin-right: 4px;
+  margin-left: auto;
+`;
+
+export const CharacterModalBtn = styled(IconButton)`
 `;
 
 export const CharacterImg = styled.div<{ $src: string }>`
@@ -42,18 +63,6 @@ export const EventColumnContainer = styled.div`
   width: 100%;
 `;
 
-export const EventContainer = styled.div`
-  box-sizing: border-box;
-  padding: 20px 0 20px 31px;
-
-  width: 100%;
-  margin-bottom: 12px;
-
-  background: ${colorSystem.gray25};
-  border: 1px solid #d7ddea;
-  border-radius: 8px;
-`;
-
 export const EventTitle = styled.input`
   height: 30px;
   width: 95%;
@@ -65,14 +74,30 @@ export const EventTitle = styled.input`
   display: flex;
   align-items: center;
   border: none;
+  outline: none;
 
-  color: rgba(0, 0, 0, 0.87);
-
-  flex: none;
+  color: ${({ theme }) => theme.color.gray900};
   order: 0;
   align-self: stretch;
   flex-grow: 0;
   background: transparent;
   margin-bottom: 5px;
   margin-top: 16px;
+`;
+
+
+export const EventDescription = styled(TextareaAutosize)`
+  width: 100%;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  color: ${({ theme }) => theme.color.gray900};
+  background: transparent;
+  border: none;
+  outline: none;
+  resize: none;
+  &::placeholder {
+    color: ${({ theme }) => theme.color.gray300};
+  }
 `;

@@ -1,7 +1,6 @@
-import { TPlot } from "./types";
-import axiosInstance from "./axiosInstance";
-import { DOMAIN } from "./domain";
-import { PlotCharacterType } from "./mock/plot";
+import { TPlot } from "../types";
+import axiosInstance from "../axiosInstance";
+import { DOMAIN } from "../domain";
 
 export const getPlotInfo = (plotId: string) => async ()=> {
   const response = await axiosInstance.get<TPlot>(
@@ -30,7 +29,7 @@ export const createChapter = (plotId: string) => async () => {
  * @param chapterId
  * @returns
  */
-export const deleteChapter = ( plotId: string ) => async ( chapterId: string) => {
+export const deleteChapter = ( plotId: string, chapterId: string ) => async ( ) => {
   const response = await axiosInstance.delete<void>(
     DOMAIN.DELETE_CHAPTER(plotId, chapterId)
   );
@@ -44,8 +43,8 @@ export const deleteChapter = ( plotId: string ) => async ( chapterId: string) =>
  * @param chapterId
  * @param chapter_name
  */
-export const updateChapterName = ( plotId: string ) => 
-  async ({ chapterId, chapter_name }: { chapterId: string; chapter_name: string }) => {
+export const updateChapterName = ( plotId: string, chapterId: string ) => 
+  async (chapter_name: string ) => {
   const response = await axiosInstance.patch<void>(
     DOMAIN.UPDATE_CHAPTER_NAME(plotId, chapterId),
     { chapter_name }
@@ -60,8 +59,8 @@ export const updateChapterName = ( plotId: string ) =>
  * @param chapterId
  * @param chapter_description
  */
-export const updateChapterDescription = ( plotId: string ) =>
-  async ({chapterId, chapter_description}: {chapterId: string, chapter_description: string}) => {
+export const updateChapterDescription = ( plotId: string, chapterId: string ) =>
+  async (chapter_description: string) => {
   const response = await axiosInstance.patch<void>(
     DOMAIN.UPDATE_CHAPTER_DESCRIPTION(plotId, chapterId),
     { chapter_description }
@@ -93,8 +92,24 @@ export const updateChapterOrder = ( plotId: string) =>
  * @param chapterId
  * @param is_folded
  */
-export const updateChapterFold = ( plotId: string ) =>
-  async ({ chapterId, is_folded }: { chapterId: string; is_folded: boolean }) => {
+export const updateChapterFoldAll = ( plotId: string ) =>
+  async ( is_folded: boolean ) => {
+  const response = await axiosInstance.patch<void>(
+    DOMAIN.UPDATE_CHAPTER_FOLD_All(plotId),
+    { is_folded }
+  );
+
+  return response.data;
+};
+
+/**
+ * 챕터 접힘 여부 수정하기
+ * @param plotId
+ * @param chapterId
+ * @param is_folded
+ */
+export const updateChapterFoldForLocal = ( plotId: string, chapterId:string ) =>
+  async (is_folded: boolean ) => {
   const response = await axiosInstance.patch<void>(
     DOMAIN.UPDATE_CHAPTER_FOLD(plotId, chapterId),
     { is_folded }
@@ -119,7 +134,7 @@ export const createEvent = (chapterId: string) => async () => {
  * @param peventId
  * @returns
  */
-export const deleteEvent = (chapterId: string) => async (peventId: string) => {
+export const deleteEvent = (chapterId: string, peventId: string) => async () => {
   const response = await axiosInstance.delete<void>(
     DOMAIN.DELETE_EVENT(chapterId, peventId)
   );
@@ -132,8 +147,8 @@ export const deleteEvent = (chapterId: string) => async (peventId: string) => {
  * @param peventId
  * @param event_name
  */
-export const updateEventName = (chapterId: string) =>
-  async ({ peventId, event_name }: { peventId: string; event_name: string }) => {
+export const updateEventName = (chapterId: string, peventId: string) =>
+  async (event_name: string) => {
   const response = await axiosInstance.patch<void>(
     DOMAIN.UPDATE_EVENT_NAME(chapterId, peventId),
     { event_name }
@@ -147,8 +162,8 @@ export const updateEventName = (chapterId: string) =>
  * @param pevntId
  * @param event_description
  */
-export const updateEventDescription = (chapterId: string) =>
-  async ({ peventId, event_description }: { peventId: string; event_description: string }) => {
+export const updateEventDescription = (chapterId: string, peventId: string) =>
+  async (event_description: string) => {
   const response = await axiosInstance.patch<void>(
     DOMAIN.UPDATE_EVENT_DESCRIPTION(chapterId, peventId),
     { event_description }
@@ -176,9 +191,9 @@ export const updateEventOrder = (chapterId: string) =>
 /**
  * 사건에 인물 수동 할당하기
  */
-export const addCharacter = (chapterId: string) =>
-  async ({peventId, characterId}: {peventId: string; characterId: string}) => {
-  const response = await axiosInstance.patch<PlotCharacterType>(
+export const addCharacter = (chapterId: string, peventId: string) =>
+  async (characterId: string) => {
+  const response = await axiosInstance.post<void>(
     DOMAIN.ADD_EVENT_CHARACTER(chapterId, peventId, characterId)
   );
 
@@ -188,8 +203,8 @@ export const addCharacter = (chapterId: string) =>
 /**
  * 사건에 인물 할당 해제하기
  */
-export const deleteCharacter = (chapterId: string) =>
-  async ({peventId, characterId}: {peventId: string; characterId: string}) => {
+export const deleteCharacter = (chapterId: string, peventId: string) =>
+  async (characterId: string) => {
   const response = await axiosInstance.delete<void>(
     DOMAIN.DELETE_EVENT_CHARACTER(chapterId, peventId, characterId)
   );

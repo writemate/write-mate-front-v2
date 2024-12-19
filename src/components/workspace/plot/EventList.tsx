@@ -1,11 +1,9 @@
-import useDragAndDrop from "@/hooks/workspace/plot/useDragAndDrop";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import Event from "./Event";
-import { PlotEventType } from "@/utils/APIs/mock/plot";
 import useEventList from "@/hooks/workspace/plot/useEventList";
 import Add from "@/assets/workspace/plot/add.svg";
-import { AddButton } from "@/styles/workspace/plot/Chapter.styles";
 import { TPlotEvent } from "@/utils/APIs/types";
+import { EventContainer, EventListContainer } from "@/styles/workspace/plot/Event.styles";
 
 interface EventListProps {
   pevent: TPlotEvent[];
@@ -13,51 +11,36 @@ interface EventListProps {
 }
 
 export const EventList = ({ pevent,chapterId }: EventListProps) => {
-  const { mutateCreateE,
-    mutateDeleteE,
-    mutateEventName,
-    mutateEventD,
-    mutateEventO,
-    handleDragAndDrop, eventList } = useEventList(chapterId, pevent);
+  const { onClickCreate, handleDragAndDrop } = useEventList(chapterId);
 
   return (
     <>
       <DragDropContext onDragEnd={handleDragAndDrop}>
         <Droppable droppableId="eventList">
           {(provided) => (
-            <div
-              style={{ width: "100%" }}
+            <EventListContainer
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
-              {eventList.map((event, index) => (
+              {pevent.map((event, index) => (
                 <Draggable key={event.id} draggableId={event.id} index={index}>
                   {(provided) => (
-                    <div
+                    <EventContainer
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                     >
-                      <Event
-                        eventId={event.id}
-                        eventCharacter={event.character_list}
-                        eventName={event.event_name}
-                        eventDescription={event.event_description}
-                        {...{mutateEventName, mutateEventD, mutateDeleteE}}
-                      />
-                    </div>
+                      <Event {...event} chapterId={chapterId} />
+                    </EventContainer>
                   )}
                 </Draggable>
               ))}
               {provided.placeholder}
-            </div>
+            </EventListContainer>
           )}
         </Droppable>
       </DragDropContext>
-
-      <AddButton type="button" onClick={()=>mutateCreateE()}>
-        <Add />
-      </AddButton>
+      <Add onClick={onClickCreate}/>
     </>
   );
 };

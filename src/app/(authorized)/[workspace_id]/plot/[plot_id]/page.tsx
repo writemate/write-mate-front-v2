@@ -4,10 +4,13 @@ import usePlot, { PlotContext } from "@/hooks/workspace/plot/usePlot";
 import { Title } from "@/styles/workspace";
 
 export default function Plot() {
-  const { plot_name, chapterList } = usePlot();
+  const { plot_name, isLoading, chapterList } = usePlot();
   return (
     <PlotContext.Provider value={chapterList}>
-      <Title>{plot_name}</Title>
+      <Title>
+        {isLoading && "불러오는 중"}
+        {!isLoading && plot_name}
+      </Title>
       <ChapterList/>
     </PlotContext.Provider>
   );

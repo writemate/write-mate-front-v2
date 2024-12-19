@@ -5,6 +5,7 @@ import {
   FlexColumnCenter,
   FlexColumnLeftStart,
   FlexRowCenter,
+  FlexRowSpaceBetween,
 } from "@/styles";
 import { GtagForClick } from "@/utils/GtagForClick";
 import Image from "next/image";
@@ -46,6 +47,7 @@ export const LoginButton = styled.button`
 
 export const UserContainer = styled.div`
   ${FlexColumnCenter};
+  width: 100%;
   gap: 1rem;
   margin-top: 2rem;
   position: relative;
@@ -183,12 +185,17 @@ export const FeatureComment = styled.div<{ $position: "left" | "right" }>`
 `;
 
 export const CounterContainer = styled.div`
-  ${FlexRowCenter};
-  gap: 10rem;
+  ${FlexRowSpaceBetween};
+  width: 100%;
+  max-width: 880px;
   margin-top: 2rem;
   > div {
     ${FlexColumnCenter};
     gap: 0.5rem;
+  }
+  @media (max-width: 768px) {
+    ${FlexColumnCenter};
+    gap: 2rem;
   }
 `;
 

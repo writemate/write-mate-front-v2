@@ -1,122 +1,74 @@
-import { useRef, useState } from "react";
-import CharacterModal from "./CharacterModal";
-import DeleteIcon from "@/assets/workspace/plot/delete.svg";
+import SelectCharacterModal from "./SelectCharacterModal";
 import DragDrop from "@/assets/workspace/plot/dragdropE.svg";
 import ChooseCharacter from "@/assets/workspace/plot/choosecharacter.svg";
 import {
   CharacterImg,
-  CharacterModalBtn,
   EventColumnContainer,
-  EventContainer,
   EventDeleteBtn,
+  EventDescription,
   EventDragWrap,
+  EventHeader,
   EventTitle,
 } from "@/styles/workspace/plot/Event.styles";
-import { PlotCharacterType } from "@/utils/APIs/mock/plot";
-import AutoResizeInput from "./AutoResizeInput";
-import UpdateModal from "./UpdateModal";
-import useEventList from "@/hooks/workspace/plot/useEventList";
-
-interface EventProps {
-  eventId: string;
-  eventName: string;
-  eventDescription: string;
-  eventCharacter: PlotCharacterType[];
-  mutateDeleteE: (peventId: string) => void;
-  mutateEventName: ({peventId, event_name}: {peventId: string; event_name: string}) => void;
-  mutateEventD: ({peventId, event_description}: {peventId: string; event_description: string}) => void;
-}
+import { TPlotEvent } from "@/utils/APIs/types";
+import useEvent from "@/hooks/workspace/plot/useEvent";
 
 export default function Event({
-  eventId,
-  eventName,
-  eventDescription,
-  eventCharacter,
-  mutateDeleteE,
-  mutateEventName,
-  mutateEventD
-}: EventProps) {
-  const [modal, setModal] = useState(false);
-  const buttonRef = useRef<HTMLButtonElement>(null);
+  id: eventId,
+  event_name: eventName,
+  event_description: eventDescription,
+  character_list: characterList,
+  chapterId,
+}: TPlotEvent&{chapterId: string}) {
 
-  const characterRef = useRef<HTMLDivElement>(null);
-  const [updateModal, setUpdateModal] = useState<string | null>(null);
-
-  const [title, setTitle] = useState<string>(eventName);
-  const [content, setContent] = useState<string>(eventDescription);
-
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setTitle(value);
-    mutateEventName({ peventId: eventId, event_name: value });
-  };
-
-  // 사건 설명 수정
-  const handleContentChange = (value: string) => {
-    setContent(value);
-    mutateEventD({ peventId: eventId, event_description: eventDescription });
-  };
-
-  // 사건 삭제
-  const deleteEvent = () => {
-    mutateDeleteE(eventId);
-  };
+  const {
+    selectCharacterModal,
+    openSelectCharacterModal,
+    editCharacterModal,
+    selectModalRef,
+    openEditCharacterModal,
+    onEventDeleteClick,
+    onEventNameChange,
+    onEventDescriptionChange,
+  } = useEvent(eventId, chapterId);
 
   return (
-    <div style={{ position: "relative" }}>
+    <>
       <EventDragWrap>
         <DragDrop />
       </EventDragWrap>
-      <EventContainer>
-        <EventColumnContainer>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <div style={{ display: "flex" }}>
-              <CharacterModalBtn
-                type="button"
-                ref={buttonRef}
-                onClick={() => setModal(!modal)}
-              >
-                <ChooseCharacter />
-              </CharacterModalBtn>
-              {eventCharacter.map((character) => (
-                <CharacterImg
-                  ref={characterRef}
-                  key={character.id}
-                  onClick={() => setUpdateModal(character.id)}
-                  $src={character.ch_image}
-                />
-              ))}
-            </div>
-            {updateModal !== null && (
-              <UpdateModal
-                onClose={() => setUpdateModal(null)}
-                characterId={updateModal}
-              />
-            )}
-            <EventDeleteBtn onClick={deleteEvent}>
-              <DeleteIcon />
-            </EventDeleteBtn>
-          </div>
-          <EventTitle
-            value={title}
-            onChange={handleNameChange}
-            placeholder="사건 제목을 적어주세요."
-          />
-          <AutoResizeInput
-            isEvent={true}
-            value={content}
-            onChange={handleContentChange}
-            placeholder="사건 내용을 적어주세요."
-          />
-        </EventColumnContainer>
-      </EventContainer>
-      {modal && (
-        <CharacterModal
-          eventId={eventId}
-          character={eventCharacter}
-          onClose={() => setModal(false)}
+      <EventColumnContainer>
+        <EventHeader>
+          <ChooseCharacter onClick={openSelectCharacterModal}/>
+          {selectCharacterModal && (
+            <SelectCharacterModal
+              chapterId={chapterId}
+              eventId={eventId}
+              selectedCharacterList={characterList}
+              modalRef={selectModalRef}
+            />
+          )}
+          {characterList.map((character) => (
+            <CharacterImg
+              key={character.id}
+              onClick={openEditCharacterModal(character.id)}
+              $src={character.ch_image}
+            />
+          ))}
+          <EventDeleteBtn onClick={onEventDeleteClick} width="24px" height="24px" viewBox="0 0 32 32"/>
+        </EventHeader>
+        <EventTitle
+          defaultValue={eventName}
+          onChange={onEventNameChange}
+          placeholder="사건 제목을 적어주세요."
         />
-      )}
-    </div>
+        <EventDescription
+          defaultValue={eventDescription}
+          onChange={onEventDescriptionChange}
+          placeholder="사건 내용을 적어주세요."
+        />
+      </EventColumnContainer>
+      {/* {editCharacterModal} */}
+    </>
   );
 }

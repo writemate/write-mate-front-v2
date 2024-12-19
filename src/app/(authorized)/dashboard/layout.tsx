@@ -21,6 +21,7 @@ import useOpenAndCloseDeleteConfirmation from "@/hooks/dashboard/useDeleteConfir
 import useMemoModal from "@/hooks/dashboard/useMemoModal";
 import useIdeaBoxMemoCharacter from "@/hooks/dashboard/useIdeaBoxMCharacter";
 import useMemoCharacterModal from "@/hooks/dashboard/useMCharacterModal";
+import { useLogin } from "@/stores/useLogin";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 export default function WorkspaceLayout({
@@ -43,12 +44,14 @@ export default function WorkspaceLayout({
     memoCharacterModal: memoCharacterModalValue,
   };
 
+  const logout = useLogin((state) => state.logout);
+
   return (
     <DashboardContext.Provider value={contextValue}>
       <DashboardContainer>
         <SideTabAndFooterContainer>
           <SideTab />
-          <FooterContainer>
+          <FooterContainer onClick={logout}>
             <Footer /> 로그아웃
           </FooterContainer>
         </SideTabAndFooterContainer>

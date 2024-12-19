@@ -7,7 +7,7 @@ import KeywordCancel from "@/assets/workspace/character/keywordCancel.svg";
 import { CharacterContext } from "@/hooks/workspace/character/character";
 
 export default function Description() {
-    const { data, isLoading, onClickRemoveKeyword } = useContext(CharacterContext);
+    const { data, onClickRemoveKeywordFromCharacter } = useContext(CharacterContext);
     const { keyword } = data ?? {};
     return (
         <Container>
@@ -15,11 +15,11 @@ export default function Description() {
             <KeywordListContainer>
                 {keyword && keyword.map((keyword, index) => (
                 <KeywordContainer key={index}
-                    // $lightColor={keyword.lightColor}
-                    // $darkColor={keyword.darkColor}
+                    $lightColor={keyword.lightColor}
+                    $darkColor={keyword.darkColor}
                 >
-                    <span>{keyword}</span>
-                    <KeywordCancel onClick={onClickRemoveKeyword(keyword)} />
+                    <span>{keyword.word}</span>
+                    <KeywordCancel onClick={onClickRemoveKeywordFromCharacter(keyword.id)} />
                 </KeywordContainer>
                 ))}
                 <AddButton />
