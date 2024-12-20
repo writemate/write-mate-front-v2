@@ -12,6 +12,7 @@ export default function MCharacterBirthAndGender() {
     selectedMCharacter,
     onChangeSelectedMCharacterBirthday,
     onChangeSelectedMCharacterGender,
+    onKeyDownInput,
   } = useContext(DashboardContext).memoCharacterModal;
   if (!selectedMCharacter) {
     return null;
@@ -20,18 +21,19 @@ export default function MCharacterBirthAndGender() {
   return (
     <BirthAndGenderContainer>
       <BirthContainer>
-        <p>생년월일</p>
+        <p>탄생일</p>
         <Input
-          className="memo-modal-birth"
+          className="birth"
           defaultValue={selectedMCharacter.birthday}
           onChange={onChangeSelectedMCharacterBirthday}
+          onKeyDown={onKeyDownInput}
           placeholder="인물의 생년월일을 입력하세요."
         />
       </BirthContainer>
       <GenderContainer>
         <p>성별</p>
         <Input
-          className="memo-modal-gender"
+          className="gender"
           defaultValue={selectedMCharacter.gender}
           onChange={onChangeSelectedMCharacterGender}
           placeholder="인물의 성별을 입력하세요."

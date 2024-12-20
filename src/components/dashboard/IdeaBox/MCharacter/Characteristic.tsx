@@ -24,13 +24,14 @@ export default function Characterisitc() {
 
   return (
     <>
-      <p>설정</p>
+      <p>특징</p>
       <CharacteristicListContainer>
         {characteristicList &&
           characteristicList.map((characteristic, index) => (
             <CharacteristicCard key={index}>
               <CharateristicHeader>
                 <Input
+                  className={`characteristic ${2 * index - 1}`}
                   value={characteristic.title}
                   placeholder="특징을 적어주세요."
                   onChange={onChangeSelectedMCharacterCharacteristicTitle(
@@ -42,6 +43,7 @@ export default function Characterisitc() {
                 />
               </CharateristicHeader>
               <TextArea
+                className={`characteristic ${2 * index}`}
                 value={characteristic.content}
                 placeholder="성격이나, 외향적 특징, 출생의 비밀 등 세부 내용을 적어주세요."
                 onChange={onChangeSelectedMCharacterCharacteristicContent(
