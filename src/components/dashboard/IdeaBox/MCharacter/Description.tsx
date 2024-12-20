@@ -14,8 +14,9 @@ export default function MCharacterDescription() {
 
   return (
     <DescriptionContainer>
-      <p>한줄 설명</p>
+      <p>설명</p>
       <TextArea
+        className="description"
         defaultValue={selectedMCharacter.description}
         onChange={onChangeSelectedMCharacterDescription}
         placeholder="인물의 설명을 입력하세요."

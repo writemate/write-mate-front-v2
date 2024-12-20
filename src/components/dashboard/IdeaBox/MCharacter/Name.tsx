@@ -13,7 +13,7 @@ export default function MCharacterImage() {
     <NameContainer>
       <p>이름</p>
       <Input
-        className="memo-modal-name"
+        className="name"
         defaultValue={selectedMCharacter.ch_name}
         onChange={onChangeSelectedMCharacterName}
         placeholder="인물의 이름을 입력하세요."

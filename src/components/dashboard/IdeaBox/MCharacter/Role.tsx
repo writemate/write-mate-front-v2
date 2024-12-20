@@ -11,8 +11,9 @@ export default function MCharacterRole() {
 
   return (
     <RoleContainer>
-      <p>역할</p>
+      <p>작품 속 역할</p>
       <Input
+        className="role"
         defaultValue={selectedMCharacter.role}
         onChange={onChangeSelectedMCharacterRole}
         placeholder="인물의 역할을 입력하세요."

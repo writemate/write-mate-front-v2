@@ -15,7 +15,7 @@ import {
 import { mCharacterQueryKeys, memoQueryKeys } from "@/utils/APIs/queryKeys";
 import { TMCharacter } from "@/utils/APIs/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 function useUpdate<T, U>({
   updateFn,
@@ -60,10 +60,7 @@ export default function useMCharacterModal() {
     TMCharacter["characteristic"]
   >([]);
 
-  const nameRef = document.getElementsByClassName("memo-modal-name");
-  const descriptionRef = document.getElementsByClassName(
-    "memo-modal-description"
-  );
+  const descriptionRef = document.getElementsByClassName("description");
 
   const { data: mCharacter } = useQuery({
     queryKey: mCharacterQueryKeys.all(selectedMCharacter.id),
@@ -114,22 +111,18 @@ export default function useMCharacterModal() {
     },
   });
 
-  const onClickMCharacterName = (memoCharacter: TMCharacter) => () => {
-    setSelectedMCharacter(memoCharacter);
-    focusInput(nameRef);
-    setIsOpenEditModal(true);
-  };
   const onClickMCharacterDescription = (memoCharacter: TMCharacter) => () => {
     setSelectedMCharacter(memoCharacter);
     focusInput(descriptionRef);
     setIsOpenEditModal(true);
   };
+
   const onClickAddCharacteristic = () => {
     if (selectedMCharacter) {
       createMCharacterCharacteristicMutation({
         id: selectedMCharacter.id,
-        title: " ", // 빈문자열로 바꾸어야 함
-        content: " ", // 빈문자열로 바꾸어야 함
+        title: "", // 빈문자열로 바꾸어야 함 완료
+        content: "", // 빈문자열로 바꾸어야 함 완료
       });
     }
   };
@@ -236,9 +229,26 @@ export default function useMCharacterModal() {
       });
     };
 
-  const onKeyDownName = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const InputClassNameList = [
+    // 요소가 업데이트 될때마다 같이 업데이트 필요함.
+    "name",
+    "role",
+    "birth",
+    "gender",
+    "description",
+    "characteristic",
+  ];
+  const InputRefList = InputClassNameList.map((classname) => {
+    return document.getElementsByClassName(classname);
+  });
+  const onKeyDownInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" || e.key === "ArrowDown") {
-      (descriptionRef[0] as HTMLElement).focus();
+      // todo: focus next input
+      // 모든 input list 를 구하고 다음 input에 포커스
+      InputRefList.map((index, input) => {
+        console.log(index);
+        console.log(input);
+      });
     }
   };
 
@@ -299,7 +309,6 @@ export default function useMCharacterModal() {
     selectedMCharacter,
     characteristicList,
     closeEditModal: closeMemoModal,
-    onClickMCharacterName,
     onClickMCharacterDescription,
     onClickAddCharacteristic,
     onChangeSelectedMCharacterName,
@@ -310,7 +319,7 @@ export default function useMCharacterModal() {
     onChangeSelectedMCharacterCharacteristicTitle,
     onChangeSelectedMCharacterCharacteristicContent,
     onDeleteMCharacterCharacteristic,
-    onKeyDownName,
+    onKeyDownInput,
     onDeleteMCharacter,
     rollbackMCharacterAndCloseModal,
   };
