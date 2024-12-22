@@ -1,36 +1,14 @@
-import { createContext, useEffect, useState } from "react";
-import { workspaceCategory } from "@/utils/APIs/types";
-import { usePathname, useRouter } from "next/navigation";
+import { createContext, useState } from "react";
 import useIdeaBoxMemo from "@/hooks/dashboard/useIdeaBoxMemo";
 import useOpenAndCloseDeleteConfirmation from "../useDeleteConfirmModal";
 import useMemoModal from "../useMemoModal";
 import useIdeaBoxMemoCharacter from "../useIdeaBoxMCharacter";
 import useMemoCharacterModal from "../useMCharacterModal";
 
-export function useWorkCategory() {
-  const router = useRouter();
-  const pathname = usePathname();
+export function useWorkCategory2() {
   const [isKebabMenuOpenWork, setIsKebabMenuOpenWork] = useState(""); // 어떤 케밥이 열려있는지 확인용
   const [isEditing, setIsEditing] = useState(""); // 어떤 작품이 수정중인지 확인용
 
-  const [workCategory, setWorkCategory] = useState<
-    // 작품 카테고리
-    keyof typeof workspaceCategory
-  >(() => {
-    if (typeof window === "undefined") return "ongoing";
-    if (!localStorage.getItem("workCategory")) return "ongoing";
-    return localStorage.getItem("workCategory") as keyof typeof workspaceCategory;
-  });
-
-  const onClickMoveToOngoing = () => {
-    router.push("/dashboard"); // 내부 라우터 경로로 이동
-
-    setWorkCategory("ongoing");
-  };
-
-  function handleWorkCategoryChange(category: keyof typeof workspaceCategory) {
-    setWorkCategory(category);
-  }
   function handleKebabMenuOpenWork(work_id: string) {
     setIsKebabMenuOpenWork((prev) => (prev === work_id ? "" : work_id));
   }
@@ -38,36 +16,17 @@ export function useWorkCategory() {
     setIsEditing((prev) => (prev === work_id ? "" : work_id));
   }
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem("workCategory", workCategory);
-    }
-  }, [workCategory]);
-  useEffect(() => {
-    const handleWorkCategory = () => {
-      if (pathname === "/dashboard" && workCategory === workspaceCategory.trash) {
-        setWorkCategory("ongoing");
-      } else if (pathname === "/dashboard/trash") {
-        setWorkCategory("trash");
-      }
-    };
-    handleWorkCategory();
-  }, [pathname, workCategory]);
-
   return {
-    workCategory,
     isEditing,
     isKebabMenuOpenWork,
-    handleWorkCategoryChange,
     handleKebabMenuOpenWork,
     handleEditing,
-    onClickMoveToOngoing,
   };
 }
 
 export const DashboardContext = createContext(
   {} as {
-    workstudioAndTrash: ReturnType<typeof useWorkCategory>;
+    workstudioAndTrash: ReturnType<typeof useWorkCategory2>;
     ideaBoxMemo: ReturnType<typeof useIdeaBoxMemo>;
     ideaBoxMCharacter: ReturnType<typeof useIdeaBoxMemoCharacter>;
     removeConfirmationModal: ReturnType<typeof useOpenAndCloseDeleteConfirmation>;

@@ -8,7 +8,10 @@ import {
 import SideTab from "@/components/dashboard/SideTab";
 import Header from "@/components/dashboard/Header";
 import Footer from "@/assets/dashboard/footer.svg";
-import { DashboardContext, useWorkCategory } from "@/hooks/dashboard/work/dashboard";
+import {
+  DashboardContext,
+  useWorkCategory2,
+} from "@/hooks/dashboard/work/dashboard";
 import DeleteModal from "@/components/DeleteModal";
 import MemoCharacterEditModal from "@/components/dashboard/MCharacter/MCharacterModal";
 import MemoEditModal from "@/components/dashboard/Memo/MemoModal";
@@ -19,9 +22,17 @@ import useIdeaBoxMemoCharacter from "@/hooks/dashboard/useIdeaBoxMCharacter";
 import useMemoCharacterModal from "@/hooks/dashboard/useMCharacterModal";
 import { useLogin } from "@/stores/useLogin";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import {
+  useWorkCategory,
+  WorkCategoryContext,
+} from "@/hooks/dashboard/work/workCategory";
 
-export default function WorkspaceLayout({ children }: { children: React.ReactNode }) {
-  const dashboardValue = useWorkCategory();
+export default function WorkspaceLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const dashboardValue = useWorkCategory2();
   const ideaBoxMemoValue = useIdeaBoxMemo();
   const ideaBoxMemoCharacterValue = useIdeaBoxMemoCharacter();
   const memoModalValue = useMemoModal();
@@ -38,19 +49,23 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
 
   const logout = useLogin((state) => state.logout);
 
+  const workCategoryValue = useWorkCategory();
+
   return (
     <DashboardContext.Provider value={contextValue}>
       <DashboardContainer>
-        <SideTabAndFooterContainer>
-          <SideTab />
-          <FooterContainer onClick={logout}>
-            <Footer /> 로그아웃
-          </FooterContainer>
-        </SideTabAndFooterContainer>
-        <HeaderAndMainContainer>
-          <Header />
-          {children}
-        </HeaderAndMainContainer>
+        <WorkCategoryContext.Provider value={workCategoryValue}>
+          <SideTabAndFooterContainer>
+            <SideTab />
+            <FooterContainer onClick={logout}>
+              <Footer /> 로그아웃
+            </FooterContainer>
+          </SideTabAndFooterContainer>
+          <HeaderAndMainContainer>
+            <Header />
+            {children}
+          </HeaderAndMainContainer>
+        </WorkCategoryContext.Provider>
       </DashboardContainer>
       <Modal />
       <DevTool />

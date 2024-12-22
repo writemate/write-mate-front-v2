@@ -5,7 +5,7 @@ import { addWorkStudio, getWorkStudio } from "@/utils/APIs/dashboard";
 import { notifySuccess } from "@/utils/showToast";
 import { createContext } from "react";
 
-export function useWorkList({ workCategory }: { workCategory: keyof typeof workspaceCategory }) {
+export function useWorkList(workCategory: keyof typeof workspaceCategory) {
   const queryClient = useQueryClient();
 
   const {
@@ -17,7 +17,7 @@ export function useWorkList({ workCategory }: { workCategory: keyof typeof works
     queryFn: getWorkStudio(workCategory),
   });
 
-  const { mutate: onAddWorkClick } = useMutation({
+  const { mutate: addWorkMutate } = useMutation({
     mutationFn: addWorkStudio,
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -27,6 +27,10 @@ export function useWorkList({ workCategory }: { workCategory: keyof typeof works
     },
   });
 
+  const onAddWorkClick = () => {
+    addWorkMutate();
+  };
+
   return {
     workList,
     error,
@@ -35,4 +39,6 @@ export function useWorkList({ workCategory }: { workCategory: keyof typeof works
   };
 }
 
-export const WorkListContext = createContext({} as ReturnType<typeof useWorkList>);
+export const WorkListContext = createContext(
+  {} as ReturnType<typeof useWorkList>
+);
