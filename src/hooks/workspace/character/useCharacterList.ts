@@ -4,6 +4,7 @@ import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { workspaceQueryKeys } from "@/utils/APIs/queryKeys";
 import { getKeywordList, getCharacterList, createCharacter, createKeyword, setMainCharacter, unsetMainCharacter } from '@/utils/APIs/workspace/character';
 import { useParams } from 'next/navigation';
+import useMiniModal from './useMiniModal';
 
 //키워드 입력창(position:absolute)이 부모요소를 넘어가지 않도록 위치를 조정
 const getLeftPositionOfMiniModal = (keywordListRef: RefObject<HTMLDivElement>, addButtonRef: RefObject<HTMLDivElement>) => {
@@ -15,8 +16,6 @@ const getLeftPositionOfMiniModal = (keywordListRef: RefObject<HTMLDivElement>, a
 }
 
 export const useCharacterList = () => {
-  const keywordListRef = useRef<HTMLDivElement>(null);
-  const addButtonRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
   const { workspace_id } = useParams<{ workspace_id: string }>();
   const { data: keywordList, isLoading: isKeywordsLoading } = useQuery({
@@ -99,27 +98,12 @@ export const useCharacterList = () => {
 
   const realCharacterList = selectedKeywords.length === 0 ? characterList : selectedCharacter;
 
-  const [miniModalOpen, setMiniModalOpen] = useState(false);
-  const [miniKeywordInput, setMiniKeywordInput] = useState('');
-
-  const openMiniModal = () => {
-    setMiniModalOpen(true);
-  }
-
-  const onBlurredMiniModal = () => {
-    setMiniModalOpen(false);
-    setMiniKeywordInput('');
-  }
-
-  const onChangeMiniKeywordInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMiniKeywordInput(e.target.value);
-  }
+  const { keywordListRef, addButtonRef, miniModalOpen, openMiniModal, miniKeywordInput, onBlurredMiniModal, onChangeMiniKeywordInput, miniModalLeftPosition } = useMiniModal();
 
   const addKeywordWithRandomColor = () => {
     if(miniKeywordInput === '') return;
     addKeyword({ word: miniKeywordInput});
-    setMiniKeywordInput('');
-    setMiniModalOpen(false);
+    onBlurredMiniModal();
   }
 
   const onEnterPressAtMiniModal = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -131,8 +115,6 @@ export const useCharacterList = () => {
   const onClickAddKeywordAtMiniModal = () => {
     addKeywordWithRandomColor();
   }
-
-  const miniModalLeftPosition = getLeftPositionOfMiniModal(keywordListRef, addButtonRef);
 
   return {
     workspace_id,
