@@ -8,14 +8,10 @@ import {
 import SideTab from "@/components/dashboard/SideTab";
 import Header from "@/components/dashboard/Header";
 import Footer from "@/assets/dashboard/footer.svg";
-import {
-  DashboardContext,
-  useWorkstudioAndTrash,
-} from "@/hooks/dashboard/dashboard";
+import { DashboardContext, useWorkCategory } from "@/hooks/dashboard/work/dashboard";
 import DeleteModal from "@/components/DeleteModal";
-import "react-toastify/dist/ReactToastify.css";
-import MemoCharacterEditModal from "@/components/dashboard/IdeaBox/MCharacter/MCharacterModal";
-import MemoEditModal from "@/components/dashboard/IdeaBox/Memo/MemoModal";
+import MemoCharacterEditModal from "@/components/dashboard/MCharacter/MCharacterModal";
+import MemoEditModal from "@/components/dashboard/Memo/MemoModal";
 import useIdeaBoxMemo from "@/hooks/dashboard/useIdeaBoxMemo";
 import useOpenAndCloseDeleteConfirmation from "@/hooks/dashboard/useDeleteConfirmModal";
 import useMemoModal from "@/hooks/dashboard/useMemoModal";
@@ -24,12 +20,8 @@ import useMemoCharacterModal from "@/hooks/dashboard/useMCharacterModal";
 import { useLogin } from "@/stores/useLogin";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
-export default function WorkspaceLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const dashboardValue = useWorkstudioAndTrash();
+export default function WorkspaceLayout({ children }: { children: React.ReactNode }) {
+  const dashboardValue = useWorkCategory();
   const ideaBoxMemoValue = useIdeaBoxMemo();
   const ideaBoxMemoCharacterValue = useIdeaBoxMemoCharacter();
   const memoModalValue = useMemoModal();

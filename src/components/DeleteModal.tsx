@@ -1,11 +1,6 @@
 "use client";
-import { DashboardContext } from "@/hooks/dashboard/dashboard";
-import {
-  ButtonContainer,
-  DangerIcon,
-  ModalButton,
-  ModalContainer,
-} from "@/styles/DeleteModal";
+import { DashboardContext } from "@/hooks/dashboard/work/dashboard";
+import { ButtonContainer, DangerIcon, ModalButton, ModalContainer } from "@/styles/DeleteModal";
 import { useContext } from "react";
 import useWork from "@/hooks/dashboard/useWork";
 import Modal from "@/components/Modal";
@@ -26,17 +21,11 @@ export default function DeleteModal() {
       {isOpenDeleteModal && (
         <Modal closeModal={closeConfirmModal} maxWidth="450px">
           <>
-            {selectedWorkForDelete != "" && !isPermanentDelete && (
-              <ConfirmMoveToTrash />
-            )}
-            {selectedWorkForDelete != "" && isPermanentDelete && (
-              <ConfirmDeleteWorkInTrashModal />
-            )}
+            {selectedWorkForDelete != "" && !isPermanentDelete && <ConfirmMoveToTrash />}
+            {selectedWorkForDelete != "" && isPermanentDelete && <ConfirmDeleteWorkInTrashModal />}
             {isDeleteMemo && <ConfirmDeleteMemoModal />}
             {isDeleteMemoCharacter && <ConfirmDeleteMemoCharacterModal />}
-            {isDeleteMCharacterCharacteristic && (
-              <ConfirmDeleteMCharacterCharacteristicModal />
-            )}
+            {isDeleteMCharacterCharacteristic && <ConfirmDeleteMCharacterCharacteristicModal />}
           </>
         </Modal>
       )}
@@ -45,8 +34,7 @@ export default function DeleteModal() {
 }
 
 function ConfirmMoveToTrash() {
-  const { selectedWorkForDelete, closeConfirmModal } =
-    useContext(DashboardContext).removeConfirmationModal;
+  const { selectedWorkForDelete, closeConfirmModal } = useContext(DashboardContext).removeConfirmationModal;
   const { onChangeCategory } = useWork(selectedWorkForDelete);
 
   const onClickConfrimMove = () => {
@@ -78,10 +66,8 @@ function ConfirmMoveToTrash() {
 }
 
 function ConfirmDeleteWorkInTrashModal() {
-  const { closeConfirmModal } =
-    useContext(DashboardContext).removeConfirmationModal;
-  const { selectedWorkForDelete } =
-    useContext(DashboardContext).removeConfirmationModal;
+  const { closeConfirmModal } = useContext(DashboardContext).removeConfirmationModal;
+  const { selectedWorkForDelete } = useContext(DashboardContext).removeConfirmationModal;
   const { onDeleteWork } = useWork(selectedWorkForDelete);
 
   const onClickConfirmDelete = () => {
@@ -113,10 +99,8 @@ function ConfirmDeleteWorkInTrashModal() {
 }
 
 function ConfirmDeleteMemoModal() {
-  const { closeConfirmModal } =
-    useContext(DashboardContext).removeConfirmationModal;
-  const { onDeleteMemo, closeMemoModal } =
-    useContext(DashboardContext).memoModal;
+  const { closeConfirmModal } = useContext(DashboardContext).removeConfirmationModal;
+  const { onDeleteMemo, closeMemoModal } = useContext(DashboardContext).memoModal;
 
   const onClickConfirmDelete = () => {
     onDeleteMemo();
@@ -148,10 +132,8 @@ function ConfirmDeleteMemoModal() {
 }
 
 function ConfirmDeleteMemoCharacterModal() {
-  const { closeConfirmModal } =
-    useContext(DashboardContext).removeConfirmationModal;
-  const { onDeleteMCharacter, closeEditModal } =
-    useContext(DashboardContext).memoCharacterModal;
+  const { closeConfirmModal } = useContext(DashboardContext).removeConfirmationModal;
+  const { onDeleteMCharacter, closeEditModal } = useContext(DashboardContext).memoCharacterModal;
 
   const onClickConfirmDelete = () => {
     onDeleteMCharacter();
@@ -183,10 +165,8 @@ function ConfirmDeleteMemoCharacterModal() {
 }
 
 function ConfirmDeleteMCharacterCharacteristicModal() {
-  const { closeConfirmModal, selectedCharacteristicIdx } =
-    useContext(DashboardContext).removeConfirmationModal;
-  const { onDeleteMCharacterCharacteristic } =
-    useContext(DashboardContext).memoCharacterModal;
+  const { closeConfirmModal, selectedCharacteristicIdx } = useContext(DashboardContext).removeConfirmationModal;
+  const { onDeleteMCharacterCharacteristic } = useContext(DashboardContext).memoCharacterModal;
 
   const onClickConfirmDelete = () => {
     onDeleteMCharacterCharacteristic(selectedCharacteristicIdx);

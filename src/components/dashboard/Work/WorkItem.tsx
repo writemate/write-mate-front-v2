@@ -10,11 +10,11 @@ import {
 import { useContext, useRef } from "react";
 import Kebab from "./KebabMenu";
 import useWork from "@/hooks/dashboard/useWork";
-import { DashboardContext } from "@/hooks/dashboard/dashboard";
+import { WorkListContext } from "@/hooks/dashboard/work/useWorkList";
 
 export default function WorkItem({ workId }: { workId: string }) {
-  const { data } = useContext(DashboardContext).workstudioAndTrash;
-  const work = data?.find((work) => work.id === workId);
+  const { workList } = useContext(WorkListContext);
+  const work = workList?.find((work) => work.id === workId);
   const { onChangeTitle, onBlurTitle, onKeyDownTitle } = useWork(workId);
   const inputRef = useRef<HTMLInputElement>(null);
 

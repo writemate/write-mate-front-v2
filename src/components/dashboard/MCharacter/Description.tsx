@@ -1,13 +1,9 @@
-import { DashboardContext } from "@/hooks/dashboard/dashboard";
-import {
-  DescriptionContainer,
-  TextArea,
-} from "@/styles/dashboard/IdeaBox/Modal";
+import { DashboardContext } from "@/hooks/dashboard/work/dashboard";
+import { DescriptionContainer, TextArea } from "@/styles/dashboard/IdeaBox/Modal";
 import { useContext } from "react";
 
 export default function MCharacterDescription() {
-  const { selectedMCharacter, onChangeSelectedMCharacterDescription } =
-    useContext(DashboardContext).memoCharacterModal;
+  const { selectedMCharacter, onChangeSelectedMCharacterDescription } = useContext(DashboardContext).memoCharacterModal;
   if (!selectedMCharacter) {
     return null;
   }

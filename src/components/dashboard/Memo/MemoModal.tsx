@@ -2,18 +2,12 @@
 import { useContext } from "react";
 import React from "react";
 import Modal from "@/components/Modal";
-import {
-  TextArea,
-  Input,
-  ModalContentAndFooterContainer,
-  ModalContentContainer,
-} from "@/styles/dashboard/IdeaBox/Modal";
-import { DashboardContext } from "@/hooks/dashboard/dashboard";
-import { ModalFooter } from "@/components/dashboard/IdeaBox/Memo/ModalFooter";
+import { TextArea, Input, ModalContentAndFooterContainer, ModalContentContainer } from "@/styles/dashboard/IdeaBox/Modal";
+import { DashboardContext } from "@/hooks/dashboard/work/dashboard";
+import { ModalFooter } from "@/components/dashboard/Memo/ModalFooter";
 
 export default function MemoModal() {
-  const { isOpenEditModal, closeMemoModal } =
-    useContext(DashboardContext).memoModal;
+  const { isOpenEditModal, closeMemoModal } = useContext(DashboardContext).memoModal;
   return (
     <>
       {isOpenEditModal && (
@@ -26,12 +20,7 @@ export default function MemoModal() {
 }
 
 function Memo() {
-  const {
-    selectedMemo,
-    onChangeSelectedMemoName,
-    onChangeSelectedMemoDescription,
-    onKeyDownTitle,
-  } = useContext(DashboardContext).memoModal;
+  const { selectedMemo, onChangeSelectedMemoName, onChangeSelectedMemoDescription, onKeyDownTitle } = useContext(DashboardContext).memoModal;
 
   return (
     <>
