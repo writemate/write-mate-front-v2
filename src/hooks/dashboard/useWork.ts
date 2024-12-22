@@ -1,27 +1,17 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { dashboardQueryKeys } from "@/utils/APIs/queryKeys";
-import {
-  deleteWork,
-  updateWorkCategory,
-  updateWorkCover,
-  updateWorkTitle,
-} from "@/utils/APIs/dashboard";
+import { deleteWork, updateWorkCategory, updateWorkCover, updateWorkTitle } from "@/utils/APIs/dashboard";
 import { useContext, useEffect, useRef, useState } from "react";
-import { DashboardContext } from "./dashboard";
+import { DashboardContext } from "./work/dashboard";
 import { TWork, workspaceCategory } from "@/utils/APIs/types";
 import { notifySuccess, notifyError } from "@/utils/showToast";
 
 export default function useWork(workId: string) {
-  const { handleEditing, data, workCategory, handleKebabMenuOpenWork } =
-    useContext(DashboardContext).workstudioAndTrash;
+  const { handleEditing, data, workCategory, handleKebabMenuOpenWork } = useContext(DashboardContext).workstudioAndTrash;
 
   const queryClient = useQueryClient();
-  const [work, setWork] = useState<TWork | undefined>(() =>
-    data?.find((work) => work.id === workId)
-  );
-  const [toBeCategory, setToBeCategory] = useState<
-    keyof typeof workspaceCategory
-  >(workspaceCategory.trash); // 이거 deleteModal에서 동작이 이상해서 trash로 설정해놓음
+  const [work, setWork] = useState<TWork | undefined>(() => data?.find((work) => work.id === workId));
+  const [toBeCategory, setToBeCategory] = useState<keyof typeof workspaceCategory>(workspaceCategory.trash); // 이거 deleteModal에서 동작이 이상해서 trash로 설정해놓음
 
   let file: File | null = null;
   const menuRef = useRef<HTMLDivElement | null>(null);
@@ -114,62 +104,45 @@ export default function useWork(workId: string) {
     mutateCategory();
   };
 
-  const onClickChangeTitle =
-    (inputRef: React.RefObject<HTMLInputElement>) =>
-    (event: React.MouseEvent<HTMLButtonElement>) => {
-      event.preventDefault();
-      if (work) {
-        handleEditing(work.id);
-        inputRef.current?.focus();
-      }
-    };
+  const onClickChangeTitle = (inputRef: React.RefObject<HTMLInputElement>) => (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    if (work) {
+      handleEditing(work.id);
+      inputRef.current?.focus();
+    }
+  };
   const onClickChangeCover = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     event.stopPropagation();
     ref.current?.click();
   };
-  const onClickChangeCategory =
-    (category: keyof typeof workspaceCategory) =>
-    (event: React.MouseEvent<HTMLButtonElement>) => {
-      event.preventDefault();
-      onChangeCategory(category);
-    };
+  const onClickChangeCategory = (category: keyof typeof workspaceCategory) => (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    onChangeCategory(category);
+  };
 
-  const onClickChangeCoverInput = (
-    event: React.MouseEvent<HTMLInputElement>
-  ) => {
+  const onClickChangeCoverInput = (event: React.MouseEvent<HTMLInputElement>) => {
     event.stopPropagation();
   };
   const onChangeCoverInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChangeCover(event);
   };
 
-  const handleClickOutside =
-    (
-      menuRef: React.RefObject<HTMLElement>,
-      excludeButtonRef: React.RefObject<HTMLElement>
-    ) =>
-    (event: MouseEvent) => {
-      if (
-        menuRef.current &&
-        !menuRef.current.contains(event.target as Node) &&
-        excludeButtonRef.current &&
-        !excludeButtonRef.current.contains(event.target as Node)
-      ) {
-        handleKebabMenuOpenWork("");
-      }
-    };
+  const handleClickOutside = (menuRef: React.RefObject<HTMLElement>, excludeButtonRef: React.RefObject<HTMLElement>) => (event: MouseEvent) => {
+    if (
+      menuRef.current &&
+      !menuRef.current.contains(event.target as Node) &&
+      excludeButtonRef.current &&
+      !excludeButtonRef.current.contains(event.target as Node)
+    ) {
+      handleKebabMenuOpenWork("");
+    }
+  };
 
   useEffect(() => {
-    document.addEventListener(
-      "mousedown",
-      handleClickOutside(menuRef, excludeButtonRef)
-    );
+    document.addEventListener("mousedown", handleClickOutside(menuRef, excludeButtonRef));
     return () => {
-      document.removeEventListener(
-        "mousedown",
-        handleClickOutside(menuRef, excludeButtonRef)
-      );
+      document.removeEventListener("mousedown", handleClickOutside(menuRef, excludeButtonRef));
     };
   }, []);
   return {

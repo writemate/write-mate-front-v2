@@ -1,6 +1,6 @@
-'use client';
-import { useState } from 'react';
-import { usePathname } from 'next/navigation';
+"use client";
+import { useState } from "react";
+import { usePathname } from "next/navigation";
 
 enum SidebarType {
   plot,
@@ -8,14 +8,13 @@ enum SidebarType {
 }
 
 export const useWorkspaceLayout = () => {
-  const [sidebarType, setSidebarType] = useState<SidebarType| null>(null);
+  const [sidebarType, setSidebarType] = useState<SidebarType | null>(null);
   const [openIdeaBox, setOpenIdeaBox] = useState(false);
   const pathname = usePathname();
   const toggleIdeaBox = () => setOpenIdeaBox(!openIdeaBox);
 
-  const toggle = (type: SidebarType) => () =>{
-    if (sidebarType === type)
-      return setSidebarType(null);
+  const toggle = (type: SidebarType) => () => {
+    if (sidebarType === type) return setSidebarType(null);
     setSidebarType(type);
   };
 
@@ -25,16 +24,15 @@ export const useWorkspaceLayout = () => {
   const isPlotOpen = sidebarType === SidebarType.plot;
   const isScriptOpen = sidebarType === SidebarType.script;
 
-  const pageOn = (page: string) => pathname.includes("/"+page);
+  const pageOn = (page: string) => pathname.includes("/" + page);
 
   // 사이드바가 열려있다면, 해당 항목 아이콘 활성화
   // 사이드바가 닫혀있다면, 현재 페이지에 해당하는 아이콘 활성화
   const getActive = (page: string, active: boolean) => {
-    if (sidebarType === null)
-      return pageOn(page);
+    if (sidebarType === null) return pageOn(page);
     return active;
-  }
-  
+  };
+
   const isInfoActive = getActive("info", false);
   const isPlotActive = getActive("plot", isPlotOpen);
   const isScriptActive = getActive("script", isScriptOpen);

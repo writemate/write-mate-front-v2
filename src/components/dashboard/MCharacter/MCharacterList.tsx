@@ -1,14 +1,13 @@
 "use Client";
-import { DashboardContext } from "@/hooks/dashboard/dashboard";
+import { DashboardContext } from "@/hooks/dashboard/work/dashboard";
 import { LoadingMessage } from "@/styles/dashboard/Loading";
 import { useContext } from "react";
-import { AddMCharacterButton } from "@/components/dashboard/IdeaBox/AddButton";
+import { AddMCharacterButton } from "@/components/dashboard/AddButton";
 import { CharacterListContainer } from "@/styles/dashboard/IdeaBox/MCharacter/MCharacterList";
 import { MemoItem } from "./MCharacterItem";
 
 export default function CharacterList() {
-  const { memoCharacterList, error, isLoading } =
-    useContext(DashboardContext).ideaBoxMCharacter;
+  const { memoCharacterList, error, isLoading } = useContext(DashboardContext).ideaBoxMCharacter;
 
   return (
     <CharacterListContainer>
@@ -26,11 +25,7 @@ export default function CharacterList() {
 }
 
 function Error() {
-  return (
-    <LoadingMessage>
-      에러가 발생했습니다. 새로고침을 하시거나, 채팅 버튼을 이용해 문의해주세요.
-    </LoadingMessage>
-  );
+  return <LoadingMessage>에러가 발생했습니다. 새로고침을 하시거나, 채팅 버튼을 이용해 문의해주세요.</LoadingMessage>;
 }
 
 function Loading() {

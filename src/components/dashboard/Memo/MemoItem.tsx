@@ -1,19 +1,11 @@
 "use client";
-import { DashboardContext } from "@/hooks/dashboard/dashboard";
-import {
-  MemoCard,
-  MemoContent,
-  MemoHeader,
-  MemoTitle,
-  MemoUpdatedDate,
-} from "@/styles/dashboard/IdeaBox/Memo/MemoList";
+import { DashboardContext } from "@/hooks/dashboard/work/dashboard";
+import { MemoCard, MemoContent, MemoHeader, MemoTitle, MemoUpdatedDate } from "@/styles/dashboard/IdeaBox/Memo/MemoList";
 import { useContext } from "react";
 
 export default function MemoItem({ memoId }: { memoId: string }) {
-  const { memoList, error, isLoading } =
-    useContext(DashboardContext).ideaBoxMemo;
-  const { selectedMemo, onClickMemoTitle, onClickMemoContent } =
-    useContext(DashboardContext).memoModal;
+  const { memoList, error, isLoading } = useContext(DashboardContext).ideaBoxMemo;
+  const { selectedMemo, onClickMemoTitle, onClickMemoContent } = useContext(DashboardContext).memoModal;
 
   const memo = memoList.find((memo) => memo.id === memoId);
 
@@ -39,20 +31,9 @@ export default function MemoItem({ memoId }: { memoId: string }) {
       {memo && (
         <MemoCard $isSelected={memo.id === selectedMemo?.id}>
           <MemoHeader>
-            <MemoTitle
-              value={getTempName()}
-              placeholder="메모 이름을 입력하세요"
-              readOnly={true}
-              onClick={onClickMemoTitle(memo)}
-            />
+            <MemoTitle value={getTempName()} placeholder="메모 이름을 입력하세요" readOnly={true} onClick={onClickMemoTitle(memo)} />
           </MemoHeader>
-          <MemoContent
-            value={memo.memo_description}
-            placeholder="메모 내용을 입력하세요"
-            maxRows={6}
-            readOnly={true}
-            onClick={onClickMemoContent(memo)}
-          />
+          <MemoContent value={memo.memo_description} placeholder="메모 내용을 입력하세요" maxRows={6} readOnly={true} onClick={onClickMemoContent(memo)} />
           <MemoUpdatedDate>
             {new Date(memo.updatedAt).toLocaleString("ko-KR", {
               year: "numeric",
