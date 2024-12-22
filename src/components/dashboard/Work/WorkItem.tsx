@@ -10,7 +10,7 @@ import {
 import { useContext, useRef } from "react";
 import Kebab from "./KebabMenu";
 import useWork from "@/hooks/dashboard/useWork";
-import { WorkListContext } from "@/hooks/dashboard/work/useWorkList";
+import { WorkListContext } from "@/hooks/dashboard/work/workList";
 
 export default function WorkItem({ workId }: { workId: string }) {
   const { workList } = useContext(WorkListContext);
