@@ -4,7 +4,8 @@ import { ContentsContainer, KeywordTitle, SubTitle, OpenManagement,
   KeywordListContainer, KeywordContainer, KeywordListContainerForCharacterCard,
   CharacterListContainer, CharacterCard, CharacterCardTitle, CharacterImage,
   CharacterName, CharacterRole, CharacterDescription, CreateCharacterButton,
-  MiniModal
+  MiniModal,
+  InputWithButton
  } from "@/styles/workspace/Character.style";
 import { Input } from "@/styles";
 import KeywordCancel from "@/assets/workspace/character/keywordCancel.svg";
@@ -33,8 +34,8 @@ export default function CharacterList() {
         {isKeywordsLoading && <div>키워드 로딩중...</div>}
         {keywordList && keywordList.map((keyword, index) => (
           <KeywordContainer key={index} onClick={selectKeyword(keyword.id)}
-            $lightColor={isSelectedKeyword(keyword.id) ? keyword.lightColor : undefined}
-            $darkColor={isSelectedKeyword(keyword.id) ? keyword.darkColor : undefined}
+            $lightColor={isSelectedKeyword(keyword.id) ? keyword.light_color : undefined}
+            $darkColor={isSelectedKeyword(keyword.id) ? keyword.dark_color : undefined}
           >
             <span>{keyword.word}</span>
             {isSelectedKeyword(keyword.id) && <KeywordCancel onClick={(e: React.MouseEvent) => {
@@ -47,10 +48,12 @@ export default function CharacterList() {
           <AddButton onClick={openMiniModal} />
           {miniModalOpen && (
           <MiniModal tabIndex={0} onBlur={onBlurredMiniModal} $left={miniModalLeftPosition}>
-            <Input value={miniKeywordInput} onChange={onChangeMiniKeywordInput}
-              onKeyDown={onEnterPressAtMiniModal} autoFocus placeholder="키워드 입력하기"
-            />
-            <button onMouseDown={onClickAddKeywordAtMiniModal}>추가</button>
+            <InputWithButton>
+              <Input value={miniKeywordInput} onChange={onChangeMiniKeywordInput}
+                onKeyDown={onEnterPressAtMiniModal} autoFocus placeholder="키워드 입력하기"
+              />
+              <button onMouseDown={onClickAddKeywordAtMiniModal}>추가</button>
+            </InputWithButton>
           </MiniModal>
           )}
         </div>
@@ -74,8 +77,8 @@ export default function CharacterList() {
                 const isSelected = isSelectedKeyword(keyword.id);
                 return (
                   <KeywordContainer key={index}
-                    $lightColor={isSelected ? keyword.lightColor : undefined}
-                    $darkColor={isSelected ? keyword.darkColor : undefined}
+                    $lightColor={isSelected ? keyword.light_color : undefined}
+                    $darkColor={isSelected ? keyword.dark_color : undefined}
                   >
                     <span>{keyword.word}</span>
                   </KeywordContainer>

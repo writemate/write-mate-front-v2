@@ -197,7 +197,7 @@ export const CreateRelationButton = styled(CreateCharacterButton)`
 `;
 
 export const MiniModal = styled.div<{ $left: number }>`
-  ${FlexRowCenter};
+  ${FlexColumnLeftStart};
   position: absolute;
   top: 20px;
   left: ${({ $left }) => $left}px;
@@ -207,6 +207,12 @@ export const MiniModal = styled.div<{ $left: number }>`
   z-index: 100;
   padding: 9px;
   box-shadow: 0px 0px 12px #00000033;
+  gap: 8px;
+`;
+
+export const InputWithButton = styled.div`
+  ${FlexRowCenter};
+  width: 100%;
   & > input {
     padding-right: 43px;
     box-shadow: none;

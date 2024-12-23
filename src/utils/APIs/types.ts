@@ -80,8 +80,8 @@ export type TWorkInfo = {
 export type TKeyword = {
   id: string;
   word: string;
-  darkColor: string;
-  lightColor: string;
+  dark_color: string;
+  light_color: string;
 };
 
 /**
