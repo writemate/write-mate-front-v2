@@ -2,9 +2,10 @@
 import { useState } from 'react';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { workspaceQueryKeys } from "@/utils/APIs/queryKeys";
-import { getKeywordList, getCharacterList, createCharacter, createKeyword, setMainCharacter, unsetMainCharacter } from '@/utils/APIs/workspace/character';
+import { getKeywordList, getCharacterList, createCharacter, createKeyword, setMainCharacter, unsetMainCharacter, deleteKeyword } from '@/utils/APIs/workspace/character';
 import { useParams } from 'next/navigation';
 import useMiniModal from './useMiniModal';
+import { useOnClickUpdate } from '@/hooks/common/useOnClickUpdate';
 
 export const useCharacterList = () => {
   const queryClient = useQueryClient();
@@ -107,6 +108,25 @@ export const useCharacterList = () => {
     addKeywordWithRandomColor();
   }
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+  const [selectedColor, setSelectedColor] = useState<string | null>(null);
+  const selectColor = (color: string) => () => setSelectedColor(color);
+  const selectRandom = () => setSelectedColor(null);
+  const [modalInput, setModalInput] = useState('');
+  const onChangeModalInput = (e: React.ChangeEvent<HTMLInputElement>) => setModalInput(e.target.value);
+  const onClickCreateKeyword = () => {
+    addKeyword({ word: modalInput, color: selectedColor??undefined });
+  }
+
+  const onClickDeleteKeyword = useOnClickUpdate({
+    mutationFn: deleteKeyword(workspace_id),
+    queryKey: workspaceQueryKeys.characterKeywordList(workspace_id),
+    savingMessage: '키워드 삭제 중',
+    errorMessage: '키워드 삭제에 실패했습니다.',
+  });
+
   return {
     workspace_id,
     keywordList,
@@ -130,6 +150,17 @@ export const useCharacterList = () => {
     onClickAddKeywordAtMiniModal,
     keywordListRef,
     addButtonRef,
-    miniModalLeftPosition
+    miniModalLeftPosition,
+    isModalOpen,
+    openModal,
+    closeModal,
+    selectedColor,
+    selectColor,
+    selectRandom,
+    modalInput,
+    setModalInput,
+    onChangeModalInput,
+    onClickCreateKeyword,
+    onClickDeleteKeyword
   };
 };
