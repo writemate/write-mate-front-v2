@@ -4,6 +4,7 @@ import { dashboardQueryKeys } from "@/utils/APIs/queryKeys";
 import { addWorkStudio, getWorkStudio } from "@/utils/APIs/dashboard";
 import { notifySuccess } from "@/utils/showToast";
 import { createContext } from "react";
+import { useOnClickUpdate } from "@/hooks/common/useOnClickUpdate";
 
 export function useWorkList(workCategory: keyof typeof workspaceCategory) {
   const queryClient = useQueryClient();
@@ -17,25 +18,24 @@ export function useWorkList(workCategory: keyof typeof workspaceCategory) {
     queryFn: getWorkStudio(workCategory),
   });
 
-  const { mutate: addWorkMutate } = useMutation({
+  const onClickAddWork = useOnClickUpdate({
     mutationFn: addWorkStudio,
+    queryKey: [dashboardQueryKeys.workStudio(), workCategory],
+    savingMessage: "작품 추가 중",
+    errorMessage: "작품 추가에 실패했습니다.",
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [dashboardQueryKeys.workStudio(), workCategory],
       });
       notifySuccess("작품이 추가되었습니다.");
     },
-  });
-
-  const onAddWorkClick = () => {
-    addWorkMutate();
-  };
+  })();
 
   return {
     workList,
     error,
     isLoading,
-    onAddWorkClick,
+    onClickAddWork,
   };
 }
 

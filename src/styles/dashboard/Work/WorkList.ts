@@ -1,9 +1,8 @@
 "use client";
 import { media } from "@/styles/media";
-import { FlexRowLeftStart, clickable, FlexColumnCenter } from "@/styles";
+import { clickable, FlexColumnCenter } from "@/styles";
 import Link from "next/link";
 import { styled } from "styled-components";
-import { HighlghtCssForHoberAfter } from "..";
 
 export const TitleAndWorkListContainer = styled.div`
   ${FlexColumnCenter}
@@ -18,20 +17,22 @@ export const TitleAndWorkListContainer = styled.div`
   }
 `;
 
-export const WorkButtonList = styled.div`
-  ${FlexRowLeftStart}
-  flex-grow: 1;
+export const WorkListContainer = styled.div`
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   height: 100%;
-  width: 100%;
-  padding: 20px;
-  overflow-y: auto;
-  flex-wrap: wrap;
+  align-items: start;
+  justify-content: start;
+  justify-items: center;
   gap: 16px;
-  align-items: flex-start;
-  align-content: flex-start;
+  padding: 20px;
+  width: 100%;
+  overflow-y: auto;
 
   ${media.tablet} {
     gap: 8px;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   }
 `;
 
@@ -47,10 +48,9 @@ export const EmptyListDiscription = styled.div`
 
 export const WorkCard = styled(Link)`
   -webkit-user-drag: none;
+  width: 100%;
   border: none;
   display: flex;
-  width: 200px;
-  height: 320px;
   padding: 8px 8px 12px 8px;
   flex-direction: column;
   flex-shrink: 0;
@@ -58,79 +58,72 @@ export const WorkCard = styled(Link)`
   border-radius: 12px;
   background: var(--white, #fff);
 
-  /* Carditem shadow */
   box-shadow: 2px 2px 12px 0px rgba(18, 18, 18, 0.12);
 
   &:hover {
     outline: 1px solid ${({ theme }) => theme.color.orange400};
   }
-
-  ${media.tablet} {
-    width: 150px;
-    height: 240px;
-  }
 `;
 
-export const WorkButtonImage = styled.img`
+export const WorkButtonImage = styled.div<{
+  $url: string;
+}>`
   width: 100%;
-  height: 83%;
+  padding-top: 133%;
   flex-shrink: 0;
   margin-bottom: 12px;
 
   border-radius: 20px;
-  background: linear-gradient(
-    0deg,
-    rgba(0, 0, 0, 0.1) 0%,
-    rgba(0, 0, 0, 0.1) 100%
-  );
+  background-image: url(${(props) => props.$url});
+  background-size: cover;
+  background-position: 50% 50%;
 `;
+
 export const TitleAndDateAndKebab = styled.div`
-  display: flex;
+  position: relative;
+
   width: 100%;
+  display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-shrink: 0;
-
-  ${media.tablet}  {
-    transform: scale(0.8);
-    transform-origin: top left;
-  }
+  padding: 0 2px;
+  gap: 8px;
 }
 `;
 
 export const TitleAndDate = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  height: 100%;
 `;
 
 export const WorkButtonTitle = styled.div`
-  width: 140px;
-  height: fit-content;
+  width: 100%;
+
   overflow: hidden;
-  text-overflow: ellipsis;
+  margin-bottom: 4px;
+
   white-space: nowrap;
+  text-overflow: ellipsis;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
   line-height: 120%;
 
-  margin-bottom: 4px;
 
   input {
-    padding: 0px;
+    width: 100%;
+
+    border: 1px solid ${({ theme }) => theme.color.white};;
+    outline: none;
     border-radius: 3px;
-    font-family: Pretendard;
+
     font-size: 14px;
     font-style: normal;
     font-weight: 600;
-    overflow: visible;
-    border: 1px solid ${({ theme }) => theme.color.white};;
-    outline: none;
 
     &:focus { 
-      width: 100%;
       border: 1px solid ${({ theme }) => theme.color.orange400};
   }
 
@@ -138,34 +131,24 @@ export const WorkButtonTitle = styled.div`
 
 export const WorkButtonDate = styled.div`
   color: #303030;
-  font-family: Pretendard;
   font-size: 10px;
   font-style: normal;
   font-weight: 400;
   line-height: 100%; /* 10px */
 `;
 
-export const WorkButtonKebab = styled.div<{
+import KebabIcon from "@/assets/icons/KebabMenu.svg";
+export const KebabButton = styled(KebabIcon)<{
   $isOpen: boolean;
   $isActivated?: boolean;
 }>`
   ${clickable}
   position: relative;
-  border: none;
-  background: none;
+  flex-shrink: 0;
+  border-radius: 10px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  min-width: 32px;
-  height: 32px;
-
-  &:hover::before {
-    ${HighlghtCssForHoberAfter}
-    width: 100%;
-    height: 100%;
-    border-radius: 10px;
+  &:hover {
+    background: ${({ theme }) => theme.color.gray75};
   }
 
   background: ${({ $isOpen }) =>

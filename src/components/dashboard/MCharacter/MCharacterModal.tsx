@@ -2,7 +2,7 @@
 import { useContext } from "react";
 import React from "react";
 import Modal from "@/components/Modal";
-import { DashboardContext } from "@/hooks/dashboard/work/dashboard";
+import { DashboardContext } from "@/hooks/dashboard/dashboard";
 import Footer from "@/components/dashboard/MCharacter/ModalFooter";
 import {
   ModalContentAndFooterContainer,
@@ -18,7 +18,8 @@ import Description from "@/components/dashboard/MCharacter/Description";
 import Characteristic from "@/components/dashboard/MCharacter/Characteristic";
 
 export default function MCharacterModal() {
-  const { isOpenEditModal, closeEditModal } = useContext(DashboardContext).memoCharacterModal;
+  const { isOpenEditModal, closeEditModal } =
+    useContext(DashboardContext).memoCharacterModal;
 
   return (
     <>

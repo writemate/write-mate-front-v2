@@ -1,5 +1,5 @@
 "use client";
-import { DashboardContext } from "@/hooks/dashboard/work/dashboard";
+import { DashboardContext } from "@/hooks/dashboard/dashboard";
 import { WorkCategoryContext } from "@/hooks/dashboard/work/workCategory";
 import {
   Title,

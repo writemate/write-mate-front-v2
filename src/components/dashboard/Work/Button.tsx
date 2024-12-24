@@ -6,19 +6,19 @@ import { AddMemoButtonContainer } from "@/styles/dashboard/IdeaBox/Memo/MemoList
 import { useContext } from "react";
 
 export function AddWork() {
-  const { onAddWorkClick } = useContext(WorkListContext);
+  const { onClickAddWork } = useContext(WorkListContext);
 
   return (
-    <AddMemoButtonContainer onClick={onAddWorkClick}>
+    <AddMemoButtonContainer onClick={onClickAddWork}>
       새 작품 집필하기
     </AddMemoButtonContainer>
   );
 }
 export function MoveToOngoing() {
-  const { onRedirectToOngoingWorkClick } = useContext(WorkCategoryContext);
+  const { onClickRedirectToOngoingWork } = useContext(WorkCategoryContext);
 
   return (
-    <AddMemoButtonContainer onClick={onRedirectToOngoingWorkClick}>
+    <AddMemoButtonContainer onClick={onClickRedirectToOngoingWork}>
       집필 중인 작품 보러가기
     </AddMemoButtonContainer>
   );

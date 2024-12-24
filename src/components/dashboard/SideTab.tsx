@@ -19,7 +19,7 @@ import { useWorkList } from "@/hooks/dashboard/work/workList";
 import { workspaceCategory } from "@/utils/APIs/types";
 
 export default function SideTab() {
-  const { onAddWorkClick } = useWorkList(workspaceCategory.ongoing);
+  const { onClickAddWork } = useWorkList(workspaceCategory.ongoing);
 
   return (
     <>
@@ -63,7 +63,7 @@ export default function SideTab() {
             <p>휴지통</p>
           </SideTabLink>
         </SideTabMenu>
-        <AddWorkspaceButton onClick={onAddWorkClick}>
+        <AddWorkspaceButton onClick={onClickAddWork}>
           새 작품 집필하기
         </AddWorkspaceButton>
       </SideTabContainer>
