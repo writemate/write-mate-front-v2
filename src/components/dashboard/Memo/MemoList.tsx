@@ -2,12 +2,13 @@
 import { MemoListContainer } from "@/styles/dashboard/IdeaBox/Memo/MemoList";
 import { useContext } from "react";
 import MemoItem from "@/components/dashboard/Memo/MemoItem";
-import { DashboardContext } from "@/hooks/dashboard/work/dashboard";
+import { DashboardContext } from "@/hooks/dashboard/dashboard";
 import { LoadingMessage } from "@/styles/dashboard/Loading";
 import { AddMemoButton } from "@/components/dashboard/AddButton";
 
 export default function MemoList() {
-  const { memoList, error, isLoading } = useContext(DashboardContext).ideaBoxMemo;
+  const { memoList, error, isLoading } =
+    useContext(DashboardContext).ideaBoxMemo;
 
   return (
     <MemoListContainer>
@@ -25,7 +26,11 @@ export default function MemoList() {
 }
 
 function Error() {
-  return <LoadingMessage>에러가 발생했습니다. 새로고침을 하시거나, 채팅 버튼을 이용해 문의해주세요.</LoadingMessage>;
+  return (
+    <LoadingMessage>
+      에러가 발생했습니다. 새로고침을 하시거나, 채팅 버튼을 이용해 문의해주세요.
+    </LoadingMessage>
+  );
 }
 
 function Loading() {

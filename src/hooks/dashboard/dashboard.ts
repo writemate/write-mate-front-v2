@@ -1,9 +1,9 @@
 import { createContext, useState } from "react";
 import useIdeaBoxMemo from "@/hooks/dashboard/useIdeaBoxMemo";
-import useOpenAndCloseDeleteConfirmation from "../useDeleteConfirmModal";
-import useMemoModal from "../useMemoModal";
-import useIdeaBoxMemoCharacter from "../useIdeaBoxMCharacter";
-import useMemoCharacterModal from "../useMCharacterModal";
+import useOpenAndCloseDeleteConfirmation from "./useDeleteConfirmModal";
+import useMemoModal from "./useMemoModal";
+import useIdeaBoxMemoCharacter from "./useIdeaBoxMCharacter";
+import useMemoCharacterModal from "./useMCharacterModal";
 
 export function useWorkCategory2() {
   const [isKebabMenuOpenWork, setIsKebabMenuOpenWork] = useState(""); // 어떤 케밥이 열려있는지 확인용
@@ -29,7 +29,9 @@ export const DashboardContext = createContext(
     workstudioAndTrash: ReturnType<typeof useWorkCategory2>;
     ideaBoxMemo: ReturnType<typeof useIdeaBoxMemo>;
     ideaBoxMCharacter: ReturnType<typeof useIdeaBoxMemoCharacter>;
-    removeConfirmationModal: ReturnType<typeof useOpenAndCloseDeleteConfirmation>;
+    removeConfirmationModal: ReturnType<
+      typeof useOpenAndCloseDeleteConfirmation
+    >;
     memoModal: ReturnType<typeof useMemoModal>;
     memoCharacterModal: ReturnType<typeof useMemoCharacterModal>;
   }

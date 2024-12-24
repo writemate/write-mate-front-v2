@@ -77,8 +77,8 @@ interface AddMemoButtonProps {
 export const AddMemoButtonContainer = styled.button<AddMemoButtonProps>`
   ${clickable}
   position: fixed;
-  left: calc(50% - 88.5px);
-  bottom: ${({ $isEmpty }) => ($isEmpty ? "calc(50% - 120px)" : "50px")};
+
+  bottom: ${({ $isEmpty }) => ($isEmpty ? "calc(50% - 120px)" : "20px")};
 
   width: 200px;
   padding: 12px;
@@ -102,7 +102,7 @@ export const AddMemoButtonContainer = styled.button<AddMemoButtonProps>`
 
   ${media.tablet} {
     scale: 0.9;
-    bottom: 15px;
+    bottom: 10px;
   }
 `;
 

@@ -11,7 +11,7 @@ import Footer from "@/assets/dashboard/footer.svg";
 import {
   DashboardContext,
   useWorkCategory2,
-} from "@/hooks/dashboard/work/dashboard";
+} from "@/hooks/dashboard/dashboard";
 import DeleteModal from "@/components/DeleteModal";
 import MemoCharacterEditModal from "@/components/dashboard/MCharacter/MCharacterModal";
 import MemoEditModal from "@/components/dashboard/Memo/MemoModal";
@@ -67,7 +67,6 @@ export default function WorkspaceLayout({
           </HeaderAndMainContainer>
         </WorkCategoryContext.Provider>
       </DashboardContainer>
-      <Modal />
       <DevTool />
     </DashboardContext.Provider>
   );

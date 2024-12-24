@@ -1,9 +1,10 @@
-import { DashboardContext } from "@/hooks/dashboard/work/dashboard";
+import { DashboardContext } from "@/hooks/dashboard/dashboard";
 import { RoleContainer, Input } from "@/styles/dashboard/IdeaBox/Modal";
 import { useContext } from "react";
 
 export default function MCharacterRole() {
-  const { selectedMCharacter, onChangeSelectedMCharacterRole } = useContext(DashboardContext).memoCharacterModal;
+  const { selectedMCharacter, onChangeSelectedMCharacterRole } =
+    useContext(DashboardContext).memoCharacterModal;
   if (!selectedMCharacter) {
     return null;
   }
@@ -11,7 +12,12 @@ export default function MCharacterRole() {
   return (
     <RoleContainer>
       <p>작품 속 역할</p>
-      <Input className="role" defaultValue={selectedMCharacter.role} onChange={onChangeSelectedMCharacterRole} placeholder="인물의 역할을 입력하세요." />
+      <Input
+        className="role"
+        defaultValue={selectedMCharacter.role}
+        onChange={onChangeSelectedMCharacterRole}
+        placeholder="인물의 역할을 입력하세요."
+      />
     </RoleContainer>
   );
 }

@@ -1,10 +1,11 @@
 "use client";
 import { clickable, Button } from "@/styles";
 import { styled } from "styled-components";
-export const KebabContainer = styled.div`
+export const KebabContainer = styled.div<{ $isActivated?: boolean }>`
   position: absolute;
-  top: 110%;
+  bottom: 110%;
   right: 0%;
+
   display: flex;
   width: 132px;
   padding: 6px 4px;
@@ -16,7 +17,7 @@ export const KebabContainer = styled.div`
   background: ${({ theme }) => theme.color.white};
   box-shadow: 0px 0px 8px 0px rgba(30, 33, 43, 0.2);
 
-  z-index: 10000;
+  z-index: 1000;
 `;
 
 export const KebabItem = styled(Button)<{

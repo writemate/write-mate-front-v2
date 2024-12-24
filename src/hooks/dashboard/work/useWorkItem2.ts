@@ -1,34 +1,36 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { dashboardQueryKeys } from "@/utils/APIs/queryKeys";
-import { deleteWork, updateWorkCategory, updateWorkCover, updateWorkTitle } from "@/utils/APIs/dashboard";
+import {
+  deleteWork,
+  updateWorkCategory,
+  updateWorkCover,
+} from "@/utils/APIs/dashboard";
 import { useContext, useEffect, useRef, useState } from "react";
-import { DashboardContext } from "./work/dashboard";
 import { TWork, workspaceCategory } from "@/utils/APIs/types";
 import { notifySuccess, notifyError } from "@/utils/showToast";
+import { DashboardContext } from "../dashboard";
+import { WorkCategoryContext } from "./workCategory";
+import { WorkListContext } from "./workList";
 
 export default function useWork(workId: string) {
-  const { handleEditing, data, workCategory, handleKebabMenuOpenWork } = useContext(DashboardContext).workstudioAndTrash;
+  const { workCategory } = useContext(WorkCategoryContext);
+  const { workList } = useContext(WorkListContext);
+  const { handleEditing, handleKebabMenuOpenWork } =
+    useContext(DashboardContext).workstudioAndTrash;
 
   const queryClient = useQueryClient();
-  const [work, setWork] = useState<TWork | undefined>(() => data?.find((work) => work.id === workId));
-  const [toBeCategory, setToBeCategory] = useState<keyof typeof workspaceCategory>(workspaceCategory.trash); // 이거 deleteModal에서 동작이 이상해서 trash로 설정해놓음
+  const [work, setWork] = useState<TWork | undefined>(() =>
+    workList?.find((work) => work.id === workId)
+  );
+  const [toBeCategory, setToBeCategory] = useState<
+    keyof typeof workspaceCategory
+  >(workspaceCategory.trash); // 이거 deleteModal에서 동작이 이상해서 trash로 설정해놓음
 
   let file: File | null = null;
   const menuRef = useRef<HTMLDivElement | null>(null);
   const excludeButtonRef = useRef<HTMLDivElement | null>(null);
   const ref = useRef<HTMLInputElement>(null);
 
-  const { mutate: mutateTitle } = useMutation({
-    mutationFn: () => {
-      if (!work) return Promise.reject(new Error("Work is undefined"));
-      return updateWorkTitle(work.id)(work.title);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [dashboardQueryKeys.workStudio(), workCategory],
-      });
-    },
-  });
   const { mutate: mutateCover } = useMutation({
     mutationFn: () => {
       if (!work) return Promise.reject(new Error("Work is undefined"));
@@ -68,32 +70,6 @@ export default function useWork(workId: string) {
     },
   });
 
-  const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!work) return;
-    setWork({
-      ...work,
-      title: e.target.value,
-    });
-  };
-  const onBlurTitle = () => {
-    if (!work) return;
-    setWork({
-      ...work,
-    });
-    mutateTitle();
-    notifySuccess("제목이 변경되었습니다.");
-    handleEditing("");
-  };
-  const onKeyDownTitle = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (!work) return;
-    if (e.key === "Enter") {
-      setWork({
-        ...work,
-      });
-      mutateTitle();
-      handleEditing("");
-    }
-  };
   const onChangeCover = (e: React.ChangeEvent<HTMLInputElement>) => {
     file = e.target.files?.[0] || null;
     if (!file) return;
@@ -104,45 +80,62 @@ export default function useWork(workId: string) {
     mutateCategory();
   };
 
-  const onClickChangeTitle = (inputRef: React.RefObject<HTMLInputElement>) => (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    if (work) {
-      handleEditing(work.id);
-      inputRef.current?.focus();
-    }
-  };
+  const onClickChangeTitle =
+    (inputRef: React.RefObject<HTMLInputElement>) =>
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      if (work) {
+        handleEditing(work.id);
+        inputRef.current?.focus();
+      }
+    };
   const onClickChangeCover = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     event.stopPropagation();
     ref.current?.click();
   };
-  const onClickChangeCategory = (category: keyof typeof workspaceCategory) => (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    onChangeCategory(category);
-  };
+  const onClickChangeCategory =
+    (category: keyof typeof workspaceCategory) =>
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      onChangeCategory(category);
+    };
 
-  const onClickChangeCoverInput = (event: React.MouseEvent<HTMLInputElement>) => {
+  const onClickChangeCoverInput = (
+    event: React.MouseEvent<HTMLInputElement>
+  ) => {
     event.stopPropagation();
   };
   const onChangeCoverInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChangeCover(event);
   };
 
-  const handleClickOutside = (menuRef: React.RefObject<HTMLElement>, excludeButtonRef: React.RefObject<HTMLElement>) => (event: MouseEvent) => {
-    if (
-      menuRef.current &&
-      !menuRef.current.contains(event.target as Node) &&
-      excludeButtonRef.current &&
-      !excludeButtonRef.current.contains(event.target as Node)
-    ) {
-      handleKebabMenuOpenWork("");
-    }
-  };
+  const handleClickOutside =
+    (
+      menuRef: React.RefObject<HTMLElement>,
+      excludeButtonRef: React.RefObject<HTMLElement>
+    ) =>
+    (event: MouseEvent) => {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(event.target as Node) &&
+        excludeButtonRef.current &&
+        !excludeButtonRef.current.contains(event.target as Node)
+      ) {
+        handleKebabMenuOpenWork("");
+      }
+    };
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside(menuRef, excludeButtonRef));
+    document.addEventListener(
+      "mousedown",
+      handleClickOutside(menuRef, excludeButtonRef)
+    );
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside(menuRef, excludeButtonRef));
+      document.removeEventListener(
+        "mousedown",
+        handleClickOutside(menuRef, excludeButtonRef)
+      );
     };
   }, []);
   return {
@@ -150,9 +143,6 @@ export default function useWork(workId: string) {
     work,
     menuRef,
     excludeButtonRef,
-    onChangeTitle,
-    onBlurTitle,
-    onKeyDownTitle,
     onChangeCover,
     onChangeCategory,
     onDeleteWork,

@@ -1,15 +1,12 @@
 "use client";
 import {
-  WorkButtonList,
+  WorkListContainer,
   EmptyListDiscription,
 } from "@/styles/dashboard/Work/WorkList";
 import { useContext } from "react";
 import WorkButton from "./WorkItem";
 import { workspaceCategory } from "@/utils/APIs/types";
-import {
-  AddWork,
-  MoveToOngoing,
-} from "@/components/dashboard/Work/WorkjButton";
+import { AddWork, MoveToOngoing } from "@/components/dashboard/Work/Button";
 import { LoadingMessage } from "@/styles/dashboard/Loading";
 import { WorkListContext } from "@/hooks/dashboard/work/workList";
 import { WorkCategoryContext } from "@/hooks/dashboard/work/workCategory";
@@ -28,34 +25,41 @@ export default function WorkList() {
         </LoadingMessage>
       )}
       {workList && (
-        <WorkButtonList>
-          {workList.length === 0 &&
-            workCategory === workspaceCategory.ongoing && (
-              <EmptyListDiscription>
-                새로운 작품을 집필해보세요!
-                <AddWork />
-              </EmptyListDiscription>
-            )}
-          {workList.length === 0 &&
-            workCategory === workspaceCategory.completed && (
-              <EmptyListDiscription>
-                완료된 작품이 없습니다. 새로운 작품을 집필해보세요!
-                <MoveToOngoing />
-              </EmptyListDiscription>
-            )}
-          {workList.length === 0 &&
-            workCategory === workspaceCategory.trash && (
-              <EmptyListDiscription>
-                삭제된 작품이 없습니다.
-                <MoveToOngoing />
-              </EmptyListDiscription>
-            )}
-          {!isLoading &&
-            workList.map((work) => (
-              <WorkButton key={work.id} workId={work.id} />
-            ))}
-          {workCategory === workspaceCategory.ongoing && <AddWork />}
-        </WorkButtonList>
+        <>
+          {workList.length > 0 && (
+            <>
+              <WorkListContainer>
+                {!isLoading &&
+                  workList.map((work) => (
+                    <WorkButton key={work.id} workId={work.id} />
+                  ))}
+              </WorkListContainer>
+              {workCategory === workspaceCategory.ongoing && <AddWork />}
+            </>
+          )}
+          {workList.length === 0 && (
+            <>
+              {workCategory === workspaceCategory.ongoing && (
+                <EmptyListDiscription>
+                  새로운 작품을 집필해보세요!
+                  <AddWork />
+                </EmptyListDiscription>
+              )}
+              {workCategory === workspaceCategory.completed && (
+                <EmptyListDiscription>
+                  완료된 작품이 없습니다. 새로운 작품을 집필해보세요!
+                  <MoveToOngoing />
+                </EmptyListDiscription>
+              )}
+              {workCategory === workspaceCategory.trash && (
+                <EmptyListDiscription>
+                  삭제된 작품이 없습니다.
+                  <MoveToOngoing />
+                </EmptyListDiscription>
+              )}
+            </>
+          )}
+        </>
       )}
     </>
   );

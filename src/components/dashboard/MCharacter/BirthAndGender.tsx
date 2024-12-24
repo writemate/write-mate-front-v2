@@ -1,10 +1,19 @@
-import { DashboardContext } from "@/hooks/dashboard/work/dashboard";
-import { BirthAndGenderContainer, BirthContainer, GenderContainer, Input } from "@/styles/dashboard/IdeaBox/Modal";
+import { DashboardContext } from "@/hooks/dashboard/dashboard";
+import {
+  BirthAndGenderContainer,
+  BirthContainer,
+  GenderContainer,
+  Input,
+} from "@/styles/dashboard/IdeaBox/Modal";
 import { useContext } from "react";
 
 export default function MCharacterBirthAndGender() {
-  const { selectedMCharacter, onChangeSelectedMCharacterBirthday, onChangeSelectedMCharacterGender, onKeyDownInput } =
-    useContext(DashboardContext).memoCharacterModal;
+  const {
+    selectedMCharacter,
+    onChangeSelectedMCharacterBirthday,
+    onChangeSelectedMCharacterGender,
+    onKeyDownInput,
+  } = useContext(DashboardContext).memoCharacterModal;
   if (!selectedMCharacter) {
     return null;
   }

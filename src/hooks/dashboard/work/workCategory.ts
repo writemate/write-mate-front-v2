@@ -14,7 +14,7 @@ export function useWorkCategory() {
   const [workCategory, setWorkCategory] =
     useState<keyof typeof workspaceCategory>(defaultCategory());
 
-  const onRedirectToOngoingWorkClick = () => {
+  const onClickRedirectToOngoingWork = () => {
     router.push("/dashboard");
     setWorkCategory("ongoing");
   };
@@ -49,7 +49,6 @@ export function useWorkCategory() {
 
   useEffect(() => {
     recordCategory();
-    console.log(workCategory);
   }, [workCategory]);
   useEffect(() => {
     matchCategoryNPath();
@@ -57,7 +56,7 @@ export function useWorkCategory() {
 
   return {
     workCategory,
-    onRedirectToOngoingWorkClick,
+    onClickRedirectToOngoingWork,
     onCategoryOngoingClick,
     onCategoryCompletedClick,
     onCategoryTrashClick,

@@ -24,21 +24,16 @@ export const updateWorkTitle = (workId: string) => async (title: string) => {
   return response.data;
 };
 
-export const updateWorkCover = (workId: string) => async (file: File) => {
-  await new Promise((resolve) => {
-    const reader = new FileReader();
-    reader.onload = async function (e) {
-      const response = await axiosInstance.patch(
-        DOMAIN.UPDATE_WORK_COVER(workId),
-        {
-          cover: e.target?.result as string,
-        }
-      );
-      return response.data;
-    };
-    resolve(null);
-  });
-};
+export const updateWorkCover =
+  (workId: string) => async (cover_image: File) => {
+    const formData = new FormData();
+    formData.append("file", cover_image);
+    const response = await axiosInstance.patch<void>(
+      DOMAIN.UPDATE_WORK_COVER(workId),
+      formData
+    );
+    return response.data;
+  };
 
 export const updateWorkCategory =
   (workId: string) => async (category: keyof typeof workspaceCategory) => {
