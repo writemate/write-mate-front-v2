@@ -5,13 +5,15 @@ import { getCharacter, updateCharacterName, updateCharacterRole, updateCharacter
   updateCharacterCoverImage, addCharacterCharacteristic, updateCharacterCharacteristicTitle,
   removeCharacterCharacteristic, updateCharacterCharacteristicContent,
   updateCharacterDescription, deleteCharacter,
-  getKeywordList
+  getKeywordList,
+  createKeyword
 } from "@/utils/APIs/workspace/character";
 import { useParams, useRouter } from "next/navigation";
 import { createContext, useState, useEffect } from "react";
 import { TCharacter, TKeyword } from "@/utils/APIs/types";
 import { useInputLiveUpdate } from "@/hooks/common/useInputLiveUpdate";
 import { useOnClickUpdate } from "@/hooks/common/useOnClickUpdate";
+import useMiniModal from "./useMiniModal";
 
 
 export function useCharacter(characterId?: string) {
@@ -59,19 +61,36 @@ export function useCharacter(characterId?: string) {
   const onChangeBirthday = useInputLiveUpdate(updateCharacterBirthday(workspace_id, character_id), "생일 변경", "생일 변경에 실패했습니다.");
   const onChangeDescription = useInputLiveUpdate(updateCharacterDescription(workspace_id, character_id), "설명 변경", "설명 변경에 실패했습니다.");
   
+  const { keywordListRef, addButtonRef, miniModalOpen, openMiniModal, miniKeywordInput, onBlurredMiniModal, onChangeMiniKeywordInput, miniModalLeftPosition } = useMiniModal();
+
+  const {mutateAsync:mutateCreateKeywordAsync,isPending:creatingKeyword} = useMutation({
+    mutationFn: createKeyword(workspace_id),
+    onMutate: () => {
+      queryClient.cancelQueries({ queryKey: workspaceQueryKeys.characterKeywordList(workspace_id) });
+    },
+    onSuccess: () => {
+      queryClient.setQueryData(workspaceQueryKeys.characterKeywordList(workspace_id), (prev: any) => {
+        return [...prev, { id: "", word: miniKeywordInput, light_color: "", dark_color: "" }];
+      });
+      queryClient.invalidateQueries({ queryKey: workspaceQueryKeys.characterKeywordList(workspace_id) });
+    }
+  });
+
   const onClickAddKeywordToCharacter = useOnClickUpdate({
     mutationFn: addKeywordToCharacter(workspace_id, character_id),
     queryKey: workspaceQueryKeys.characterDetail(workspace_id, character_id),
-    savingMessage: "키워드 추가 중",
-    errorMessage: "키워드 추가에 실패했습니다.",
+    savingMessage: "캐릭터에 키워드 추가 중",
+    errorMessage: "캐릭터 키워드 추가에 실패했습니다.",
     onMutate: (keyword_id: string) => {
       const prevData = queryClient.getQueryData(workspaceQueryKeys.characterDetail(workspace_id, character_id));
       const keywordData = queryClient.getQueryData<TKeyword[]>(workspaceQueryKeys.characterKeywordList(workspace_id));
       if(!prevData || !keywordData) return;
+      const keyword = keywordData.find((k) => k.id === keyword_id);
+      if(!keyword) return;
       queryClient.setQueryData(workspaceQueryKeys.characterDetail(workspace_id, character_id), (prev: any) => {
         return {
           ...prev,
-          keyword: [...prev.keyword, keywordData.find((k) => k.id === keyword_id)],
+          keyword: [...prev.keyword, keyword],
         };
       });
       return { prevData };
@@ -81,11 +100,26 @@ export function useCharacter(characterId?: string) {
     }
   });
 
+  const onClickCreateAndAddKeywordToCharacter = async () => {
+    if(miniKeywordInput === "") return;
+    const keyword = await mutateCreateKeywordAsync({word: miniKeywordInput});
+    if(keyword) {
+      onClickAddKeywordToCharacter(keyword)();
+    }
+    onBlurredMiniModal();
+  }
+
+  const onEnterPressAtMiniModal = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if(e.key === "Enter") {
+      onClickCreateAndAddKeywordToCharacter();
+    }
+  }
+
   const onClickRemoveKeywordFromCharacter = useOnClickUpdate({
     mutationFn: removeKeywordFromCharacter(workspace_id, character_id),
     queryKey: workspaceQueryKeys.characterDetail(workspace_id, character_id),
-    savingMessage: "키워드 삭제 중",
-    errorMessage: "키워드 삭제에 실패했습니다.",
+    savingMessage: "캐릭터에서 키워드 삭제 중",
+    errorMessage: "캐릭터 키워드 삭제에 실패했습니다.",
     onMutate: (keyword_id: string) => {
       const prevData = queryClient.getQueryData(workspaceQueryKeys.characterDetail(workspace_id, character_id));
       if(!prevData) return;
@@ -113,8 +147,8 @@ export function useCharacter(characterId?: string) {
   const onClickAddCharacteristic = useOnClickUpdate({
     mutationFn: addCharacterCharacteristic(workspace_id, character_id),
     queryKey: workspaceQueryKeys.characterDetail(workspace_id, character_id),
-    savingMessage: "특징 추가 중",
-    errorMessage: "특징 추가에 실패했습니다.",
+    savingMessage: "캐릭터에 특징 추가 중",
+    errorMessage: "캐릭터 특징 추가에 실패했습니다.",
     onMutate: () => {
       const prevData = queryClient.getQueryData(workspaceQueryKeys.characterDetail(workspace_id, character_id));
       if(!prevData) return;
@@ -134,8 +168,8 @@ export function useCharacter(characterId?: string) {
   const onClickRemoveCharacteristic = useOnClickUpdate({
     mutationFn: removeCharacterCharacteristic(workspace_id, character_id),
     queryKey: workspaceQueryKeys.characterDetail(workspace_id, character_id),
-    savingMessage: "특징 삭제 중",
-    errorMessage: "특징 삭제에 실패했습니다.",
+    savingMessage: "캐릭터에서 특징 삭제 중",
+    errorMessage: "캐릭터 특징 삭제에 실패했습니다.",
     onMutate: (index: number) => {
       const prevData = queryClient.getQueryData<TCharacter>(workspaceQueryKeys.characterDetail(workspace_id, character_id));
       if(!prevData) return;
@@ -188,9 +222,11 @@ export function useCharacter(characterId?: string) {
   };
 
   return { data, error, isLoading, characteristicList, keywordList, isKeywordsLoading,
+    keywordListRef, addButtonRef, miniModalOpen, openMiniModal, miniKeywordInput, onBlurredMiniModal, onChangeMiniKeywordInput, miniModalLeftPosition,
     onChangeName, onChangeRole, onChangeGender, onChangeBirthday, onChangeDescription,
     onClickAddKeywordToCharacter, onClickRemoveKeywordFromCharacter, onClickAddCharacteristic,
     onClickRemoveCharacteristic, onChangeCharacteristicTitle, onChangeCharacteristicContent,
+    onClickCreateAndAddKeywordToCharacter, creatingKeyword, onEnterPressAtMiniModal,
     onClickDeleteCharacter, onChangeCoverImage };
 }
 
