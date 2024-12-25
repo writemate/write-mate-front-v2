@@ -1,22 +1,13 @@
 'use client';
-import { useState, useRef, RefObject } from 'react';
+import { useState } from 'react';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { workspaceQueryKeys } from "@/utils/APIs/queryKeys";
-import { getKeywordList, getCharacterList, createCharacter, createKeyword, setMainCharacter, unsetMainCharacter } from '@/utils/APIs/workspace/character';
+import { getKeywordList, getCharacterList, createCharacter, createKeyword, setMainCharacter, unsetMainCharacter, deleteKeyword } from '@/utils/APIs/workspace/character';
 import { useParams } from 'next/navigation';
-
-//키워드 입력창(position:absolute)이 부모요소를 넘어가지 않도록 위치를 조정
-const getLeftPositionOfMiniModal = (keywordListRef: RefObject<HTMLDivElement>, addButtonRef: RefObject<HTMLDivElement>) => {
-  if (!keywordListRef.current || !addButtonRef.current) return 0;
-  const keywordListRect = keywordListRef.current.getBoundingClientRect();
-  const addButtonRect = addButtonRef.current.getBoundingClientRect();
-  if(addButtonRect.left+320+10<keywordListRect.right) return 10;
-  return keywordListRect.right - addButtonRect.left - 320;
-}
+import useMiniModal from './useMiniModal';
+import { useOnClickUpdate } from '@/hooks/common/useOnClickUpdate';
 
 export const useCharacterList = () => {
-  const keywordListRef = useRef<HTMLDivElement>(null);
-  const addButtonRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
   const { workspace_id } = useParams<{ workspace_id: string }>();
   const { data: keywordList, isLoading: isKeywordsLoading } = useQuery({
@@ -99,27 +90,12 @@ export const useCharacterList = () => {
 
   const realCharacterList = selectedKeywords.length === 0 ? characterList : selectedCharacter;
 
-  const [miniModalOpen, setMiniModalOpen] = useState(false);
-  const [miniKeywordInput, setMiniKeywordInput] = useState('');
-
-  const openMiniModal = () => {
-    setMiniModalOpen(true);
-  }
-
-  const onBlurredMiniModal = () => {
-    setMiniModalOpen(false);
-    setMiniKeywordInput('');
-  }
-
-  const onChangeMiniKeywordInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMiniKeywordInput(e.target.value);
-  }
+  const { keywordListRef, addButtonRef, miniModalOpen, openMiniModal, miniKeywordInput, onBlurredMiniModal, onChangeMiniKeywordInput, miniModalLeftPosition } = useMiniModal();
 
   const addKeywordWithRandomColor = () => {
     if(miniKeywordInput === '') return;
     addKeyword({ word: miniKeywordInput});
-    setMiniKeywordInput('');
-    setMiniModalOpen(false);
+    onBlurredMiniModal();
   }
 
   const onEnterPressAtMiniModal = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -132,7 +108,24 @@ export const useCharacterList = () => {
     addKeywordWithRandomColor();
   }
 
-  const miniModalLeftPosition = getLeftPositionOfMiniModal(keywordListRef, addButtonRef);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+  const [selectedColor, setSelectedColor] = useState<string | null>(null);
+  const selectColor = (color: string) => () => setSelectedColor(color);
+  const selectRandom = () => setSelectedColor(null);
+  const [modalInput, setModalInput] = useState('');
+  const onChangeModalInput = (e: React.ChangeEvent<HTMLInputElement>) => setModalInput(e.target.value);
+  const onClickCreateKeyword = () => {
+    addKeyword({ word: modalInput, color: selectedColor??undefined });
+  }
+
+  const onClickDeleteKeyword = useOnClickUpdate({
+    mutationFn: deleteKeyword(workspace_id),
+    queryKey: workspaceQueryKeys.characterKeywordList(workspace_id),
+    savingMessage: '키워드 삭제 중',
+    errorMessage: '키워드 삭제에 실패했습니다.',
+  });
 
   return {
     workspace_id,
@@ -157,6 +150,17 @@ export const useCharacterList = () => {
     onClickAddKeywordAtMiniModal,
     keywordListRef,
     addButtonRef,
-    miniModalLeftPosition
+    miniModalLeftPosition,
+    isModalOpen,
+    openModal,
+    closeModal,
+    selectedColor,
+    selectColor,
+    selectRandom,
+    modalInput,
+    setModalInput,
+    onChangeModalInput,
+    onClickCreateKeyword,
+    onClickDeleteKeyword
   };
 };

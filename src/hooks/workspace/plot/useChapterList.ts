@@ -82,7 +82,7 @@ const useChapterList = () => {
     (chapter) => chapter.is_folded
   );
 
-  const toggleAllChapters = () => mutateChapterFold(!areAllChaptersFolded);  
+  const toggleAllChapters = () => mutateChapterFold(!areAllChaptersFolded)();  
 
   return {
     onClickCreate,

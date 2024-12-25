@@ -2,13 +2,13 @@ import styled from "styled-components";
 import TextareaAutosize from "react-textarea-autosize";
 import { FlexColumnCenter, FlexRowCenter, FlexRowLeftStart } from "@/styles";
 
-export const ChapterContainer = styled.section`
+export const ChapterContainer = styled.section<{ isDraggable?: boolean }>`
   ${FlexRowLeftStart};
   width: 100%;
   background: #ffffff;
   border: 1px solid ${({ theme }) => theme.color.orange400};
   margin-bottom: 18.18px;
-  padding: 20px 20px 20px 0;
+  padding: 20px 20px 20px ${({ isDraggable = true }) => (isDraggable ? "0" : "20px")};
   box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
 `;
@@ -53,6 +53,9 @@ export const TitleInput = styled.input`
   line-height: 150%;
   display: inline-block;
   color: ${({ theme }) => theme.color.gray900};
+  &:disabled {
+    background: none;
+  }
 `;
 
 export const Description = styled(TextareaAutosize)`
@@ -67,5 +70,8 @@ export const Description = styled(TextareaAutosize)`
   resize: none;
   &::placeholder {
     color: ${({ theme }) => theme.color.gray300};
+  }
+  &:disabled {
+    background: none;
   }
 `;

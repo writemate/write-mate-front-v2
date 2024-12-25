@@ -103,6 +103,8 @@ export const KeywordContainer = styled.div<{
   background-color: ${({ $lightColor = "transparent" }) => $lightColor};
   color: ${({ theme, $darkColor }) => $darkColor ?? theme.color.gray400};
   font-weight: 600;
+  font-size: 14px;
+  line-height: 150%;
   border: 1px solid
     ${({ theme, $darkColor }) => $darkColor ?? theme.color.gray400};
 `;
@@ -197,7 +199,7 @@ export const CreateRelationButton = styled(CreateCharacterButton)`
 `;
 
 export const MiniModal = styled.div<{ $left: number }>`
-  ${FlexRowCenter};
+  ${FlexColumnLeftStart};
   position: absolute;
   top: 20px;
   left: ${({ $left }) => $left}px;
@@ -207,15 +209,23 @@ export const MiniModal = styled.div<{ $left: number }>`
   z-index: 100;
   padding: 9px;
   box-shadow: 0px 0px 12px #00000033;
+  gap: 8px;
+`;
+
+export const InputWithButton = styled.div`
+  ${FlexRowCenter};
+  width: 100%;
+  position: relative;
   & > input {
     padding-right: 43px;
+    width: 302px;
     box-shadow: none;
     border: 1px solid ${({ theme }) => theme.color.gray75};
   }
   & > button {
     ${clickable};
     position: absolute;
-    right: 14px;
+    right: 5px;
     padding: 10px;
     border-radius: 8px;
     background-color: ${({ theme }) => theme.color.gray75};
@@ -391,3 +401,92 @@ export const SaveButton = styled(
   $background: props.$isSavalble ? props.theme.color.gray900 : "#CDCDCD",
   $color: "#fff",
 }))``;
+
+export const ManageKeywordContainer = styled.div`
+  ${FlexColumnCenter};
+  gap: 16px;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  overflow-y: auto;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.20);
+`;
+
+export const ManageRowWrapper = styled.div`
+  ${FlexRowLeftStart};
+  width: 100%;
+  height: 100%;
+  gap: 20px;
+  align-items: stretch;
+`;
+
+export const ManageKeywordLeft = styled.div`
+  ${FlexColumnLeftStart};
+  gap: 10px;
+  flex-shrink: 0;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 100%;
+  color: ${({ theme }) => theme.color.gray900};
+`;
+
+export const VerticalLine = styled.div`
+  width: 1px;
+  height: 228px;
+  background-color: ${({ theme }) => theme.color.gray200};
+  flex-shrink: 0;
+`;
+
+export const ManageKeywordRight = styled.div`
+  ${FlexColumnLeftStart};
+  gap: 11px;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 100%;
+  color: ${({ theme }) => theme.color.gray900};
+`;
+
+export const SelectColorContainer = styled.div`
+  ${FlexRowLeftStart};
+  gap: 6px;
+  &>div{
+    ${clickable};
+    width: 24px;
+    height: 24px;
+    border-radius: 100%;
+  }
+`;
+
+export const SelectableColor = styled.div<{ $color: string, $isSelected?: boolean }>`
+  background-color: ${({ theme, $color,$isSelected }) => $isSelected?theme.color[$color+($color==="darkYellow"?"600":"500")]:theme.color[$color+"200"]};
+  border: 1px solid ${({ theme, $color }) => theme.color[$color+($color==="darkYellow"?"600":"500")]};
+`;
+
+export const RandomColor = styled.div<{ $isSelected?: boolean }>`
+  background: conic-gradient(red, yellow, #1e90ff, red);
+  opacity: ${({ $isSelected }) => $isSelected ? 1 : 0.6};
+  border: 1px solid ${({ theme }) => theme.color.gray900};
+`;
+
+export const CreateKeywordButton = styled.button`
+  ${FlexRowCenter};
+  ${clickable};
+  width: 302px;
+  height: 48px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background-color: ${({ theme }) => theme.color.orange400};
+  color: #fff;
+  font-size: 16px;
+  font-weight: 800;
+  margin-top: auto;
+  border: none;
+  color: #fff;
+  &:disabled {
+    background-color: ${({ theme }) => theme.color.gray100};
+  }
+`;

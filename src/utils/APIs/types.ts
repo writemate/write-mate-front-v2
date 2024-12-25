@@ -80,8 +80,8 @@ export type TWorkInfo = {
 export type TKeyword = {
   id: string;
   word: string;
-  darkColor: string;
-  lightColor: string;
+  dark_color: string;
+  light_color: string;
 };
 
 /**
@@ -98,7 +98,7 @@ export type TCharacter = {
   gender: string;
   characteristic: Array<{ title: string; content: string }>;
   keyword: TKeyword[];
-  relatedEvent: TPlotEvent[];
+  relatedEvent: TChapter[];
 };
 
 export type TSimpleCharacter = {

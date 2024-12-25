@@ -12,9 +12,9 @@ export const EventListContainer = styled.div`
   margin: 20px 0;
 `;
 
-export const EventContainer = styled.div`
+export const EventContainer = styled.div<{ isDraggable?: boolean }>`
   ${FlexRowLeftStart};
-  padding: 20px 20px 20px 0;
+  padding: 20px 20px 20px ${({ isDraggable = true }) => (isDraggable ? "0" : "20px")};
   width: 100%;
   margin-bottom: 12px;
 
@@ -83,6 +83,9 @@ export const EventTitle = styled.input`
   background: transparent;
   margin-bottom: 5px;
   margin-top: 16px;
+  &:disabled {
+    background: none;
+  }
 `;
 
 
@@ -99,5 +102,8 @@ export const EventDescription = styled(TextareaAutosize)`
   resize: none;
   &::placeholder {
     color: ${({ theme }) => theme.color.gray300};
+  }
+  &:disabled {
+    background: none;
   }
 `;
