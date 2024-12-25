@@ -12,12 +12,8 @@ import {
     Description,
     ChapterHeader,
 } from "@/styles/workspace/plot/Chapter.styles";
-import DeleteIcon from "@/assets/workspace/plot/delete.svg";
 import ToggleIcon from "@/assets/workspace/plot/toggle.svg";
-import CopyIcon from "@/assets/workspace/plot/copy.svg";
-import DragDrop from "@/assets/workspace/plot/dragdrop.svg";
 import ToggleFold from "@/assets/workspace/plot/toggleFold.svg";
-import useChapter from "@/hooks/workspace/plot/useChapter";
 import { TChapter } from "@/utils/APIs/types";
 import { CharacterContext } from "@/hooks/workspace/character/character";
   
@@ -79,6 +75,7 @@ export default function RelatedEvents() {
     return (
         <Container>
             <SubTitle>연관 사건</SubTitle>
+            {relatedEvent?.length === 0 && <span>연관 사건이 없습니다.</span>}
             {relatedEvent?.map((event) => (
                 <Chapter key={event.id} {...event} />
             ))}

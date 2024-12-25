@@ -89,6 +89,8 @@ export const KeywordListContainerForCharacterCard = styled(
   margin-top: 0;
   font-size: 12px;
   line-height: 18px;
+  height: 78px;
+  overflow: hidden;
 `;
 
 export const KeywordContainer = styled.div<{
@@ -121,6 +123,7 @@ export const CharacterCard = styled(Link)`
   ${FlexColumnLeftStart};
   ${clickable};
   width: 244px;
+  height: 228px;
   padding: 20px;
   border-radius: 12px;
   gap: 10px;
@@ -166,6 +169,7 @@ export const CharacterRole = styled.div`
 export const CharacterDescription = styled.div`
   font-size: 14px;
   line-height: 21px;
+  height: 42px;
   color: ${({ theme }) => theme.color.gray400};
   overflow: hidden;
   text-overflow: ellipsis;
