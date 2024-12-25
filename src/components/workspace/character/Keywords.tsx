@@ -36,7 +36,7 @@ export default function Description() {
             <MiniModal tabIndex={0} onBlur={onBlurredMiniModal} $left={miniModalLeftPosition}>
               <InputWithButton>
                 <Input value={miniKeywordInput} onChange={onChangeMiniKeywordInput}
-                  onKeyDown={onEnterPressAtMiniModal} autoFocus placeholder="키워드 입력하기" />
+                  onKeyDown={onEnterPressAtMiniModal} placeholder="키워드 입력하기" />
                 <button onMouseDown={onClickCreateAndAddKeywordToCharacter}>추가</button>
               </InputWithButton>
               {keywordList?.filter(({id})=>!keyword?.some((keyword)=>keyword.id===id)).map((keyword, index) => (
