@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { workspaceQueryKeys } from "@/utils/APIs/queryKeys";
-import { createCharacterRelation, deleteCharacterRelation, updateCharacterRelation} from "@/utils/APIs/workspace";
-import { TRelation, TCharacter } from "@/utils/APIs/types";
+import { createCharacterRelation, deleteCharacterRelation, updateCharacterRelation} from "@/utils/APIs/workspace/character";
+import { TCharacter } from "@/utils/APIs/types";
 import { useState } from "react";
 import { EditRelationProps } from "@/components/workspace/character/EditRelation";
 import { useParams } from "next/navigation";
@@ -53,19 +53,19 @@ export function useEditRelation({character1, character2, relation, closeModal }:
 
   const onClickCreate = () => {
     createRelation({
-      start_ch: selectedCharacter1!._id,
-      end_ch: selectedCharacter2!._id,
-      arrow_text_left: inputRelationLeft,
-      arrow_text_right: inputRelationRight,
+      character1Id: selectedCharacter1!.id,
+      character2Id: selectedCharacter2!.id,
+      relation2to1: inputRelationLeft,
+      relation1to2: inputRelationRight,
     });
     closeModal?.();
   }
 
   const onClickUpdate = () => {
     updateRelation({
-      relation_id: relation!._id,
-      arrow_text_left: inputRelationLeft,
-      arrow_text_right: inputRelationRight,
+      relationId: relation!._id,
+      relation2to1: inputRelationLeft,
+      relation1to2: inputRelationRight,
     });
     closeModal?.();
   }
