@@ -122,13 +122,19 @@ export default function CharacterList() {
             <CharacterCardTitle>
               <CharacterImage $src={character.ch_image} />
               <div>
-                <CharacterName>{character.ch_name}</CharacterName>
+                <CharacterName $isNew={character.ch_name===""}>
+                  {character.ch_name}
+                  {character.ch_name==="" && "새 인물"}
+                </CharacterName>
                 <CharacterRole>{character.role}</CharacterRole>
               </div>
               {character.isMain && <StarActive onClick={removeMainCharacter(character.id)} />}
               {!character.isMain && <StarInactive onClick={setMainCharacter(character.id)} />}
             </CharacterCardTitle>
-            <CharacterDescription>{character.description}</CharacterDescription>
+            <CharacterDescription  $isNew={character.ch_name===""}>
+              {character.description}
+              {character.description==="" && "인물 설명을 적어주세요."}
+            </CharacterDescription>
             <KeywordListContainerForCharacterCard>
               {character.keyword.map((keyword, index) => {
                 const isSelected = isSelectedKeyword(keyword.id);
@@ -141,6 +147,7 @@ export default function CharacterList() {
                   </KeywordContainer>
                 );
               })}
+              {character.keyword.length===0 && <div style={{color:"#B1B5C4"}}>키워드를 선택해주세요.</div>}
             </KeywordListContainerForCharacterCard>
           </CharacterCard>
         ))}

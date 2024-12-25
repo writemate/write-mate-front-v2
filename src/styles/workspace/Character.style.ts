@@ -91,6 +91,7 @@ export const KeywordListContainerForCharacterCard = styled(
   line-height: 18px;
   height: 78px;
   overflow: hidden;
+  align-items: flex-end;
 `;
 
 export const KeywordContainer = styled.div<{
@@ -150,13 +151,14 @@ export const CharacterImage = styled.div<{ $src: string }>`
   flex-shrink: 0;
   margin-right: 12px;
 `;
-export const CharacterName = styled.div`
+export const CharacterName = styled.div<{ $isNew?: boolean }>`
   font-size: 14px;
   font-weight: 700;
   width: 123px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: ${({ theme, $isNew }) => ($isNew ? theme.color.gray300 : theme.color.gray900)};
 `;
 export const CharacterRole = styled.div`
   font-size: 13px;
@@ -166,11 +168,11 @@ export const CharacterRole = styled.div`
   white-space: nowrap;
   width: 123px;
 `;
-export const CharacterDescription = styled.div`
+export const CharacterDescription = styled.div<{ $isNew?: boolean }>`
   font-size: 14px;
   line-height: 21px;
   height: 42px;
-  color: ${({ theme }) => theme.color.gray400};
+  color: ${({ theme, $isNew }) => ($isNew ? theme.color.gray200 : theme.color.gray400)};
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
