@@ -358,6 +358,12 @@ export const RelationCharacterDescription = styled.div`
   font-style: normal;
   font-weight: 500;
   line-height: 140%;
+  height: calc(13px * 1.4 * 5);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
   color: ${({ theme }) => theme.color.gray400};
 `;
 
