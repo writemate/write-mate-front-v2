@@ -131,7 +131,7 @@ export default function CharacterList() {
               {character.isMain && <StarActive onClick={removeMainCharacter(character.id)} />}
               {!character.isMain && <StarInactive onClick={setMainCharacter(character.id)} />}
             </CharacterCardTitle>
-            <CharacterDescription  $isNew={character.ch_name===""}>
+            <CharacterDescription  $isNew={character.description===""}>
               {character.description}
               {character.description==="" && "인물 설명을 적어주세요."}
             </CharacterDescription>

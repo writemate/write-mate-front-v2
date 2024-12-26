@@ -12,11 +12,11 @@ export const createCharacter = (workspaceId: string) => async () => {
   return response.data;
 }
 export const setMainCharacter = (workspaceId: string) => async (characterId: string) => {
-  const response = await axiosInstance.patch<void>(DOMAIN.UPDATE_CHARACTER_MAIN(workspaceId, characterId));
+  const response = await axiosInstance.patch<void>(DOMAIN.UPDATE_CHARACTER_MAIN(workspaceId, characterId), { isMain: true });
   return response.data;
 }
 export const unsetMainCharacter = (workspaceId: string) => async (characterId: string) => {
-  const response = await axiosInstance.patch<void>(DOMAIN.UPDATE_CHARACTER_MAIN(workspaceId, characterId));
+  const response = await axiosInstance.patch<void>(DOMAIN.UPDATE_CHARACTER_MAIN(workspaceId, characterId), { isMain: false });
   return response.data;
 }
 
