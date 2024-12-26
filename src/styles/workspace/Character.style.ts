@@ -139,6 +139,9 @@ export const CharacterCardTitle = styled.div`
   }
 `;
 export const CharacterImage = styled.div<{ $src: string }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-image: url(${({ $src }) => $src});
   background-size: cover;
   width: 48px;
@@ -149,6 +152,8 @@ export const CharacterImage = styled.div<{ $src: string }>`
   border: 2px solid #fff;
   flex-shrink: 0;
   margin-right: 12px;
+  font-size: 18px;
+  font-weight: 700;
 `;
 export const CharacterName = styled.div`
   font-size: 14px;
@@ -415,7 +420,7 @@ export const ManageKeywordContainer = styled.div`
   overflow-y: auto;
   background-color: #fff;
   border-radius: 8px;
-  box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.20);
+  box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.2);
 `;
 
 export const ManageRowWrapper = styled.div`
@@ -457,7 +462,7 @@ export const ManageKeywordRight = styled.div`
 export const SelectColorContainer = styled.div`
   ${FlexRowLeftStart};
   gap: 6px;
-  &>div{
+  & > div {
     ${clickable};
     width: 24px;
     height: 24px;
@@ -465,14 +470,22 @@ export const SelectColorContainer = styled.div`
   }
 `;
 
-export const SelectableColor = styled.div<{ $color: string, $isSelected?: boolean }>`
-  background-color: ${({ theme, $color,$isSelected }) => $isSelected?theme.color[$color+($color==="darkYellow"?"600":"500")]:theme.color[$color+"200"]};
-  border: 1px solid ${({ theme, $color }) => theme.color[$color+($color==="darkYellow"?"600":"500")]};
+export const SelectableColor = styled.div<{
+  $color: string;
+  $isSelected?: boolean;
+}>`
+  background-color: ${({ theme, $color, $isSelected }) =>
+    $isSelected
+      ? theme.color[$color + ($color === "darkYellow" ? "600" : "500")]
+      : theme.color[$color + "200"]};
+  border: 1px solid
+    ${({ theme, $color }) =>
+      theme.color[$color + ($color === "darkYellow" ? "600" : "500")]};
 `;
 
 export const RandomColor = styled.div<{ $isSelected?: boolean }>`
   background: conic-gradient(red, yellow, #1e90ff, red);
-  opacity: ${({ $isSelected }) => $isSelected ? 1 : 0.6};
+  opacity: ${({ $isSelected }) => ($isSelected ? 1 : 0.6)};
   border: 1px solid ${({ theme }) => theme.color.gray900};
 `;
 

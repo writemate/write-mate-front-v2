@@ -3,14 +3,13 @@ import { MemoListContainer } from "@/styles/dashboard/IdeaBox/Memo/MemoList";
 import MemoItem from "@/components/dashboard/Memo/MemoItem";
 import { LoadingMessage } from "@/styles/dashboard/Loading";
 import { AddMemoButton } from "@/components/dashboard/AddButton";
-import { MemoListContext, useMemoList } from "@/hooks/dashboard/memo/memoList";
+import { useMemoList } from "@/hooks/dashboard/memo/useMemoList";
 
 export default function MemoList() {
-  const memoListValue = useMemoList();
-  const { memoList, error, isLoading } = memoListValue;
+  const { memoList, error, isLoading } = useMemoList();
 
   return (
-    <MemoListContext.Provider value={memoListValue}>
+    <>
       <MemoListContainer>
         {memoList &&
           memoList
@@ -21,7 +20,7 @@ export default function MemoList() {
         {isLoading && <Loading />}
       </MemoListContainer>
       <AddMemoButton />
-    </MemoListContext.Provider>
+    </>
   );
 }
 

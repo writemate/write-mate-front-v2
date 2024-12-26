@@ -1,4 +1,4 @@
-import { DashboardContext } from "@/hooks/dashboard/dashboard";
+import { CharacterItemContext } from "@/hooks/dashboard/character/characterItem";
 import {
   BirthAndGenderContainer,
   BirthContainer,
@@ -8,15 +8,8 @@ import {
 import { useContext } from "react";
 
 export default function MCharacterBirthAndGender() {
-  const {
-    selectedMCharacter,
-    onChangeSelectedMCharacterBirthday,
-    onChangeSelectedMCharacterGender,
-    onKeyDownInput,
-  } = useContext(DashboardContext).memoCharacterModal;
-  if (!selectedMCharacter) {
-    return null;
-  }
+  const { character, onChangeBirthday, onChangeGender } =
+    useContext(CharacterItemContext);
 
   return (
     <BirthAndGenderContainer>
@@ -24,9 +17,8 @@ export default function MCharacterBirthAndGender() {
         <p>탄생일</p>
         <Input
           className="birth"
-          defaultValue={selectedMCharacter.birthday}
-          onChange={onChangeSelectedMCharacterBirthday}
-          onKeyDown={onKeyDownInput}
+          defaultValue={character.birthday}
+          onChange={onChangeBirthday}
           placeholder="인물의 생년월일을 입력하세요."
         />
       </BirthContainer>
@@ -34,8 +26,8 @@ export default function MCharacterBirthAndGender() {
         <p>성별</p>
         <Input
           className="gender"
-          defaultValue={selectedMCharacter.gender}
-          onChange={onChangeSelectedMCharacterGender}
+          defaultValue={character.gender}
+          onChange={onChangeGender}
           placeholder="인물의 성별을 입력하세요."
         />
       </GenderContainer>
