@@ -31,35 +31,33 @@ export default function MemoItem({ memo }: { memo: TMemo }) {
 
   return (
     <MemoItemContext.Provider value={memoItemValue}>
-      {memo && (
-        <MemoCard $isSelected={isOpenEditModal}>
-          <MemoHeader>
-            <MemoTitle
-              value={getTempName()}
-              placeholder="메모 이름을 입력하세요"
-              readOnly={true}
-              onClick={onClickMemoTitle}
-            />
-          </MemoHeader>
-          <MemoContent
-            value={memo.memo_description}
-            placeholder="메모 내용을 입력하세요"
-            maxRows={6}
+      <MemoCard $isSelected={isOpenEditModal}>
+        <MemoHeader>
+          <MemoTitle
+            value={getTempName()}
+            placeholder="메모 이름을 입력하세요"
             readOnly={true}
-            onClick={onClickMemoContent}
+            onClick={onClickMemoTitle}
           />
-          <MemoUpdatedDate>
-            {new Date(memo.updatedAt).toLocaleString("ko-KR", {
-              year: "numeric",
-              month: "2-digit",
-              day: "2-digit",
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
-          </MemoUpdatedDate>
-          {isOpenEditModal && <EditModal />}
-        </MemoCard>
-      )}
+        </MemoHeader>
+        <MemoContent
+          value={memo.memo_description}
+          placeholder="메모 내용을 입력하세요"
+          maxRows={6}
+          readOnly={true}
+          onClick={onClickMemoContent}
+        />
+        <MemoUpdatedDate>
+          {new Date(memo.updatedAt).toLocaleString("ko-KR", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+          })}
+        </MemoUpdatedDate>
+      </MemoCard>
+      {isOpenEditModal && <EditModal />}
     </MemoItemContext.Provider>
   );
 }

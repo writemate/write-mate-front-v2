@@ -15,7 +15,7 @@ export const createMemo = async () => {
   return response.data;
 };
 
-export const deleteMemo = async (id: string) => {
+export const deleteMemo = (id: string) => async () => {
   await axiosInstance.delete(DOMAIN.DELETE_MEMO(id));
 };
 
