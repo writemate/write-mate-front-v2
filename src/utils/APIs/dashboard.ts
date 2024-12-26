@@ -46,7 +46,7 @@ export const updateWorkCategory =
     return response.data;
   };
 
-export const deleteWork = async (workId: string) => {
+export const deleteWork = (workId: string) => async () => {
   const response = await axiosInstance.delete(DOMAIN.DELETE_WORK(workId));
   return response.data;
 };

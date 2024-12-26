@@ -7,6 +7,7 @@ import Danger from "@/assets/icons/danger.svg";
 export const ModalContainer = styled.div`
   ${FlexColumnCenter}
   padding: 16px;
+  padding-top: 48px;
 
   border-radius: 12px;
   background: ${({ theme }) => theme.color.white};
@@ -38,9 +39,10 @@ export const DangerIcon = styled(Danger)`
 `;
 
 export const ButtonContainer = styled.div`
+  padding-top: 16px;
   display: flex;
-  gap: 12px;
-  justify-content: space-between;
+  gap: 8px;
+  justify-content: flex-end;
   width: 100%;
 `;
 
@@ -66,7 +68,7 @@ export const ModalButton = styled(Button)<{ $isDanger?: boolean }>`
   }
 
   ${media.mobile} {
-    padding: 8px 14px;
+    padding: 6px 12px;
     font-size: 14px;
   }
 `;

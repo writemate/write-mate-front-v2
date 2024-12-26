@@ -8,7 +8,7 @@ import { useContext } from "react";
 import { KebabContext, useKebab } from "@/hooks/dashboard/work/useKebab";
 import { WorkCategoryContext } from "@/hooks/dashboard/work/workCategory";
 import { DashboardContext } from "@/hooks/dashboard/dashboard";
-import { workspaceCategory } from "@/utils/APIs/types";
+import { WarningModal } from "./WarningModal";
 
 export const Kebab = ({
   workId,
@@ -18,7 +18,7 @@ export const Kebab = ({
   titleInputRef: React.RefObject<HTMLInputElement>;
 }) => {
   const { workCategory } = useContext(WorkCategoryContext);
-  const useKebabValue = useKebab(workId);
+  const useKebabValue = useKebab(workId, titleInputRef);
   const { isKebabOpen, onClickKebab, menuRef, onBlurKebab } = useKebabValue;
 
   return (
@@ -29,37 +29,25 @@ export const Kebab = ({
           <KebabContainer ref={menuRef}>
             {workCategory === "ongoing" && (
               <>
-                <ChangeTitle titleInputRef={titleInputRef} />
+                <ChangeTitle />
                 <ChangeCover />
-                <ChangeCategory
-                  toBeCategory={"completed"}
-                  message={"완결으로 변경"}
-                />
-                <ChangeCategory2Trash workId={workId} />
+                <ChangeCategory2Ongoing />
+                <ChangeCategory2Trash />
               </>
             )}
             {workCategory === "completed" && (
               <>
-                <ChangeTitle titleInputRef={titleInputRef} />
+                <ChangeTitle />
                 <ChangeCover />
-                <ChangeCategory
-                  toBeCategory={"ongoing"}
-                  message={"집필중으로 변경"}
-                />
-                <ChangeCategory2Trash workId={workId} />
+                <ChangeCategory2Ongoing />
+                <ChangeCategory2Trash />
               </>
             )}
             {workCategory === "trash" && (
               <>
-                <ChangeCategory
-                  toBeCategory={"ongoing"}
-                  message={"집필중으로 변경"}
-                />
-                <ChangeCategory
-                  toBeCategory={"completed"}
-                  message={"완결으로 변경"}
-                />
-                <DeletePermanently workId={workId} />
+                <ChangeCategory2Ongoing />
+                <ChangeCategory2Completed />
+                <DeletePermanently />
               </>
             )}
           </KebabContainer>
@@ -69,46 +57,27 @@ export const Kebab = ({
   );
 };
 
-export const ChangeTitle = ({
-  titleInputRef,
-}: {
-  titleInputRef: React.RefObject<HTMLInputElement>;
-}) => {
+export const ChangeTitle = () => {
   const { onClickChangeTitle } = useContext(KebabContext);
 
-  return (
-    <KebabItem onClick={onClickChangeTitle(titleInputRef)}>
-      작품명 변경
-    </KebabItem>
-  );
+  return <KebabItem onClick={onClickChangeTitle}>작품명 변경</KebabItem>;
 };
 
-export const ChangeCategory = ({
-  toBeCategory,
-  message,
-}: {
-  toBeCategory: keyof typeof workspaceCategory;
-  message: string;
-}) => {
+export const ChangeCategory2Ongoing = () => {
   const { onClickChangeCategory } = useContext(KebabContext);
 
   return (
-    <KebabItem onClick={onClickChangeCategory(toBeCategory)}>
-      {message}
+    <KebabItem onClick={onClickChangeCategory("ongoing")}>
+      집필중으로 변경
     </KebabItem>
   );
 };
+export const ChangeCategory2Completed = () => {
+  const { onClickChangeCategory } = useContext(KebabContext);
 
-export const ChangeCategory2Trash = ({ workId }: { workId: string }) => {
-  const { onClickMoveToTrash } =
-    useContext(DashboardContext).removeConfirmationModal;
   return (
-    <KebabItem
-      $isMajor={true}
-      $isLast={true}
-      onClick={onClickMoveToTrash(workId)}
-    >
-      휴지통으로 이동
+    <KebabItem onClick={onClickChangeCategory("completed")}>
+      완결로 변경
     </KebabItem>
   );
 };
@@ -133,17 +102,53 @@ export const ChangeCover = () => {
   );
 };
 
-export const DeletePermanently = ({ workId }: { workId: string }) => {
-  const { onClickDeleteWork } =
-    useContext(DashboardContext).removeConfirmationModal;
+export const ChangeCategory2Trash = () => {
+  // 휴지통으로 이동 버튼 + 버튼 누르면 모달 보임
+  const {
+    isOpenDeleteModal,
+    closeModal,
+    onClickOpenModal,
+    onClickCancel,
+    onClickChangeCategory,
+  } = useContext(KebabContext);
 
   return (
-    <KebabItem
-      $isMajor={true}
-      $isLast={true}
-      onClick={onClickDeleteWork(workId)}
-    >
-      영구 삭제
-    </KebabItem>
+    <>
+      <KebabItem $isMajor={true} $isLast={true} onClick={onClickOpenModal}>
+        휴지통으로 이동
+      </KebabItem>
+      {isOpenDeleteModal && (
+        <WarningModal
+          closeModal={closeModal}
+          onClickConfirm={onClickChangeCategory("trash")}
+          onClickCancel={onClickCancel}
+          message={"작품을 휴지통으로 이동하시겠습니까?"}
+          ConfirmButtonName={"이동"}
+        />
+      )}
+    </>
+  );
+};
+
+export const DeletePermanently = () => {
+  // 영구 삭제 버튼 + 버튼 누르면 뜰 모달. 모달에서 버튼 누르면 삭제
+  const { isOpenDeleteModal, onClickOpenModal, closeModal, onDeleteWork } =
+    useContext(KebabContext);
+
+  return (
+    <>
+      <KebabItem $isMajor={true} $isLast={true} onClick={onClickOpenModal}>
+        영구 삭제
+      </KebabItem>
+      {isOpenDeleteModal && (
+        <WarningModal
+          closeModal={closeModal}
+          onClickConfirm={onDeleteWork()}
+          onClickCancel={closeModal}
+          message={"작품을 영구 삭제하시겠습니까?"}
+          ConfirmButtonName={"삭제"}
+        />
+      )}
+    </>
   );
 };
