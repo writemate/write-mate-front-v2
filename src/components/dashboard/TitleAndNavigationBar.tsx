@@ -1,5 +1,6 @@
 "use client";
 import { DashboardContext } from "@/hooks/dashboard/dashboard";
+import { ideaCategoryContext } from "@/hooks/dashboard/ideaCategoy";
 import { WorkCategoryContext } from "@/hooks/dashboard/work/workCategory";
 import {
   Title,
@@ -38,26 +39,22 @@ export function WorkStudioTitleAndNavigationBar() {
 }
 
 export function IdeaBoxTitleAndNavigationBar() {
-  const { ideaCategory, handleIdeaCategoryChange } =
-    useContext(DashboardContext).ideaBoxMemo;
+  const { ideaCategory, onClickMemo, onClickCharacter, isActiceCategory } =
+    useContext(ideaCategoryContext);
 
   return (
     <TitleAndNavigationBar>
       <Title>아이디어 보관함</Title>
       <NavigationBar>
         <NavigationButton
-          onClick={() => {
-            handleIdeaCategoryChange(ideaBoxCategory.memo);
-          }}
-          $isActivated={ideaCategory === ideaBoxCategory.memo}
+          onClick={onClickMemo}
+          $isActivated={isActiceCategory(ideaBoxCategory.memo)}
         >
           메모
         </NavigationButton>
         <NavigationButton
-          onClick={() => {
-            handleIdeaCategoryChange(ideaBoxCategory.character);
-          }}
-          $isActivated={ideaCategory === ideaBoxCategory.character}
+          onClick={onClickCharacter}
+          $isActivated={isActiceCategory(ideaBoxCategory.character)}
         >
           인물
         </NavigationButton>
