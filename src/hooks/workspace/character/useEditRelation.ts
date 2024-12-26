@@ -63,7 +63,7 @@ export function useEditRelation({character1, character2, relation, closeModal }:
 
   const onClickUpdate = () => {
     updateRelation({
-      relationId: relation!._id,
+      relationId: relation!.id,
       relation2to1: inputRelationLeft,
       relation1to2: inputRelationRight,
     });
@@ -71,7 +71,7 @@ export function useEditRelation({character1, character2, relation, closeModal }:
   }
 
   const onClickDelete = () => {
-    deleteRelation(relation!._id);
+    deleteRelation(relation!.id);
     closeModal?.();
   }
 

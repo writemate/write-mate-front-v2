@@ -28,7 +28,8 @@ export default function EditRelation<T extends boolean>({
     onClickCreate, onClickUpdate, onClickDelete, closeModal } = useEditRelation(otherProps);
   
 
-  const isSavalble = !!selectedCharacter1 && !!selectedCharacter2 && !!inputRelationLeft && !!inputRelationRight;
+  const isSavalble = !!selectedCharacter1 && !!selectedCharacter2 && !!inputRelationLeft && !!inputRelationRight
+    && selectedCharacter1.id !== selectedCharacter2.id;
 
   return (
     <EditRelationContainer>

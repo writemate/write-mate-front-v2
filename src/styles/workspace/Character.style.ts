@@ -1,5 +1,6 @@
 "use client";
 import { styled } from "styled-components";
+import {  DropdownMenuWrapper, DropdownSelector } from "@/styles";
 import {
   Button,
   clickable,
@@ -500,5 +501,27 @@ export const CreateKeywordButton = styled.button`
   color: #fff;
   &:disabled {
     background-color: ${({ theme }) => theme.color.gray100};
+  }
+`;
+
+export const CharacterDropdownMenuWrapper = styled(DropdownMenuWrapper)`
+  width: 100%;
+  max-width: 150px;
+  position: relative;
+`;
+
+export const CharacterDropdownSelector = styled(DropdownSelector)`
+  box-shadow: none;
+  color: ${({ theme }) => theme.color.red400};
+  &>svg{
+    flex-shrink: 0;
+  }
+  & path {
+    fill: ${({ theme }) => theme.color.red400};
+  }
+  &>span{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 `;

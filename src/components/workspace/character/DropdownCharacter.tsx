@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { DropdownMenuWrapper, DropdownSelector, DropDownListContainer, DropDownOption } from '@/styles';
+import { DropDownListContainer, DropDownOption } from '@/styles';
+import { CharacterDropdownMenuWrapper, CharacterDropdownSelector } from '@/styles/workspace/Character.style';
 import DropButtonIcon from '@/assets/icons/dropButton.svg';
 import { TCharacter } from '@/utils/APIs/types';
 
@@ -16,19 +17,19 @@ export default function DropdownCharacter({ placeholder, options, selected, setS
   }
 
   return (
-    <DropdownMenuWrapper tabIndex={0} onBlur={onBlur}>
-      <DropdownSelector onClick={() => setIsOpen(!isOpen)}>
+    <CharacterDropdownMenuWrapper tabIndex={0} onBlur={onBlur}>
+      <CharacterDropdownSelector onClick={() => setIsOpen(!isOpen)}>
         <span>{selected??placeholder}</span>
         <DropButtonIcon/>
-      </DropdownSelector>
+      </CharacterDropdownSelector>
       {isOpen && (
         <DropDownListContainer>
           <DropDownOption>{placeholder}</DropDownOption>
           {options.map((option) => (
-            <DropDownOption key={option._id} onClick={handleSelect(option)}>{option.ch_name}</DropDownOption>
+            <DropDownOption key={option.id} onClick={handleSelect(option)}>{option.ch_name}</DropDownOption>
           ))}
         </DropDownListContainer>
       )}
-    </DropdownMenuWrapper>
+    </CharacterDropdownMenuWrapper>
   );
 }
