@@ -4,20 +4,23 @@ import {
   deleteWork,
   updateWorkCategory,
   updateWorkCover,
-  updateWorkTitle,
 } from "@/utils/APIs/dashboard";
 import { useContext, useEffect, useRef, useState } from "react";
-import { DashboardContext } from "./dashboard";
 import { TWork, workspaceCategory } from "@/utils/APIs/types";
 import { notifySuccess, notifyError } from "@/utils/showToast";
+import { DashboardContext } from "../dashboard";
+import { WorkCategoryContext } from "./workCategory";
+import { WorkListContext } from "./workList";
 
 export default function useWork(workId: string) {
-  const { handleEditing, data, workCategory, handleKebabMenuOpenWork } =
+  const { workCategory } = useContext(WorkCategoryContext);
+  const { workList } = useContext(WorkListContext);
+  const { handleEditing, handleKebabMenuOpenWork } =
     useContext(DashboardContext).workstudioAndTrash;
 
   const queryClient = useQueryClient();
   const [work, setWork] = useState<TWork | undefined>(() =>
-    data?.find((work) => work.id === workId)
+    workList?.find((work) => work.id === workId)
   );
   const [toBeCategory, setToBeCategory] = useState<
     keyof typeof workspaceCategory
@@ -28,17 +31,6 @@ export default function useWork(workId: string) {
   const excludeButtonRef = useRef<HTMLDivElement | null>(null);
   const ref = useRef<HTMLInputElement>(null);
 
-  const { mutate: mutateTitle } = useMutation({
-    mutationFn: () => {
-      if (!work) return Promise.reject(new Error("Work is undefined"));
-      return updateWorkTitle(work.id)(work.title);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [dashboardQueryKeys.workStudio(), workCategory],
-      });
-    },
-  });
   const { mutate: mutateCover } = useMutation({
     mutationFn: () => {
       if (!work) return Promise.reject(new Error("Work is undefined"));
@@ -78,32 +70,6 @@ export default function useWork(workId: string) {
     },
   });
 
-  const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!work) return;
-    setWork({
-      ...work,
-      title: e.target.value,
-    });
-  };
-  const onBlurTitle = () => {
-    if (!work) return;
-    setWork({
-      ...work,
-    });
-    mutateTitle();
-    notifySuccess("제목이 변경되었습니다.");
-    handleEditing("");
-  };
-  const onKeyDownTitle = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (!work) return;
-    if (e.key === "Enter") {
-      setWork({
-        ...work,
-      });
-      mutateTitle();
-      handleEditing("");
-    }
-  };
   const onChangeCover = (e: React.ChangeEvent<HTMLInputElement>) => {
     file = e.target.files?.[0] || null;
     if (!file) return;
@@ -177,9 +143,6 @@ export default function useWork(workId: string) {
     work,
     menuRef,
     excludeButtonRef,
-    onChangeTitle,
-    onBlurTitle,
-    onKeyDownTitle,
     onChangeCover,
     onChangeCategory,
     onDeleteWork,

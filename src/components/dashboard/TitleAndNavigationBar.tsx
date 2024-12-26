@@ -1,5 +1,6 @@
 "use client";
 import { DashboardContext } from "@/hooks/dashboard/dashboard";
+import { WorkCategoryContext } from "@/hooks/dashboard/work/workCategory";
 import {
   Title,
   NavigationBar,
@@ -11,8 +12,8 @@ import { ideaBoxCategory } from "@/utils/APIs/types";
 import { useContext } from "react";
 
 export function WorkStudioTitleAndNavigationBar() {
-  const { workCategory, handleWorkCategoryChange } =
-    useContext(DashboardContext).workstudioAndTrash;
+  const { onCategoryOngoingClick, onCategoryCompletedClick, isActiveCategory } =
+    useContext(WorkCategoryContext);
 
   return (
     <TitleAndNavigationBar>
@@ -20,18 +21,14 @@ export function WorkStudioTitleAndNavigationBar() {
 
       <NavigationBar>
         <NavigationButton
-          onClick={() => {
-            handleWorkCategoryChange(workspaceCategory.ongoing);
-          }}
-          $isActivated={workCategory === workspaceCategory.ongoing}
+          onClick={onCategoryOngoingClick}
+          $isActivated={isActiveCategory(workspaceCategory.ongoing)}
         >
           집필 중
         </NavigationButton>
         <NavigationButton
-          onClick={() => {
-            handleWorkCategoryChange(workspaceCategory.completed);
-          }}
-          $isActivated={workCategory === workspaceCategory.completed}
+          onClick={onCategoryCompletedClick}
+          $isActivated={isActiveCategory(workspaceCategory.completed)}
         >
           완결
         </NavigationButton>
@@ -70,18 +67,16 @@ export function IdeaBoxTitleAndNavigationBar() {
 }
 
 export function TrashTitleAndNavigationBar() {
-  const { workCategory, handleWorkCategoryChange } =
-    useContext(DashboardContext).workstudioAndTrash;
+  const { onCategoryTrashClick, isActiveCategory } =
+    useContext(WorkCategoryContext);
 
   return (
     <TitleAndNavigationBar>
       <Title>휴지통</Title>
       <NavigationBar>
         <NavigationButton
-          onClick={() => {
-            handleWorkCategoryChange(workspaceCategory.trash);
-          }}
-          $isActivated={workCategory === workspaceCategory.trash}
+          onClick={onCategoryTrashClick}
+          $isActivated={isActiveCategory(workspaceCategory.trash)}
         >
           작품
         </NavigationButton>

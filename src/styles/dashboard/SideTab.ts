@@ -11,7 +11,7 @@ export const SideTabContainer = styled.div`
   align-items: center;
   width: 228px;
   background-color: ${({ theme }) => theme.color.white};
-  filter: drop-shadow(-2px 2px 5px rgba(0, 0, 0, 0.08));
+  box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.08);
   border-radius: 12px 0px 0px 12px;
   padding: 31px;
 

@@ -5,9 +5,8 @@ import {
   DangerIcon,
   ModalButton,
   ModalContainer,
-} from "@/styles/DeleteModal";
+} from "@/styles/WarningModal";
 import { useContext } from "react";
-import useWork from "@/hooks/dashboard/useWork";
 import Modal from "@/components/Modal";
 
 export default function DeleteModal() {

@@ -1,10 +1,10 @@
 "use client";
 import { MemoListContainer } from "@/styles/dashboard/IdeaBox/Memo/MemoList";
 import { useContext } from "react";
-import MemoItem from "@/components/dashboard/IdeaBox/Memo/MemoItem";
+import MemoItem from "@/components/dashboard/Memo/MemoItem";
 import { DashboardContext } from "@/hooks/dashboard/dashboard";
 import { LoadingMessage } from "@/styles/dashboard/Loading";
-import { AddMemoButton } from "@/components/dashboard/IdeaBox/AddButton";
+import { AddMemoButton } from "@/components/dashboard/AddButton";
 
 export default function MemoList() {
   const { memoList, error, isLoading } =

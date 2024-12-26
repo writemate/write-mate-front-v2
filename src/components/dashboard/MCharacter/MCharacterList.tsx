@@ -2,7 +2,7 @@
 import { DashboardContext } from "@/hooks/dashboard/dashboard";
 import { LoadingMessage } from "@/styles/dashboard/Loading";
 import { useContext } from "react";
-import { AddMCharacterButton } from "@/components/dashboard/IdeaBox/AddButton";
+import { AddMCharacterButton } from "@/components/dashboard/AddButton";
 import { CharacterListContainer } from "@/styles/dashboard/IdeaBox/MCharacter/MCharacterList";
 import { MemoItem } from "./MCharacterItem";
 
