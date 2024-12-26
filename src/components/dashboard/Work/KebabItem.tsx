@@ -1,7 +1,7 @@
 import { KebabContext } from "@/hooks/dashboard/work/kebab";
 import { KebabItem } from "@/styles/dashboard/Work/Kebab";
 import { useContext } from "react";
-import { WarningModal } from "./WarningModal";
+import { WarningModal } from "../WarningModal";
 import { ChangeCoverInput } from "@/styles/dashboard/Work/WorkList";
 
 export const ChangeTitle = () => {

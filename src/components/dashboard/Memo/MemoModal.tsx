@@ -7,17 +7,26 @@ import {
   Input,
   ModalContentAndFooterContainer,
   ModalContentContainer,
+  FooterContainer,
+  DeleteButton,
+  RightButtonContainer,
+  SaveButton,
 } from "@/styles/dashboard/IdeaBox/Modal";
-import { ModalFooter } from "@/components/dashboard/Memo/ModalFooter";
 import { MemoItemContext } from "@/hooks/dashboard/memo/memoItem";
+import { WarningModal } from "../WarningModal";
 
 export function EditModal() {
   const {
     memo,
+    isOpenDeleteModal,
     closeEditModal,
+    closeDeleteModal,
+    onKeyDownTitle,
+    onDeleteMemo,
     onChangeName,
     onChangeDescription,
-    onKeyDownTitle,
+    onClickCloseEditModal,
+    onClickOpenDeleteModal,
   } = useContext(MemoItemContext);
   return (
     <Modal closeModal={closeEditModal} maxWidth="600px">
@@ -41,7 +50,21 @@ export function EditModal() {
             placeholder="메모 내용을 입력하세요"
           />
         </ModalContentContainer>
-        <ModalFooter />
+        <FooterContainer>
+          <DeleteButton onClick={onClickOpenDeleteModal}>삭제</DeleteButton>
+          {isOpenDeleteModal && (
+            <WarningModal
+              closeModal={closeDeleteModal}
+              onClickConfirm={onDeleteMemo()}
+              onClickCancel={closeDeleteModal}
+              message="정말로 삭제하시겠습니까?"
+              ConfirmButtonName="삭제"
+            />
+          )}
+          <RightButtonContainer>
+            <SaveButton onClick={onClickCloseEditModal}>닫기</SaveButton>
+          </RightButtonContainer>
+        </FooterContainer>
       </ModalContentAndFooterContainer>
     </Modal>
   );
