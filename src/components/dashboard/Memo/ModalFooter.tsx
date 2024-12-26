@@ -2,24 +2,23 @@
 import { DashboardContext } from "@/hooks/dashboard/dashboard";
 import { useContext } from "react";
 import {
-  CancelButton,
   DeleteButton,
   FooterContainer,
   SaveButton,
   RightButtonContainer,
 } from "@/styles/dashboard/IdeaBox/Modal";
+import { MemoItemContext } from "@/hooks/dashboard/memo/memoItem";
 
 export function ModalFooter() {
-  const { closeMemoModal, rollbackMemoAndCloseModal } =
-    useContext(DashboardContext).memoModal;
+  const { onClickCloseModal } = useContext(MemoItemContext);
+
   const { onClickDeleteMemo } =
     useContext(DashboardContext).removeConfirmationModal;
   return (
     <FooterContainer>
       <DeleteButton onClick={onClickDeleteMemo}>삭제</DeleteButton>
       <RightButtonContainer>
-        <CancelButton onClick={rollbackMemoAndCloseModal}>취소</CancelButton>
-        <SaveButton onClick={closeMemoModal}>저장</SaveButton>
+        <SaveButton onClick={onClickCloseModal}>닫기</SaveButton>
       </RightButtonContainer>
     </FooterContainer>
   );

@@ -1,5 +1,4 @@
 "use client";
-import { DashboardContext } from "@/hooks/dashboard/dashboard";
 import {
   MemoCard,
   MemoContent,
@@ -7,18 +6,14 @@ import {
   MemoTitle,
   MemoUpdatedDate,
 } from "@/styles/dashboard/IdeaBox/Memo/MemoList";
-import { useContext } from "react";
+import { TMemo } from "@/utils/APIs/types";
+import { EditModal } from "./MemoModal";
+import { MemoItemContext, useMemoItem } from "@/hooks/dashboard/memo/memoItem";
 
-export default function MemoItem({ memoId }: { memoId: string }) {
-  const { memoList, error, isLoading } =
-    useContext(DashboardContext).ideaBoxMemo;
-  const { selectedMemo, onClickMemoTitle, onClickMemoContent } =
-    useContext(DashboardContext).memoModal;
-
-  const memo = memoList.find((memo) => memo.id === memoId);
-
-  if (isLoading) return <div>메모를 불러오는 중...</div>;
-  if (error) return <div>메모를 불러오는 중 에러가 발생했습니다.</div>;
+export default function MemoItem({ memo }: { memo: TMemo }) {
+  const memoItemValue = useMemoItem(memo);
+  const { isOpenEditModal, onClickMemoTitle, onClickMemoContent } =
+    memoItemValue;
 
   const getTempName = () => {
     if (!memo) return "";
@@ -35,15 +30,15 @@ export default function MemoItem({ memoId }: { memoId: string }) {
   };
 
   return (
-    <>
+    <MemoItemContext.Provider value={memoItemValue}>
       {memo && (
-        <MemoCard $isSelected={memo.id === selectedMemo?.id}>
+        <MemoCard $isSelected={isOpenEditModal}>
           <MemoHeader>
             <MemoTitle
               value={getTempName()}
               placeholder="메모 이름을 입력하세요"
               readOnly={true}
-              onClick={onClickMemoTitle(memo)}
+              onClick={onClickMemoTitle}
             />
           </MemoHeader>
           <MemoContent
@@ -51,7 +46,7 @@ export default function MemoItem({ memoId }: { memoId: string }) {
             placeholder="메모 내용을 입력하세요"
             maxRows={6}
             readOnly={true}
-            onClick={onClickMemoContent(memo)}
+            onClick={onClickMemoContent}
           />
           <MemoUpdatedDate>
             {new Date(memo.updatedAt).toLocaleString("ko-KR", {
@@ -62,8 +57,9 @@ export default function MemoItem({ memoId }: { memoId: string }) {
               minute: "2-digit",
             })}
           </MemoUpdatedDate>
+          {isOpenEditModal && <EditModal />}
         </MemoCard>
       )}
-    </>
+    </MemoItemContext.Provider>
   );
 }
