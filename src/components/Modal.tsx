@@ -12,8 +12,10 @@ export default function Modal({
   maxWidth?: number | string;
   maxHeight?: number | string;
 }) {
-  const propagateClick = (e: React.MouseEvent<HTMLDivElement>) =>
+  const propagateClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
     e.stopPropagation();
+  };
   return (
     <ModalContainer onClick={closeModal}>
       <div onClick={propagateClick} style={{ maxWidth, maxHeight }}>

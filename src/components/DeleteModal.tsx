@@ -5,7 +5,7 @@ import {
   DangerIcon,
   ModalButton,
   ModalContainer,
-} from "@/styles/DeleteModal";
+} from "@/styles/WarningModal";
 import { useContext } from "react";
 import Modal from "@/components/Modal";
 

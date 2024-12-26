@@ -73,7 +73,7 @@ export const HeaderAndMainContainer = styled.div`
   flex-grow: 1;
   height: 100%;
   background-color: ${({ theme }) => theme.color.white};
-  filter: drop-shadow(-2px 2px 5px rgba(0, 0, 0, 0.08));
+  box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.08);
   border-radius: 0px 12px 12px 12px;
   padding: 17px 20px;
   z-index: 0;

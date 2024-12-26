@@ -135,6 +135,10 @@ export const WorkButtonDate = styled.div`
   font-style: normal;
   font-weight: 400;
   line-height: 100%; /* 10px */
+
+  ${media.tablet} {
+    font-size: 8px;
+  }
 `;
 
 import KebabIcon from "@/assets/icons/KebabMenu.svg";

@@ -1,14 +1,24 @@
 import { useOnClickUpdate } from "@/hooks/common/useOnClickUpdate";
-import { updateWorkCategory, updateWorkCover } from "@/utils/APIs/dashboard";
+import {
+  deleteWork,
+  updateWorkCategory,
+  updateWorkCover,
+} from "@/utils/APIs/dashboard";
 import { dashboardQueryKeys } from "@/utils/APIs/queryKeys";
 import { workspaceCategory } from "@/utils/APIs/types";
 import { notifySuccess } from "@/utils/showToast";
 import { useQueryClient } from "@tanstack/react-query";
 import { createContext, useRef, useState } from "react";
 
-export function useKebab(workId: string) {
+export function useKebab(
+  workId: string,
+  titleInputRef: React.RefObject<HTMLInputElement>
+) {
   const queryClient = useQueryClient();
+
   const [isKebabOpen, setIsKebabOpen] = useState(false);
+  const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
+
   const imageInputRef = useRef<HTMLInputElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -29,17 +39,15 @@ export function useKebab(workId: string) {
     if (menuRef.current && menuRef.current.contains(event.relatedTarget)) {
       return;
     }
+    setIsOpenDeleteModal(false);
     closeKebab();
   };
 
   // 작품명 변경
-  const onClickChangeTitle =
-    (titleRef: React.RefObject<HTMLInputElement>) =>
-    (event: React.MouseEvent<HTMLButtonElement>) => {
-      event.preventDefault();
-      titleRef.current?.focus();
-      console.log("Title input ref: ", titleRef);
-    };
+  const onClickChangeTitle = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    titleInputRef.current?.focus();
+  };
 
   // 커버 이미지 변경
   const mutateCoverImage = useOnClickUpdate({
@@ -61,7 +69,6 @@ export function useKebab(workId: string) {
   const onClickChangeCover = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     event.stopPropagation();
-    console.log("Image input ref: ", imageInputRef);
     imageInputRef.current?.click();
   };
 
@@ -70,7 +77,7 @@ export function useKebab(workId: string) {
     mutationFn: updateWorkCategory(workId),
     queryKey: ["workCategory", workId],
     onSuccess: () => {
-      notifySuccess("카테고리가 변경되었습니다.");
+      notifySuccess("작품의 카테고리가 변경되었습니다.");
       queryClient.invalidateQueries({
         queryKey: [dashboardQueryKeys.workStudio(), "ongoing"],
       });
@@ -88,23 +95,53 @@ export function useKebab(workId: string) {
     (workCategory: keyof typeof workspaceCategory) =>
     (event: React.MouseEvent<HTMLButtonElement>) => {
       event.preventDefault();
-
       mutateCategory(workCategory)();
       closeKebab();
     };
 
-  //
+  // 워닝 모달 띄우기
+  const onClickOpenModal = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    setIsOpenDeleteModal(true);
+  };
+  const closeModal = () => {
+    setIsOpenDeleteModal(false);
+  };
+  const onClickCancel = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    closeKebab();
+    closeModal();
+  };
+
+  // 삭제하기
+  const onDeleteWork = useOnClickUpdate({
+    mutationFn: deleteWork(workId),
+    queryKey: [dashboardQueryKeys.workStudio(), "trash"],
+    onSuccess: () => {
+      notifySuccess("작품이 삭제되었습니다.");
+      queryClient.invalidateQueries({
+        queryKey: [dashboardQueryKeys.workStudio(), "trash"],
+      });
+    },
+    savingMessage: "작품 삭제 중",
+    errorMessage: "작품 삭제에 실패했습니다.",
+  });
 
   return {
     isKebabOpen,
+    isOpenDeleteModal,
     imageInputRef,
     menuRef,
-    onClickKebab,
+    closeModal,
     onBlurKebab,
+    onClickKebab,
     onClickChangeTitle,
-    onChangeCoverImage,
     onClickChangeCover,
     onClickChangeCategory,
+    onClickOpenModal,
+    onClickCancel,
+    onChangeCoverImage,
+    onDeleteWork,
   };
 }
 
