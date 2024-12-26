@@ -12,10 +12,8 @@ import {
   DashboardContext,
   useWorkCategory2,
 } from "@/hooks/dashboard/dashboard";
-
 import useIdeaBoxMemo from "@/hooks/dashboard/useIdeaBoxMemo";
 import useOpenAndCloseDeleteConfirmation from "@/hooks/dashboard/useDeleteConfirmModal";
-import useMemoModal from "@/hooks/dashboard/useMemoModal";
 import useIdeaBoxMemoCharacter from "@/hooks/dashboard/useIdeaBoxMCharacter";
 import useMemoCharacterModal from "@/hooks/dashboard/useMCharacterModal";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
@@ -28,7 +26,6 @@ export default function WorkspaceLayout({
   const dashboardValue = useWorkCategory2();
   const ideaBoxMemoValue = useIdeaBoxMemo();
   const ideaBoxMemoCharacterValue = useIdeaBoxMemoCharacter();
-  const memoModalValue = useMemoModal();
   const memoCharacterModalValue = useMemoCharacterModal();
   const deleteConfirmModalValue = useOpenAndCloseDeleteConfirmation();
   const contextValue = {
@@ -36,7 +33,7 @@ export default function WorkspaceLayout({
     ideaBoxMemo: ideaBoxMemoValue,
     ideaBoxMCharacter: ideaBoxMemoCharacterValue,
     removeConfirmationModal: deleteConfirmModalValue,
-    memoModal: memoModalValue,
+    memoModal: {},
     memoCharacterModal: memoCharacterModalValue,
   };
 
