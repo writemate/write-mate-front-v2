@@ -11,17 +11,19 @@ export default function MemoList() {
     useContext(DashboardContext).ideaBoxMemo;
 
   return (
-    <MemoListContainer>
-      {error && <Error />}
-      {isLoading && <Loading />}
-      {memoList
-        .slice()
-        .reverse()
-        .map((memo) => (
-          <MemoItem key={memo.id} memoId={memo.id} />
-        ))}
+    <>
+      <MemoListContainer>
+        {memoList
+          .slice()
+          .reverse()
+          .map((memo) => (
+            <MemoItem key={memo.id} memoId={memo.id} />
+          ))}
+        {error && <Error />}
+        {isLoading && <Loading />}
+      </MemoListContainer>
       <AddMemoButton />
-    </MemoListContainer>
+    </>
   );
 }
 
