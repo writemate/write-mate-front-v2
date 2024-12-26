@@ -78,7 +78,7 @@ export const AddMemoButtonContainer = styled.button<AddMemoButtonProps>`
   ${clickable}
   position: fixed;
 
-  bottom: ${({ $isEmpty }) => ($isEmpty ? "calc(50% - 120px)" : "20px")};
+  bottom: ${({ $isEmpty }) => ($isEmpty ? "calc(50% - 120px)" : "40px")};
 
   width: 200px;
   padding: 12px;

@@ -2,20 +2,25 @@
 import { TitleAndWorkListContainer } from "@/styles/dashboard/Work/WorkList";
 import { TrashTitleAndNavigationBar } from "@/components/dashboard/TitleAndNavigationBar";
 import WorkList from "@/components/dashboard/Work/WorkList";
-import { useContext } from "react";
 import { useWorkList, WorkListContext } from "@/hooks/dashboard/work/workList";
-import { WorkCategoryContext } from "@/hooks/dashboard/work/workCategory";
+import {
+  useWorkCategory,
+  WorkCategoryContext,
+} from "@/hooks/dashboard/work/workCategory";
 
 export default function Dashboard() {
-  const { workCategory } = useContext(WorkCategoryContext);
+  const workCategoryValue = useWorkCategory();
+  const { workCategory } = workCategoryValue;
   const WorkListValue = useWorkList(workCategory);
 
   return (
     <TitleAndWorkListContainer>
-      <TrashTitleAndNavigationBar />
-      <WorkListContext.Provider value={WorkListValue}>
-        <WorkList />
-      </WorkListContext.Provider>
+      <WorkCategoryContext.Provider value={workCategoryValue}>
+        <TrashTitleAndNavigationBar />
+        <WorkListContext.Provider value={WorkListValue}>
+          <WorkList />
+        </WorkListContext.Provider>
+      </WorkCategoryContext.Provider>
     </TitleAndWorkListContainer>
   );
 }

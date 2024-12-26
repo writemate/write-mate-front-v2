@@ -12,19 +12,13 @@ import {
   DashboardContext,
   useWorkCategory2,
 } from "@/hooks/dashboard/dashboard";
-import DeleteModal from "@/components/DeleteModal";
-import MemoCharacterEditModal from "@/components/dashboard/MCharacter/MCharacterModal";
-import MemoEditModal from "@/components/dashboard/Memo/MemoModal";
+
 import useIdeaBoxMemo from "@/hooks/dashboard/useIdeaBoxMemo";
 import useOpenAndCloseDeleteConfirmation from "@/hooks/dashboard/useDeleteConfirmModal";
 import useMemoModal from "@/hooks/dashboard/useMemoModal";
 import useIdeaBoxMemoCharacter from "@/hooks/dashboard/useIdeaBoxMCharacter";
 import useMemoCharacterModal from "@/hooks/dashboard/useMCharacterModal";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import {
-  useWorkCategory,
-  WorkCategoryContext,
-} from "@/hooks/dashboard/work/workCategory";
 
 export default function WorkspaceLayout({
   children,
@@ -48,36 +42,22 @@ export default function WorkspaceLayout({
 
   const logout = useLogin((state) => state.logout);
 
-  const workCategoryValue = useWorkCategory();
-
   return (
     <DashboardContext.Provider value={contextValue}>
       <DashboardContainer>
-        <WorkCategoryContext.Provider value={workCategoryValue}>
-          <SideTabAndFooterContainer>
-            <SideTab />
-            <FooterContainer onClick={logout}>
-              <Footer /> 로그아웃
-            </FooterContainer>
-          </SideTabAndFooterContainer>
-          <HeaderAndMainContainer>
-            <Header />
-            {children}
-          </HeaderAndMainContainer>
-        </WorkCategoryContext.Provider>
+        <SideTabAndFooterContainer>
+          <SideTab />
+          <FooterContainer onClick={logout}>
+            <Footer /> 로그아웃
+          </FooterContainer>
+        </SideTabAndFooterContainer>
+        <HeaderAndMainContainer>
+          <Header />
+          {children}
+        </HeaderAndMainContainer>
       </DashboardContainer>
       <DevTool />
     </DashboardContext.Provider>
-  );
-}
-
-function Modal() {
-  return (
-    <>
-      <MemoEditModal />
-      <MemoCharacterEditModal />
-      <DeleteModal />
-    </>
   );
 }
 
