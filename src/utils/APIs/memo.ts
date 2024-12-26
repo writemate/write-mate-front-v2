@@ -52,7 +52,7 @@ export const createMCharacter = async () => {
   return response.data;
 };
 
-export const deleteMCharacter = async (id: string) => {
+export const deleteMCharacter = (id: string) => async () => {
   await axiosInstance.delete(DOMAIN.DELETE_MEMO_CHARACTER(id));
 };
 
@@ -63,13 +63,17 @@ export const updateMCharacterName = (id: string) => async (ch_name: string) => {
 export const updateMCharacterImage = (id: string) => async (ch_image: File) => {
   const formData = new FormData();
   formData.append("file", ch_image);
-  await axiosInstance.patch(DOMAIN.UPDATE_MEMO_CHARACTER_IMAGE(id), formData);
+  const response = await axiosInstance.patch(
+    DOMAIN.UPDATE_MEMO_CHARACTER_IMAGE(id),
+    formData
+  );
+  return response.data;
 };
 
 export const updateMCharacterDescription =
-  (id: string) => async (ch_description: string) => {
+  (id: string) => async (description: string) => {
     await axiosInstance.patch(DOMAIN.UPDATE_MEMO_CHARACTER_DESCRIPTION(id), {
-      ch_description,
+      description,
     });
   };
 
@@ -91,21 +95,9 @@ export const updateMCharacterBirthday =
     });
   };
 
-export const createMCharacterCharacteristic =
-  (id: string) => async (title: string, content: string) => {
-    await axiosInstance.post(
-      DOMAIN.CREATE_MEMO_CHARACTER_CHARACTERISTIC(id),
-      {
-        title,
-        content,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-  };
+export const createMCharacterCharacteristic = (id: string) => async () => {
+  await axiosInstance.patch(DOMAIN.CREATE_MEMO_CHARACTER_CHARACTERISTIC(id));
+};
 
 export const deleteMCharacterCharacteristic =
   (id: string) => async (idx: number) => {
@@ -118,29 +110,19 @@ export const deleteMCharacterCharacteristic =
   };
 
 export const updateMCharacterCharacteristicTitle =
-  (id: string) => async (idx: number, title: string) => {
+  (id: string) =>
+  async ({ index, title }: { index: number; title: string }) => {
     await axiosInstance.patch(
-      DOMAIN.UPDATE_MEMO_CHARACTER_CHARACTERISTIC_TITLE(id),
-      { title },
-      {
-        params: { idx },
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
+      DOMAIN.UPDATE_MEMO_CHARACTER_CHARACTERISTIC_TITLE(id, index),
+      { title }
     );
   };
 
 export const updateMCharacterCharacteristicContent =
-  (id: string) => async (idx: number, content: string) => {
+  (id: string) =>
+  async ({ index, content }: { index: number; content: string }) => {
     await axiosInstance.patch(
-      DOMAIN.UPDATE_MEMO_CHARACTER_CHARACTERISTIC_CONTENT(id),
-      { content },
-      {
-        params: { idx },
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
+      DOMAIN.UPDATE_MEMO_CHARACTER_CHARACTERISTIC_CONTENT(id, index),
+      { content }
     );
   };

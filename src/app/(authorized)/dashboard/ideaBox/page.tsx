@@ -2,7 +2,7 @@
 import { TitleAndWorkListContainer } from "@/styles/dashboard/Work/WorkList";
 import { IdeaBoxTitleAndNavigationBar } from "@/components/dashboard/TitleAndNavigationBar";
 import MemoList from "@/components/dashboard/Memo/MemoList";
-import CharacterList from "@/components/dashboard/MCharacter/MCharacterList";
+import CharacterList from "@/components/dashboard/Character/CharacterList";
 import {
   ideaCategoryContext,
   useIdeaCategory,

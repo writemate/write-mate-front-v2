@@ -1,27 +1,28 @@
 "use Client";
-import { DashboardContext } from "@/hooks/dashboard/dashboard";
 import { LoadingMessage } from "@/styles/dashboard/Loading";
-import { useContext } from "react";
 import { AddMCharacterButton } from "@/components/dashboard/AddButton";
 import { CharacterListContainer } from "@/styles/dashboard/IdeaBox/MCharacter/MCharacterList";
-import { MemoItem } from "./MCharacterItem";
+import { CharacterItem } from "./CharacterItem";
+import { useCharacterList } from "@/hooks/dashboard/character/useCharacterList";
 
 export default function CharacterList() {
-  const { memoCharacterList, error, isLoading } =
-    useContext(DashboardContext).ideaBoxMCharacter;
+  const { characterList, error, isLoading } = useCharacterList();
 
   return (
-    <CharacterListContainer>
-      {error && <Error />}
-      {isLoading && <Loading />}
-      {memoCharacterList
-        .slice()
-        .reverse()
-        .map((memo) => (
-          <MemoItem key={memo.id} character={memo} />
-        ))}
+    <>
+      <CharacterListContainer>
+        {Array.isArray(characterList) &&
+          characterList
+            .slice()
+            .reverse()
+            .map((character) => (
+              <CharacterItem key={character.id} character={character} />
+            ))}
+        {error && <Error />}
+        {isLoading && <Loading />}
+      </CharacterListContainer>
       <AddMCharacterButton />
-    </CharacterListContainer>
+    </>
   );
 }
 

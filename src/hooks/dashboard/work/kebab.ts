@@ -61,7 +61,6 @@ export function useKebab(
     },
   });
   const onChangeCoverImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("Image input ref222: ", imageInputRef);
     const file = e.target.files?.[0];
     if (!file) return;
     mutateCoverImage(file)();

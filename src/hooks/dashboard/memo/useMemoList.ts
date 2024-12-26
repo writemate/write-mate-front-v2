@@ -3,11 +3,9 @@ import { getMemoList, createMemo } from "@/utils/APIs/memo";
 import { dashboardQueryKeys } from "@/utils/APIs/queryKeys";
 import { notifySuccess } from "@/utils/showToast";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { createContext } from "react";
 
 export function useMemoList() {
   const queryClient = useQueryClient();
-
   const {
     data: memoList,
     error,
@@ -37,7 +35,3 @@ export function useMemoList() {
     onClickAddMemo,
   };
 }
-
-export const MemoListContext = createContext(
-  {} as ReturnType<typeof useMemoList>
-);
