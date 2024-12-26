@@ -1,5 +1,4 @@
 "use client";
-import { useMemoModal } from "@/hooks/dashboard/memo/useMemoModal";
 import {
   MemoCard,
   MemoContent,
@@ -8,11 +7,13 @@ import {
   MemoUpdatedDate,
 } from "@/styles/dashboard/IdeaBox/Memo/MemoList";
 import { TMemo } from "@/utils/APIs/types";
-import MemoModal from "./MemoModal";
+import { EditModal } from "./MemoModal";
+import { MemoItemContext, useMemoItem } from "@/hooks/dashboard/memo/memoItem";
 
 export default function MemoItem({ memo }: { memo: TMemo }) {
+  const memoItemValue = useMemoItem(memo);
   const { isOpenEditModal, onClickMemoTitle, onClickMemoContent } =
-    useMemoModal(memo.id);
+    memoItemValue;
 
   const getTempName = () => {
     if (!memo) return "";
@@ -29,7 +30,7 @@ export default function MemoItem({ memo }: { memo: TMemo }) {
   };
 
   return (
-    <>
+    <MemoItemContext.Provider value={memoItemValue}>
       {memo && (
         <MemoCard $isSelected={isOpenEditModal}>
           <MemoHeader>
@@ -56,9 +57,9 @@ export default function MemoItem({ memo }: { memo: TMemo }) {
               minute: "2-digit",
             })}
           </MemoUpdatedDate>
-          {isOpenEditModal && <MemoModal />}
+          {isOpenEditModal && <EditModal />}
         </MemoCard>
       )}
-    </>
+    </MemoItemContext.Provider>
   );
 }

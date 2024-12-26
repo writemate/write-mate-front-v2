@@ -8,57 +8,41 @@ import {
   ModalContentAndFooterContainer,
   ModalContentContainer,
 } from "@/styles/dashboard/IdeaBox/Modal";
-import { DashboardContext } from "@/hooks/dashboard/dashboard";
 import { ModalFooter } from "@/components/dashboard/Memo/ModalFooter";
+import { MemoItemContext } from "@/hooks/dashboard/memo/memoItem";
 
-export default function MemoModal() {
-  const { isOpenEditModal, closeMemoModal } =
-    useContext(DashboardContext).memoModal;
-  return (
-    <>
-      {isOpenEditModal && (
-        <Modal closeModal={closeMemoModal} maxWidth="600px">
-          <Memo />
-        </Modal>
-      )}
-    </>
-  );
-}
-
-function Memo() {
+export function EditModal() {
   const {
-    selectedMemo,
-    onChangeSelectedMemoName,
-    onChangeSelectedMemoDescription,
+    memo,
+    closeEditModal,
+    onChangeName,
+    onChangeDescription,
     onKeyDownTitle,
-  } = useContext(DashboardContext).memoModal;
-
+  } = useContext(MemoItemContext);
   return (
-    <>
-      {selectedMemo && (
-        <ModalContentAndFooterContainer>
-          <ModalContentContainer>
-            <p>제목</p>
-            <Input
-              className="memo-modal-name"
-              defaultValue={selectedMemo.memo_name}
-              onChange={onChangeSelectedMemoName}
-              placeholder="메모 이름을 입력하세요"
-              onKeyDown={onKeyDownTitle}
-            />
-            <p>내용</p>
-            <TextArea
-              className="memo-modal-description"
-              defaultValue={selectedMemo.memo_description}
-              onChange={onChangeSelectedMemoDescription}
-              cacheMeasurements
-              minRows={10}
-              placeholder="메모 내용을 입력하세요"
-            />
-          </ModalContentContainer>
-          <ModalFooter />
-        </ModalContentAndFooterContainer>
-      )}
-    </>
+    <Modal closeModal={closeEditModal} maxWidth="600px">
+      <ModalContentAndFooterContainer>
+        <ModalContentContainer>
+          <p>제목</p>
+          <Input
+            className="memo-modal-name"
+            defaultValue={memo.memo_name}
+            onChange={onChangeName}
+            placeholder="메모 이름을 입력하세요"
+            onKeyDown={onKeyDownTitle}
+          />
+          <p>내용</p>
+          <TextArea
+            className="memo-modal-description"
+            defaultValue={memo.memo_description}
+            onChange={onChangeDescription}
+            cacheMeasurements
+            minRows={10}
+            placeholder="메모 내용을 입력하세요"
+          />
+        </ModalContentContainer>
+        <ModalFooter />
+      </ModalContentAndFooterContainer>
+    </Modal>
   );
 }
