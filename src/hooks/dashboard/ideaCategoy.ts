@@ -18,7 +18,7 @@ export function useIdeaCategory() {
     setIdeaCategory(ideaBoxCategory.character);
   };
 
-  const isActiceCategory = (category: keyof typeof ideaBoxCategory) => {
+  const isActiveCategory = (category: keyof typeof ideaBoxCategory) => {
     return ideaCategory === category;
   };
 
@@ -34,7 +34,7 @@ export function useIdeaCategory() {
 
   return {
     ideaCategory,
-    isActiceCategory,
+    isActiveCategory,
     onClickMemo,
     onClickCharacter,
   };

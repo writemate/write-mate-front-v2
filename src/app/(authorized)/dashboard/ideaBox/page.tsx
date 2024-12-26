@@ -3,7 +3,10 @@ import { TitleAndWorkListContainer } from "@/styles/dashboard/Work/WorkList";
 import { IdeaBoxTitleAndNavigationBar } from "@/components/dashboard/TitleAndNavigationBar";
 import MemoList from "@/components/dashboard/Memo/MemoList";
 import CharacterList from "@/components/dashboard/MCharacter/MCharacterList";
-import { useIdeaCategory } from "@/hooks/dashboard/ideaCategoy";
+import {
+  ideaCategoryContext,
+  useIdeaCategory,
+} from "@/hooks/dashboard/ideaCategoy";
 
 export default function Dashboard() {
   const ideaCategoryValue = useIdeaCategory();
@@ -11,9 +14,11 @@ export default function Dashboard() {
 
   return (
     <TitleAndWorkListContainer>
-      <IdeaBoxTitleAndNavigationBar />
-      {ideaCategory == "memo" && <MemoList />}
-      {ideaCategory == "character" && <CharacterList />}
+      <ideaCategoryContext.Provider value={ideaCategoryValue}>
+        <IdeaBoxTitleAndNavigationBar />
+        {ideaCategory == "memo" && <MemoList />}
+        {ideaCategory == "character" && <CharacterList />}
+      </ideaCategoryContext.Provider>
     </TitleAndWorkListContainer>
   );
 }
