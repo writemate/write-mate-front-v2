@@ -1,29 +1,27 @@
 "use client";
 import { MemoListContainer } from "@/styles/dashboard/IdeaBox/Memo/MemoList";
-import { useContext } from "react";
 import MemoItem from "@/components/dashboard/Memo/MemoItem";
-import { DashboardContext } from "@/hooks/dashboard/dashboard";
 import { LoadingMessage } from "@/styles/dashboard/Loading";
 import { AddMemoButton } from "@/components/dashboard/AddButton";
+import { MemoListContext, useMemoList } from "@/hooks/dashboard/memo/memoList";
 
 export default function MemoList() {
-  const { memoList, error, isLoading } =
-    useContext(DashboardContext).ideaBoxMemo;
+  const memoListValue = useMemoList();
+  const { memoList, error, isLoading } = memoListValue;
 
   return (
-    <>
+    <MemoListContext.Provider value={memoListValue}>
       <MemoListContainer>
-        {memoList
-          .slice()
-          .reverse()
-          .map((memo) => (
-            <MemoItem key={memo.id} memoId={memo.id} />
-          ))}
+        {memoList &&
+          memoList
+            .slice()
+            .reverse()
+            .map((memo) => <MemoItem key={memo.id} memo={memo} />)}
         {error && <Error />}
         {isLoading && <Loading />}
       </MemoListContainer>
       <AddMemoButton />
-    </>
+    </MemoListContext.Provider>
   );
 }
 

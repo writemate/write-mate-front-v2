@@ -8,7 +8,7 @@ import { memoQueryKeys } from "@/utils/APIs/queryKeys";
 import { TMemo } from "@/utils/APIs/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useState } from "react";
-import { notifySuccess, notifyWarning, notifyError } from "@/utils/showToast";
+import { notifySuccess } from "@/utils/showToast";
 
 export default function useMemoModal() {
   const queryClient = useQueryClient();
