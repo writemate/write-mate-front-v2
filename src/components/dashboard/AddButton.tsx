@@ -1,44 +1,23 @@
 "use client";
-
-import { DashboardContext } from "@/hooks/dashboard/dashboard";
+import { useCharacterList } from "@/hooks/dashboard/character/useCharacterList";
+import { useMemoList } from "@/hooks/dashboard/memo/useMemoList";
 import { AddMemoButtonContainer } from "@/styles/dashboard/IdeaBox/Memo/MemoList";
-import { useContext } from "react";
 
 export function AddMemoButton() {
-  const { memoList, getNewlyCreatedMemo } =
-    useContext(DashboardContext).ideaBoxMemo;
-  const { onClickMemoContent } = useContext(DashboardContext).memoModal;
-  const onClickAddMemo = async () => {
-    const newMemo = await getNewlyCreatedMemo();
-    if (!newMemo) return;
-    onClickMemoContent(newMemo)();
-  };
+  const { onClickAddMemo } = useMemoList();
+
   return (
-    <AddMemoButtonContainer
-      $isEmpty={memoList.length === 0}
-      onClick={onClickAddMemo}
-    >
+    <AddMemoButtonContainer onClick={onClickAddMemo}>
       메모 추가
     </AddMemoButtonContainer>
   );
 }
 
 export function AddMCharacterButton() {
-  const { memoCharacterList, getNewlyCreatedMCharacter } =
-    useContext(DashboardContext).ideaBoxMCharacter;
-  const { onClickMCharacterDescription } =
-    useContext(DashboardContext).memoCharacterModal;
-  const onClickAddMemo = async () => {
-    const newMemo = await getNewlyCreatedMCharacter();
-    if (!newMemo) return;
-    onClickMCharacterDescription(newMemo)();
-  };
+  const { onClickAddCharacter } = useCharacterList();
 
   return (
-    <AddMemoButtonContainer
-      $isEmpty={memoCharacterList.length === 0}
-      onClick={onClickAddMemo}
-    >
+    <AddMemoButtonContainer onClick={onClickAddCharacter}>
       인물 메모 추가
     </AddMemoButtonContainer>
   );
