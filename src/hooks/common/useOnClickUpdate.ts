@@ -3,14 +3,15 @@ import { notifyError } from "@/utils/showToast";
 import { useSaveLoading } from "@/stores/useSaveLoading";
 
 export const useOnClickUpdate = <T,C extends Object,U = void,>(
-  {mutationFn, onMutate, onError, onSuccess, queryKey, savingMessage, errorMessage}: {
+  {mutationFn, onMutate, onError, onSuccess, queryKey, savingMessage, errorMessage, clickEvent}: {
     mutationFn: MutationFunction<T, U>,
     onMutate?: (variables: U) => Promise<C | undefined> | C | undefined,
     onError?: (error: Error, variables: U, context: C | undefined) => Promise<void> | void,
     onSuccess?: (data: T, variables: U, context: C | undefined) => Promise<void> | void,
     queryKey: any,
     savingMessage: string,
-    errorMessage: string
+    errorMessage: string,
+    clickEvent?: Function,
   }
 ) => {
   const addSaving = useSaveLoading((state) => state.add);
@@ -39,7 +40,8 @@ export const useOnClickUpdate = <T,C extends Object,U = void,>(
     }
   });
 
-  const updateWithData = (data: U) => () => {
+  const updateWithData = (data: U) => (e?:any) => {
+    clickEvent?.(e);
     mutate(data);
   };
 

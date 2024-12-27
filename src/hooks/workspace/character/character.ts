@@ -34,7 +34,7 @@ export function useCharacter(characterId?: string) {
 
   const mutateDeleteCharacter = useOnClickUpdate({
     mutationFn: deleteCharacter(workspace_id, character_id),
-    queryKey: workspaceQueryKeys.characterList(workspace_id),
+    queryKey: workspaceQueryKeys.character(workspace_id),
     savingMessage: "캐릭터 삭제 중",
     errorMessage: "캐릭터 삭제에 실패했습니다.",
     onMutate: () => {

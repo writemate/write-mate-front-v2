@@ -20,26 +20,47 @@ export const useCharacterList = () => {
     queryFn: getCharacterList(workspace_id),
   });
 
-  const { mutate: addCharacter, isPending: isAddingCharacter } = useMutation({
+  const onClickAddCharacter = useOnClickUpdate({
     mutationFn: createCharacter(workspace_id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: workspaceQueryKeys.characterList(workspace_id) });
+    queryKey: workspaceQueryKeys.characterList(workspace_id),
+    savingMessage: '인물 추가 중',
+    errorMessage: '인물 추가에 실패했습니다.',
+    onMutate: async () => {
+      const prevData = queryClient.getQueryData(workspaceQueryKeys.characterList(workspace_id));
+      queryClient.setQueryData(workspaceQueryKeys.characterList(workspace_id), (oldData: Awaited<ReturnType<ReturnType<typeof getCharacterList>>>) => {
+        return [...oldData, { id: null, ch_name: '', description: '', keyword: [], isMain: false }];
+      });
+      return { prevData };
     },
-  });
+    onError: (error, newCharacter, context) => {
+      queryClient.setQueryData(workspaceQueryKeys.characterList(workspace_id), context?.prevData);
+    }
+  })();
 
-  const { mutate: addKeyword, isPending: isAddingKeyword } = useMutation({
+  const onClickAddKeyword = useOnClickUpdate({
     mutationFn: createKeyword(workspace_id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: workspaceQueryKeys.characterKeywordList(workspace_id) });
+    queryKey: workspaceQueryKeys.characterKeywordList(workspace_id),
+    savingMessage: '키워드 추가 중',
+    errorMessage: '키워드 추가에 실패했습니다.',
+    onMutate: async ({ word, color }) => {
+      const prevData = queryClient.getQueryData(workspaceQueryKeys.characterKeywordList(workspace_id));
+      queryClient.setQueryData(workspaceQueryKeys.characterKeywordList(workspace_id), (oldData: Awaited<ReturnType<ReturnType<typeof getKeywordList>>>) => {
+        return [...oldData, { id: null, word: word, light_color: '', dark_color: '' }];
+      });
+      return { prevData };
     },
+    onError: (error, newKeyword, context) => {
+      queryClient.setQueryData(workspaceQueryKeys.characterKeywordList(workspace_id), context?.prevData);
+    }
   });
 
-  const { mutate: setMainCharacterMutation } = useMutation({
+  const onClickSetMainCharacter = useOnClickUpdate({
     mutationFn: setMainCharacter(workspace_id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: workspaceQueryKeys.characterList(workspace_id) });
-    },
+    queryKey: workspaceQueryKeys.characterList(workspace_id),
+    savingMessage: '메인 캐릭터 설정 중',
+    errorMessage: '메인 캐릭터 설정에 실패했습니다.',
     onMutate: async (characterId: string) => {
+      const prevData = queryClient.getQueryData(workspaceQueryKeys.characterList(workspace_id));
       queryClient.setQueryData(workspaceQueryKeys.characterList(workspace_id), (oldData: Awaited<ReturnType<ReturnType<typeof getCharacterList>>>) => {
         return oldData.map((character) => {
           if (character.id === characterId) {
@@ -48,15 +69,21 @@ export const useCharacterList = () => {
           return character;
         });
       });
-    }
+      return { prevData };
+    },
+    onError: (error, newCharacter, context) => {
+      queryClient.setQueryData(workspaceQueryKeys.characterList(workspace_id), context?.prevData);
+    },
+    clickEvent: (e: React.MouseEvent) => {e.preventDefault(); e.stopPropagation();}
   });
 
-  const { mutate: removeMainCharacterMutation } = useMutation({
+  const onClickUnsetMainCharacter = useOnClickUpdate({
     mutationFn: unsetMainCharacter(workspace_id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: workspaceQueryKeys.characterList(workspace_id) });
-    },
+    queryKey: workspaceQueryKeys.characterList(workspace_id),
+    savingMessage: '메인 캐릭터 해제 중',
+    errorMessage: '메인 캐릭터 해제에 실패했습니다.',
     onMutate: async (characterId: string) => {
+      const prevData = queryClient.getQueryData(workspaceQueryKeys.characterList(workspace_id));
       queryClient.setQueryData(workspaceQueryKeys.characterList(workspace_id), (oldData: Awaited<ReturnType<ReturnType<typeof getCharacterList>>>) => {
         return oldData.map((character) => {
           if (character.id === characterId) {
@@ -65,7 +92,12 @@ export const useCharacterList = () => {
           return character;
         });
       });
-    }
+      return { prevData };
+    },
+    onError: (error, newCharacter, context) => {
+      queryClient.setQueryData(workspaceQueryKeys.characterList(workspace_id), context?.prevData);
+    },
+    clickEvent: (e: React.MouseEvent) => {e.preventDefault(); e.stopPropagation();}
   });
 
   const [selectedKeywords, setSelectedKeywords] = useState<string[]>([]);
@@ -94,7 +126,7 @@ export const useCharacterList = () => {
 
   const addKeywordWithRandomColor = () => {
     if(miniKeywordInput === '') return;
-    addKeyword({ word: miniKeywordInput});
+    onClickAddKeyword({ word: miniKeywordInput})();
     onBlurredMiniModal();
   }
 
@@ -117,7 +149,7 @@ export const useCharacterList = () => {
   const [modalInput, setModalInput] = useState('');
   const onChangeModalInput = (e: React.ChangeEvent<HTMLInputElement>) => setModalInput(e.target.value);
   const onClickCreateKeyword = () => {
-    addKeyword({ word: modalInput, color: selectedColor??undefined });
+    onClickAddKeyword({ word: modalInput, color: selectedColor??undefined })();
   }
 
   const onClickDeleteKeyword = useOnClickUpdate({
@@ -133,14 +165,13 @@ export const useCharacterList = () => {
     characterList: realCharacterList,
     isKeywordsLoading,
     isCharactersLoading,
-    addCharacter,
-    isAddingCharacter,
-    isAddingKeyword,
+    onClickAddCharacter,
+    onClickAddKeyword,
     selectKeyword,
     isSelectedKeyword,
     removeSelectedKeyword,
-    setMainCharacter: (characterId: string) => (e: React.MouseEvent) => {e.preventDefault(); e.stopPropagation(); setMainCharacterMutation(characterId)},
-    removeMainCharacter: (characterId: string) => (e: React.MouseEvent) => {e.preventDefault(); e.stopPropagation(); removeMainCharacterMutation(characterId)},
+    onClickSetMainCharacter,
+    onClickUnsetMainCharacter,
     miniModalOpen,
     openMiniModal,
     miniKeywordInput,
