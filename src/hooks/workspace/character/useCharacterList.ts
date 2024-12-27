@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { workspaceQueryKeys } from "@/utils/APIs/queryKeys";
 import { getKeywordList, getCharacterList, createCharacter, createKeyword, setMainCharacter, unsetMainCharacter, deleteKeyword } from '@/utils/APIs/workspace/character';
 import { useParams } from 'next/navigation';

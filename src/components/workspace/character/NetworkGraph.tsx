@@ -581,7 +581,7 @@ const NetworkGraph = () => {
       {characterModal && 
         <Modal closeModal={()=>{
           setcharacterModal(null);
-          queryClient.invalidateQueries({queryKey: workspaceQueryKeys.characterList(workspace_id)});
+          queryClient.invalidateQueries({queryKey: workspaceQueryKeys.character(workspace_id)});
         }} maxWidth={972} maxHeight={560}>
           <div style={{width: '100%', height: '100%', background:"#fff", borderRadius:"8px", padding:"36px", overflowY:"auto"}}>
             <CharacterDetail characterId={characterModal} />
