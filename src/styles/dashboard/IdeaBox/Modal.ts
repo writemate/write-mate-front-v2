@@ -3,6 +3,7 @@ import { media } from "@/styles/media";
 import { styled, css } from "styled-components";
 import TextareaAutosize from "react-textarea-autosize";
 import TrashCan from "@/assets/icons/trashcan.svg";
+import { clickable, FlexRowCenter } from "@/styles";
 
 /* Css */
 export const InputBoxContainer = css`
@@ -112,11 +113,12 @@ export const ImageContainer = styled.div`
   ${FlexColumn}
   flex-shrink: 0;
   background: ${({ theme }) => theme.color.gray100};
-  border-radius: 8px;
+  border-radius: 14px;
   justify-content: center;
   align-items: center;
   box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.1);
   width: 180px;
+  height: 240px;
 
   p {
     height: 220px;
@@ -130,10 +132,14 @@ export const ImageContainer = styled.div`
   img {
     width: 100%;
     height: 100%;
+    justify-content: center;
+    align-items: center;
     object-fit: cover;
+    overflow: hidden;
+    border-radius: 14px;
   }
   &:hover {
-    filter: brightness(0.9);
+    background: ${({ theme }) => theme.color.gray200};
     * {
       visibility: visible;
     }
@@ -148,6 +154,21 @@ export const ImageButtonContainer = styled.div`
   button {
     visibility: hidden;
     cursor: pointer;
+  }
+`;
+
+export const ChangeCover = styled.button`
+  ${FlexRowCenter};
+  color: ${({ theme }) => theme.color.orange500};
+  border-radius: 100px;
+  padding: 8px 12px;
+  gap: 10px;
+  border: 1px solid ${({ theme }) => theme.color.orange100};
+  box-shadow: 1px 1px 4px 0 #0000001f;
+  background-color: #ffffff;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.color.orange100};
   }
 `;
 
