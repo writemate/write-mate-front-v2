@@ -15,31 +15,20 @@ export const createMemo = async () => {
   return response.data;
 };
 
-export const deleteMemo = async (id: string) => {
+export const deleteMemo = (id: string) => async () => {
   await axiosInstance.delete(DOMAIN.DELETE_MEMO(id));
 };
 
-export const updaetMemoName = async ({
-  id,
-  memo_name,
-}: {
-  id: string;
-  memo_name: string;
-}) => {
+export const updateMemoName = (id: string) => async (memo_name: string) => {
   await axiosInstance.patch(DOMAIN.UPDATE_MEMO_NAME(id), { memo_name });
 };
 
-export const updateMemoDescription = async ({
-  id,
-  memo_description,
-}: {
-  id: string;
-  memo_description: string;
-}) => {
-  await axiosInstance.patch(DOMAIN.UPDATE_MEMO_DESCRIPTION(id), {
-    memo_description,
-  });
-};
+export const updateMemoDescription =
+  (id: string) => async (memo_description: string) => {
+    await axiosInstance.patch(DOMAIN.UPDATE_MEMO_DESCRIPTION(id), {
+      memo_description,
+    });
+  };
 
 /*
  * 메모 캐릭터
@@ -63,155 +52,77 @@ export const createMCharacter = async () => {
   return response.data;
 };
 
-export const deleteMCharacter = async (id: string) => {
+export const deleteMCharacter = (id: string) => async () => {
   await axiosInstance.delete(DOMAIN.DELETE_MEMO_CHARACTER(id));
 };
 
-export const updateMCharacterName = async ({
-  id,
-  ch_name,
-}: {
-  id: string;
-  ch_name: string;
-}) => {
+export const updateMCharacterName = (id: string) => async (ch_name: string) => {
   await axiosInstance.patch(DOMAIN.UPDATE_MEMO_CHARACTER_NAME(id), { ch_name });
 };
 
-export const updateMCharacterImage = async ({
-  id,
-  ch_image,
-}: {
-  id: string;
-  ch_image: File;
-}) => {
-  await axiosInstance.patch(DOMAIN.UPDATE_MEMO_CHARACTER_IMAGE(id), {
-    ch_image,
-  });
+export const updateMCharacterImage = (id: string) => async (ch_image: File) => {
+  const formData = new FormData();
+  formData.append("file", ch_image);
+  const response = await axiosInstance.patch(
+    DOMAIN.UPDATE_MEMO_CHARACTER_IMAGE(id),
+    formData
+  );
+  return response.data;
 };
 
-export const updateMCharacterDescription = async ({
-  id,
-  description,
-}: {
-  id: string;
-  description: string;
-}) => {
-  await axiosInstance.patch(DOMAIN.UPDATE_MEMO_CHARACTER_DESCRIPTION(id), {
-    description,
-  });
-};
+export const updateMCharacterDescription =
+  (id: string) => async (description: string) => {
+    await axiosInstance.patch(DOMAIN.UPDATE_MEMO_CHARACTER_DESCRIPTION(id), {
+      description,
+    });
+  };
 
-export const updateMCharacterRole = async ({
-  id,
-  role,
-}: {
-  id: string;
-  role: string;
-}) => {
+export const updateMCharacterRole = (id: string) => async (role: string) => {
   await axiosInstance.patch(DOMAIN.UPDATE_MEMO_CHARACTER_ROLE(id), { role });
 };
 
-export const updateMCharacterGender = async ({
-  id,
-  gender,
-}: {
-  id: string;
-  gender: string;
-}) => {
-  await axiosInstance.patch(DOMAIN.UPDATE_MEMO_CHARACTER_GENDER(id), {
-    gender,
-  });
+export const updateMCharacterGender =
+  (id: string) => async (gender: string) => {
+    await axiosInstance.patch(DOMAIN.UPDATE_MEMO_CHARACTER_GENDER(id), {
+      gender,
+    });
+  };
+
+export const updateMCharacterBirthday =
+  (id: string) => async (birthday: string) => {
+    await axiosInstance.patch(DOMAIN.UPDATE_MEMO_CHARACTER_BIRTHDAY(id), {
+      birthday,
+    });
+  };
+
+export const createMCharacterCharacteristic = (id: string) => async () => {
+  await axiosInstance.patch(DOMAIN.CREATE_MEMO_CHARACTER_CHARACTERISTIC(id));
 };
 
-export const updateMCharacterBirthday = async ({
-  id,
-  birthday,
-}: {
-  id: string;
-  birthday: string;
-}) => {
-  await axiosInstance.patch(DOMAIN.UPDATE_MEMO_CHARACTER_BIRTHDAY(id), {
-    birthday,
-  });
-};
+export const deleteMCharacterCharacteristic =
+  (id: string) => async (idx: number) => {
+    await axiosInstance.delete(
+      DOMAIN.DELETE_MEMO_CHARACTER_CHARACTERISTIC(id),
+      {
+        params: { idx },
+      }
+    );
+  };
 
-export const createMCharacterCharacteristic = async ({
-  id,
-  title,
-  content,
-}: {
-  id: string;
-  title: string;
-  content: string;
-}) => {
-  console.log({
-    title,
-    content,
-  }); // 요청 데이터 확인
-  await axiosInstance.patch(
-    DOMAIN.CREATE_MEMO_CHARACTER_CHARACTERISTIC(id),
-    {
-      title,
-      content,
-    },
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
-};
+export const updateMCharacterCharacteristicTitle =
+  (id: string) =>
+  async ({ index, title }: { index: number; title: string }) => {
+    await axiosInstance.patch(
+      DOMAIN.UPDATE_MEMO_CHARACTER_CHARACTERISTIC_TITLE(id, index),
+      { title }
+    );
+  };
 
-export const deleteMCharacterCharacteristic = async ({
-  id,
-  idx,
-}: {
-  id: string;
-  idx: number;
-}) => {
-  await axiosInstance.delete(DOMAIN.DELETE_MEMO_CHARACTER_CHARACTERISTIC(id), {
-    params: { idx },
-  });
-};
-
-export const updateMCharacterCharacteristicTitle = async ({
-  id,
-  idx,
-  title,
-}: {
-  id: string;
-  idx: number;
-  title: string;
-}) => {
-  await axiosInstance.patch(
-    DOMAIN.UPDATE_MEMO_CHARACTER_CHARACTERISTIC_TITLE(id),
-    { title },
-    {
-      params: { idx },
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
-};
-
-export const updateMCharacterCharacteristicContent = async ({
-  id,
-  idx,
-  content,
-}: {
-  id: string;
-  idx: number;
-  content: string;
-}) => {
-  await axiosInstance.patch(
-    DOMAIN.UPDATE_MEMO_CHARACTER_CHARACTERISTIC_CONTENT(id),
-    { content },
-    {
-      params: { idx },
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
-};
+export const updateMCharacterCharacteristicContent =
+  (id: string) =>
+  async ({ index, content }: { index: number; content: string }) => {
+    await axiosInstance.patch(
+      DOMAIN.UPDATE_MEMO_CHARACTER_CHARACTERISTIC_CONTENT(id, index),
+      { content }
+    );
+  };

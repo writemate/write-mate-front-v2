@@ -8,37 +8,30 @@ import {
   TitleAndDateAndKebab,
 } from "@/styles/dashboard/Work/WorkList";
 import { useContext, useRef } from "react";
-import Kebab from "./KebabMenu";
-import useWork from "@/hooks/dashboard/useWork";
-import { DashboardContext } from "@/hooks/dashboard/dashboard";
+import { WorkListContext } from "@/hooks/dashboard/work/workList";
+import { useWorkItem } from "@/hooks/dashboard/work/useWorkItem";
+import { Kebab } from "./Kebab";
 
 export default function WorkItem({ workId }: { workId: string }) {
-  const { data } = useContext(DashboardContext).workstudioAndTrash;
-  const work = data?.find((work) => work.id === workId);
-  const { onChangeTitle, onBlurTitle, onKeyDownTitle } = useWork(workId);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const { workList } = useContext(WorkListContext);
+  const { titleInputRef, onChangeTitle } = useWorkItem(workId);
+  const work = workList?.find((work) => work.id === workId);
 
   return (
     <>
       {work && (
         <WorkCard href={`/${work.id}/info`} passHref>
-          <WorkButtonImage src={work.cover} alt={work.title} />
+          <WorkButtonImage $url={work.cover} />
           <TitleAndDateAndKebab>
             <TitleAndDate>
               <WorkButtonTitle>
                 <input
                   type="text"
-                  ref={inputRef}
+                  ref={titleInputRef}
                   placeholder="작품의 제목을 적어주세요."
                   defaultValue={work.title}
                   onClick={(event) => event.preventDefault()}
-                  onChange={(event) => {
-                    onChangeTitle(event);
-                  }}
-                  onBlur={onBlurTitle}
-                  onKeyDown={(event) => {
-                    onKeyDownTitle(event);
-                  }}
+                  onChange={onChangeTitle}
                 />
               </WorkButtonTitle>
               <WorkButtonDate>
@@ -51,7 +44,7 @@ export default function WorkItem({ workId }: { workId: string }) {
                 })}
               </WorkButtonDate>
             </TitleAndDate>
-            <Kebab workValue={work} inputRef={inputRef} />
+            <Kebab workId={workId} titleInputRef={titleInputRef} />
           </TitleAndDateAndKebab>
         </WorkCard>
       )}

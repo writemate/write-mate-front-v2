@@ -48,7 +48,8 @@ export const CharacterCard = styled.div<{ $isSelected?: boolean }>`
   border-radius: 8px;
   box-shadow: 2px 2px 12px 0px rgba(18, 18, 18, 0.12);
   margin-bottom: 6px;
-  padding: 8px;
+  padding: 20px;
   visibility: ${({ $isSelected }) => ($isSelected ? "hidden" : "visible")};
   border: none !important;
+  gap: 8px;
 `;

@@ -14,13 +14,12 @@ import InactiveArtStudio from "@/assets/dashboard/sideTab/inactive/artStudio.svg
 import InactiveIdeaBox from "@/assets/dashboard/sideTab/inactive/ideaBox.svg";
 import InactiveTrash from "@/assets/dashboard/sideTab/inactive/trash.svg";
 
-import { DashboardContext } from "@/hooks/dashboard/dashboard";
 import { usePathname } from "next/navigation";
-import { useContext } from "react";
+import { useWorkList } from "@/hooks/dashboard/work/workList";
+import { workspaceCategory } from "@/utils/APIs/types";
 
 export default function SideTab() {
-  const { onClickAddWorkspace, isAdding } =
-    useContext(DashboardContext).workstudioAndTrash;
+  const { onClickAddWork } = useWorkList(workspaceCategory.ongoing);
 
   return (
     <>
@@ -64,22 +63,10 @@ export default function SideTab() {
             <p>휴지통</p>
           </SideTabLink>
         </SideTabMenu>
-        <AddWork />
+        <AddWorkspaceButton onClick={onClickAddWork}>
+          새 작품 집필하기
+        </AddWorkspaceButton>
       </SideTabContainer>
     </>
   );
-}
-export function AddWork() {
-  const { onClickAddWorkspace } =
-    useContext(DashboardContext).workstudioAndTrash;
-
-  return (
-    <AddWorkspaceButton onClick={onClickAddWorkspace}>
-      새 작품 집필하기
-    </AddWorkspaceButton>
-  );
-}
-
-export function WaitingAddWork() {
-  return <AddWorkspaceButton>작품 생성 중입니다...</AddWorkspaceButton>;
 }

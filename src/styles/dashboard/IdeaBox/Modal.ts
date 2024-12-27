@@ -45,7 +45,6 @@ export const FlexColumn = css`
 
 /* Modal */
 export const ModalContentAndFooterContainer = styled.div`
-  max-height: 90vh;
   width: 100%;
   display: flex;
   flex-direction: column;
