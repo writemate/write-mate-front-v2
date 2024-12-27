@@ -23,18 +23,27 @@ export const Kebab = ({
   const { workCategory } = useContext(WorkCategoryContext);
   const useKebabValue = useKebab(workId, titleInputRef);
   const { isKebabOpen, onClickKebab, menuRef, onBlurKebab } = useKebabValue;
+  const onClickKebabContainer = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+  };
 
   return (
     <KebabContext.Provider value={useKebabValue}>
-      <div tabIndex={0} onBlur={onBlurKebab}>
+      <div
+        tabIndex={0}
+        onBlur={onBlurKebab}
+        ref={menuRef}
+        onClick={onClickKebabContainer}
+      >
         <KebabButton $isOpen={isKebabOpen} onClick={onClickKebab} />
         {isKebabOpen && (
-          <KebabContainer ref={menuRef}>
+          <KebabContainer>
             {workCategory === "ongoing" && (
               <>
                 <ChangeTitle />
                 <ChangeCover />
-                <ChangeCategory2Ongoing />
+                <ChangeCategory2Completed />
                 <ChangeCategory2Trash />
               </>
             )}

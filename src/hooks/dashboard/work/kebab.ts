@@ -8,7 +8,7 @@ import { dashboardQueryKeys } from "@/utils/APIs/queryKeys";
 import { workspaceCategory } from "@/utils/APIs/types";
 import { notifySuccess } from "@/utils/showToast";
 import { useQueryClient } from "@tanstack/react-query";
-import { createContext, useRef, useState } from "react";
+import { createContext, useEffect, useRef, useState } from "react";
 
 export function useKebab(
   workId: string,
@@ -24,8 +24,6 @@ export function useKebab(
 
   // 케밥 클릭 시 메뉴 열기
   const onClickKebab = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    event.stopPropagation();
     setIsKebabOpen((prev) => !prev);
   };
 
@@ -39,13 +37,16 @@ export function useKebab(
     if (menuRef.current && menuRef.current.contains(event.relatedTarget)) {
       return;
     }
+    if (event.relatedTarget === null) {
+      // 표지 이미지 변경 input 클릭 시 onBlur 발생을 예방하기 위함
+      return;
+    }
     setIsOpenDeleteModal(false);
     closeKebab();
   };
 
   // 작품명 변경
-  const onClickChangeTitle = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
+  const onClickChangeTitle = () => {
     titleInputRef.current?.focus();
   };
 
@@ -57,17 +58,33 @@ export function useKebab(
     errorMessage: "커버 이미지 변경에 실패했습니다.",
     onSuccess: () => {
       notifySuccess("작품 표지가 변경되었습니다.");
-      closeKebab();
+    },
+    onMutate: (value: File) => {
+      const prevData = queryClient.getQueryData([
+        dashboardQueryKeys.workStudio(),
+        "ongoing",
+      ]);
+      queryClient.setQueryData(
+        [dashboardQueryKeys.workStudio(), "ongoing"],
+        (prev: any) => {
+          return prev.map((work: any) => {
+            if (work.id === workId) {
+              return { ...work, cover: URL.createObjectURL(value) };
+            }
+            return work;
+          });
+        }
+      );
+      return { prevData };
     },
   });
   const onChangeCoverImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
     mutateCoverImage(file)();
+    closeKebab();
   };
-  const onClickChangeCover = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    event.stopPropagation();
+  const onClickChangeCover = () => {
     imageInputRef.current?.click();
   };
 
@@ -91,24 +108,21 @@ export function useKebab(
     errorMessage: "카테고리 변경에 실패했습니다.",
   });
   const onClickChangeCategory =
-    (workCategory: keyof typeof workspaceCategory) =>
-    (event: React.MouseEvent<HTMLButtonElement>) => {
-      event.preventDefault();
+    (workCategory: keyof typeof workspaceCategory) => () => {
       mutateCategory(workCategory)();
+      menuRef.current?.focus();
       closeKebab();
     };
 
   // 워닝 모달 띄우기
-  const onClickOpenModal = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
+  const onClickOpenModal = () => {
     setIsOpenDeleteModal(true);
   };
   const closeModal = () => {
     setIsOpenDeleteModal(false);
+    menuRef.current?.focus();
   };
-  const onClickCancel = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    closeKebab();
+  const onClickCancel = () => {
     closeModal();
   };
 
