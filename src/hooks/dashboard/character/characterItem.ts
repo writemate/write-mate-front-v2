@@ -71,15 +71,24 @@ export function useCharacterItem(curCharacter: TMCharacter) {
         queryKey: [dashboardQueryKeys.character(), character.id],
       });
     },
+    onMutate: (value: File) => {
+      const prevData = queryClient.getQueryData<TMCharacter>([
+        dashboardQueryKeys.character(),
+        character.id,
+      ]);
+      queryClient.setQueryData([dashboardQueryKeys.character(), character.id], {
+        ...prevData,
+        ch_image: URL.createObjectURL(value),
+      });
+      return { prevData };
+    },
   });
   const onChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
     mutateImage(file)();
   };
-  const onClickChangeImage = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    event.stopPropagation();
+  const onClickChangeImage = () => {
     imageInputRef.current?.click();
   };
 
@@ -159,10 +168,10 @@ export function useCharacterItem(curCharacter: TMCharacter) {
   const onDeleteMCharacter = useOnClickUpdate({
     mutationFn: deleteMCharacter(character.id),
     queryKey: [dashboardQueryKeys.character()],
-    savingMessage: "메모 삭제 중",
-    errorMessage: "메모 삭제에 실패하였습니다.",
+    savingMessage: "인물 삭제 중",
+    errorMessage: "인물 삭제에 실패하였습니다.",
     onSuccess: () => {
-      notifySuccess("메모가 삭제되었습니다.");
+      notifySuccess("인물이 삭제되었습니다.");
       closeEditModal();
       closeDeleteModal();
     },
@@ -216,6 +225,7 @@ export function useCharacterItem(curCharacter: TMCharacter) {
 
   return {
     character,
+    imageInputRef,
     isOpenEditModal,
     isOpenDeleteModal,
     deleteCharacteristic,
