@@ -8,7 +8,7 @@ import { dashboardQueryKeys } from "@/utils/APIs/queryKeys";
 import { workspaceCategory } from "@/utils/APIs/types";
 import { notifySuccess } from "@/utils/showToast";
 import { useQueryClient } from "@tanstack/react-query";
-import { createContext, useEffect, useRef, useState } from "react";
+import { createContext, useRef, useState } from "react";
 
 export function useKebab(
   workId: string,
@@ -18,12 +18,13 @@ export function useKebab(
 
   const [isKebabOpen, setIsKebabOpen] = useState(false);
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
+  const [isInputing, setIsInputing] = useState(false);
 
   const imageInputRef = useRef<HTMLInputElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
   // 케밥 클릭 시 메뉴 열기
-  const onClickKebab = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const onClickKebab = () => {
     setIsKebabOpen((prev) => !prev);
   };
 
@@ -37,8 +38,8 @@ export function useKebab(
     if (menuRef.current && menuRef.current.contains(event.relatedTarget)) {
       return;
     }
-    if (event.relatedTarget === null) {
-      // 표지 이미지 변경 input 클릭 시 onBlur 발생을 예방하기 위함
+    if (event.relatedTarget === null && isInputing) {
+      setIsInputing(false);
       return;
     }
     setIsOpenDeleteModal(false);
@@ -51,6 +52,7 @@ export function useKebab(
   };
 
   // 커버 이미지 변경
+  const [isCompleted, setIsCompleted] = useState(true);
   const mutateCoverImage = useOnClickUpdate({
     mutationFn: updateWorkCover(workId),
     queryKey: ["workCover", workId],
@@ -60,31 +62,51 @@ export function useKebab(
       notifySuccess("작품 표지가 변경되었습니다.");
     },
     onMutate: (value: File) => {
-      const prevData = queryClient.getQueryData([
+      const prevDataOngoing = queryClient.getQueryData([
         dashboardQueryKeys.workStudio(),
         "ongoing",
+      ]);
+      const prevDataCompleted = queryClient.getQueryData([
+        dashboardQueryKeys.workStudio(),
+        "completed",
       ]);
       queryClient.setQueryData(
         [dashboardQueryKeys.workStudio(), "ongoing"],
         (prev: any) => {
           return prev.map((work: any) => {
             if (work.id === workId) {
+              setIsCompleted(false);
               return { ...work, cover: URL.createObjectURL(value) };
             }
             return work;
           });
         }
       );
+      queryClient.setQueryData(
+        [dashboardQueryKeys.workStudio(), "completed"],
+        (prev: any) => {
+          return prev.map((work: any) => {
+            if (work.id === workId) {
+              setIsCompleted(true);
+              return { ...work, cover: URL.createObjectURL(value) };
+            }
+            return work;
+          });
+        }
+      );
+      const prevData = isCompleted ? prevDataCompleted : prevDataOngoing;
+      closeKebab();
       return { prevData };
     },
   });
+
   const onChangeCoverImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
     mutateCoverImage(file)();
-    closeKebab();
   };
   const onClickChangeCover = () => {
+    setIsInputing(true);
     imageInputRef.current?.click();
   };
 
