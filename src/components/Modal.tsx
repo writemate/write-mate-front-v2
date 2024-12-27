@@ -7,7 +7,7 @@ export default function Modal({
   maxHeight,
   children,
 }: {
-  closeModal: () => void | ((e: React.MouseEvent<HTMLDivElement>) => void);
+  closeModal: (() => void) | ((e: React.MouseEvent<HTMLDivElement>) => void);
   children: React.ReactElement;
   maxWidth?: number | string;
   maxHeight?: number | string;

@@ -1,8 +1,8 @@
 import { KebabContext } from "@/hooks/dashboard/work/kebab";
 import { KebabItem } from "@/styles/dashboard/Work/Kebab";
 import { useContext } from "react";
-import { WarningModal } from "../WarningModal";
 import { ChangeCoverInput } from "@/styles/dashboard/Work/WorkList";
+import { WarningModal } from "../WarningModal";
 
 export const ChangeTitle = () => {
   const { onClickChangeTitle } = useContext(KebabContext);
@@ -77,8 +77,14 @@ export const ChangeCategory2Trash = () => {
 };
 
 export const DeletePermanently = () => {
-  const { isOpenDeleteModal, onClickOpenModal, closeModal, onDeleteWork } =
-    useContext(KebabContext);
+  // 영구 삭제 버튼 + 버튼 누르면 뜰 모달. 모달에서 버튼 누르면 삭제
+  const {
+    isOpenDeleteModal,
+    onClickOpenModal,
+    closeModal,
+    onDeleteWork,
+    onClickCancel,
+  } = useContext(KebabContext);
 
   return (
     <>
@@ -89,7 +95,7 @@ export const DeletePermanently = () => {
         <WarningModal
           closeModal={closeModal}
           onClickConfirm={onDeleteWork()}
-          onClickCancel={closeModal}
+          onClickCancel={onClickCancel}
           message={"작품을 영구 삭제하시겠습니까?"}
           ConfirmButtonName={"삭제"}
         />
