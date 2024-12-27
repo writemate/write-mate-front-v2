@@ -1,5 +1,6 @@
 "use client";
 import { styled } from "styled-components";
+import {  DropdownMenuWrapper, DropdownSelector } from "@/styles";
 import {
   Button,
   clickable,
@@ -91,6 +92,7 @@ export const KeywordListContainerForCharacterCard = styled(
   line-height: 18px;
   height: 78px;
   overflow: hidden;
+  align-items: flex-end;
 `;
 
 export const KeywordContainer = styled.div<{
@@ -155,13 +157,14 @@ export const CharacterImage = styled.div<{ $src: string }>`
   font-size: 18px;
   font-weight: 700;
 `;
-export const CharacterName = styled.div`
+export const CharacterName = styled.div<{ $isNew?: boolean }>`
   font-size: 14px;
   font-weight: 700;
   width: 123px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: ${({ theme, $isNew }) => ($isNew ? theme.color.gray300 : theme.color.gray900)};
 `;
 export const CharacterRole = styled.div`
   font-size: 13px;
@@ -171,11 +174,11 @@ export const CharacterRole = styled.div`
   white-space: nowrap;
   width: 123px;
 `;
-export const CharacterDescription = styled.div`
+export const CharacterDescription = styled.div<{ $isNew?: boolean }>`
   font-size: 14px;
   line-height: 21px;
   height: 42px;
-  color: ${({ theme }) => theme.color.gray400};
+  color: ${({ theme, $isNew }) => ($isNew ? theme.color.gray200 : theme.color.gray400)};
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -361,6 +364,12 @@ export const RelationCharacterDescription = styled.div`
   font-style: normal;
   font-weight: 500;
   line-height: 140%;
+  height: calc(13px * 1.4 * 5);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
   color: ${({ theme }) => theme.color.gray400};
 `;
 
@@ -505,5 +514,27 @@ export const CreateKeywordButton = styled.button`
   color: #fff;
   &:disabled {
     background-color: ${({ theme }) => theme.color.gray100};
+  }
+`;
+
+export const CharacterDropdownMenuWrapper = styled(DropdownMenuWrapper)`
+  width: 100%;
+  max-width: 150px;
+  position: relative;
+`;
+
+export const CharacterDropdownSelector = styled(DropdownSelector)`
+  box-shadow: none;
+  color: ${({ theme }) => theme.color.red400};
+  &>svg{
+    flex-shrink: 0;
+  }
+  & path {
+    fill: ${({ theme }) => theme.color.red400};
+  }
+  &>span{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 `;

@@ -27,9 +27,9 @@ import { Title } from "@/styles/workspace";
 export default function CharacterList() {
   const {
     workspace_id, keywordList, characterList, isKeywordsLoading, isCharactersLoading,
-    addCharacter, isAddingCharacter, isAddingKeyword,
+    onClickAddCharacter,
     selectKeyword, isSelectedKeyword, removeSelectedKeyword,
-    setMainCharacter, removeMainCharacter,miniModalOpen,
+    onClickSetMainCharacter, onClickUnsetMainCharacter,miniModalOpen,
     openMiniModal, miniKeywordInput, onChangeMiniKeywordInput,
     onEnterPressAtMiniModal, onClickAddKeywordAtMiniModal, onBlurredMiniModal,
     keywordListRef, addButtonRef, miniModalLeftPosition,
@@ -64,7 +64,7 @@ export default function CharacterList() {
                     <SelectableColor onClick={selectColor('purple')} $color="purple" $isSelected={selectedColor==='purple'} />
                   </SelectColorContainer>
                   <CreateKeywordButton onClick={onClickCreateKeyword}
-                    disabled={isAddingKeyword || modalInput.trim()===""}
+                    disabled={modalInput.trim()===""}
                   >키워드 생성</CreateKeywordButton>
                 </ManageKeywordLeft>
                 <VerticalLine />
@@ -89,18 +89,22 @@ export default function CharacterList() {
       </KeywordTitle>
       <KeywordListContainer ref={keywordListRef}>
         {isKeywordsLoading && <div>키워드 로딩중...</div>}
-        {keywordList && keywordList.map((keyword, index) => (
-          <KeywordContainer key={index} onClick={selectKeyword(keyword.id)}
-            $lightColor={isSelectedKeyword(keyword.id) ? keyword.light_color : undefined}
-            $darkColor={isSelectedKeyword(keyword.id) ? keyword.dark_color : undefined}
-          >
+        {keywordList && keywordList.map((keyword, index) => {
+          if(keyword.id === null) return (<KeywordContainer key={index}>
             <span>{keyword.word}</span>
-            {isSelectedKeyword(keyword.id) && <KeywordCancel onClick={(e: React.MouseEvent) => {
-              e.stopPropagation();
-              removeSelectedKeyword(keyword.id);
-            }} />}
-          </KeywordContainer>
-        ))}
+          </KeywordContainer>);
+          return (
+            <KeywordContainer key={index} onClick={selectKeyword(keyword.id)}
+              $lightColor={isSelectedKeyword(keyword.id) ? keyword.light_color : undefined}
+              $darkColor={isSelectedKeyword(keyword.id) ? keyword.dark_color : undefined}
+            >
+              <span>{keyword.word}</span>
+              {isSelectedKeyword(keyword.id) && <KeywordCancel onClick={(e: React.MouseEvent) => {
+                e.stopPropagation();
+                removeSelectedKeyword(keyword.id);
+              }} />}
+            </KeywordContainer>
+        )})}
         <div style={{ position: 'relative' }} ref={addButtonRef}>
           <AddButton onClick={openMiniModal} />
           {miniModalOpen && (
@@ -118,17 +122,23 @@ export default function CharacterList() {
       <CharacterListContainer>
         {(isKeywordsLoading || isCharactersLoading) && <div>캐릭터 로딩중...</div>}
         {characterList && keywordList && characterList.map((character, index) => (
-          <CharacterCard key={index+1} href={`/${workspace_id}/character/${character.id}`}>
+          <CharacterCard key={index+1} href={character.id===null?"#":`/${workspace_id}/character/${character.id}`}>
             <CharacterCardTitle>
               <CharacterImage $src={character.ch_image} />
               <div>
-                <CharacterName>{character.ch_name}</CharacterName>
+                <CharacterName $isNew={character.ch_name===""}>
+                  {character.ch_name}
+                  {character.ch_name==="" && "새 인물"}
+                </CharacterName>
                 <CharacterRole>{character.role}</CharacterRole>
               </div>
-              {character.isMain && <StarActive onClick={removeMainCharacter(character.id)} />}
-              {!character.isMain && <StarInactive onClick={setMainCharacter(character.id)} />}
+              {character.isMain && <StarActive onClick={onClickUnsetMainCharacter(character.id)} />}
+              {!character.isMain && <StarInactive onClick={onClickSetMainCharacter(character.id)} />}
             </CharacterCardTitle>
-            <CharacterDescription>{character.description}</CharacterDescription>
+            <CharacterDescription  $isNew={character.description===""}>
+              {character.description}
+              {character.description==="" && "인물 설명을 적어주세요."}
+            </CharacterDescription>
             <KeywordListContainerForCharacterCard>
               {character.keyword.map((keyword, index) => {
                 const isSelected = isSelectedKeyword(keyword.id);
@@ -141,13 +151,13 @@ export default function CharacterList() {
                   </KeywordContainer>
                 );
               })}
+              {character.keyword.length===0 && <div style={{color:"#B1B5C4"}}>키워드를 선택해주세요.</div>}
             </KeywordListContainerForCharacterCard>
           </CharacterCard>
         ))}
       </CharacterListContainer>
-      <CreateCharacterButton onClick={()=>addCharacter()} disabled={isAddingCharacter || isAddingKeyword}>
-        {isAddingCharacter&&"인물 생성중..."}
-        {!isAddingCharacter && "인물 생성하기"}
+      <CreateCharacterButton onClick={onClickAddCharacter}>
+        인물 생성하기
       </CreateCharacterButton>
     </ContentsContainer>
   );
