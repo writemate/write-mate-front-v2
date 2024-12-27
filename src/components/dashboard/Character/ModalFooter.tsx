@@ -1,9 +1,9 @@
 "use client";
 import { useContext } from "react";
 import {
+  CancelButton,
   DeleteButton,
   FooterContainer,
-  SaveButton,
 } from "@/styles/dashboard/IdeaBox/Modal";
 import { CharacterItemContext } from "@/hooks/dashboard/character/characterItem";
 import { WarningModal } from "../WarningModal";
@@ -30,7 +30,7 @@ export default function ModalFooter() {
           ConfirmButtonName="삭제"
         />
       )}
-      <SaveButton onClick={closeEditModal}>저장</SaveButton>
+      <CancelButton onClick={closeEditModal}>닫기</CancelButton>
     </FooterContainer>
   );
 }
