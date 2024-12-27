@@ -214,7 +214,7 @@ export type TSynopsis = {
 };
 
 export type TRelation = {
-  _id: string;
+  id: string;
   arrow_right: boolean;
   arrow_left: boolean;
   arrow_text_right: string;

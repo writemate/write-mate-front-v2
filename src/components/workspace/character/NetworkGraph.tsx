@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
-import { TCharacter, TRelation, TWorkCharacter } from '@/utils/APIs/types';
+import { TCharacter, TRelation } from '@/utils/APIs/types';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import Modal from '@/components/Modal';
 import EditRelation from '@/components/workspace/character/EditRelation';
 import { useParams } from 'next/navigation';
 import { workspaceQueryKeys } from '@/utils/APIs/queryKeys';
-import { getCharacterList, getCharacterRelation } from '@/utils/APIs/workspace';
+import { getCharacterList, getRelationList } from '@/utils/APIs/workspace/character';
 import { CreateRelationButton } from '@/styles/workspace/Character.style';
 import { EditRelationProps } from '@/components/workspace/character/EditRelation';
 import CharacterDetail from '@/components/workspace/character/CharacterDetail';
@@ -106,7 +106,7 @@ const transformToNodesAndLinks = (data: TRelation[],characterList: TCharacter[])
 
   // Removing duplicate nodes based on 'id' using a Set
   const nodes: Node[] = Array.from(nodeIdSet).map((id) => {
-    const character = characterList.find((character) => character._id === id);
+    const character = characterList.find((character) => character.id === id);
     return {
       id,
       name: character?.ch_name ?? '삭제되었거나 존재하지 않는 사용자입니다',
@@ -134,16 +134,12 @@ const NetworkGraph = () => {
   const { workspace_id } = useParams<{ workspace_id: string}>();
   const { data: relations, error, isLoading:isLoading2 } = useQuery({
     queryKey: workspaceQueryKeys.characterRelation(workspace_id),
-    queryFn: getCharacterRelation(workspace_id),
+    queryFn: getRelationList(workspace_id),
   });
   const { data: characterList } = useQuery({
     queryKey: workspaceQueryKeys.characterList(workspace_id),
     queryFn: getCharacterList(workspace_id),
   });
-
-  const [clickedCharacter1, setClickedCharacter1] = useState<TCharacter | undefined>(undefined);
-  const [clickedCharacter2, setClickedCharacter2] = useState<TCharacter | undefined>(undefined);
-  const [relation, setRelation] = useState<TRelation | undefined>(undefined);
 
   useEffect(() => {
     const svg = d3.select(ref.current!);
@@ -194,8 +190,8 @@ const NetworkGraph = () => {
       )!;
 
       return {
-        character1: characterList.find((character) => character._id == relation?.start_ch)!,
-        character2: characterList.find((character) => character._id == relation?.end_ch)!,
+        character1: characterList.find((character) => character.id == relation?.start_ch)!,
+        character2: characterList.find((character) => character.id == relation?.end_ch)!,
         relation,
       }
     };
@@ -578,13 +574,14 @@ const NetworkGraph = () => {
         <Modal closeModal={()=>setModalContent(null)} maxWidth={972} maxHeight="100%">
           <EditRelation
             {...modalContent}
+            closeModal={()=>setModalContent(null)}
           />
         </Modal>
       )}
       {characterModal && 
         <Modal closeModal={()=>{
           setcharacterModal(null);
-          queryClient.invalidateQueries({queryKey: workspaceQueryKeys.characterList(workspace_id)});
+          queryClient.invalidateQueries({queryKey: workspaceQueryKeys.character(workspace_id)});
         }} maxWidth={972} maxHeight={560}>
           <div style={{width: '100%', height: '100%', background:"#fff", borderRadius:"8px", padding:"36px", overflowY:"auto"}}>
             <CharacterDetail characterId={characterModal} />

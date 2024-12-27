@@ -10,25 +10,17 @@ export const getCharacterList = (workspaceId: string) => async () => {
   return response.data;
 };
 export const createCharacter = (workspaceId: string) => async () => {
-  const response = await axiosInstance.post<string>(
-    DOMAIN.CREATE_CHARACTER(workspaceId)
-  );
+  const response = await axiosInstance.post<string>(DOMAIN.CREATE_CHARACTER(workspaceId));
   return response.data;
-};
-export const setMainCharacter =
-  (workspaceId: string) => async (characterId: string) => {
-    const response = await axiosInstance.patch<void>(
-      DOMAIN.UPDATE_CHARACTER_MAIN(workspaceId, characterId)
-    );
-    return response.data;
-  };
-export const unsetMainCharacter =
-  (workspaceId: string) => async (characterId: string) => {
-    const response = await axiosInstance.patch<void>(
-      DOMAIN.UPDATE_CHARACTER_MAIN(workspaceId, characterId)
-    );
-    return response.data;
-  };
+}
+export const setMainCharacter = (workspaceId: string) => async (characterId: string) => {
+  const response = await axiosInstance.patch<void>(DOMAIN.UPDATE_CHARACTER_MAIN(workspaceId, characterId), { isMain: true });
+  return response.data;
+}
+export const unsetMainCharacter = (workspaceId: string) => async (characterId: string) => {
+  const response = await axiosInstance.patch<void>(DOMAIN.UPDATE_CHARACTER_MAIN(workspaceId, characterId), { isMain: false });
+  return response.data;
+}
 
 export const getKeywordList = (workspaceId: string) => async () => {
   const response = await axiosInstance.get<TKeyword[]>(
