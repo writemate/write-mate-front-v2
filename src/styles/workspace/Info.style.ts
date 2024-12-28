@@ -6,16 +6,23 @@ import {
   FlexColumnLeftStart,
   FlexRowCenter,
   FlexRowLeftStart,
+  FlexRowSpaceBetween,
 } from "@/styles";
+import Back from "@/assets/workspace/character/back.svg";
 import { media } from "../media";
 
-// 작품 표지
+export const BackButton = styled(Back)`
+  flex-shrink: 0;
+  cursor: pointer;
+  margin-bottom: 73px;
+  margin-right: auto;
+`;
+
 export const CoverContainer = styled.div`
   ${FlexRowLeftStart};
   align-items: flex-end;
   gap: 36px;
   width: 100%;
-  margin-top: 55px;
   flex-wrap: wrap;
 
   ${media.tablet} {

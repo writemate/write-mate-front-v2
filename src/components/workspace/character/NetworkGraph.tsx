@@ -9,7 +9,7 @@ import { workspaceQueryKeys } from '@/utils/APIs/queryKeys';
 import { getCharacterList, getRelationList } from '@/utils/APIs/workspace/character';
 import { CreateRelationButton } from '@/styles/workspace/Character.style';
 import { EditRelationProps } from '@/components/workspace/character/EditRelation';
-import CharacterDetail from '@/components/workspace/character/CharacterDetail';
+import CharacterModal from '@/components/workspace/character/CharacterModal';
 
 export type Node = {
   id: string;
@@ -584,7 +584,7 @@ const NetworkGraph = () => {
           queryClient.invalidateQueries({queryKey: workspaceQueryKeys.character(workspace_id)});
         }} maxWidth={972} maxHeight={560}>
           <div style={{width: '100%', height: '100%', background:"#fff", borderRadius:"8px", padding:"36px", overflowY:"auto"}}>
-            <CharacterDetail characterId={characterModal} />
+            <CharacterModal characterId={characterModal} />
           </div>
         </Modal>
       }
