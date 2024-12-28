@@ -1,5 +1,6 @@
 import { styled, css, keyframes } from "styled-components";
 import { media } from "./media";
+import Close from "@/assets/icons/close.svg";
 
 export const FlexRowCenter = css`
   display: flex;
@@ -234,4 +235,16 @@ export const ModalContainer = styled.div`
   & > * {
     width: 100%;
   }
+`;
+
+export const DeleteButton = styled.div`
+  ${ButtonCss};
+  background-color: ${({ theme }) => theme.color.red600};
+  color: #fff;
+  border-radius: 30px;
+  padding: 10px 14px;
+`;
+
+export const CloseButton = styled(Close)`
+  ${clickable};
 `;
