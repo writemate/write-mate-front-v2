@@ -103,6 +103,11 @@ export const CoverImageContainer = styled.div`
 `;
 export const ChangeCoverInput = styled.input`
   display: none;
+  ${media.tablet} {
+    width: 100%;
+    aspect-ratio: 263 / 341;
+    padding: 0;
+  }
 `;
 
 // 작품 정보

@@ -235,6 +235,9 @@ export const ModalContainer = styled.div`
   & > * {
     width: 100%;
   }
+  ${media.tablet} {
+    padding: 20px;
+  }
 `;
 
 export const DeleteButton = styled.div`
