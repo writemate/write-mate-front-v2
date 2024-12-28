@@ -6,7 +6,6 @@ import {
   HearderProfileButton,
   HeaderRightButtonList,
 } from "@/styles/dashboard/Header";
-
 import Event from "@/assets/dashboard/header/event.svg";
 import Profile from "@/assets/dashboard/header/profile.svg";
 import Help from "@/assets/dashboard/header/help.svg";
@@ -44,12 +43,12 @@ export default function Header() {
           <Chat />
         </HeaderRightButton>
         <Separator />
-        <HearderProfileButton onClick={onClickMyPage}>
-          <Profile />
-          <MyPageContext.Provider value={myPageValue}>
-            {isOpenMyPage && <MyPageModal />}
-          </MyPageContext.Provider>
-        </HearderProfileButton>
+        <MyPageContext.Provider value={myPageValue}>
+          <HearderProfileButton onClick={onClickMyPage}>
+            <Profile />
+          </HearderProfileButton>
+          {isOpenMyPage && <MyPageModal />}
+        </MyPageContext.Provider>
       </HeaderRightButtonList>
     </HeaderContainer>
   );

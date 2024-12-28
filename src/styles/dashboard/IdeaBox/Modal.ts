@@ -74,6 +74,18 @@ export const ModalContentContainer = styled.div`
   max-height: 70vh;
 `;
 
+export const ModalHeader = styled.div`
+  ${FlexRow}
+  justify-content: space-between;
+
+  p {
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 150%;
+  }
+`;
+
 /* Input */
 export const Input = styled.input`
   ${InputBoxContainer}
@@ -113,7 +125,7 @@ export const ImageContainer = styled.div`
   ${FlexColumn}
   flex-shrink: 0;
   background: ${({ theme }) => theme.color.gray100};
-  border-radius: 14px;
+  border-radius: 8px;
   justify-content: center;
   align-items: center;
   box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.1);
@@ -136,7 +148,7 @@ export const ImageContainer = styled.div`
     align-items: center;
     object-fit: cover;
     overflow: hidden;
-    border-radius: 14px;
+    border-radius: 88px;
   }
   &:hover {
     background: ${({ theme }) => theme.color.gray200};
@@ -164,7 +176,7 @@ export const ChangeCover = styled.button`
   padding: 8px 12px;
   gap: 10px;
   border: 1px solid ${({ theme }) => theme.color.orange100};
-  box-shadow: 1px 1px 4px 0 #0000001f;
+  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.1);
   background-color: #ffffff;
 
   &:hover {
@@ -189,6 +201,7 @@ export const DescriptionContainer = styled.div`
 `;
 export const BirthAndGenderContainer = styled.div`
   ${FlexRow}
+  padding-right: 20%;
 `;
 export const BirthContainer = styled.div`
   ${FlexColumn}
@@ -255,7 +268,7 @@ export const Delete = styled(TrashCan)`
 
 export const FooterContainer = styled.div`
   ${FlexRow}
-  justify-content: space-between;
+  justify-content: flex-end;
   padding: 4px 12px;
 
   ${media.tablet} {
@@ -264,7 +277,6 @@ export const FooterContainer = styled.div`
 `;
 
 export const defaultButton = styled.button`
-  cursor: pointer;
   width: fit-content;
   height: fit-content;
   padding: 4px 16px;
@@ -279,10 +291,16 @@ export const defaultButton = styled.button`
   line-height: 21px;
 `;
 
-export const DeleteButton = styled(defaultButton)`
-  background: ${({ theme }) => theme.color.red600};
-  border: 1px solid ${({ theme }) => theme.color.red600};
-  color: ${({ theme }) => theme.color.white};
+export const DeleteButton = styled.button`
+  cursor: pointer;
+  color: ${({ theme }) => theme.color.red600};
+  background: none;
+  border: none;
+
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 350;
+  line-height: 21px;
 `;
 
 export const RightButtonContainer = styled.div`

@@ -8,6 +8,7 @@ import {
   ModalContentContainer,
   ImgAndNameAndDescriptionContainer,
   NameAndDescriptionContainer,
+  ModalHeader,
 } from "@/styles/dashboard/IdeaBox/Modal";
 import Image from "@/components/dashboard/Character/Image";
 import Name from "@/components/dashboard/Character/Name";
@@ -16,6 +17,7 @@ import Role from "@/components/dashboard/Character/Role";
 import Description from "@/components/dashboard/Character/Description";
 import Characteristic from "@/components/dashboard/Character/Characteristic";
 import { CharacterItemContext } from "@/hooks/dashboard/character/characterItem";
+import Close from "@/assets/icons/close.svg";
 
 export default function MCharacterModal() {
   const { closeEditModal } = useContext(CharacterItemContext);
@@ -24,6 +26,10 @@ export default function MCharacterModal() {
     <Modal closeModal={closeEditModal} maxWidth="700px">
       <ModalContentAndFooterContainer>
         <ModalContentContainer>
+          <ModalHeader>
+            <p>인물 정보</p>
+            <Close onClick={closeEditModal} />
+          </ModalHeader>
           <ImgAndNameAndDescriptionContainer>
             <Image />
             <NameAndDescriptionContainer>
@@ -34,8 +40,8 @@ export default function MCharacterModal() {
           <BirthAndGender />
           <Description />
           <Characteristic />
+          <Footer />
         </ModalContentContainer>
-        <Footer />
       </ModalContentAndFooterContainer>
     </Modal>
   );
