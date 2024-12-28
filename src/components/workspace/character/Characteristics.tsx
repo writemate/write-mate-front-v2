@@ -26,14 +26,16 @@ export default function Description() {
       <CharacteristicListContainer>
         {characteristicList.map((c, i) => (
           <CharacteristicContainer key={i}>
-            <CharacteristicTitle
-              type="text"
-              placeholder="특징을 적어주세요."
-              value={c.title}
-              onChange={onChangeCharacteristicTitle(i)}
-              disabled={isLoading}
-            />
-            <TrashCan onClick={onClickRemoveCharacteristic(i)} />
+            <div style={{ display: "flex", alignItems: "center", gap: 6, width: "100%" }}>
+              <CharacteristicTitle
+                type="text"
+                placeholder="특징을 적어주세요."
+                value={c.title}
+                onChange={onChangeCharacteristicTitle(i)}
+                disabled={isLoading}
+              />
+              <TrashCan onClick={onClickRemoveCharacteristic(i)} style={{ cursor: "pointer", flexShrink: 0 }} />
+            </div>
             <CharacteristicContent
               placeholder="성격이나, 외향적 특징, 출생의 비밀 등 세부 내용을 적어주세요."
               value={c.content}
