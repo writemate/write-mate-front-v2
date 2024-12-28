@@ -1,4 +1,4 @@
-import { FlexColumnLeftStart, Input } from "@/styles";
+import { FlexColumnLeftStart } from "@/styles";
 import styled from "styled-components";
 
 export const AddMemoButton = styled.button<{ $isEmpty?: boolean }>`
@@ -52,4 +52,8 @@ export const CharacterCard = styled.div<{ $isSelected?: boolean }>`
   visibility: ${({ $isSelected }) => ($isSelected ? "hidden" : "visible")};
   border: none !important;
   gap: 8px;
+
+  &:hover {
+    outline: 1px solid ${({ theme }) => theme.color.orange400};
+  }
 `;

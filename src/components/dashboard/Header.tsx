@@ -6,18 +6,22 @@ import {
   HearderProfileButton,
   HeaderRightButtonList,
 } from "@/styles/dashboard/Header";
-
 import Event from "@/assets/dashboard/header/event.svg";
 import Profile from "@/assets/dashboard/header/profile.svg";
 import Help from "@/assets/dashboard/header/help.svg";
 import Chat from "@/assets/dashboard/header/chat.svg";
 import Separator from "@/assets/dashboard/header/separator.svg";
+import { MyPageContext, useMyPage } from "@/hooks/dashboard/useMyPage";
+import { MyPageModal } from "./MyPageModal";
 
-export default function Header({}: {}) {
+export default function Header() {
+  const myPageValue = useMyPage();
+  const { isOpenMyPage, onClickMyPage } = myPageValue;
+
   return (
     <HeaderContainer>
       <HeaderLeftButton
-        onClick={(event) => {
+        onClick={() => {
           window.open("https://promotion.write-mate.net/", "_blank");
         }}
       >
@@ -25,27 +29,26 @@ export default function Header({}: {}) {
       </HeaderLeftButton>
       <HeaderRightButtonList>
         <HeaderRightButton
-          onClick={(event) => {
+          onClick={() => {
             window.open("https://guide.write-mate.net/", "_blank");
           }}
         >
           <Help />
         </HeaderRightButton>
         <HeaderRightButton
-          onClick={(event) => {
+          onClick={() => {
             window.open("http://pf.kakao.com/_lrfTG/chat", "_blank");
           }}
         >
           <Chat />
         </HeaderRightButton>
         <Separator />
-        <HearderProfileButton
-          onClick={(event) => {
-            console.log("마이페이지");
-          }}
-        >
-          <Profile />
-        </HearderProfileButton>
+        <MyPageContext.Provider value={myPageValue}>
+          <HearderProfileButton onClick={onClickMyPage}>
+            <Profile />
+          </HearderProfileButton>
+          {isOpenMyPage && <MyPageModal />}
+        </MyPageContext.Provider>
       </HeaderRightButtonList>
     </HeaderContainer>
   );

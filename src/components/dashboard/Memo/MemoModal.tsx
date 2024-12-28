@@ -9,11 +9,11 @@ import {
   ModalContentContainer,
   FooterContainer,
   DeleteButton,
-  RightButtonContainer,
-  SaveButton,
+  ModalHeader,
 } from "@/styles/dashboard/IdeaBox/Modal";
 import { MemoItemContext } from "@/hooks/dashboard/memo/memoItem";
 import { WarningModal } from "../WarningModal";
+import Close from "@/assets/icons/close.svg";
 
 export function EditModal() {
   const {
@@ -25,14 +25,17 @@ export function EditModal() {
     onDeleteMemo,
     onChangeName,
     onChangeDescription,
-    onClickCloseEditModal,
     onClickOpenDeleteModal,
   } = useContext(MemoItemContext);
   return (
     <Modal closeModal={closeEditModal} maxWidth="600px">
       <ModalContentAndFooterContainer>
         <ModalContentContainer>
-          <p>제목</p>
+          <ModalHeader>
+            <p>메모</p>
+            <Close onClick={closeEditModal} />
+          </ModalHeader>
+
           <Input
             className="memo-modal-name"
             defaultValue={memo.memo_name}
@@ -49,22 +52,19 @@ export function EditModal() {
             minRows={10}
             placeholder="메모 내용을 입력하세요"
           />
+          <FooterContainer>
+            <DeleteButton onClick={onClickOpenDeleteModal}>삭제</DeleteButton>
+            {isOpenDeleteModal && (
+              <WarningModal
+                closeModal={closeDeleteModal}
+                onClickConfirm={onDeleteMemo()}
+                onClickCancel={closeDeleteModal}
+                message="정말로 삭제하시겠습니까?"
+                ConfirmButtonName="삭제"
+              />
+            )}
+          </FooterContainer>
         </ModalContentContainer>
-        <FooterContainer>
-          <DeleteButton onClick={onClickOpenDeleteModal}>삭제</DeleteButton>
-          {isOpenDeleteModal && (
-            <WarningModal
-              closeModal={closeDeleteModal}
-              onClickConfirm={onDeleteMemo()}
-              onClickCancel={closeDeleteModal}
-              message="정말로 삭제하시겠습니까?"
-              ConfirmButtonName="삭제"
-            />
-          )}
-          <RightButtonContainer>
-            <SaveButton onClick={onClickCloseEditModal}>닫기</SaveButton>
-          </RightButtonContainer>
-        </FooterContainer>
       </ModalContentAndFooterContainer>
     </Modal>
   );
