@@ -306,9 +306,8 @@ export const CharacteristicListContainer = styled.div`
 `;
 
 export const CharacteristicContainer = styled.div`
-  ${FlexRowLeftStart};
+  ${FlexColumnCenter};
   width: 100%;
-  flex-wrap: wrap;
   padding: 26px 20px;
   background-color: #fff;
   border-radius: 8px;
@@ -317,12 +316,14 @@ export const CharacteristicContainer = styled.div`
 `;
 export const CharacteristicTitle = styled.input`
   flex-grow: 1;
+  flex-shrink: 1;
   border: none;
   outline: none;
   font-size: 24px;
   font-style: normal;
   font-weight: 600;
   line-height: 150%;
+  width: 100%;
 `;
 export const CharacteristicContent = styled.textarea`
   width: 100%;
