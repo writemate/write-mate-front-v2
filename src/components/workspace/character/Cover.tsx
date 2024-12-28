@@ -2,7 +2,7 @@
 import { useContext } from 'react';
 import { CoverContainer, SubTitle, CoverContentsContainer } from "@/styles/workspace/Info.style";
 import CoverImageBox from '@/components/workspace/character/CoverImageBox';
-import { Input, DeleteButton, CloseButton } from "@/styles";
+import { Input, DeleteButton } from "@/styles";
 import { CharacterContext } from "@/hooks/workspace/character/character";
 
 export default function Cover({isDeletable=true}: {isDeletable?:boolean}){
