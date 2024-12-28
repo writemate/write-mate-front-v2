@@ -4,15 +4,10 @@ import { MyPageContext } from "@/hooks/dashboard/useMyPage";
 import { MyPageContainer } from "@/styles/dashboard/MyPage";
 
 export function MyPageModal() {
-  const { closeModal, setIsOpenMyPage } = useContext(MyPageContext);
+  const { closeModal } = useContext(MyPageContext);
 
   return (
-    <Modal
-      closeModal={() => {
-        setIsOpenMyPage(false);
-      }}
-      maxWidth="600px"
-    >
+    <Modal closeModal={closeModal} maxWidth="600px">
       <MyPageContainer>
         <p>닫기 버튼</p>
         <p>이미지</p>
