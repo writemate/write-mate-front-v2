@@ -33,7 +33,7 @@ export default function Header() {
             window.open("https://guide.write-mate.net/", "_blank");
           }}
         >
-          <Help />
+          <Help /> <p>도움말</p>
         </HeaderRightButton>
         <HeaderRightButton
           onClick={() => {
@@ -41,11 +41,13 @@ export default function Header() {
           }}
         >
           <Chat />
+          <p>문의하기</p>
         </HeaderRightButton>
         <Separator />
         <MyPageContext.Provider value={myPageValue}>
           <HearderProfileButton onClick={onClickMyPage}>
             <Profile />
+            <p>프로필</p>
           </HearderProfileButton>
           {isOpenMyPage && <MyPageModal />}
         </MyPageContext.Provider>

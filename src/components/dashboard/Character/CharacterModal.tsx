@@ -23,25 +23,23 @@ export default function MCharacterModal() {
   const { closeEditModal } = useContext(CharacterItemContext);
 
   return (
-    <Modal closeModal={closeEditModal} maxWidth="700px">
+    <Modal closeModal={closeEditModal} maxWidth="750px">
       <ModalContentAndFooterContainer>
-        <ModalContentContainer>
-          <ModalHeader>
-            <p>인물 정보</p>
-            <Close onClick={closeEditModal} />
-          </ModalHeader>
-          <ImgAndNameAndDescriptionContainer>
-            <Image />
-            <NameAndDescriptionContainer>
-              <Name />
-              <Role />
-            </NameAndDescriptionContainer>
-          </ImgAndNameAndDescriptionContainer>
-          <BirthAndGender />
-          <Description />
-          <Characteristic />
-          <Footer />
-        </ModalContentContainer>
+        <ModalHeader>
+          <p>인물 정보</p>
+          <Close onClick={closeEditModal} />
+        </ModalHeader>
+        <ImgAndNameAndDescriptionContainer>
+          <Image />
+          <NameAndDescriptionContainer>
+            <Name />
+            <Role />
+          </NameAndDescriptionContainer>
+        </ImgAndNameAndDescriptionContainer>
+        <BirthAndGender />
+        <Description />
+        <Characteristic />
+        <Footer />
       </ModalContentAndFooterContainer>
     </Modal>
   );

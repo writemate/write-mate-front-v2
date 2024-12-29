@@ -26,7 +26,8 @@ export const HeaderLeftButton = styled.button`
 
   border-radius: 9999px;
   background: ${({ theme }) => theme.color.red400};
-  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1),
+  box-shadow:
+    0px 1px 3px 0px rgba(0, 0, 0, 0.1),
     0px 1px 2px -1px rgba(0, 0, 0, 0.1);
 
   border: none;
@@ -75,6 +76,9 @@ export const HeaderRightButton = styled.button`
   &:hover {
     outline: 1px solid ${({ theme }) => theme.color.orange300};
   }
+  p {
+    display: none;
+  }
 `;
 
 export const HearderProfileButton = styled.button`
@@ -98,5 +102,8 @@ export const HearderProfileButton = styled.button`
 
   &:hover {
     outline: 1px solid ${({ theme }) => theme.color.orange300};
+  }
+  p {
+    display: none;
   }
 `;

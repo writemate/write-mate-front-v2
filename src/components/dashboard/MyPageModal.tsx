@@ -1,24 +1,62 @@
 import Modal from "../Modal";
 import { useContext } from "react";
 import { MyPageContext } from "@/hooks/dashboard/useMyPage";
-import { MyPageContainer } from "@/styles/dashboard/MyPage";
+import {
+  CloseButton,
+  FooterContainer,
+  HalfBackground,
+  PolicyLinks,
+  ModalContentAndFooterContainer,
+  UsageContainer,
+  UsageListContainer,
+  UserImage,
+  Logout,
+  UserNameContainer,
+  Name,
+  EmailContainer,
+} from "@/styles/dashboard/MyPage";
 
 export function MyPageModal() {
-  const { closeModal } = useContext(MyPageContext);
+  const { user, usage, closeModal } = useContext(MyPageContext);
 
   return (
-    <Modal closeModal={closeModal} maxWidth="600px">
-      <MyPageContainer>
-        <p>닫기 버튼</p>
-        <p>이미지</p>
-        <p>이름</p>
-        <p>이메일</p>
-        <p>집필중 작품 수</p>
-        <p>완성 작품 수</p>
-        <p>개인정보처리방침</p>
-        <p>홈페이지 이용약관</p>
-        <p>로그아웃</p>
-      </MyPageContainer>
+    <Modal closeModal={closeModal} maxWidth="450px" maxHeight="800px">
+      <ModalContentAndFooterContainer>
+        <HalfBackground />
+        <CloseButton onClick={closeModal} />
+        <UserImage $src={user?.user_image || ""} />
+        <UserNameContainer>
+          <Name>{user?.user_name}</Name>
+          <p>작가님</p>
+        </UserNameContainer>
+        <EmailContainer>{user?.email}</EmailContainer>
+        <UsageListContainer>
+          <UsageContainer>
+            {usage?.attendanceDays}
+            <p>출석일 수</p>
+          </UsageContainer>
+          <UsageContainer>
+            {usage?.allWorks}
+            <p>전체 작품 수</p>
+          </UsageContainer>
+          <UsageContainer>
+            {usage?.completedWorks}
+            <p>완성 작품 수</p>
+          </UsageContainer>
+        </UsageListContainer>
+        <FooterContainer>
+          <PolicyLinks>
+            <a href="https://write-mate-team.notion.site/400bc182b9824760be00ff8c4cbeee3e">
+              개인정보 처리방침
+            </a>{" "}
+            |{" "}
+            <a href="https://write-mate-team.notion.site/f33681bdc71647619d5b447ac417c86f?pvs=4">
+              이용약관
+            </a>
+          </PolicyLinks>
+          <Logout href="/">로그아웃</Logout>
+        </FooterContainer>
+      </ModalContentAndFooterContainer>
     </Modal>
   );
 }
