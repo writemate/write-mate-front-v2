@@ -3,7 +3,7 @@ import { media } from "@/styles/media";
 import { styled, css } from "styled-components";
 import TextareaAutosize from "react-textarea-autosize";
 import TrashCan from "@/assets/icons/trashcan.svg";
-import { clickable, FlexRowCenter } from "@/styles";
+import { FlexRowCenter } from "@/styles";
 
 /* Css */
 export const InputBoxContainer = css`
@@ -47,13 +47,18 @@ export const FlexColumn = css`
 /* Modal */
 export const ModalContentAndFooterContainer = styled.div`
   width: 100%;
+  max-height: 70vh;
+  padding: 30px;
+
   display: flex;
   flex-direction: column;
-  padding: 18px;
-  transition: all 0.3s;
+
   background-color: ${({ theme }) => theme.color.white};
   border: 1px solid ${({ theme }) => theme.color.gray200};
   border-radius: 8px;
+
+  gap: 16px;
+  overflow: auto;
 
   p {
     color: ${({ theme }) => theme.color.gray900};
@@ -66,13 +71,7 @@ export const ModalContentAndFooterContainer = styled.div`
 `;
 
 /* Content */
-export const ModalContentContainer = styled.div`
-  ${FlexColumn}
-  padding: 12px;
-  gap: 16px;
-  overflow: auto;
-  max-height: 70vh;
-`;
+export const ModalContentContainer = styled.div``;
 
 export const ModalHeader = styled.div`
   ${FlexRow}
@@ -83,6 +82,11 @@ export const ModalHeader = styled.div`
     font-style: normal;
     font-weight: 700;
     line-height: 150%;
+  }
+
+  ${media.tablet} {
+    flex-direction: row;
+    gap: 12px;
   }
 `;
 
