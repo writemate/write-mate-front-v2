@@ -1,5 +1,6 @@
 import axiosInstance from "./axiosInstance";
 import { DOMAIN } from "./domain";
+import { mockUsage, mockUser } from "./mock/\bmypage";
 import { TWork } from "./types";
 import { workspaceCategory } from "./types";
 
@@ -54,4 +55,14 @@ export const deleteWork = (workId: string) => async () => {
 export const getMemo = async () => {
   const response = await axiosInstance.get(DOMAIN.GET_MEMO_LIST);
   return response.data;
+};
+
+export const getMockUser = () => {
+  const response = mockUser;
+  return response;
+};
+
+export const getMockUsage = () => {
+  const response = mockUsage;
+  return response;
 };
