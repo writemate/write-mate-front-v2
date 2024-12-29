@@ -157,7 +157,7 @@ export const HamburgerMenuButton = styled(HamburgerMenu)`
 `;
 
 export const HamburgerMenuContainer = styled.div`
-  display: flex;
+  display: none;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
@@ -166,6 +166,11 @@ export const HamburgerMenuContainer = styled.div`
   width: 100%;
   padding: 0 15px;
   gap: 15px;
+
+  ${media.tablet} {
+    display: flex;
+  }
+
   ${HeaderContainer} {
     display: flex;
     flex-direction: column;

@@ -46,11 +46,27 @@ export function MyPageModal() {
         </UsageListContainer>
         <FooterContainer>
           <PolicyLinks>
-            <a href="https://write-mate-team.notion.site/400bc182b9824760be00ff8c4cbeee3e">
+            <a
+              href="https://write-mate-team.notion.site/400bc182b9824760be00ff8c4cbeee3e"
+              onClick={() => {
+                window.open(
+                  "https://write-mate-team.notion.site/400bc182b9824760be00ff8c4cbeee3e",
+                  "_blank"
+                );
+              }}
+            >
               개인정보 처리방침
             </a>{" "}
             |{" "}
-            <a href="https://write-mate-team.notion.site/f33681bdc71647619d5b447ac417c86f?pvs=4">
+            <a
+              href="https://write-mate-team.notion.site/f33681bdc71647619d5b447ac417c86f?pvs=4"
+              onClick={() =>
+                window.open(
+                  "https://write-mate-team.notion.site/f33681bdc71647619d5b447ac417c86f?pvs=4",
+                  "_blank"
+                )
+              }
+            >
               이용약관
             </a>
           </PolicyLinks>
