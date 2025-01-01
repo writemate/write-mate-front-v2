@@ -4,56 +4,43 @@ import { clickable } from "@/styles";
 import { styled, css } from "styled-components";
 import Link from "next/link";
 import { HighlghtCssForHoberAfter } from ".";
-
-export const SideTabContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 228px;
-  background-color: ${({ theme }) => theme.color.white};
-  box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.08);
-  border-radius: 12px 0px 0px 12px;
-  padding: 31px;
-
-  ${media.tablet} {
-    flex-direction: row;
-    width: 100%;
-    height: fit-content;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px;
-    border-radius: 0;
-    background-color: ${({ theme }) => theme.color.orange100};
-    box-shadow: none;
-  }
-`;
+import HamburgerMenu from "@/assets/icons/hamburgerMenu.svg";
+import {
+  HeaderContainer,
+  HeaderLeftButton,
+  HeaderRightButton,
+  HeaderRightButtonList,
+  HearderProfileButton,
+} from "./Header";
 
 export const SideTabMenu = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   margin-bottom: 240px;
-
-  ${media.tablet} {
-    width: 100%;
-    flex-direction: row;
-    margin: 0;
-    align-items: center;
-    gap: 4px;
-  }
 `;
 
 export const LogoLink = styled(Link)`
   margin-bottom: 88px;
 
-  ${media.tablet} {
+  .logo-small {
+    display: none;
+  }
+
+  .logo-full {
     display: block;
-    align-self: center;
-    padding: 0;
-    margin: 0;
-    scale: 0.8;
-    svg {
-      width: 40px;
+    width: 100%;
+  }
+
+  ${media.tablet} {
+    .logo-small {
+      display: block;
+      width: 35px;
+      padding: 5px;
+    }
+
+    .logo-full {
+      display: none;
     }
   }
 `;
@@ -61,9 +48,10 @@ export const LogoLink = styled(Link)`
 const SideTabSVG = css<{ $isActivated?: boolean }>`
   position: relative;
   display: flex;
-  width: 100%;
   justify-content: flex-start;
   align-items: center;
+
+  width: 100%;
   gap: 10px;
   color: ${({ $isActivated, theme }) =>
     $isActivated ? theme.color.orange400 : theme.color.gray400};
@@ -84,26 +72,6 @@ export const SideTabLink = styled(Link)<{ $isActivated?: boolean }>`
     width: 110%;
     height: 100%;
     z-index: -1;
-  }
-
-  ${media.tablet} {
-    font-size: 14px;
-    width: fit-content;
-    margin-bottom: 0;
-    word-break: keep-all;
-    text-align: center;
-
-    svg {
-      display: none;
-    }
-
-    &:hover::after {
-      display: none;
-    }
-
-    &:hover {
-      color: ${({ theme }) => theme.color.orange400};
-    }
   }
 `;
 
@@ -130,20 +98,8 @@ export const AddWorkspaceButton = styled.button`
   &:hover {
     filter: brightness(95%);
   }
-
-  ${media.tablet} {
-    display: none;
-  }
 `;
 
-import HamburgerMenu from "@/assets/icons/hamburgerMenu.svg";
-import {
-  HeaderContainer,
-  HeaderLeftButton,
-  HeaderRightButton,
-  HeaderRightButtonList,
-  HearderProfileButton,
-} from "./Header";
 export const HamburgerMenuButton = styled(HamburgerMenu)`
   display: none;
 
@@ -167,10 +123,6 @@ export const HamburgerMenuContainer = styled.div`
   padding: 0 15px;
   gap: 15px;
 
-  ${media.tablet} {
-    display: flex;
-  }
-
   ${HeaderContainer} {
     display: flex;
     flex-direction: column;
@@ -182,25 +134,20 @@ export const HamburgerMenuContainer = styled.div`
     svg {
       display: none;
     }
-    p {
+    & > p {
       color: ${({ theme }) => theme.color.gray400};
     }
-
-    ${media.tablet} {
-      display: flex;
-      flex-direction: column;
-      padding: 0;
-      margin-bottom: 0;
-    }
   }
+
   ${HeaderLeftButton} {
     background: none;
     box-shadow: none;
     outline: none;
-    p {
+    & > p {
       color: ${({ theme }) => theme.color.gray400};
     }
   }
+
   ${HeaderRightButtonList} {
     display: flex;
     flex-direction: column;
@@ -208,24 +155,103 @@ export const HamburgerMenuContainer = styled.div`
     box-shadow: none;
     gap: 0;
   }
+
   ${HeaderRightButton} {
     width: 100%;
     background: none;
     box-shadow: none;
     outline: none;
-    p {
+    & > p {
       display: flex;
       color: ${({ theme }) => theme.color.gray400};
     }
   }
+
   ${HearderProfileButton} {
     width: 100%;
     background: none;
     box-shadow: none;
     outline: none;
-    p {
+    & > p {
       display: flex;
       color: ${({ theme }) => theme.color.gray400};
+    }
+  }
+
+  ${media.tablet} {
+    display: flex;
+
+    ${HeaderContainer} {
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+      margin-bottom: 0;
+    }
+  }
+`;
+
+export const SideTabContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 228px;
+  background-color: ${({ theme }) => theme.color.white};
+  box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.08);
+  border-radius: 12px 0px 0px 12px;
+  padding: 31px;
+
+  ${media.tablet} {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+    height: fit-content;
+    padding: 5px 15px 5px 10px;
+
+    border-radius: 0;
+    background-color: ${({ theme }) => theme.color.orange100};
+    box-shadow: none;
+
+    ${SideTabMenu} {
+      width: 100%;
+      flex-direction: row;
+      margin: 0;
+      align-items: center;
+      gap: 4px;
+    }
+    ${LogoLink} {
+      display: block;
+      align-self: center;
+      margin: 0;
+    }
+    ${SideTabLink} {
+      font-size: 14px;
+      width: fit-content;
+      margin-bottom: 0;
+      word-break: keep-all;
+      text-align: center;
+
+      & > svg {
+        display: none;
+      }
+      &:hover::after {
+        display: none;
+      }
+      &:hover {
+        color: ${({ theme }) => theme.color.orange400};
+      }
+    }
+
+    ${AddWorkspaceButton} {
+      display: none;
+    }
+
+    ${HamburgerMenuContainer} {
+      display: flex;
+
+      ${HeaderContainer} {
+      }
     }
   }
 `;
