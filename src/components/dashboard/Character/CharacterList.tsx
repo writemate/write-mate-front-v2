@@ -20,7 +20,11 @@ export default function CharacterList() {
             ))}
         {error && <Error />}
         {isLoading && <Loading />}
+        {characterList && characterList.length === 0 && (
+          <LoadingMessage>캐릭터가 없습니다.</LoadingMessage>
+        )}
       </CharacterListContainer>
+
       <AddMCharacterButton />
     </>
   );

@@ -30,14 +30,17 @@ export const AddMemoButton = styled.button<{ $isEmpty?: boolean }>`
 `;
 
 export const CharacterListContainer = styled.div`
+  position: relative;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  width: 100%;
+  height: 100%;
+
   align-items: start;
   justify-content: start;
   gap: 16px;
   padding: 16px;
   padding-bottom: 100px;
-  width: 100%;
   overflow-y: auto;
 `;
 
