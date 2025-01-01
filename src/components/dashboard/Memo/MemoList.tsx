@@ -18,6 +18,9 @@ export default function MemoList() {
             .map((memo) => <MemoItem key={memo.id} memo={memo} />)}
         {error && <Error />}
         {isLoading && <Loading />}
+        {memoList && memoList.length === 0 && (
+          <LoadingMessage>메모가 없습니다.</LoadingMessage>
+        )}
       </MemoListContainer>
       <AddMemoButton />
     </>

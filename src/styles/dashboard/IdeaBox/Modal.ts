@@ -152,7 +152,6 @@ export const ImageContainer = styled.div`
     align-items: center;
     object-fit: cover;
     overflow: hidden;
-    border-radius: 88px;
   }
   &:hover {
     background: ${({ theme }) => theme.color.gray200};
@@ -176,12 +175,12 @@ export const ImageButtonContainer = styled.div`
 export const ChangeCover = styled.button`
   ${FlexRowCenter};
   color: ${({ theme }) => theme.color.orange500};
-  border-radius: 100px;
   padding: 8px 12px;
   gap: 10px;
   border: 1px solid ${({ theme }) => theme.color.orange100};
   box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.1);
   background-color: #ffffff;
+  border-radius: 100px;
 
   &:hover {
     background-color: ${({ theme }) => theme.color.orange100};

@@ -15,9 +15,11 @@ import {
   Name,
   EmailContainer,
 } from "@/styles/dashboard/MyPage";
+import { useLogin } from "@/stores/useLogin";
 
 export function MyPageModal() {
   const { user, usage, closeModal } = useContext(MyPageContext);
+  const logout = useLogin((state) => state.logout);
 
   return (
     <Modal closeModal={closeModal} maxWidth="450px" maxHeight="800px">
@@ -70,7 +72,7 @@ export function MyPageModal() {
               이용약관
             </a>
           </PolicyLinks>
-          <Logout href="/">로그아웃</Logout>
+          <Logout onClick={logout}>로그아웃</Logout>
         </FooterContainer>
       </ModalContentAndFooterContainer>
     </Modal>

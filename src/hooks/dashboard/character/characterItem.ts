@@ -18,7 +18,7 @@ import { dashboardQueryKeys } from "@/utils/APIs/queryKeys";
 import { TMCharacter } from "@/utils/APIs/types";
 import { notifySuccess } from "@/utils/showToast";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { createContext, use, useEffect, useRef, useState } from "react";
+import { createContext, useEffect, useRef, useState } from "react";
 
 export function useCharacterItem(curCharacter: TMCharacter) {
   const queryClient = useQueryClient();
@@ -82,6 +82,12 @@ export function useCharacterItem(curCharacter: TMCharacter) {
       });
       return { prevData };
     },
+    onError: (error, variables, context) => {
+      queryClient.setQueryData(
+        [dashboardQueryKeys.character(), character.id],
+        context?.prevData
+      );
+    },
   });
   const onChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -116,7 +122,7 @@ export function useCharacterItem(curCharacter: TMCharacter) {
     savingMessage: "캐릭터에 특징 추가 중",
     errorMessage: "캐릭터 특징 추가에 실패했습니다.",
     onMutate: () => {
-      const prevData = queryClient.getQueryData([
+      const prevData = queryClient.getQueryData<TMCharacter>([
         dashboardQueryKeys.character(),
         character.id,
       ]);
@@ -126,10 +132,7 @@ export function useCharacterItem(curCharacter: TMCharacter) {
         (prev: any) => {
           return {
             ...prev,
-            characteristic: [
-              ...prev.characteristic,
-              { title: "", content: "" },
-            ],
+            ch_image: prevData.ch_image,
           };
         }
       );
