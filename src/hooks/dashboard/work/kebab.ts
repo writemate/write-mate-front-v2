@@ -52,7 +52,6 @@ export function useKebab(
   };
 
   // 커버 이미지 변경
-  const [isCompleted, setIsCompleted] = useState(true);
   const mutateCoverImage = useOnClickUpdate({
     mutationFn: updateWorkCover(workId),
     queryKey: ["workCover", workId],
@@ -66,37 +65,51 @@ export function useKebab(
         dashboardQueryKeys.workStudio(),
         "ongoing",
       ]);
+      console.log(prevDataOngoing);
       const prevDataCompleted = queryClient.getQueryData([
         dashboardQueryKeys.workStudio(),
         "completed",
       ]);
+      console.log(prevDataOngoing, 2);
+
       queryClient.setQueryData(
         [dashboardQueryKeys.workStudio(), "ongoing"],
         (prev: any) => {
           return prev.map((work: any) => {
             if (work.id === workId) {
-              setIsCompleted(false);
               return { ...work, cover: URL.createObjectURL(value) };
             }
             return work;
           });
         }
       );
+      console.log(prevDataOngoing, 3);
+
       queryClient.setQueryData(
         [dashboardQueryKeys.workStudio(), "completed"],
         (prev: any) => {
           return prev.map((work: any) => {
             if (work.id === workId) {
-              setIsCompleted(true);
               return { ...work, cover: URL.createObjectURL(value) };
             }
             return work;
           });
         }
       );
-      const prevData = isCompleted ? prevDataCompleted : prevDataOngoing;
+      console.log(444);
+      console.log(prevDataOngoing, 4);
+      console.log(555);
       closeKebab();
-      return { prevData };
+      console.log(prevDataOngoing, 5);
+
+      return { prevDataOngoing };
+    },
+    onError: (error, variables, context) => {
+      console.log(context?.prevDataOngoing);
+      queryClient.setQueryData(
+        [dashboardQueryKeys.workStudio(), "ongoing"],
+        context?.prevDataOngoing
+      );
     },
   });
 
