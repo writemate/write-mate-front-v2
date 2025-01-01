@@ -33,19 +33,19 @@ export default function SideTab({
         <Logo />
       </LogoLink>
       <SideTabLink href={`/${workspace_id}/info`} $isActivated={isInfoActive}>
-        <Info />
+        <Info /> 작품 정보
       </SideTabLink>
       <SideTabButton onClick={togglePlot} $isActivated={isPlotActive}>
-        <Plot />
+        <Plot /> 플롯
       </SideTabButton>
       <SideTabButton onClick={toggleScript} $isActivated={isScriptActive}>
-        <Script />
+        <Script /> 원고
       </SideTabButton>
       <SideTabLink
         href={`/${workspace_id}/character`}
         $isActivated={isCharacterActive}
       >
-        <Character />
+        <Character /> 인물
       </SideTabLink>
       <Footer />
     </SideTabContainer>

@@ -8,7 +8,8 @@ import {
   HamburgerMenuButton,
   HamburgerMenuContainer,
 } from "@/styles/dashboard/SideTab";
-import Logo from "@/assets/dashboard/sideTab/logo.svg";
+import Logo from "@/assets/logo.svg";
+import LogoWithText from "@/assets/logoWithText.svg";
 import ActiveArtStudio from "@/assets/dashboard/sideTab/active/artStudio.svg";
 import ActiveIdeaBox from "@/assets/dashboard/sideTab/active/ideaBox.svg";
 import ActiveTrash from "@/assets/dashboard/sideTab/active/trash.svg";
@@ -34,9 +35,9 @@ export default function SideTab() {
     <>
       <SideTabContainer>
         <LogoLink href="/dashboard">
-          <Logo />
+          <Logo className="logo-small" />
+          <LogoWithText className="logo-full" />{" "}
         </LogoLink>
-
         <SideTabMenu>
           <SideTabLink
             href="/dashboard"

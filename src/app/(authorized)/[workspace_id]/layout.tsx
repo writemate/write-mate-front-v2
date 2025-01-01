@@ -4,7 +4,6 @@ import {
   HeaderAndMainContainer,
   SideBarAndMainContainer,
   MainContainer,
-  TitleContainer,
 } from "@/styles/workspace";
 import Header from "@/components/workspace/Header";
 import SideTab from "@/components/workspace/SideTab";
