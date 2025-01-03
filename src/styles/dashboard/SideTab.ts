@@ -4,7 +4,6 @@ import { clickable } from "@/styles";
 import { styled, css } from "styled-components";
 import Link from "next/link";
 import { HighlghtCssForHoberAfter } from ".";
-import HamburgerMenu from "@/assets/icons/hamburgerMenu.svg";
 import {
   HeaderContainer,
   HeaderLeftButton,
@@ -100,96 +99,6 @@ export const AddWorkspaceButton = styled.button`
   }
 `;
 
-export const HamburgerMenuButton = styled(HamburgerMenu)`
-  display: none;
-
-  ${media.tablet} {
-    ${clickable}
-    display: block;
-    width: 24px;
-    height: 24px;
-    color: ${({ theme }) => theme.color.gray900};
-  }
-`;
-
-export const HamburgerMenuContainer = styled.div`
-  display: none;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
-
-  height: 100%;
-  width: 100%;
-  padding: 0 15px;
-  gap: 15px;
-
-  ${HeaderContainer} {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    background: none;
-    box-shadow: none;
-    gap: 0;
-    outline: none;
-    svg {
-      display: none;
-    }
-    & > p {
-      color: ${({ theme }) => theme.color.gray400};
-    }
-  }
-
-  ${HeaderLeftButton} {
-    background: none;
-    box-shadow: none;
-    outline: none;
-    & > p {
-      color: ${({ theme }) => theme.color.gray400};
-    }
-  }
-
-  ${HeaderRightButtonList} {
-    display: flex;
-    flex-direction: column;
-    background: none;
-    box-shadow: none;
-    gap: 0;
-  }
-
-  ${HeaderRightButton} {
-    width: 100%;
-    background: none;
-    box-shadow: none;
-    outline: none;
-    & > p {
-      display: flex;
-      color: ${({ theme }) => theme.color.gray400};
-    }
-  }
-
-  ${HearderProfileButton} {
-    width: 100%;
-    background: none;
-    box-shadow: none;
-    outline: none;
-    & > p {
-      display: flex;
-      color: ${({ theme }) => theme.color.gray400};
-    }
-  }
-
-  ${media.tablet} {
-    display: flex;
-
-    ${HeaderContainer} {
-      display: flex;
-      flex-direction: column;
-      padding: 0;
-      margin-bottom: 0;
-    }
-  }
-`;
-
 export const SideTabContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -246,9 +155,6 @@ export const SideTabContainer = styled.div`
     ${AddWorkspaceButton} {
       display: none;
     }
-
-    ${HamburgerMenuContainer} {
-      display: flex;
 
       ${HeaderContainer} {
       }

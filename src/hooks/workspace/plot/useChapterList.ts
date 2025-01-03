@@ -14,7 +14,10 @@ import { useOnClickUpdate } from "@/hooks/common/useOnClickUpdate";
 
 const useChapterList = () => {
   const queryClient = useQueryClient();
-  const { workspace_id, plot_id } = useParams<{ workspace_id: string; plot_id: string }>();
+  const { workspace_id, plot_id } = useParams<{
+    workspace_id: string;
+    plot_id: string;
+  }>();
 
   const chapterList = useContext(PlotContext) ?? [];
 
@@ -22,31 +25,39 @@ const useChapterList = () => {
     mutationFn: createChapter(plot_id),
     queryKey: workspaceQueryKeys.plot(workspace_id, plot_id),
     savingMessage: "챕터 추가",
-    errorMessage: "챕터 추가에 실패했습니다."
+    errorMessage: "챕터 추가에 실패했습니다.",
   })();
 
   // 챕터 순서 수정하기
-  const mutateChapterOrder  = useOnClickUpdate({
+  const mutateChapterOrder = useOnClickUpdate({
     mutationFn: updateChapterOrder(plot_id),
     queryKey: workspaceQueryKeys.plot(workspace_id, plot_id),
     savingMessage: "챕터 순서 수정",
     errorMessage: "챕터 순서 수정에 실패했습니다.",
     onMutate: ({ chapterId, pre_idx, next_idx }) => {
-      const previousPlot = queryClient.getQueryData<TPlot>(workspaceQueryKeys.plot(workspace_id, plot_id));
+      const previousPlot = queryClient.getQueryData<TPlot>(
+        workspaceQueryKeys.plot(workspace_id, plot_id)
+      );
       const previousChapters = previousPlot?.chapter_list;
-      if(!previousChapters) return;
+      if (!previousChapters) return;
 
       const newChapters = [...previousChapters];
       const movedChapter = newChapters.splice(pre_idx, 1)[0];
       newChapters.splice(next_idx, 0, movedChapter);
 
-      queryClient.setQueryData<TPlot>(workspaceQueryKeys.plot(workspace_id, plot_id), {...previousPlot, chapter_list: newChapters});
+      queryClient.setQueryData<TPlot>(
+        workspaceQueryKeys.plot(workspace_id, plot_id),
+        { ...previousPlot, chapter_list: newChapters }
+      );
 
       return { previousPlot };
     },
     onError: (error, _, context) => {
-      queryClient.setQueryData(workspaceQueryKeys.plot(workspace_id, plot_id), context?.previousPlot);
-    }
+      queryClient.setQueryData(
+        workspaceQueryKeys.plot(workspace_id, plot_id),
+        context?.previousPlot
+      );
+    },
   });
 
   const handleDragAndDrop = getHandleDragAndDropFunctionForReorder({
@@ -61,28 +72,36 @@ const useChapterList = () => {
     savingMessage: "챕터 접힘 여부 수정",
     errorMessage: "챕터 접힘 여부 수정에 실패했습니다.",
     onMutate: (is_folded) => {
-      const previousPlot = queryClient.getQueryData<TPlot>(workspaceQueryKeys.plot(workspace_id, plot_id));
+      const previousPlot = queryClient.getQueryData<TPlot>(
+        workspaceQueryKeys.plot(workspace_id, plot_id)
+      );
       const previousChapters = previousPlot?.chapter_list;
-      if(!previousChapters) return;
+      if (!previousChapters) return;
 
       const newChapters = previousChapters.map((chapter) => {
-          return { ...chapter, is_folded };
+        return { ...chapter, is_folded };
       });
 
-      queryClient.setQueryData<TPlot>(workspaceQueryKeys.plot(workspace_id, plot_id), {...previousPlot, chapter_list: newChapters});
+      queryClient.setQueryData<TPlot>(
+        workspaceQueryKeys.plot(workspace_id, plot_id),
+        { ...previousPlot, chapter_list: newChapters }
+      );
 
       return { previousPlot };
     },
     onError: (error, _, context) => {
-      queryClient.setQueryData(workspaceQueryKeys.plot(workspace_id, plot_id), context?.previousPlot);
-    }
+      queryClient.setQueryData(
+        workspaceQueryKeys.plot(workspace_id, plot_id),
+        context?.previousPlot
+      );
+    },
   });
 
   const areAllChaptersFolded = chapterList.every(
     (chapter) => chapter.is_folded
   );
 
-  const toggleAllChapters = () => mutateChapterFold(!areAllChaptersFolded)();  
+  const toggleAllChapters = () => mutateChapterFold(!areAllChaptersFolded)();
 
   return {
     onClickCreate,

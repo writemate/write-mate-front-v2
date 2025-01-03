@@ -5,10 +5,14 @@ import ToggleBtn from "./ToggleBtn";
 import { AddChapterButton } from "@/styles/workspace/plot/ChapterList.styles";
 import useChapterList from "@/hooks/workspace/plot/useChapterList";
 
-
 export default function ChapterList() {
-  const { chapterList, handleDragAndDrop, areAllChaptersFolded, toggleAllChapters,
-    onClickCreate } = useChapterList();
+  const {
+    chapterList,
+    handleDragAndDrop,
+    areAllChaptersFolded,
+    toggleAllChapters,
+    onClickCreate,
+  } = useChapterList();
 
   return (
     <>
@@ -16,7 +20,6 @@ export default function ChapterList() {
         isOpen={areAllChaptersFolded}
         handleChange={toggleAllChapters}
       />
-
       <DragDropContext onDragEnd={handleDragAndDrop}>
         <Droppable droppableId="chapterList">
           {(provided) => (
@@ -25,34 +28,30 @@ export default function ChapterList() {
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
-              {chapterList.map((chapter, index) =>
-                  <Draggable
-                    key={chapter.id}
-                    draggableId={chapter.id}
-                    index={index}
-                  >
-                    {(provided) => (
-                      <div
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                      >
-                        <Chapter
-                          {...chapter}
-                        />
-                      </div>
-                    )}
-                  </Draggable>
-              )}
+              {chapterList.map((chapter, index) => (
+                <Draggable
+                  key={chapter.id}
+                  draggableId={chapter.id}
+                  index={index}
+                >
+                  {(provided) => (
+                    <div
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                    >
+                      <Chapter {...chapter} />
+                    </div>
+                  )}
+                </Draggable>
+              ))}
               {provided.placeholder}
             </div>
           )}
         </Droppable>
       </DragDropContext>
 
-      <AddChapterButton onClick={onClickCreate}>
-        챕터 추가하기
-      </AddChapterButton>
+      <AddChapterButton onClick={onClickCreate}>챕터 추가하기</AddChapterButton>
     </>
   );
 }

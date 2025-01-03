@@ -17,7 +17,9 @@ export const WorkspaceContainer = styled.div`
 export const HeaderAndMainContainer = styled.div`
   ${FlexColumnCenter}
   flex-grow: 1;
+  width: 100%;
   height: 100%;
+  background-color: ${({ theme }) => theme.color.gray25};
 `;
 
 export const SideBarAndMainContainer = styled.div`
@@ -35,8 +37,6 @@ export const MainContainer = styled.div<{
   height: 100%;
   width: 100%;
   position: relative;
-  //최대 너비가 1012px이면서 최소 패딩이 28px이도록
-  //left open일때는 왼쪽에서 258px 빼고, right open일때는 오른쪽에서 309px 빼고
   padding-top: 65px;
   padding-left: max(
     28px,
@@ -54,6 +54,10 @@ export const MainContainer = styled.div<{
   );
   padding-bottom: 60px;
   overflow-y: auto;
+
+  ${media.tablet} {
+    padding: 15px;
+  }
 `;
 
 export const Title = styled.div`
@@ -63,6 +67,11 @@ export const Title = styled.div`
   line-height: 42px;
   font-weight: 700;
   color: ${({ theme }) => theme.color.gray900};
+
+  ${media.tablet} {
+    font-size: 16px;
+    line-height: 150%;
+  }
 `;
 
 export const TitleContainer = styled.h1`

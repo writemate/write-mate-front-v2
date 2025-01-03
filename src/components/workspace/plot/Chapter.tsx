@@ -8,7 +8,6 @@ import {
   ChapterHeader,
 } from "@/styles/workspace/plot/Chapter.styles";
 import { EventList } from "./EventList";
-import { useEffect, useState } from "react";
 import DeleteIcon from "@/assets/workspace/plot/delete.svg";
 import ToggleIcon from "@/assets/workspace/plot/toggle.svg";
 import CopyIcon from "@/assets/workspace/plot/copy.svg";
@@ -24,8 +23,12 @@ export default function Chapter({
   pevent_list: pevent,
   is_folded: isFolded,
 }: TChapter) {
-
-  const { onChapterDeleteClick, onChapterNameChange, onChapterDescriptionChange, toggleChapterFold } = useChapter(chapterId,isFolded);
+  const {
+    onChapterDeleteClick,
+    onChapterNameChange,
+    onChapterDescriptionChange,
+    toggleChapterFold,
+  } = useChapter(chapterId, isFolded);
 
   return (
     <ChapterContainer>
@@ -41,8 +44,8 @@ export default function Chapter({
             placeholder="챕터 제목을 적어주세요."
           />
           <IconButton type="button" onClick={toggleChapterFold}>
-            {isFolded && <ToggleFold/>}
-            {!isFolded && <ToggleIcon/>}
+            {isFolded && <ToggleFold />}
+            {!isFolded && <ToggleIcon />}
           </IconButton>
           <IconButton type="button">
             <CopyIcon />
@@ -56,9 +59,7 @@ export default function Chapter({
           onChange={onChapterDescriptionChange}
           placeholder="챕터 내용을 적어주세요."
         />
-        {!isFolded && (
-          <EventList pevent={pevent} chapterId={chapterId} />
-        )}
+        {!isFolded && <EventList pevent={pevent} chapterId={chapterId} />}
       </ChapterCard>
     </ChapterContainer>
   );

@@ -1,5 +1,6 @@
 "use client";
 import { colorSystem } from "@/styles/colorSystem";
+import { media } from "@/styles/media";
 import styled from "styled-components";
 
 export const ToggleSwitch = styled.label`
@@ -9,6 +10,10 @@ export const ToggleSwitch = styled.label`
   height: 10px;
   margin-bottom: 24px;
   margin-top: 25px;
+
+  ${media.tablet} {
+    scale: 0.6;
+  }
 `;
 
 export const ToggleSlider = styled.span`

@@ -1,4 +1,5 @@
 import { styled, css, keyframes } from "styled-components";
+import { media } from "./media";
 
 export const FlexRowCenter = css`
   display: flex;
@@ -138,6 +139,11 @@ export const Input = styled.input`
     outline: none;
     border: 1px solid ${({ theme }) => theme.color.orange400};
   }
+
+  ${media.tablet} {
+    font-size: 14px;
+    padding: 10px 14px;
+  }
 `;
 
 export const TextArea = styled.textarea`
@@ -154,6 +160,11 @@ export const TextArea = styled.textarea`
   &:focus {
     outline: none;
     border: 1px solid ${({ theme }) => theme.color.orange400};
+  }
+
+  ${media.tablet} {
+    font-size: 14px;
+    padding: 10px 14px;
   }
 `;
 
@@ -191,6 +202,10 @@ export const DropDownListContainer = styled.div`
   background: white;
   box-shadow: 0 0 8px 0 #1e212b33;
   z-index: 100;
+
+  ${media.tablet} {
+    top: calc(100% + 8px);
+  }
 `;
 
 export const DropDownOption = styled.div`

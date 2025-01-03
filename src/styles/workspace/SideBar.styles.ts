@@ -9,6 +9,7 @@ import {
 } from "@/styles";
 import KebabIcon from "@/assets/workspace/sideBar/kebab.svg";
 import Link from "next/link";
+import { media } from "../media";
 
 export const SidebarContainer = styled.div`
   ${FlexColumnCenter}
@@ -21,6 +22,13 @@ export const SidebarContainer = styled.div`
   flex-grow: 0;
   z-index: 500;
   box-shadow: 4px 0 8px 0 rgba(30, 33, 43, 0.1);
+
+  ${media.tablet} {
+    position: fixed;
+    top: 100px;
+    left: 0;
+    height: calc(100% - 100px);
+  }
 `;
 
 export const SidebarTitleContainer = styled.div`
