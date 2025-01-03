@@ -40,6 +40,9 @@ export const SideTabAndFooterContainer = styled.div`
   ${media.tablet} {
     width: 100%;
     height: fit-content;
+    flex-direction: row;
+    align-items: center;
+    padding-right: 15px;
   }
 `;
 

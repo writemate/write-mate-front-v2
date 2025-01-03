@@ -5,8 +5,6 @@ import {
   SideTabLink,
   SideTabMenu,
   AddWorkspaceButton,
-  HamburgerMenuButton,
-  HamburgerMenuContainer,
 } from "@/styles/dashboard/SideTab";
 import Logo from "@/assets/logo.svg";
 import LogoWithText from "@/assets/logoWithText.svg";
@@ -20,70 +18,54 @@ import InactiveTrash from "@/assets/dashboard/sideTab/inactive/trash.svg";
 import { usePathname } from "next/navigation";
 import { useWorkList } from "@/hooks/dashboard/work/workList";
 import { workspaceCategory } from "@/utils/APIs/types";
-import { useState } from "react";
-import Header from "./Header";
 
 export default function SideTab() {
   const { onClickAddWork } = useWorkList(workspaceCategory.ongoing);
-  const [isHambugerMenuOpen, setIsHambugerMenuOpen] = useState(false);
-  const onClickHamburgerMenu = () => {
-    setIsHambugerMenuOpen(!isHambugerMenuOpen);
-    console.log("click");
-  };
 
   return (
-    <>
-      <SideTabContainer>
-        <LogoLink href="/dashboard">
-          <Logo className="logo-small" />
-          <LogoWithText className="logo-full" />{" "}
-        </LogoLink>
-        <SideTabMenu>
-          <SideTabLink
-            href="/dashboard"
-            $isActivated={usePathname() === "/dashboard"}
-          >
-            {usePathname() === "/dashboard" ? (
-              <ActiveArtStudio />
-            ) : (
-              <InactiveArtStudio />
-            )}
-            <p>작품 스튜디오</p>
-          </SideTabLink>
-          <SideTabLink
-            href="/dashboard/ideaBox"
-            $isActivated={usePathname() === "/dashboard/ideaBox"}
-          >
-            {usePathname() === "/dashboard/ideaBox" ? (
-              <ActiveIdeaBox />
-            ) : (
-              <InactiveIdeaBox />
-            )}
-            <p>아이디어 보관함</p>
-          </SideTabLink>
-          <SideTabLink
-            href="/dashboard/trash"
-            $isActivated={usePathname() === "/dashboard/trash"}
-          >
-            {usePathname() === "/dashboard/trash" ? (
-              <ActiveTrash />
-            ) : (
-              <InactiveTrash />
-            )}
-            <p>휴지통</p>
-          </SideTabLink>
-        </SideTabMenu>
-        <HamburgerMenuButton onClick={onClickHamburgerMenu} />
-
-        <AddWorkspaceButton onClick={onClickAddWork}>
-          새 작품 집필하기
-        </AddWorkspaceButton>
-      </SideTabContainer>
-      {isHambugerMenuOpen && (
-        <HamburgerMenuContainer>
-          <Header />
-        </HamburgerMenuContainer>
-      )}
-    </>
+    <SideTabContainer>
+      <LogoLink href="/dashboard">
+        <Logo className="logo-small" />
+        <LogoWithText className="logo-full" />{" "}
+      </LogoLink>
+      <SideTabMenu>
+        <SideTabLink
+          href="/dashboard"
+          $isActivated={usePathname() === "/dashboard"}
+        >
+          {usePathname() === "/dashboard" ? (
+            <ActiveArtStudio />
+          ) : (
+            <InactiveArtStudio />
+          )}
+          <p>작품 스튜디오</p>
+        </SideTabLink>
+        <SideTabLink
+          href="/dashboard/ideaBox"
+          $isActivated={usePathname() === "/dashboard/ideaBox"}
+        >
+          {usePathname() === "/dashboard/ideaBox" ? (
+            <ActiveIdeaBox />
+          ) : (
+            <InactiveIdeaBox />
+          )}
+          <p>아이디어 보관함</p>
+        </SideTabLink>
+        <SideTabLink
+          href="/dashboard/trash"
+          $isActivated={usePathname() === "/dashboard/trash"}
+        >
+          {usePathname() === "/dashboard/trash" ? (
+            <ActiveTrash />
+          ) : (
+            <InactiveTrash />
+          )}
+          <p>휴지통</p>
+        </SideTabLink>
+      </SideTabMenu>
+      <AddWorkspaceButton onClick={onClickAddWork}>
+        새 작품 집필하기
+      </AddWorkspaceButton>
+    </SideTabContainer>
   );
 }

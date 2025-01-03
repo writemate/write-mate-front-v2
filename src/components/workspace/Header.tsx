@@ -1,17 +1,29 @@
-'use client';
-import { HeaderContainer, HeaderTitle, SaveStatus, VersionControlButton, 
-  RightContainer, GuideButton, IdeaBoxButton, DownloadButton, ProfileButton
- } from "@/styles/workspace/Header.styles";
+"use client";
+import {
+  HeaderContainer,
+  HeaderTitle,
+  SaveStatus,
+  VersionControlButton,
+  RightContainer,
+  GuideButton,
+  IdeaBoxButton,
+  DownloadButton,
+  ProfileButton,
+} from "@/styles/workspace/Header.styles";
 import Link from "next/link";
 import RightArrow from "@/assets/icons/rightArrow.svg";
 import useWorkspaceHeader from "@/hooks/workspace/useWorkspaceHeader";
 import { useSaveLoading } from "@/stores/useSaveLoading";
 
-export default function Header({toggleIdeaBox}: {toggleIdeaBox: () => void}) {
+export default function Header({
+  toggleIdeaBox,
+}: {
+  toggleIdeaBox: () => void;
+}) {
   const { data, error, isLoading } = useWorkspaceHeader();
   const isSaving = useSaveLoading().checkIsSaving();
 
-  return ( 
+  return (
     <HeaderContainer>
       <HeaderTitle>
         {data?.title}
@@ -27,10 +39,10 @@ export default function Header({toggleIdeaBox}: {toggleIdeaBox: () => void}) {
       </VersionControlButton>
       <RightContainer>
         {/*TODO: 맞는 아이콘으로 교체해야함 */}
-        <GuideButton />
-        <IdeaBoxButton onClick={toggleIdeaBox}/>
-        <DownloadButton />
-        <ProfileButton />
+        <GuideButton /> 가이드
+        <IdeaBoxButton onClick={toggleIdeaBox} /> 아이디어 보관함
+        <DownloadButton /> txt 저장
+        <ProfileButton /> 마이페이지
       </RightContainer>
     </HeaderContainer>
   );

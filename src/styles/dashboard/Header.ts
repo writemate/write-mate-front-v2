@@ -1,6 +1,8 @@
 "use client";
 import { media } from "@/styles/media";
 import { styled } from "styled-components";
+import HamburgerMenu from "@/assets/icons/hamburgerMenu.svg";
+import { clickable } from "..";
 
 export const HeaderContainer = styled.div`
   display: flex;
@@ -12,6 +14,18 @@ export const HeaderContainer = styled.div`
 
   ${media.tablet} {
     display: none;
+    flex-direction: column;
+    width: 100%;
+    background: none;
+    box-shadow: none;
+    gap: 0;
+    outline: none;
+    svg {
+      display: none;
+    }
+    & > p {
+      color: ${({ theme }) => theme.color.gray400};
+    }
   }
 `;
 
@@ -44,6 +58,15 @@ export const HeaderLeftButton = styled.button`
     line-height: 21px;
     letter-spacing: -0.16px;
   }
+
+  ${media.tablet} {
+    background: none;
+    box-shadow: none;
+    outline: none;
+    & > p {
+      color: ${({ theme }) => theme.color.gray400};
+    }
+  }
 `;
 
 export const HeaderRightButtonList = styled.div`
@@ -52,6 +75,14 @@ export const HeaderRightButtonList = styled.div`
   align-items: center;
   flex-grow: 1;
   gap: 12px;
+
+  ${media.tablet} {
+    display: flex;
+    flex-direction: column;
+    background: none;
+    box-shadow: none;
+    gap: 0;
+  }
 `;
 
 export const HeaderRightButton = styled.button`
@@ -79,6 +110,17 @@ export const HeaderRightButton = styled.button`
   p {
     display: none;
   }
+
+  ${media.tablet} {
+    width: 100%;
+    background: none;
+    box-shadow: none;
+    outline: none;
+    & > p {
+      display: flex;
+      color: ${({ theme }) => theme.color.gray400};
+    }
+  }
 `;
 
 export const HearderProfileButton = styled.button`
@@ -105,5 +147,50 @@ export const HearderProfileButton = styled.button`
   }
   p {
     display: none;
+  }
+
+  ${media.tablet} {
+    width: 100%;
+    background: none;
+    box-shadow: none;
+    outline: none;
+    & > p {
+      display: flex;
+      color: ${({ theme }) => theme.color.gray400};
+    }
+  }
+`;
+
+export const HamburgerMenuButton = styled(HamburgerMenu)`
+  display: none;
+
+  ${media.tablet} {
+    ${clickable}
+    display: block;
+    width: 24px;
+    height: 24px;
+    color: ${({ theme }) => theme.color.gray900};
+  }
+`;
+
+export const HamburgerMenuContainer = styled.div`
+  display: none;
+  flex-direction: column;
+  align-items: center;
+
+  height: fit-content;
+  width: 100%;
+  padding: 0 15px;
+  gap: 15px;
+
+  ${media.tablet} {
+    display: flex;
+
+    ${HeaderContainer} {
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+      margin-bottom: 0;
+    }
   }
 `;
