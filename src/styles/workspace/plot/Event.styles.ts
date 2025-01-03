@@ -4,28 +4,44 @@ import { ChapterDragWrap, IconButton } from "./Chapter.styles";
 import { FlexColumnLeftStart, FlexRowLeftStart } from "@/styles";
 import DeleteIcon from "@/assets/workspace/plot/delete.svg";
 import TextareaAutosize from "react-textarea-autosize";
+import { media } from "@/styles/media";
 
 export const EventListContainer = styled.div`
   ${FlexColumnLeftStart};
   width: 100%;
-  gap: 12px;
   margin: 20px 0;
+
+  ${media.tablet} {
+    margin: 12px 0;
+  }
 `;
 
 export const EventContainer = styled.div<{ isDraggable?: boolean }>`
   ${FlexRowLeftStart};
-  padding: 20px 20px 20px ${({ isDraggable = true }) => (isDraggable ? "0" : "20px")};
+  padding: 20px 20px 20px
+    ${({ isDraggable = true }) => (isDraggable ? "0" : "20px")};
   width: 100%;
   margin-bottom: 12px;
 
   background: ${colorSystem.gray25};
   border: 1px solid #d7ddea;
   border-radius: 8px;
+
+  ${media.tablet} {
+    padding: 12px 12px 12px
+      ${({ isDraggable = true }) => (isDraggable ? "0" : "12px")};
+    margin-bottom: 8px;
+  }
 `;
 
 export const EventDragWrap = styled(ChapterDragWrap)`
-  width: 31px;
+  width: 32px;
   padding: 10px 6px;
+
+  ${media.tablet} {
+    padding: 4px 2px;
+    width: 20px;
+  }
 `;
 
 export const EventHeader = styled.div`
@@ -33,15 +49,20 @@ export const EventHeader = styled.div`
   width: 100%;
   gap: 4px;
   position: relative;
+  align-items: center;
 `;
 
 export const EventDeleteBtn = styled(DeleteIcon)`
+  width: 32px;
   cursor: pointer;
   margin-left: auto;
+
+  ${media.tablet} {
+    width: 24px;
+  }
 `;
 
-export const CharacterModalBtn = styled(IconButton)`
-`;
+export const CharacterModalBtn = styled(IconButton)``;
 
 export const CharacterImg = styled.div<{ $src: string }>`
   width: 24px;
@@ -52,9 +73,12 @@ export const CharacterImg = styled.div<{ $src: string }>`
   background-color: ${({ theme }) => theme.color.gray200};
   box-shadow: 2px 2px 8px #323f4d33;
   border: 2px solid #fff;
-  margin-left: 4px;
   cursor: pointer;
-  margin-top: 3px;
+
+  ${media.tablet} {
+    width: 20px;
+    height: 20px;
+  }
 `;
 
 export const EventColumnContainer = styled.div`
@@ -86,8 +110,13 @@ export const EventTitle = styled.input`
   &:disabled {
     background: none;
   }
-`;
 
+  ${media.tablet} {
+    height: 24px;
+    font-size: 14px;
+    margin-top: 8px;
+  }
+`;
 
 export const EventDescription = styled(TextareaAutosize)`
   width: 100%;
@@ -105,5 +134,10 @@ export const EventDescription = styled(TextareaAutosize)`
   }
   &:disabled {
     background: none;
+  }
+
+  ${media.tablet} {
+    height: 24px;
+    font-size: 14px;
   }
 `;
