@@ -1,4 +1,5 @@
 import { colorSystem } from "@/styles/colorSystem";
+import { media } from "@/styles/media";
 import styled from "styled-components";
 
 export const AddChapterButton = styled.button`
@@ -9,6 +10,10 @@ export const AddChapterButton = styled.button`
   fontsize: 14px;
   fontweight: 350;
   cursor: pointer;
-  margintop: 22px;
-  marginbottom: 168px;
+  margin-top: 22px;
+  margin-bottom: 168px;
+
+  ${media.tablet} {
+    margin-bottom: 12px;
+  }
 `;
