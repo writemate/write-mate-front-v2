@@ -22,9 +22,16 @@ export const SidebarContainer = styled.div`
   flex-grow: 0;
   z-index: 500;
   box-shadow: 4px 0 8px 0 rgba(30, 33, 43, 0.1);
+  svg {
+    width: 24px;
+    height: 24px;
+  }
 
   ${media.tablet} {
     position: fixed;
+    padding: 15px 9px 13px;
+    font-size: 14px;
+
     top: 100px;
     left: 0;
     height: calc(100% - 100px);
@@ -35,6 +42,14 @@ export const SidebarTitleContainer = styled.div`
   ${FlexRowSpaceBetween};
   width: 100%;
   padding: 12px 5px 12px 16px;
+  svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  ${media.tablet} {
+    padding: 9px 3px 9px 8px;
+  }
 `;
 
 export const SidebarTitle = styled.div`
@@ -42,6 +57,11 @@ export const SidebarTitle = styled.div`
   line-height: 20px;
   font-weight: 700;
   color: #000000;
+
+  ${media.tablet} {
+    font-size: 16px;
+    line-height: 16px;
+  }
 `;
 
 export const SidebarIconContainer = styled.div`
@@ -74,6 +94,10 @@ export const SidebarContentsContainer = styled.div`
   }
   &::-webkit-scrollbar-track {
     background-color: #f1f1f1;
+  }
+
+  ${media.tablet} {
+    padding-top: 4px;
   }
 `;
 
@@ -198,6 +222,7 @@ export const FolderFileContainer = styled.div<{
 }>`
   ${FileOrFolderContainer};
   padding-left: ${({ $nestedLevel = 0 }) => `${$nestedLevel * 12}px`};
+  align-items: center;
 `;
 
 export const FileContainer = styled(Link)<{
@@ -208,6 +233,7 @@ export const FileContainer = styled(Link)<{
 }>`
   ${FileOrFolderContainer};
   padding-left: ${({ $nestedLevel = 0 }) => `${$nestedLevel * 12 + 16}px`};
+  align-items: center;
 `;
 
 export const KebabItem = styled.div`
