@@ -1,6 +1,6 @@
 "use client";
 import { styled } from "styled-components";
-import {  DropdownMenuWrapper, DropdownSelector } from "@/styles";
+import { DropdownMenuWrapper, DropdownSelector } from "@/styles";
 import {
   Button,
   clickable,
@@ -10,6 +10,7 @@ import {
   FlexRowLeftStart,
 } from "..";
 import Link from "next/link";
+import { media } from "../media";
 
 export const TabContainer = styled.div`
   ${FlexRowLeftStart};
@@ -20,6 +21,12 @@ export const TabContainer = styled.div`
   gap: 48px;
   padding-left: 18px;
   flex-shrink: 0;
+
+  ${media.tablet} {
+    margin-top: 24px;
+    padding-left: 9px;
+    gap: 24px;
+  }
 `;
 
 export const TabButton = styled.div<{ $isSelected: boolean }>`
@@ -46,6 +53,10 @@ export const TabButton = styled.div<{ $isSelected: boolean }>`
       background-color: ${theme.color.orange400};
     }
   `}
+
+  ${media.tablet} {
+    font-size: 14px;
+  }
 `;
 
 export const ContentsContainer = styled.div`
@@ -53,6 +64,10 @@ export const ContentsContainer = styled.div`
   width: 100%;
   flex-grow: 1;
   margin-top: 36px;
+
+  ${media.tablet} {
+    margin-top: 24px;
+  }
 `;
 
 export const KeywordTitle = styled.div`
@@ -64,6 +79,10 @@ export const SubTitle = styled.span`
   font-size: 20px;
   font-weight: 700;
   color: ${({ theme }) => theme.color.gray400};
+
+  ${media.tablet} {
+    font-size: 14px;
+  }
 `;
 
 export const OpenManagement = styled.span`
@@ -72,6 +91,10 @@ export const OpenManagement = styled.span`
   font-weight: 500;
   color: ${({ theme }) => theme.color.gray300};
   margin-left: auto;
+
+  ${media.tablet} {
+    font-size: 12px;
+  }
 `;
 
 export const KeywordListContainer = styled.div`
@@ -82,6 +105,23 @@ export const KeywordListContainer = styled.div`
   flex-wrap: wrap;
   font-size: 14px;
   line-height: 21px;
+  height: fit-content;
+  svg {
+    width: 33px;
+    height: 33px;
+  }
+
+  ${media.tablet} {
+    margin-top: 16px;
+    gap: 6px;
+    font-size: 12px;
+    align-items: flex-start;
+
+    svg {
+      width: 32px;
+      height: 32px;
+    }
+  }
 `;
 
 export const KeywordListContainerForCharacterCard = styled(
@@ -93,6 +133,10 @@ export const KeywordListContainerForCharacterCard = styled(
   height: 78px;
   overflow: hidden;
   align-items: flex-end;
+
+  ${media.tablet} {
+    height: 100px;
+  }
 `;
 
 export const KeywordContainer = styled.div<{
@@ -111,6 +155,10 @@ export const KeywordContainer = styled.div<{
   line-height: 150%;
   border: 1px solid
     ${({ theme, $darkColor }) => $darkColor ?? theme.color.gray400};
+
+  ${media.tablet} {
+    font-size: 12px;
+  }
 `;
 
 export const CharacterListContainer = styled.div`
@@ -121,6 +169,7 @@ export const CharacterListContainer = styled.div`
   flex-wrap: wrap;
   align-items: flex-start;
 `;
+
 export const CharacterCard = styled(Link)`
   ${FlexColumnLeftStart};
   ${clickable};
@@ -164,7 +213,8 @@ export const CharacterName = styled.div<{ $isNew?: boolean }>`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  color: ${({ theme, $isNew }) => ($isNew ? theme.color.gray300 : theme.color.gray900)};
+  color: ${({ theme, $isNew }) =>
+    $isNew ? theme.color.gray300 : theme.color.gray900};
 `;
 export const CharacterRole = styled.div`
   font-size: 13px;
@@ -178,7 +228,8 @@ export const CharacterDescription = styled.div<{ $isNew?: boolean }>`
   font-size: 14px;
   line-height: 21px;
   height: 42px;
-  color: ${({ theme, $isNew }) => ($isNew ? theme.color.gray200 : theme.color.gray400)};
+  color: ${({ theme, $isNew }) =>
+    $isNew ? theme.color.gray200 : theme.color.gray400};
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -526,13 +577,13 @@ export const CharacterDropdownMenuWrapper = styled(DropdownMenuWrapper)`
 export const CharacterDropdownSelector = styled(DropdownSelector)`
   box-shadow: none;
   color: ${({ theme }) => theme.color.red400};
-  &>svg{
+  & > svg {
     flex-shrink: 0;
   }
   & path {
     fill: ${({ theme }) => theme.color.red400};
   }
-  &>span{
+  & > span {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
