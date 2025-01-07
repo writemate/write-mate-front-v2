@@ -182,27 +182,42 @@ export const DropdownSelector = styled.div`
   ${FlexRowCenter};
   ${clickable};
   width: 100%;
-  padding: 12px;
-  border-radius: 24px;
   height: 44px;
-  box-shadow: 0 0 12px 0 #0000001a;
-  background: white;
-  font-weight: 600;
+  padding: 12px;
   gap: 12px;
+
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 0 12px 0 #0000001a;
+
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 100%;
+
+  & > span {
+    width: 100%;
+    text-align: center;
+  }
+
+  & > svg {
+    flex-shrink: 0;
+  }
 `;
 
 export const DropDownListContainer = styled.div`
   ${FlexColumnCenter};
   position: absolute;
-  top: calc(100% + 17px);
+  top: calc(100% + 11px);
   left: 0;
-  width: 100%;
-  border-radius: 8px;
-  padding: 6px 4px;
-  gap: 2px;
-  background: white;
-  box-shadow: 0 0 8px 0 #1e212b33;
   z-index: 100;
+
+  width: 100%;
+  padding: 6px 6px;
+  gap: 2px;
+
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 0 8px 0 #1e212b33;
 
   ${media.tablet} {
     top: calc(100% + 8px);
@@ -216,6 +231,13 @@ export const DropDownOption = styled.div`
   border-radius: 4px;
   border-bottom: 1px solid transparent;
   width: 100%;
+
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 135%;
+
+  align-items: flex-start;
+
   &:hover {
     background: #f2f4f9;
     border-bottom: 1px solid ${({ theme }) => theme.color.gray100};

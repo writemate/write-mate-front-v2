@@ -114,9 +114,9 @@ export const ChangeCoverInput = styled.input`
 export const CoverContentsContainer = styled.div`
   ${FlexColumnLeftStart};
   height: 100%;
-  justify-content: flex-end;
   min-width: 263px;
   width: calc(100% - 263px - 36px);
+  justify-content: flex-end;
   flex-grow: 1;
 
   ${media.tablet} {
@@ -125,8 +125,9 @@ export const CoverContentsContainer = styled.div`
     height: fit-content;
   }
 
-  & > br {
-    height: 46px;
+  & > div {
+    margin-top: 60px;
+    width: 100%;
   }
 `;
 
