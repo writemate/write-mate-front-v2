@@ -178,15 +178,25 @@ export const KeywordContainer = styled.div<{
 
 // 캐릭터 리스트
 export const CharacterListContainer = styled.div`
+  position: relative;
   ${FlexRowLeftStart};
   width: 100%;
   margin-top: 36px;
   gap: 12px;
   flex-wrap: wrap;
   align-items: flex-start;
+
+  & > div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
-export const CharacterCard = styled(Link)`
+export const CharacterCardContainer = styled(Link)`
   ${FlexColumnLeftStart};
   ${clickable};
   width: 244px;
@@ -609,5 +619,53 @@ export const CharacterDropdownSelector = styled(DropdownSelector)`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+`;
+
+export const AddMemoButtonContainer = styled(Link)`
+  ${clickable}
+  position:relative;
+
+  width: fit-content;
+  padding: 12px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100px;
+  background: ${({ theme }) => theme.color.orange400};
+  border: none;
+
+  color: ${({ theme }) => theme.color.white};
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 100%;
+  letter-spacing: 0.32px;
+
+  &:hover {
+    filter: brightness(95%);
+  }
+
+  ${media.tablet} {
+    scale: 0.75;
+    bottom: 10px;
+  }
+`;
+
+export const LoadingMessage = styled.div`
+  position: relative;
+  width: 100%;
+  height: fit-content;
+
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  font-size: 16px;
+  font-weight: 500;
+  color: ${({ theme }) => theme.color.gray300};
+
+  ${media.tablet} {
+    font-size: 14px;
   }
 `;

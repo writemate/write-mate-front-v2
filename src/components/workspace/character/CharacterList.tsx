@@ -22,7 +22,7 @@ export default function CharacterList() {
         {isModalOpen && <KeywordManageModal />}
       </KeywordTitle>
       <KeywordList />
-      <CharacterCardList />
+      <CharacterCardList forInfoPage={false} />
       <AddMemoButtonContainer onClick={onClickAddCharacter}>
         인물 생성하기
       </AddMemoButtonContainer>
