@@ -12,6 +12,7 @@ import {
 import Link from "next/link";
 import { media } from "../media";
 
+// 네비게이션 바
 export const TabContainer = styled.div`
   ${FlexRowLeftStart};
   margin-top: 45px;
@@ -59,6 +60,7 @@ export const TabButton = styled.div<{ $isSelected: boolean }>`
   }
 `;
 
+// 메인
 export const ContentsContainer = styled.div`
   ${FlexColumnCenter};
   width: 100%;
@@ -70,6 +72,7 @@ export const ContentsContainer = styled.div`
   }
 `;
 
+// 키워드
 export const KeywordTitle = styled.div`
   ${FlexRowLeftStart};
   width: 100%;
@@ -106,16 +109,23 @@ export const KeywordListContainer = styled.div`
   font-size: 14px;
   line-height: 21px;
   height: fit-content;
+
   svg {
     width: 33px;
-    height: 33px;
+    height: 100%;
+  }
+
+  & > div {
+    align-items: center;
+    align-self: center;
+    justify-content: center;
   }
 
   ${media.tablet} {
     margin-top: 16px;
     gap: 6px;
     font-size: 12px;
-    align-items: flex-start;
+    align-items: center;
 
     svg {
       width: 32px;
@@ -156,11 +166,17 @@ export const KeywordContainer = styled.div<{
   border: 1px solid
     ${({ theme, $darkColor }) => $darkColor ?? theme.color.gray400};
 
+  & > svg {
+    width: 20px;
+    height: 20px;
+  }
+
   ${media.tablet} {
     font-size: 12px;
   }
 `;
 
+// 캐릭터 리스트
 export const CharacterListContainer = styled.div`
   ${FlexRowLeftStart};
   width: 100%;
@@ -180,6 +196,11 @@ export const CharacterCard = styled(Link)`
   gap: 10px;
   background-color: ${({ theme }) => theme.color.white};
   box-shadow: 0px 0px 12px #00000033;
+
+  ${media.tablet} {
+    width: 100%;
+    padding: 16px;
+  }
 `;
 export const CharacterCardTitle = styled.div`
   ${FlexRowLeftStart};

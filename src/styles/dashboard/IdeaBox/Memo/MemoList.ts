@@ -85,7 +85,7 @@ export const AddMemoButtonContainer = styled.button<AddMemoButtonProps>`
   justify-content: center;
   align-items: center;
   border-radius: 100px;
-  background: ${({ theme }) => theme.color.gray300};
+  background: ${({ theme }) => theme.color.orange400};
   border: none;
 
   color: ${({ theme }) => theme.color.white};
