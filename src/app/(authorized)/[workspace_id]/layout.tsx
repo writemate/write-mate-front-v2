@@ -10,6 +10,7 @@ import SideTab from "@/components/workspace/SideTab";
 import Sidebar from "@/components/workspace/Sidebar/Sidebar";
 import IdeaBox from "@/components/workspace/IdeaBox/IdeaBox";
 import { useWorkspaceLayout } from "@/hooks/workspace/useWorkspaceLayout";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 export default function WorkspaceLayout({
   children,
@@ -36,6 +37,7 @@ export default function WorkspaceLayout({
           {openIdeaBox && <IdeaBox toggleIdeaBox={toggleIdeaBox} />}
         </SideBarAndMainContainer>
       </HeaderAndMainContainer>
+      <ReactQueryDevtools />
     </WorkspaceContainer>
   );
 }
