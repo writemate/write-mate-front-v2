@@ -17,7 +17,7 @@ export function CharacterCardList({
     useCharacterList();
 
   return (
-    <CharacterListContainer>
+    <CharacterListContainer $forInfoPage={forInfoPage}>
       {(isKeywordsLoading || isCharactersLoading) && (
         <div>캐릭터 로딩중...</div>
       )}
