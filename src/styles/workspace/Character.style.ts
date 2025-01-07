@@ -177,11 +177,11 @@ export const KeywordContainer = styled.div<{
 `;
 
 // 캐릭터 리스트
-export const CharacterListContainer = styled.div`
+export const CharacterListContainer = styled.div<{ $forInfoPage: boolean }>`
   position: relative;
   ${FlexRowLeftStart};
   width: 100%;
-  margin-top: 36px;
+  margin-top: ${({ $forInfoPage }) => ($forInfoPage ? "0" : "36px")};
   gap: 12px;
   flex-wrap: wrap;
   align-items: flex-start;
