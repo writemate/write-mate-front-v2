@@ -67,6 +67,7 @@ export const Title = styled.div`
   line-height: 42px;
   font-weight: 700;
   color: ${({ theme }) => theme.color.gray900};
+  margin-bottom: 69px;
 
   ${media.tablet} {
     font-size: 16px;
