@@ -147,6 +147,38 @@ export const Input = styled.input`
   }
 `;
 
+export const InputWithText = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+  border-radius: 12px;
+  font-size: 16px;
+  border: 1px solid transparent;
+  padding: 13px 20px;
+  box-shadow: 0 0 12px 0 #0000001a;
+  background: ${({ theme }) => theme.color.white};
+  width: 100%;
+  color: ${({ theme }) => theme.color.gray900};
+
+  &:has(input:focus) {
+    outline: none;
+    border: 1px solid ${({ theme }) => theme.color.orange400};
+  }
+
+  & > input {
+    width: 100%;
+    padding: 0;
+    border: none;
+    outline: none;
+    text-align: right;
+  }
+
+  ${media.tablet} {
+    font-size: 14px;
+    padding: 10px 14px;
+  }
+`;
+
 export const TextArea = styled.textarea`
   padding: 10px;
   font-size: 16px;
@@ -257,6 +289,11 @@ export const ModalContainer = styled.div`
   & > * {
     width: 100%;
   }
+  & > div {
+    width: 100%;
+    height: auto !important;
+  }
+
   ${media.tablet} {
     padding: 20px;
   }

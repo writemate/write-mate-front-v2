@@ -11,21 +11,23 @@ import Info from "@/assets/workspace/sideTab/info.svg";
 import Plot from "@/assets/workspace/sideTab/plot.svg";
 import Script from "@/assets/workspace/sideTab/script.svg";
 import Character from "@/assets/workspace/sideTab/character.svg";
-import { useWorkspaceLayout } from "@/hooks/workspace/useWorkspaceLayout";
+import {
+  useWorkspaceLayout,
+  WorkspaceLayoutContext,
+} from "@/hooks/workspace/useWorkspaceLayout";
 import { useParams } from "next/navigation";
+import { useContext } from "react";
 
-export default function SideTab({
-  togglePlot,
-  toggleScript,
-  isInfoActive,
-  isPlotActive,
-  isScriptActive,
-  isCharacterActive,
-}: Omit<
-  ReturnType<typeof useWorkspaceLayout>,
-  "isPlotOpen" | "isScriptOpen" | "openIdeaBox" | "toggleIdeaBox"
->) {
+export default function SideTab() {
   const { workspace_id } = useParams<{ workspace_id: string }>();
+  const {
+    isInfoActive,
+    isPlotActive,
+    isScriptActive,
+    isCharacterActive,
+    togglePlot,
+    toggleScript,
+  } = useContext(WorkspaceLayoutContext);
 
   return (
     <SideTabContainer>

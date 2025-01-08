@@ -2,7 +2,6 @@
 import { useContext } from "react";
 import {
   CoverContainer,
-  Container,
   SubTitle,
   TextWithDropMenu,
   CoverContentsContainer,

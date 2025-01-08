@@ -65,6 +65,7 @@ export interface TFolderWithOptions extends TFolder {
  * 작품 정보 타입
  */
 export type TWorkInfo = {
+  mainPlot: TPlot | null;
   cover: string;
   title: string;
   genre: string;

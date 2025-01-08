@@ -132,6 +132,7 @@ export const CoverContentsContainer = styled.div`
 `;
 
 export const SubTitle = styled.h2`
+  height: fit-content;
   font-size: 20px;
   font-weight: 700;
   color: ${({ theme }) => theme.color.gray900};
@@ -139,6 +140,26 @@ export const SubTitle = styled.h2`
 
   ${media.tablet} {
     font-size: 14px;
+    margin-bottom: 12px;
+  }
+`;
+
+export const SubTitleWithButton = styled.div`
+  ${FlexRowSpaceBetween}
+
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 10px;
+
+  & > h2 {
+    margin-bottom: 0;
+  }
+
+  ${media.tablet} {
     margin-bottom: 12px;
   }
 `;
@@ -181,5 +202,36 @@ export const DropdownMenu = styled.div`
 
   ${media.tablet} {
     font-size: 12px;
+  }
+`;
+
+export const AddMemoButtonContainer = styled.button`
+  ${clickable}
+  position:relative;
+  margin-left: 12px;
+
+  width: fit-content;
+  padding: 12px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100px;
+  background: ${({ theme }) => theme.color.orange400};
+  border: none;
+
+  color: ${({ theme }) => theme.color.white};
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 100%;
+  letter-spacing: 0.32px;
+
+  &:hover {
+    filter: brightness(95%);
+  }
+
+  ${media.tablet} {
+    scale: 0.75;
+    bottom: 10px;
   }
 `;

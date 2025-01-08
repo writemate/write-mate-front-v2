@@ -9,17 +9,17 @@ import { useParams } from "next/navigation";
 import { PlotContext } from "./usePlot";
 import { useContext } from "react";
 import { getHandleDragAndDropFunctionForReorder } from "@/utils/getReorderFunction";
-import { TPlot } from "@/utils/APIs/types";
+import { TPlot, TWorkInfo } from "@/utils/APIs/types";
 import { useOnClickUpdate } from "@/hooks/common/useOnClickUpdate";
+import router from "next/router";
 
-const useChapterList = () => {
+const useChapterList = (plot_id: string) => {
   const queryClient = useQueryClient();
-  const { workspace_id, plot_id } = useParams<{
+  const { workspace_id } = useParams<{
     workspace_id: string;
-    plot_id: string;
   }>();
 
-  const chapterList = useContext(PlotContext) ?? [];
+  const chapterList = useContext(PlotContext).chapterList ?? [];
 
   const onClickCreate = useOnClickUpdate({
     mutationFn: createChapter(plot_id),
@@ -76,18 +76,45 @@ const useChapterList = () => {
         workspaceQueryKeys.plot(workspace_id, plot_id)
       );
       const previousChapters = previousPlot?.chapter_list;
-      if (!previousChapters) return;
+      if (previousChapters) {
+        const newChapters = previousChapters.map((chapter) => {
+          return { ...chapter, is_folded };
+        });
 
-      const newChapters = previousChapters.map((chapter) => {
-        return { ...chapter, is_folded };
-      });
+        queryClient.setQueryData<TPlot>(
+          workspaceQueryKeys.plot(workspace_id, plot_id),
+          { ...previousPlot, chapter_list: newChapters }
+        );
+        return { previousPlot };
+      }
 
-      queryClient.setQueryData<TPlot>(
-        workspaceQueryKeys.plot(workspace_id, plot_id),
-        { ...previousPlot, chapter_list: newChapters }
+      const previousInfo = queryClient.getQueryData<TWorkInfo>(
+        workspaceQueryKeys.info(workspace_id)
       );
+      const previousMainPlot = previousInfo?.mainPlot;
+      const previousMainChapters = previousMainPlot?.chapter_list;
+      if (previousMainChapters) {
+        const newMainChapters = previousMainChapters.map((chapter) => ({
+          ...chapter,
+          is_folded,
+        }));
 
-      return { previousPlot };
+        if (previousInfo) {
+          queryClient.setQueryData<TWorkInfo>(
+            workspaceQueryKeys.info(workspace_id),
+            {
+              ...previousInfo,
+              mainPlot: {
+                ...previousMainPlot,
+                chapter_list: newMainChapters,
+              },
+            }
+          );
+        }
+
+        return { previousInfo };
+      }
+      return;
     },
     onError: (error, _, context) => {
       queryClient.setQueryData(

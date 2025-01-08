@@ -65,51 +65,50 @@ export function useKebab(
         dashboardQueryKeys.workStudio(),
         "ongoing",
       ]);
-      console.log(prevDataOngoing);
+      if (prevDataOngoing) {
+        queryClient.setQueryData(
+          [dashboardQueryKeys.workStudio(), "ongoing"],
+          (prev: any) => {
+            return prev.map((work: any) => {
+              if (work.id === workId) {
+                return { ...work, cover: URL.createObjectURL(value) };
+              }
+              return work;
+            });
+          }
+        );
+      }
       const prevDataCompleted = queryClient.getQueryData([
         dashboardQueryKeys.workStudio(),
         "completed",
       ]);
-      console.log(prevDataOngoing, 2);
-
-      queryClient.setQueryData(
-        [dashboardQueryKeys.workStudio(), "ongoing"],
-        (prev: any) => {
-          return prev.map((work: any) => {
-            if (work.id === workId) {
-              return { ...work, cover: URL.createObjectURL(value) };
-            }
-            return work;
-          });
-        }
-      );
-      console.log(prevDataOngoing, 3);
-
-      queryClient.setQueryData(
-        [dashboardQueryKeys.workStudio(), "completed"],
-        (prev: any) => {
-          return prev.map((work: any) => {
-            if (work.id === workId) {
-              return { ...work, cover: URL.createObjectURL(value) };
-            }
-            return work;
-          });
-        }
-      );
-      console.log(444);
-      console.log(prevDataOngoing, 4);
-      console.log(555);
+      if (prevDataCompleted) {
+        queryClient.setQueryData(
+          [dashboardQueryKeys.workStudio(), "completed"],
+          (prev: any) => {
+            return prev.map((work: any) => {
+              if (work.id === workId) {
+                return { ...work, cover: URL.createObjectURL(value) };
+              }
+              return work;
+            });
+          }
+        );
+      }
       closeKebab();
-      console.log(prevDataOngoing, 5);
-
-      return { prevDataOngoing };
+      return { prevDataOngoing, prevDataCompleted };
     },
     onError: (error, variables, context) => {
-      console.log(context?.prevDataOngoing);
-      queryClient.setQueryData(
-        [dashboardQueryKeys.workStudio(), "ongoing"],
-        context?.prevDataOngoing
-      );
+      if (context?.prevDataCompleted)
+        queryClient.setQueryData(
+          [dashboardQueryKeys.workStudio(), "completed"],
+          context?.prevDataCompleted
+        );
+      if (context?.prevDataOngoing)
+        queryClient.setQueryData(
+          [dashboardQueryKeys.workStudio(), "ongoing"],
+          context?.prevDataOngoing
+        );
     },
   });
 

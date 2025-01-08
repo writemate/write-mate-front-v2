@@ -190,7 +190,7 @@ export const CharacterListContainer = styled.div<{ $forInfoPage: boolean }>`
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 24px;
     justify-content: center;
     align-items: center;
   }
