@@ -50,63 +50,150 @@ export const getWork = (workId: string) => async (): Promise<TWork> => {
 };
 
 export const getPlotFolderList = (workId: string) => async () => {
-  const response = await axiosInstance.get<TFolder>(DOMAIN.GET_PLOT_LIST(workId));
+  const response = await axiosInstance.get<TFolder>(
+    DOMAIN.GET_PLOT_LIST(workId)
+  );
   return response.data;
-}
+};
 export const updatePlotFolder = (workId: string) => async (folder: TFolder) => {
-  const response = await axiosInstance.put<void>(DOMAIN.UPDATE_PLOT_LIST(workId), folder);
+  const response = await axiosInstance.put<void>(
+    DOMAIN.UPDATE_PLOT_LIST(workId),
+    folder
+  );
   return response.data;
-}
+};
 export const createPlot = (workId: string) => async () => {
   const response = await axiosInstance.post<string>(DOMAIN.CREATE_PLOT(workId));
   return response.data;
-}
-export const updatePlotName = async ({ id, name }: { id: string, name: string }) => {
-  const response = await axiosInstance.patch<void>(DOMAIN.UPDATE_PLOT_NAME(id), { plot_name: name });
+};
+export const updatePlotName = async ({
+  id,
+  name,
+}: {
+  id: string;
+  name: string;
+}) => {
+  const response = await axiosInstance.patch<void>(
+    DOMAIN.UPDATE_PLOT_NAME(id),
+    { plot_name: name }
+  );
   return response.data;
-}
+};
 export const setMainPlot = async (plotId: string) => {
-  const response = await axiosInstance.patch<void>(DOMAIN.SET_MAIN_PLOT(plotId));
+  const response = await axiosInstance.patch<void>(
+    DOMAIN.SET_MAIN_PLOT(plotId)
+  );
   return response.data;
-}
+};
 export const deletePlot = async (plotId: string) => {
   const response = await axiosInstance.delete<void>(DOMAIN.DELETE_PLOT(plotId));
   return response.data;
-}
+};
 
 export const getScriptFolderList = (workId: string) => async () => {
-  const response = await axiosInstance.get<TFolder>(DOMAIN.GET_SCRIPT_LIST(workId));
+  const response = await axiosInstance.get<TFolder>(
+    DOMAIN.GET_SCRIPT_LIST(workId)
+  );
   return response.data;
-}
-export const updateScriptFolder = (workId: string) => async (folder: TFolder) => {
-  const response = await axiosInstance.put<void>(DOMAIN.UPDATE_SCRIPT_LIST(workId), folder);
-  return response.data;
-}
+};
+export const updateScriptFolder =
+  (workId: string) => async (folder: TFolder) => {
+    const response = await axiosInstance.put<void>(
+      DOMAIN.UPDATE_SCRIPT_LIST(workId),
+      folder
+    );
+    return response.data;
+  };
 export const createScript = (workId: string) => async () => {
-  const response = await axiosInstance.post<string>(DOMAIN.CREATE_SCRIPT(workId));
+  const response = await axiosInstance.post<string>(
+    DOMAIN.CREATE_SCRIPT(workId)
+  );
   return response.data;
-}
-export const updateScriptName = async ({ id, name }: { id: string, name: string }) => {
-  const response = await axiosInstance.patch<void>(DOMAIN.UPDATE_SCRIPT_NAME(id), { script_name: name });
+};
+export const updateScriptName = async ({
+  id,
+  name,
+}: {
+  id: string;
+  name: string;
+}) => {
+  const response = await axiosInstance.patch<void>(
+    DOMAIN.UPDATE_SCRIPT_NAME(id),
+    { script_name: name }
+  );
   return response.data;
-}
+};
 export const setMainScript = async (scriptId: string) => {
-  const response = await axiosInstance.patch<void>(DOMAIN.SET_MAIN_SCRIPT(scriptId));
+  const response = await axiosInstance.patch<void>(
+    DOMAIN.SET_MAIN_SCRIPT(scriptId)
+  );
   return response.data;
-}
+};
 export const deleteScript = async (scriptId: string) => {
-  const response = await axiosInstance.delete<void>(DOMAIN.DELETE_SCRIPT(scriptId));
+  const response = await axiosInstance.delete<void>(
+    DOMAIN.DELETE_SCRIPT(scriptId)
+  );
   return response.data;
-}
+};
 
-export const getInfo = getInfoMock;
-export const updateCoverImage = updateCoverImageMock;
-export const updateTitle = updateTitleMock;
-export const updateGenre = updateGenreMock;
-export const updateGrade = updateGradeMock;
-export const updateLogline = updateLoglineMock;
-export const updateExpectedQuantity = updateExpectedQuantityMock;
-export const updateIntroduction = updateIntroductionMock;
+export const getInfo = (workspace_id: string) => async () => {
+  const response = await axiosInstance.get(DOMAIN.GET_WORK(workspace_id));
+  return response.data;
+};
+export const updateCoverImage =
+  (workId: string) => async (cover_image: File) => {
+    const formData = new FormData();
+    formData.append("file", cover_image);
+    const response = await axiosInstance.patch<void>(
+      DOMAIN.UPDATE_WORK_COVER(workId),
+      formData
+    );
+    return response.data;
+  };
+export const updateTitle = (workId: string) => async (title: string) => {
+  const response = await axiosInstance.patch<void>(
+    DOMAIN.UPDATE_WORK_TITLE(workId),
+    { title }
+  );
+  return response.data;
+};
+export const updateGenre = (workId: string) => async (genre: string) => {
+  const response = await axiosInstance.patch<void>(
+    DOMAIN.UPDATE_WORK_GENRE(workId),
+    { genre }
+  );
+  return response.data;
+};
+export const updateGrade = (workId: string) => async (grade: string) => {
+  const response = await axiosInstance.patch<void>(
+    DOMAIN.UPDATE_WORK_GRADE(workId),
+    { grade }
+  );
+  return response.data;
+};
+export const updateLogline = (workId: string) => async (logline: string) => {
+  const response = await axiosInstance.patch<void>(
+    DOMAIN.UPDATE_WORK_LOGLINE(workId),
+    { logline }
+  );
+  return response.data;
+};
+export const updateExpectedQuantity =
+  (workId: string) => async (expected_quantity: string) => {
+    const response = await axiosInstance.patch<void>(
+      DOMAIN.UPDATE_WORK_QUANTITY(workId),
+      { expected_quantity }
+    );
+    return response.data;
+  };
+export const updateIntroduction =
+  (workId: string) => async (introduction: string) => {
+    const response = await axiosInstance.patch<void>(
+      DOMAIN.UPDATE_WORK_INTRODUCTION(workId),
+      { introduction }
+    );
+    return response.data;
+  };
 
 //캐릭터 리스트 페이지에서 쓰임
 export const getCharacterList = getCharacterListMock;

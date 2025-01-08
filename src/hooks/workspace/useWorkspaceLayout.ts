@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { createContext, useState } from "react";
 import { usePathname } from "next/navigation";
 
 enum SidebarType {
@@ -38,5 +38,20 @@ export const useWorkspaceLayout = () => {
   const isScriptActive = getActive("script", isScriptOpen);
   const isCharacterActive = getActive("character", false);
 
-  return { togglePlot, toggleScript, isPlotOpen, isScriptOpen, openIdeaBox, toggleIdeaBox, isInfoActive, isPlotActive, isScriptActive, isCharacterActive };
+  return {
+    togglePlot,
+    toggleScript,
+    isPlotOpen,
+    isScriptOpen,
+    openIdeaBox,
+    toggleIdeaBox,
+    isInfoActive,
+    isPlotActive,
+    isScriptActive,
+    isCharacterActive,
+  };
 };
+
+export const WorkspaceLayoutContext = createContext(
+  {} as ReturnType<typeof useWorkspaceLayout>
+);

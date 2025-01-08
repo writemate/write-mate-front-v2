@@ -51,17 +51,7 @@ export function CharacterCardList({
               </LoadingMessage>
             </>
           )}
-        {forInfoPage && <MoveToCharacter />}
       </div>
     </CharacterListContainer>
-  );
-}
-
-export function MoveToCharacter() {
-  const { workspace_id } = useCharacterList();
-  return (
-    <AddMemoButtonContainer href={`/${workspace_id}/character`}>
-      인물 관리하러가기
-    </AddMemoButtonContainer>
   );
 }
