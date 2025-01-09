@@ -12,8 +12,14 @@ import { InfoContext } from "@/hooks/workspace/info";
 import DropdownMenu from "@/components/DropdownMenu";
 
 export default function Cover() {
-  const { data, isLoading, onChangeTitle, onChangeGenre, onChangeLogline } =
-    useContext(InfoContext);
+  const {
+    data,
+    isLoading,
+    onChangeTitle,
+    onChangeGenre,
+    onChangeLogline,
+    onBlurTitle,
+  } = useContext(InfoContext);
   const { title, logline } = data ?? {};
   const genre = data?.genre === "" ? null : data?.genre;
   return (
@@ -29,6 +35,7 @@ export default function Cover() {
               onChange={onChangeTitle}
               defaultValue={title}
               disabled={isLoading}
+              onBlur={onBlurTitle}
             />
             <DropdownMenu
               placeholder="장르 선택"

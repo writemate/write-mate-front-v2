@@ -5,23 +5,28 @@ import {
   SaveStatus,
   VersionControlButton,
   RightContainer,
-  GuideButton,
-  IdeaBoxButton,
-  DownloadButton,
-  ProfileButton,
 } from "@/styles/workspace/Header.styles";
+import IdeaBox from "@/assets/icons/ideabox.svg";
+import Help from "@/assets/dashboard/header/help.svg";
 import RightArrow from "@/assets/icons/rightArrow.svg";
 import useWorkspaceHeader from "@/hooks/workspace/useWorkspaceHeader";
 import { useSaveLoading } from "@/stores/useSaveLoading";
 import SavingIcon from "@/assets/icons/saving.svg";
 import SavedIcon from "@/assets/icons/saved.svg";
+import HeaderSeparator from "@/assets/icons/headerSeparator.svg";
+import Profile from "@/assets/dashboard/header/profile.svg";
 import Modal from "../Modal";
 import {
-  DangerIcon,
   ButtonContainer,
   ModalButton,
   ModalContainer,
 } from "@/styles/WarningModal";
+import { MyPageContext, useMyPage } from "@/hooks/dashboard/useMyPage";
+import {
+  HeaderRightButton,
+  HearderProfileButton,
+} from "@/styles/dashboard/Header";
+import { MyPageModal } from "../dashboard/MyPageModal";
 
 export default function Header({
   toggleIdeaBox,
@@ -29,19 +34,24 @@ export default function Header({
   toggleIdeaBox: () => void;
 }) {
   const {
-    data,
-    error,
-    isLoading,
+    work,
+    subTitle,
+    workIsLoading,
     isOpenVersionControl,
     onClickVersionControl,
+    closeVersionControl,
   } = useWorkspaceHeader();
   const isSaving = useSaveLoading().checkIsSaving();
+  const myPageValue = useMyPage();
+  const { isOpenMyPage, onClickMyPage } = myPageValue;
 
   return (
     <HeaderContainer>
       <HeaderTitle>
-        {data?.title}
-        {isLoading && "로딩 중..."}
+        {work?.title}
+        <HeaderSeparator />
+        {subTitle}
+        {workIsLoading && "로딩 중..."}
       </HeaderTitle>
       <SaveStatus>
         {isSaving ? "저장 중" : "저장 완료"}
@@ -51,19 +61,38 @@ export default function Header({
         버전 관리
         <RightArrow />
       </VersionControlButton>
-      {isOpenVersionControl && <VersionControl />}
+      {isOpenVersionControl && (
+        <VersionControl closeVersionControl={closeVersionControl} />
+      )}
       <RightContainer>
-        <GuideButton /> 가이드
-        <IdeaBoxButton onClick={toggleIdeaBox} /> 아이디어 보관함
-        <DownloadButton /> txt 저장
-        <ProfileButton /> 마이페이지
+        <HeaderRightButton
+          onClick={() => {
+            window.open("https://guide.write-mate.net/", "_blank");
+          }}
+        >
+          <Help /> <p>도움말</p>
+        </HeaderRightButton>
+        <HeaderRightButton onClick={toggleIdeaBox}>
+          <IdeaBox />
+        </HeaderRightButton>
+        {/* <DownloadButton /> txt 저장 */}
+        <MyPageContext.Provider value={myPageValue}>
+          <HearderProfileButton onClick={onClickMyPage}>
+            <Profile />
+            <p>프로필</p>
+          </HearderProfileButton>
+          {isOpenMyPage && <MyPageModal />}
+        </MyPageContext.Provider>
       </RightContainer>
     </HeaderContainer>
   );
 }
 
-export function VersionControl() {
-  const { closeVersionControl } = useWorkspaceHeader();
+export function VersionControl({
+  closeVersionControl,
+}: {
+  closeVersionControl: () => void;
+}) {
   return (
     <Modal closeModal={closeVersionControl} maxWidth="450px">
       <ModalContainer>

@@ -31,6 +31,12 @@ export const workspaceQueryKeys = {
   mainPlot: (workId: string) =>
     [...workspaceQueryKeys.info(workId), "mainPlot"] as const,
 
+  plot: (workId: string, plotId: string) =>
+    [...workspaceQueryKeys.all(workId), "plot", plotId] as const,
+
+  script: (workId: string, scriptId: string) =>
+    [...workspaceQueryKeys.all(workId), "script", scriptId] as const,
+
   character: (workId: string) =>
     [...workspaceQueryKeys.all(workId), "character"] as const,
   characterList: (workId: string) =>
@@ -41,9 +47,6 @@ export const workspaceQueryKeys = {
     [...workspaceQueryKeys.character(workId), characterId] as const,
   characterRelation: (workId: string) =>
     [...workspaceQueryKeys.character(workId), "relation"] as const,
-
-  plot: (workId: string, plotId: string) =>
-    [...workspaceQueryKeys.all(workId), "plot", plotId] as const,
 
   characterModal: (workId: string) =>
     [...workspaceQueryKeys.all(workId)] as const,
