@@ -167,6 +167,7 @@ export const InputWithText = styled.div`
 
   & > input {
     width: 100%;
+    font-size: 16px;
     padding: 0;
     border: none;
     outline: none;

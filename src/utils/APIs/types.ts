@@ -140,6 +140,12 @@ export type TPlotEvent = {
   character_list: TSimpleCharacter[];
 };
 
+export type TScript = {
+  id: string;
+  script_name: string;
+  script_content: string;
+};
+
 /**
  * 스토리지 캐릭터 타입
  */

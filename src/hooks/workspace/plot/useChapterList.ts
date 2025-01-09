@@ -11,7 +11,6 @@ import { useContext } from "react";
 import { getHandleDragAndDropFunctionForReorder } from "@/utils/getReorderFunction";
 import { TPlot, TWorkInfo } from "@/utils/APIs/types";
 import { useOnClickUpdate } from "@/hooks/common/useOnClickUpdate";
-import router from "next/router";
 
 const useChapterList = (plot_id: string) => {
   const queryClient = useQueryClient();

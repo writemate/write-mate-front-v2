@@ -22,12 +22,21 @@ export const HeaderContainer = styled.header`
 `;
 
 export const HeaderTitle = styled.h1`
-  font-size: 24px;
-  font-weight: 700;
-  margin: 0 24px 0 28px;
+  padding-left: 28px;
+  padding-right: 16px;
+
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%;
+
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
 
   ${media.tablet} {
-    font-size: 20px;
+    padding: 0;
+    font-size: 16px;
     margin: 0 8px 0 0;
   }
 `;

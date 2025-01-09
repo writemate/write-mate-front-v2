@@ -11,7 +11,7 @@ import {
   updateGrade,
 } from "@/utils/APIs/workspace";
 import { useParams } from "next/navigation";
-import { createContext, useRef } from "react";
+import { createContext, use, useRef } from "react";
 import { useInputLiveUpdate } from "../common/useInputLiveUpdate";
 import { useOnClickUpdate } from "../common/useOnClickUpdate";
 import { notifySuccess } from "@/utils/showToast";
@@ -30,6 +30,12 @@ export function useInfo() {
     "제목을 저장 중입니다.",
     "제목을 저장하는 중에 문제가 발생했습니다."
   );
+
+  const onBlurTitle = () => {
+    queryClient.invalidateQueries({
+      queryKey: workspaceQueryKeys.workName(workspace_id),
+    });
+  };
 
   const onChangeLogline = useInputLiveUpdate(
     updateLogline(workspace_id),
@@ -120,6 +126,7 @@ export function useInfo() {
     error,
     isLoading,
     imageInputRef,
+    onBlurTitle,
     onChangeGrade,
     onChangeCoverImage,
     onChangeTitle,
