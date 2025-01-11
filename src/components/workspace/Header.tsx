@@ -25,7 +25,7 @@ import { MyPageContext, useMyPage } from "@/hooks/dashboard/useMyPage";
 import {
   HeaderRightButton,
   HearderProfileButton,
-} from "@/styles/dashboard/Header";
+} from "@/styles/dashboard/Header.style";
 import { MyPageModal } from "../dashboard/MyPageModal";
 
 export default function Header({

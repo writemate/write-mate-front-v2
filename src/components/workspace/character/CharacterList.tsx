@@ -9,7 +9,7 @@ import {
   SubTitle,
   OpenManagement,
 } from "@/styles/workspace/Character.style";
-import { AddMemoButtonContainer } from "@/styles/dashboard/IdeaBox/Memo/MemoList";
+import { AddMemoButtonContainer } from "@/styles/dashboard/IdeaBox/Memo/MemoList.style";
 import { CharacterCardList } from "./CharacterCardList";
 import { KeywordList } from "./KeyworkdList";
 import { KeywordManageModal } from "./KeywordManageModal";

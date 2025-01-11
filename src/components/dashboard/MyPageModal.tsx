@@ -14,7 +14,7 @@ import {
   Name,
   EmailContainer,
   CloseButton,
-} from "@/styles/dashboard/MyPage";
+} from "@/styles/dashboard/MyPage.style";
 import { useLogin } from "@/stores/useLogin";
 export function MyPageModal() {
   const { user, usage, closeModal } = useContext(MyPageContext);

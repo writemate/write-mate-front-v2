@@ -2,7 +2,7 @@
 
 import { WorkCategoryContext } from "@/hooks/dashboard/work/workCategory";
 import { WorkListContext } from "@/hooks/dashboard/work/workList";
-import { AddMemoButtonContainer } from "@/styles/dashboard/IdeaBox/Memo/MemoList";
+import { AddMemoButtonContainer } from "@/styles/dashboard/IdeaBox/Memo/MemoList.style";
 import { useContext } from "react";
 
 export function AddWork() {

@@ -4,11 +4,11 @@ import {
   HeaderAndMainContainer,
   SideTabAndFooterContainer,
   FooterContainer,
-} from "@/styles/dashboard/index";
+} from "@/styles/dashboard";
 import {
   TabletHeaderButton,
   TabletHeaderMenuContainer,
-} from "@/styles/dashboard/Header";
+} from "@/styles/dashboard/Header.style";
 import SideTab from "@/components/dashboard/SideTab";
 import Header from "@/components/dashboard/Header";
 import Footer from "@/assets/dashboard/footer.svg";

@@ -5,7 +5,7 @@ import {
   HeaderRightButton,
   HeaderRightButtonList,
   HearderProfileButton,
-} from "@/styles/dashboard/Header";
+} from "@/styles/dashboard/Header.style";
 import Event from "@/assets/dashboard/header/event.svg";
 import Profile from "@/assets/dashboard/header/profile.svg";
 import Help from "@/assets/dashboard/header/help.svg";

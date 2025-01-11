@@ -5,7 +5,7 @@ import {
   SideTabContainer,
   SideTabLink,
   SideTabMenu,
-} from "@/styles/dashboard/SideTab";
+} from "@/styles/dashboard/SideTab.style";
 import Logo from "@/assets/logo.svg";
 import LogoWithText from "@/assets/logoWithText.svg";
 import ArtStudio from "@/assets/dashboard/sideTab/artStudio.svg";

@@ -12,11 +12,21 @@ import {
 import Link from "next/link";
 import { media } from "../media";
 import { Title } from ".";
+import {
+  FontBold20,
+  FontBold24,
+  FontBold28,
+  FontRegular16,
+  FontSemibold14,
+  FontSemibold16,
+  FontTabletRegular13,
+  FontTabletRegular14,
+} from "../Font";
+import { Round9999OrangeBackgoundWhiteColor } from "../Button";
 
 // 네비게이션 바
 export const TabContainer = styled.div`
   ${FlexRowLeftStart};
-  margin-top: 45px;
   width: 100%;
   border-bottom: 1px solid #cacdda;
   height: 29px;
@@ -32,13 +42,12 @@ export const TabContainer = styled.div`
 `;
 
 export const TabButton = styled.div<{ $isSelected: boolean }>`
-  ${FlexRowCenter};
+  ${FlexRowCenter}
+  ${FontRegular16}
   align-items: flex-start;
   ${clickable};
-  font-weight: 400;
   color: ${({ $isSelected, theme }) =>
     $isSelected ? theme.color.orange400 : theme.color.gray300};
-  font-size: 18px;
   height: 100%;
   position: relative;
   ${({ $isSelected, theme }) =>
@@ -55,10 +64,6 @@ export const TabButton = styled.div<{ $isSelected: boolean }>`
       background-color: ${theme.color.orange400};
     }
   `}
-
-  ${media.tablet} {
-    font-size: 14px;
-  }
 `;
 
 // 메인
@@ -81,52 +86,39 @@ export const KeywordTitle = styled.div`
 `;
 
 export const SubTitle = styled.span`
-  font-size: 20px;
-  font-weight: 700;
+  ${FontBold20}
   color: ${({ theme }) => theme.color.gray400};
-
-  ${media.tablet} {
-    font-size: 14px;
-  }
 `;
 
 export const OpenManagement = styled.span`
   ${clickable};
-  font-size: 14px;
-  font-weight: 500;
+  ${FontSemibold14}
   color: ${({ theme }) => theme.color.gray300};
   margin-left: auto;
-
-  ${media.tablet} {
-    font-size: 12px;
-  }
 `;
 
 export const KeywordListContainer = styled.div`
   ${FlexRowLeftStart};
+  ${FontSemibold14}
+  position: relative;
   width: 100%;
   gap: 8px;
   flex-wrap: wrap;
-  font-size: 14px;
-  line-height: 21px;
   height: fit-content;
-  align-items: flex-start;
+  align-items: center;
 
   ${media.tablet} {
     margin-top: 16px;
     gap: 6px;
-    font-size: 12px;
     align-items: center;
   }
 `;
 
 export const KeywordAddDiv = styled.div`
-  width: 33px;
-  height: 33px;
+  ${FlexRowCenter}
+  width: 24px;
+  height: auto;
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   flex-shrink: 0;
 
   svg {
@@ -140,16 +132,13 @@ export const KeywordAddDiv = styled.div`
 export const KeywordListContainerForCharacterCard = styled(
   KeywordListContainer
 )`
+  ${FontTabletRegular13}
   margin-top: 0;
-  font-size: 12px;
-  line-height: 18px;
   height: fit-content;
   flex-wrap: wrap;
-  overflow: hidden;
+  overflow: auto;
   align-items: baseline;
   align-content: flex-start;
-
-  ${media.tablet}
 `;
 
 export const KeywordContainer = styled.div<{
@@ -158,25 +147,18 @@ export const KeywordContainer = styled.div<{
 }>`
   ${FlexRowCenter};
   ${clickable};
-  height: 33px !important;
+  ${FontTabletRegular13}
   gap: 6px;
-  padding: 6px 10px;
+  padding: 4px 10px;
   border-radius: 30px;
   background-color: ${({ $lightColor = "transparent" }) => $lightColor};
   color: ${({ theme, $darkColor }) => $darkColor ?? theme.color.gray400};
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 150%;
   border: 1px solid
     ${({ theme, $darkColor }) => $darkColor ?? theme.color.gray400};
 
   & > svg {
-    width: 20px;
-    height: 20px;
-  }
-
-  ${media.tablet} {
-    font-size: 12px;
+    width: 18px;
+    height: 18px;
   }
 `;
 
@@ -209,13 +191,18 @@ export const CharacterListContainer = styled.div<{ $forInfoPage: boolean }>`
 export const CharacterCardContainer = styled(Link)`
   ${FlexColumnLeftStart};
   ${clickable};
+  align-items: flex-start;
   width: 244px;
-  height: fit-content;
-  padding: 20px;
+  height: 220px;
+  padding: 18px;
   border-radius: 12px;
   gap: 10px;
   background-color: ${({ theme }) => theme.color.white};
   box-shadow: 0px 0px 12px #00000033;
+
+  ${KeywordContainer} {
+    padding: 2px 10px;
+  }
 
   ${media.tablet} {
     padding: 16px;
@@ -231,6 +218,7 @@ export const CharacterCardTitle = styled.div`
   }
 `;
 export const CharacterImage = styled.div<{ $src: string }>`
+  ${FontBold20}
   display: flex;
   justify-content: center;
   align-items: center;
@@ -244,12 +232,9 @@ export const CharacterImage = styled.div<{ $src: string }>`
   border: 2px solid #fff;
   flex-shrink: 0;
   margin-right: 12px;
-  font-size: 18px;
-  font-weight: 700;
 `;
 export const CharacterName = styled.div<{ $isNew?: boolean }>`
-  font-size: 14px;
-  font-weight: 700;
+  ${FontSemibold14}
   width: 123px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -258,7 +243,7 @@ export const CharacterName = styled.div<{ $isNew?: boolean }>`
     $isNew ? theme.color.gray300 : theme.color.gray900};
 `;
 export const CharacterRole = styled.div`
-  font-size: 13px;
+  ${FontTabletRegular13}
   color: ${({ theme }) => theme.color.gray400};
   overflow: hidden;
   text-overflow: ellipsis;
@@ -266,8 +251,7 @@ export const CharacterRole = styled.div`
   width: 123px;
 `;
 export const CharacterDescription = styled.div<{ $isNew?: boolean }>`
-  font-size: 14px;
-  line-height: 21px;
+  ${FontTabletRegular14}
   height: 42px;
   color: ${({ theme, $isNew }) =>
     $isNew ? theme.color.gray200 : theme.color.gray400};
@@ -281,12 +265,11 @@ export const CharacterDescription = styled.div<{ $isNew?: boolean }>`
 export const CreateCharacterButton = styled.button`
   ${FlexRowCenter};
   ${clickable};
+  ${FontSemibold16}
   padding: 12px 28px;
   border-radius: 100px;
   background-color: ${({ theme }) => theme.color.orange500};
   color: #fff;
-  font-size: 16px;
-  font-weight: 800;
   margin-top: auto;
   border: none;
   &:disabled {
@@ -328,13 +311,12 @@ export const InputWithButton = styled.div`
   }
   & > button {
     ${clickable};
+    ${FontTabletRegular13}
     position: absolute;
     right: 5px;
     padding: 10px;
     border-radius: 8px;
     background-color: ${({ theme }) => theme.color.gray75};
-    font-size: 13px;
-    font-weight: 400;
     width: 43px;
     border: none;
   }
@@ -370,56 +352,35 @@ export const CharacteristicContainer = styled.div`
   }
 `;
 export const CharacteristicTitle = styled.input`
+  ${FontBold20}
   flex-grow: 1;
   flex-shrink: 1;
   border: none;
   outline: none;
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 150%;
   width: 100%;
-
-  ${media.tablet} {
-    font-size: 16px;
-  }
 `;
 export const CharacteristicContent = styled.textarea`
   width: 100%;
   border: none;
   outline: none;
   resize: none;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 150%;
-
-  ${media.tablet} {
-    font-size: 14px;
-    font-weight: 400;
-  }
+  ${FontRegular16}
 `;
 
 export const CharacteristicAdd = styled.button`
+  ${FontTabletRegular14}
+  ${FlexColumnLeftStart}
   ${clickable};
-  display: flex;
   padding: 10px;
-  flex-direction: column;
-  align-items: flex-start;
   gap: 10px;
   margin: 0 auto;
   background: none;
   border: none;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 350;
-  line-height: 21px; /* 150% */
-  letter-spacing: -0.16px;
+
   color: ${({ theme }) => theme.color.orange400};
 
   ${media.tablet} {
     padding: 6px;
-    font-size: 12px;
   }
 `;
 
@@ -441,10 +402,7 @@ export const EditRelationContainer = styled.div`
 `;
 
 export const RelationTitle = styled.div`
-  font-size: 36px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 100%; /* 36px */
+  ${FontBold28}
   margin-right: auto;
 `;
 
@@ -471,20 +429,14 @@ export const RelationCharacterImage = styled.div<{ $src?: string }>`
   background: url(${({ $src }) => $src}) lightgray 50% / cover no-repeat;
 `;
 export const RelationCharacterName = styled.div`
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 100%;
+  ${FontSemibold16}
   color: ${({ theme }) => theme.color.red400};
 `;
 
 export const RelationCharacterDescription = styled.div`
+  ${FontTabletRegular13}
   width: 150px;
   padding: 4px;
-  font-size: 13px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 140%;
   height: calc(13px * 1.4 * 5);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -509,10 +461,7 @@ export const RelationArrowContainer = styled.div`
       width: 100%;
       padding: 7px 15px;
       text-align: center;
-      font-size: 14px;
-      font-style: normal;
-      font-weight: 500;
-      line-height: 100%;
+      ${FontTabletRegular14}
       border: ${({ theme }) => theme.color.orange400} 1px solid;
       border-radius: 100px;
       outline: none;
@@ -567,12 +516,9 @@ export const ManageRowWrapper = styled.div`
 
 export const ManageKeywordLeft = styled.div`
   ${FlexColumnLeftStart};
+  ${FontTabletRegular13}
   gap: 10px;
   flex-shrink: 0;
-  font-size: 13px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 100%;
   color: ${({ theme }) => theme.color.gray900};
 `;
 
@@ -585,11 +531,8 @@ export const VerticalLine = styled.div`
 
 export const ManageKeywordRight = styled.div`
   ${FlexColumnLeftStart};
+  ${FontTabletRegular13}
   gap: 11px;
-  font-size: 13px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 100%;
   color: ${({ theme }) => theme.color.gray900};
 `;
 
@@ -625,15 +568,13 @@ export const RandomColor = styled.div<{ $isSelected?: boolean }>`
 
 export const CreateKeywordButton = styled.button`
   ${FlexRowCenter};
+  ${FontSemibold16}
   ${clickable};
   width: 302px;
   height: 48px;
   flex-shrink: 0;
   border-radius: 12px;
   background-color: ${({ theme }) => theme.color.orange400};
-  color: #fff;
-  font-size: 16px;
-  font-weight: 800;
   margin-top: auto;
   border: none;
   color: #fff;
@@ -665,36 +606,12 @@ export const CharacterDropdownSelector = styled(DropdownSelector)`
 `;
 
 export const AddMemoButtonContainer = styled(Link)`
-  ${clickable}
-  position:relative;
-
-  width: fit-content;
-  padding: 12px;
-  justify-content: center;
-  align-items: center;
-  border-radius: 100px;
-  background: ${({ theme }) => theme.color.orange400};
-  border: none;
-
-  color: ${({ theme }) => theme.color.white};
-  font-family: Pretendard;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 800;
-  line-height: 100%;
-  letter-spacing: 0.32px;
-
-  &:hover {
-    filter: brightness(95%);
-  }
-
-  ${media.tablet} {
-    font-size: 12px;
-    padding: 8px;
-  }
+  position: relative;
+  ${Round9999OrangeBackgoundWhiteColor}
 `;
 
 export const LoadingMessage = styled.div`
+  ${FontRegular16}
   position: relative;
   width: 100%;
   height: fit-content;
@@ -703,11 +620,5 @@ export const LoadingMessage = styled.div`
   align-items: center;
   text-align: center;
 
-  font-size: 16px;
-  font-weight: 500;
   color: ${({ theme }) => theme.color.gray300};
-
-  ${media.tablet} {
-    font-size: 14px;
-  }
 `;

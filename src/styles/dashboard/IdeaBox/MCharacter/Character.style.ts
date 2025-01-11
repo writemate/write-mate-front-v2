@@ -1,4 +1,9 @@
-import { FlexRowLeftStart } from "@/styles";
+import { FlexColumnCenter, FlexRowLeftStart } from "@/styles";
+import {
+  FontSemibold14,
+  FontSemibold16,
+  FontTabletRegular13,
+} from "@/styles/Font";
 import styled from "styled-components";
 
 export const CharacterCardTitle = styled.div`
@@ -10,21 +15,20 @@ export const CharacterCardTitle = styled.div`
   }
 `;
 export const CharacterImage = styled.div<{ $src: string }>`
-  display: flex;
+  ${FontSemibold16}
+  ${FlexColumnCenter}
   justify-content: center;
-  align-items: center;
   background-image: url(${({ $src }) => $src});
   background-size: cover;
   width: 48px;
   height: 48px;
-  border-radius: 100%;
+  border-radius: 9999px;
   background-color: ${({ theme }) => theme.color.gray200};
+  color: ${({ theme }) => theme.color.white};
   box-shadow: 2px 2px 8px #323f4d33;
   border: 2px solid #fff;
   flex-shrink: 0;
   margin-right: 12px;
-  font-size: 18px;
-  font-weight: 700;
 `;
 
 export const NameAndRole = styled.div`
@@ -35,15 +39,14 @@ export const NameAndRole = styled.div`
 `;
 
 export const CharacterName = styled.div`
-  font-size: 14px;
-  font-weight: 700;
+  ${FontSemibold14}
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 `;
 export const CharacterRole = styled.div`
-  font-size: 13px;
+  ${FontTabletRegular13}
   color: ${({ theme }) => theme.color.gray400};
   overflow: hidden;
   text-overflow: ellipsis;
@@ -51,10 +54,9 @@ export const CharacterRole = styled.div`
   width: 100%;
 `;
 export const CharacterDescription = styled.div`
-  font-size: 14px;
-  line-height: 21px;
-  height: 42px;
+  ${FontTabletRegular13}
   color: ${({ theme }) => theme.color.gray400};
+  height: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;

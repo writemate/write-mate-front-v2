@@ -1,7 +1,7 @@
 "use client";
-import { MemoListContainer } from "@/styles/dashboard/IdeaBox/Memo/MemoList";
+import { MemoListContainer } from "@/styles/dashboard/IdeaBox/Memo/MemoList.style";
 import MemoItem from "@/components/dashboard/Memo/MemoItem";
-import { LoadingMessage } from "@/styles/dashboard/Loading";
+import { LoadingMessage } from "@/styles/dashboard/Loading.style";
 import { AddMemoButton } from "@/components/dashboard/AddButton";
 import { useMemoList } from "@/hooks/dashboard/memo/useMemoList";
 

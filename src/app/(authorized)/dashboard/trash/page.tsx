@@ -1,5 +1,5 @@
 "use client";
-import { TitleAndWorkListContainer } from "@/styles/dashboard/Work/WorkList";
+import { TitleAndWorkListContainer } from "@/styles/dashboard/Work/WorkList.style";
 import { TrashTitleAndNavigationBar } from "@/components/dashboard/TitleAndNavigationBar";
 import WorkList from "@/components/dashboard/Work/WorkList";
 import { useWorkList, WorkListContext } from "@/hooks/dashboard/work/workList";

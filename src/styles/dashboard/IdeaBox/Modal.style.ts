@@ -17,6 +17,7 @@ import {
   FontSemibold16,
   FontTabletRegular14,
 } from "@/styles/Font";
+import { SubTitle } from "@/styles/workspace/Info.style";
 
 /* Css */
 export const ModalInputBoxContainer = css`
@@ -60,32 +61,33 @@ export const ModalContentAndFooterContainer = styled.div`
   ${FlexColumnLeftStart}
   color: ${({ theme }) => theme.color.gray900};
   padding: 30px;
+  max-height: 90vh;
 
   background-color: ${({ theme }) => theme.color.white};
   border: 1px solid ${({ theme }) => theme.color.gray200};
   border-radius: 8px;
 
-  gap: 16px;
   overflow: auto;
 
-  p {
-    ${FontSemibold14}
+  ${SubTitle} {
+    ${FontSemibold16}
+    margin-top: 32px;
   }
 `;
 
-/* Content */
-export const ModalContent = styled.div`
-  ${FontSemibold14}
-`;
-
 export const ModalTitle = styled.div`
-  ${ModalFlexRowGap24}
   ${FlexRowSpaceBetween}
-  ${FontSemibold16}
+  width: 100%;
+
   justify-content: space-between;
 
   ${CloseButton} {
     margin-bottom: auto;
+  }
+
+  ${SubTitle} {
+    ${FontBold20}
+    margin-top: 0;
   }
 
   ${media.tablet} {

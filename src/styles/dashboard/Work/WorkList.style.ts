@@ -20,7 +20,7 @@ export const TitleAndWorkListContainer = styled.div`
 export const WorkListContainer = styled.div`
   position: relative;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
   height: 100%;
   align-items: start;
   justify-content: start;
@@ -32,6 +32,7 @@ export const WorkListContainer = styled.div`
 
   ${media.tablet} {
     gap: 8px;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   }
 `;
 

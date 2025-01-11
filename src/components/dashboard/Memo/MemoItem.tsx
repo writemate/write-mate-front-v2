@@ -5,7 +5,7 @@ import {
   MemoHeader,
   MemoTitle,
   MemoUpdatedDate,
-} from "@/styles/dashboard/IdeaBox/Memo/MemoList";
+} from "@/styles/dashboard/IdeaBox/Memo/MemoList.style";
 import { TMemo } from "@/utils/APIs/types";
 import { EditModal } from "./MemoModal";
 import { MemoItemContext, useMemoItem } from "@/hooks/dashboard/memo/memoItem";

@@ -15,7 +15,7 @@ import { SubTitle } from "@/styles/workspace/Info.style";
 import {
   ModalContentAndFooterContainer,
   ModalTitle,
-} from "@/styles/dashboard/IdeaBox/Modal";
+} from "@/styles/dashboard/IdeaBox/Modal.style";
 import { Infos } from "@/styles/workspace/Info.style";
 import { CloseButton, DeleteButton } from "@/styles";
 

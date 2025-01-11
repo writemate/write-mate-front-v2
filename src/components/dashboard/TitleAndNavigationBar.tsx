@@ -6,7 +6,7 @@ import {
   NavigationBar,
   TitleAndNavigationBar,
   NavigationButton,
-} from "@/styles/dashboard/TitleAndNavigationBar";
+} from "@/styles/dashboard/TitleAndNavigationBar.style";
 import { workspaceCategory } from "@/utils/APIs/types";
 import { ideaBoxCategory } from "@/utils/APIs/types";
 import { useContext } from "react";

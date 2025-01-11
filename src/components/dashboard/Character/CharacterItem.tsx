@@ -3,7 +3,7 @@ import {
   CharacterItemContext,
   useCharacterItem,
 } from "@/hooks/dashboard/character/characterItem";
-import { CharacterCard } from "@/styles/dashboard/IdeaBox/MCharacter/MCharacterList";
+import { CharacterCard } from "@/styles/dashboard/IdeaBox/MCharacter/MCharacterList.style";
 import { TMCharacter } from "@/utils/APIs/types";
 import MCharacterModal from "./MemoCharacterModal";
 import {
@@ -14,6 +14,7 @@ import {
   CharacterDescription,
   NameAndRole,
 } from "@/styles/dashboard/IdeaBox/MCharacter/Character.style";
+import { MemoUpdatedDate } from "@/styles/dashboard/IdeaBox/Memo/MemoList.style";
 
 export function CharacterItem({ character }: { character: TMCharacter }) {
   const characterItemValue: ReturnType<typeof useCharacterItem> =
@@ -49,6 +50,15 @@ export function CharacterItem({ character }: { character: TMCharacter }) {
           {character.description}
           {!character.description && "인물 설명을 적어주세요."}
         </CharacterDescription>
+        <MemoUpdatedDate>
+          {new Date(character.updatedAt).toLocaleString("ko-KR", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+          })}
+        </MemoUpdatedDate>
       </CharacterCard>
       {isOpenEditModal && <MCharacterModal />}
     </CharacterItemContext.Provider>
