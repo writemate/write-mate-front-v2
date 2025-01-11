@@ -1,18 +1,11 @@
 "use client";
 import { media } from "@/styles/media";
-import { FlexRowLeftStart, clickable, FlexColumnCenter } from "@/styles";
+import { FlexRowLeftStart, FlexColumnCenter } from "@/styles";
 import { styled, css } from "styled-components";
-
-export const HighlghtCssForHoberAfter = css<{ $isActivated?: boolean }>`
-  content: "";
-  position: absolute;
-  background-color: ${({ $isActivated, theme }) =>
-    $isActivated ? theme.color.orange200 : theme.color.gray200};
-  opacity: 0.3;
-  border-radius: 9999px;
-  width: 100%;
-  height: 100%;
-`;
+import {
+  GrayTextIconHoverBackgroundButton,
+  HighlghtCssForHoberAfter,
+} from "@/styles/Button";
 
 /* Dashboard */
 export const DashboardContainer = styled.div`
@@ -46,30 +39,6 @@ export const SideTabAndFooterContainer = styled.div`
   }
 `;
 
-export const FooterContainer = styled.div<{ $isActivated?: boolean }>`
-  ${clickable}
-  position: relative;
-  display: flex;
-  justify-content: left;
-  align-items: center;
-  gap: 8px;
-  padding: 11px;
-  color: ${({ $isActivated, theme }) =>
-    $isActivated ? theme.color.orange400 : theme.color.gray300};
-
-  &:hover::after {
-    ${HighlghtCssForHoberAfter}
-    top: 0;
-    left: 0;
-    width: 50%;
-    z-index: -1;
-  }
-
-  ${media.tablet} {
-    display: none;
-  }
-`;
-
 /* Header And Main (FlexColumn)*/
 export const HeaderAndMainContainer = styled.div`
   ${FlexColumnCenter}
@@ -86,5 +55,21 @@ export const HeaderAndMainContainer = styled.div`
     height: calc(100% - 60px);
     border-radius: 12px 12px 0px 0px;
     padding: 0;
+  }
+`;
+
+export const FooterContainer = styled.div<{ $isActivated?: boolean }>`
+  ${GrayTextIconHoverBackgroundButton}
+  width: fit-content;
+  position: relative;
+
+  &:hover::after {
+    ${HighlghtCssForHoberAfter}
+    left: -8px;
+    width: calc(100% + 16px);
+  }
+
+  ${media.tablet} {
+    display: none;
   }
 `;

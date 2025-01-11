@@ -20,8 +20,8 @@ export default function WorkList() {
       {isLoading && <LoadingMessage>로딩중...</LoadingMessage>}
       {error && (
         <LoadingMessage>
-          에러가 발생했습니다. 새로고침을 하시거나, 채팅 버튼을 이용해
-          문의해주세요.
+          에러가 발생했습니다. <br />
+          새로고침을 하시거나, 채팅 버튼을 이용해 문의해주세요.
         </LoadingMessage>
       )}
       {workList && (
@@ -47,13 +47,14 @@ export default function WorkList() {
               )}
               {workCategory === workspaceCategory.completed && (
                 <EmptyListDiscription>
-                  완료된 작품이 없습니다. 새로운 작품을 집필해보세요!
+                  완료된 작품이 없습니다. <br />
+                  새로운 작품을 집필해보세요!
                   <MoveToOngoing />
                 </EmptyListDiscription>
               )}
               {workCategory === workspaceCategory.trash && (
                 <EmptyListDiscription>
-                  삭제된 작품이 없습니다.
+                  휴지통이 비어있습니다.
                   <MoveToOngoing />
                 </EmptyListDiscription>
               )}

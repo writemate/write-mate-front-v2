@@ -18,7 +18,7 @@ export default function Modal({
   };
   return (
     <ModalContainer onClick={closeModal}>
-      <div onClick={propagateClick} style={{ maxWidth, maxHeight }}>
+      <div onClick={propagateClick} style={{ maxWidth, maxHeight, height: "100%", overflowY: "auto" }}>
         {children}
       </div>
     </ModalContainer>

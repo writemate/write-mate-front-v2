@@ -2,16 +2,18 @@
 import { useContext } from "react";
 import {
   CoverContainer,
-  Container,
   SubTitle,
-  TextWithDropMenu,
   CoverContentsContainer,
 } from "@/styles/workspace/Info.style";
-import CoverImageBox from "@/components/workspace/character/CoverImageBox";
-import { Input, ButtonWithHoverAnimation } from "@/styles";
+import CoverImageBox from "@/components/workspace/character/detail/CoverImageBox";
+import { Input, DeleteButton } from "@/styles";
 import { CharacterContext } from "@/hooks/workspace/character/character";
 
-export default function Cover() {
+export default function Cover({
+  isDeletable = true,
+}: {
+  isDeletable?: boolean;
+}) {
   const {
     data,
     isLoading,
@@ -24,12 +26,14 @@ export default function Cover() {
     <CoverContainer>
       <CoverImageBox />
       <CoverContentsContainer>
-        <ButtonWithHoverAnimation
-          onClick={onClickDeleteCharacter}
-          style={{ marginLeft: "auto", marginBottom: "auto" }}
-        >
-          삭제
-        </ButtonWithHoverAnimation>
+        {isDeletable && (
+          <DeleteButton
+            onClick={onClickDeleteCharacter}
+            style={{ marginLeft: "auto", marginBottom: "auto" }}
+          >
+            삭제하기
+          </DeleteButton>
+        )}
         <SubTitle>인물 이름</SubTitle>
         <Input
           type="text"
@@ -38,7 +42,7 @@ export default function Cover() {
           defaultValue={ch_name}
           disabled={isLoading}
         />
-        <SubTitle style={{ marginTop: 46 }}>작품 속 역할</SubTitle>
+        <SubTitle>작품 속 역할</SubTitle>
         <Input
           placeholder="작품 속 인물의 역할을 적어주세요"
           onChange={onChangeRole}

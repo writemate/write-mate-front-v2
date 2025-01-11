@@ -27,6 +27,7 @@ export default function CoverImageBox() {
         accept="image/*"
         onChange={onChangeCoverImage}
         ref={ref}
+        onClick={(e) => e.stopPropagation()}
       />
       {!isLoading && (
         <ChangeCover onClick={onClickChangeCover}>

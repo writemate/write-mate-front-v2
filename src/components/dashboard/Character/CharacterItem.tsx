@@ -5,7 +5,7 @@ import {
 } from "@/hooks/dashboard/character/characterItem";
 import { CharacterCard } from "@/styles/dashboard/IdeaBox/MCharacter/MCharacterList";
 import { TMCharacter } from "@/utils/APIs/types";
-import MCharacterModal from "./CharacterModal";
+import MCharacterModal from "./MemoCharacterModal";
 import {
   CharacterCardTitle,
   CharacterImage,
@@ -16,7 +16,8 @@ import {
 } from "@/styles/dashboard/IdeaBox/MCharacter/Character.style";
 
 export function CharacterItem({ character }: { character: TMCharacter }) {
-  const characterItemValue = useCharacterItem(character);
+  const characterItemValue: ReturnType<typeof useCharacterItem> =
+    useCharacterItem(character);
   const { isOpenEditModal, onClickItem } = characterItemValue;
 
   const getName = () => {

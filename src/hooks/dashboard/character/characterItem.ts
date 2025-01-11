@@ -228,6 +228,7 @@ export function useCharacterItem(curCharacter: TMCharacter) {
 
   return {
     character,
+
     imageInputRef,
     isOpenEditModal,
     isOpenDeleteModal,

@@ -3,14 +3,26 @@ import { media } from "@/styles/media";
 import { styled, css } from "styled-components";
 import TextareaAutosize from "react-textarea-autosize";
 import TrashCan from "@/assets/icons/trashcan.svg";
-import { FlexRowCenter } from "@/styles";
+import {
+  CloseButton,
+  FlexColumnLeftStart,
+  FlexRowCenter,
+  FlexRowLeftStart,
+  FlexRowSpaceBetween,
+} from "@/styles";
+import {
+  FontBold20,
+  FontRegular16,
+  FontSemibold14,
+  FontSemibold16,
+  FontTabletRegular14,
+} from "@/styles/Font";
 
 /* Css */
-export const InputBoxContainer = css`
+export const ModalInputBoxContainer = css`
+  ${FlexRowCenter}
   width: 100%;
-  display: flex;
   padding: 12px 12px;
-  align-items: center;
   border-radius: 8px;
   border: 1px solid ${({ theme }) => theme.color.gray200};
   background: ${({ theme }) => theme.color.white};
@@ -22,23 +34,21 @@ export const InputBoxContainer = css`
     color: ${({ theme }) => theme.color.gray200};
   }
 `;
-export const FlexRow = css`
+export const ModalFlexRowGap24 = css`
+  ${FlexRowLeftStart}
   position: relative;
-  display: flex;
-  flex-direction: row;
   width: 100%;
   height: 100%;
   gap: 24px;
 
   ${media.tablet} {
-    flex-direction: column;
+    ${FlexColumnLeftStart}
   }
 `;
 
-export const FlexColumn = css`
+export const ModalFlexColumnGap12 = css`
+  ${FlexColumnLeftStart}
   position: relative;
-  display: flex;
-  flex-direction: column;
   height: 100%;
   width: 100%;
   gap: 12px;
@@ -46,12 +56,10 @@ export const FlexColumn = css`
 
 /* Modal */
 export const ModalContentAndFooterContainer = styled.div`
-  width: 100%;
-  max-height: 70vh;
+  ${FontRegular16}
+  ${FlexColumnLeftStart}
+  color: ${({ theme }) => theme.color.gray900};
   padding: 30px;
-
-  display: flex;
-  flex-direction: column;
 
   background-color: ${({ theme }) => theme.color.white};
   border: 1px solid ${({ theme }) => theme.color.gray200};
@@ -61,27 +69,23 @@ export const ModalContentAndFooterContainer = styled.div`
   overflow: auto;
 
   p {
-    color: ${({ theme }) => theme.color.gray900};
-    font-family: Pretendard;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 150%;
+    ${FontSemibold14}
   }
 `;
 
 /* Content */
-export const ModalContentContainer = styled.div``;
+export const ModalContent = styled.div`
+  ${FontSemibold14}
+`;
 
-export const ModalHeader = styled.div`
-  ${FlexRow}
+export const ModalTitle = styled.div`
+  ${ModalFlexRowGap24}
+  ${FlexRowSpaceBetween}
+  ${FontSemibold16}
   justify-content: space-between;
 
-  p {
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 150%;
+  ${CloseButton} {
+    margin-bottom: auto;
   }
 
   ${media.tablet} {
@@ -92,22 +96,16 @@ export const ModalHeader = styled.div`
 
 /* Input */
 export const Input = styled.input`
-  ${InputBoxContainer}
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 150%;
+  ${ModalInputBoxContainer}
+  ${FontTabletRegular14}
   color: ${({ theme }) => theme.color.gray700};
   border: none;
   outline: none;
 `;
 
 export const TextArea = styled(TextareaAutosize)`
-  ${InputBoxContainer}
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 150%;
+  ${ModalInputBoxContainer}
+  ${FontTabletRegular14}
   color: ${({ theme }) => theme.color.gray700};
   border: none;
   outline: none;
@@ -116,7 +114,7 @@ export const TextArea = styled(TextareaAutosize)`
 
 /* Image */
 export const ImgAndNameAndDescriptionContainer = styled.div`
-  ${FlexRow}
+  ${ModalFlexRowGap24}
   height: auto;
   align-items: flex-end;
   flex-shrink: 0;
@@ -126,7 +124,7 @@ export const ImgAndNameAndDescriptionContainer = styled.div`
 `;
 
 export const ImageContainer = styled.div`
-  ${FlexColumn}
+  ${ModalFlexColumnGap12}
   flex-shrink: 0;
   background: ${({ theme }) => theme.color.gray100};
   border-radius: 8px;
@@ -189,36 +187,36 @@ export const ChangeCover = styled.button`
 
 /* Name and Role, Birth, Gender, Description */
 export const NameAndDescriptionContainer = styled.div`
-  ${FlexColumn}
+  ${ModalFlexColumnGap12}
 `;
 export const RoleContainer = styled.div`
-  ${FlexColumn}
+  ${ModalFlexColumnGap12}
   justify-content: center;
 `;
 export const NameContainer = styled.div`
-  ${FlexColumn}
+  ${ModalFlexColumnGap12}
   justify-content: center;
 `;
 export const DescriptionContainer = styled.div`
-  ${FlexColumn}
+  ${ModalFlexColumnGap12}
 `;
 export const BirthAndGenderContainer = styled.div`
-  ${FlexRow}
+  ${ModalFlexRowGap24}
   padding-right: 20%;
 `;
 export const BirthContainer = styled.div`
-  ${FlexColumn}
+  ${ModalFlexColumnGap12}
 `;
 export const GenderContainer = styled.div`
-  ${FlexColumn}
+  ${ModalFlexColumnGap12}
 `;
 
 /* Characteristic */
 export const CharacteristicContainer = styled.div`
-  ${FlexColumn}
+  ${ModalFlexColumnGap12}
 `;
 export const CharacteristicListContainer = styled.div`
-  ${FlexColumn}
+  ${ModalFlexColumnGap12}
   align-items: center;
 `;
 
@@ -270,7 +268,7 @@ export const Delete = styled(TrashCan)`
 /* Footer */
 
 export const FooterContainer = styled.div`
-  ${FlexRow}
+  ${ModalFlexRowGap24}
   justify-content: flex-end;
   padding: 4px 12px;
 
@@ -307,7 +305,7 @@ export const DeleteButton = styled.button`
 `;
 
 export const RightButtonContainer = styled.div`
-  ${FlexRow}
+  ${ModalFlexRowGap24}
   width: fit-content;
   ${media.tablet} {
     flex-direction: row;

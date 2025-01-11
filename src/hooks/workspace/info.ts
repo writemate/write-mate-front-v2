@@ -1,4 +1,4 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { workspaceQueryKeys } from "@/utils/APIs/queryKeys";
 import {
   getInfo,
@@ -10,32 +10,11 @@ import {
   updateTitle,
   updateGrade,
 } from "@/utils/APIs/workspace";
-import { debounce } from "@/utils";
 import { useParams } from "next/navigation";
-import { createContext } from "react";
-
-function useUpdate<T, U>({
-  updateFn,
-  onMutate,
-  onChange,
-}: {
-  updateFn: (workspace_id: string) => (value: T) => Promise<void>;
-  onMutate: (value: T) => void;
-  onChange: (debouncedMutate: (value: T) => void) => (arg: U) => void;
-}) {
-  const queryClient = useQueryClient();
-  const { workspace_id } = useParams<{ workspace_id: string }>();
-  const { mutate, isPending } = useMutation({
-    mutationFn: updateFn(workspace_id),
-    onSuccess: () =>
-      queryClient.invalidateQueries({
-        queryKey: workspaceQueryKeys.info(workspace_id),
-      }),
-    onMutate,
-  });
-  const debouncedMutate = debounce(mutate, 500);
-  return { onChange: onChange(debouncedMutate), isPending };
-}
+import { createContext, use, useRef } from "react";
+import { useInputLiveUpdate } from "../common/useInputLiveUpdate";
+import { useOnClickUpdate } from "../common/useOnClickUpdate";
+import { notifySuccess } from "@/utils/showToast";
 
 export function useInfo() {
   const queryClient = useQueryClient();
@@ -44,137 +23,118 @@ export function useInfo() {
     queryKey: workspaceQueryKeys.info(workspace_id),
     queryFn: getInfo(workspace_id),
   });
+  const imageInputRef = useRef<HTMLInputElement>(null);
 
-  const { onChange: onChangeTitle, isPending: isPendingTitle } = useUpdate({
-    updateFn: updateTitle,
-    onMutate: (value) => {
-      queryClient.setQueryData(
-        workspaceQueryKeys.info(workspace_id),
-        (prev: any) => ({
-          ...prev,
-          title: value,
-        })
-      );
+  const onChangeTitle = useInputLiveUpdate(
+    updateTitle(workspace_id),
+    "제목을 저장 중입니다.",
+    "제목을 저장하는 중에 문제가 발생했습니다."
+  );
+
+  const onBlurTitle = () => {
+    queryClient.invalidateQueries({
+      queryKey: workspaceQueryKeys.workName(workspace_id),
+    });
+  };
+
+  const onChangeLogline = useInputLiveUpdate(
+    updateLogline(workspace_id),
+    "로그라인을 저장 중입니다.",
+    "로그라인을 저장하는 중에 문제가 발생했습니다."
+  );
+
+  const onChangeIntroduction = useInputLiveUpdate(
+    updateIntroduction(workspace_id),
+    "소개글을 저장 중입니다.",
+    "소개글을 저장하는 중에 문제가 발생했습니다."
+  );
+
+  const onChangeGenre = useOnClickUpdate({
+    mutationFn: updateGenre(workspace_id),
+    queryKey: workspaceQueryKeys.info(workspace_id),
+    savingMessage: "장르를 저장 중입니다.",
+    errorMessage: "장르를 저장하는 중에 문제가 발생했습니다.",
+    onSuccess: () => {
+      notifySuccess("장르가 변경되었습니다.");
     },
-    onChange: (debouncedMutate) => (e: React.ChangeEvent<HTMLInputElement>) =>
-      debouncedMutate(e.target.value),
   });
 
-  const { onChange: onChangeLogline, isPending: isPendingLogline } = useUpdate({
-    updateFn: updateLogline,
-    onMutate: (value) => {
-      queryClient.setQueryData(
-        workspaceQueryKeys.info(workspace_id),
-        (prev: any) => ({
-          ...prev,
-          logline: value,
-        })
-      );
+  const onChangeGrade = useOnClickUpdate({
+    mutationFn: updateGrade(workspace_id),
+    queryKey: workspaceQueryKeys.info(workspace_id),
+    savingMessage: "등급을 저장 중입니다.",
+    errorMessage: "등급을 저장하는 중에 문제가 발생했습니다.",
+    onSuccess: () => {
+      notifySuccess("등급이 변경되었습니다.");
     },
-    onChange:
-      (debouncedMutate) => (e: React.ChangeEvent<HTMLTextAreaElement>) =>
-        debouncedMutate(e.target.value),
   });
 
-  const { onChange: onChangeIntroduction, isPending: isPendingIntroduction } =
-    useUpdate({
-      updateFn: updateIntroduction,
-      onMutate: (value) => {
+  const onChangeExpectedQuantity = useInputLiveUpdate(
+    updateExpectedQuantity(workspace_id),
+    "예상 연재량을 저장 중입니다.",
+    "예상 연재량을 저장하는 중에 문제가 발생했습니다."
+  );
+
+  // 커버 이미지 변경
+  const mutateCoverImage = useOnClickUpdate({
+    mutationFn: updateCoverImage(workspace_id),
+    queryKey: workspaceQueryKeys.info(workspace_id),
+    savingMessage: "커버 이미지 변경 중",
+    errorMessage: "커버 이미지 변경에 실패했습니다.",
+    onSuccess: () => {
+      notifySuccess("작품 표지가 변경되었습니다.");
+    },
+    onMutate: (value: File) => {
+      const prevData = queryClient.getQueryData([
+        workspaceQueryKeys.info(workspace_id),
+      ]);
+      if (prevData) {
         queryClient.setQueryData(
           workspaceQueryKeys.info(workspace_id),
-          (prev: any) => ({
-            ...prev,
-            introduction: value,
-          })
+          (prev: any) => {
+            return prev.map((work: any) => {
+              if (work.id === workspace_id) {
+                return { ...work, cover: URL.createObjectURL(value) };
+              }
+              return work;
+            });
+          }
         );
-      },
-      onChange:
-        (debouncedMutate) => (e: React.ChangeEvent<HTMLTextAreaElement>) =>
-          debouncedMutate(e.target.value),
-    });
-
-  const { onChange: onChangeGenre, isPending: isPendingGenre } = useUpdate({
-    updateFn: updateGenre,
-    onMutate: (value) => {
-      queryClient.setQueryData(
-        workspaceQueryKeys.info(workspace_id),
-        (prev: any) => ({
-          ...prev,
-          genre: value,
-        })
-      );
+      }
+      return { prevData };
     },
-    onChange: (debouncedMutate) => (option: string) => debouncedMutate(option),
-  });
-
-  const { onChange: onChangeGrade, isPending: isPendingGrade } = useUpdate({
-    updateFn: updateGrade,
-    onMutate: (value) => {
-      queryClient.setQueryData(
-        workspaceQueryKeys.info(workspace_id),
-        (prev: any) => ({
-          ...prev,
-          grade: value,
-        })
-      );
-    },
-    onChange:
-      (debouncedMutate) =>
-      (option: Parameters<ReturnType<typeof updateGrade>>[0]) =>
-        debouncedMutate(option),
-  });
-
-  const {
-    onChange: onChangeExpectedQuantity,
-    isPending: isPendingExpectedQuantity,
-  } = useUpdate({
-    updateFn: updateExpectedQuantity,
-    onMutate: (value) => {},
-    onChange: (debouncedMutate) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      const value = e.target.value;
-      if (isNaN(Number(value))) return;
-      debouncedMutate(Number(value));
-    },
-  });
-
-  const { onChange: onChangeCoverImage, isPending: isPendingCoverImage } =
-    useUpdate({
-      updateFn: updateCoverImage,
-      onMutate: (value) => {
+    onError: (error, variables, context) => {
+      if (context?.prevData)
         queryClient.setQueryData(
           workspaceQueryKeys.info(workspace_id),
-          (prev: any) => ({
-            ...prev,
-            cover: URL.createObjectURL(value),
-          })
+          context?.prevData
         );
-      },
-      onChange:
-        (debouncedMutate) => (e: React.ChangeEvent<HTMLInputElement>) => {
-          const file = e.target.files?.[0];
-          if (!file) return;
-          debouncedMutate(file);
-        },
-    });
+    },
+  });
+
+  const onChangeCoverImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    mutateCoverImage(file)();
+  };
+  const onClickChangeCover = () => {
+    imageInputRef.current?.click();
+  };
 
   return {
     data,
     error,
     isLoading,
+    imageInputRef,
+    onBlurTitle,
     onChangeGrade,
-    isPendingGrade,
     onChangeCoverImage,
-    isPendingCoverImage,
     onChangeTitle,
-    isPendingTitle,
     onChangeGenre,
-    isPendingGenre,
     onChangeLogline,
-    isPendingLogline,
     onChangeIntroduction,
-    isPendingIntroduction,
     onChangeExpectedQuantity,
-    isPendingExpectedQuantity,
+    onClickChangeCover,
   };
 }
 

@@ -1,31 +1,21 @@
 import styled from "styled-components";
-import { FlexColumn, FlexRow } from "./IdeaBox/Modal";
+import { FlexColumnCenter, FlexRowCenter, FlexRowSpaceBetween } from "@/styles";
+import { media } from "@/styles/media";
+import { FontBold20, FontBold24, FontSemibold14 } from "@/styles/Font";
+import Close from "@/assets/icons/close.svg";
+import { WhiteXButton } from "@/styles/Button";
 
 /* Modal */
 export const ModalContentAndFooterContainer = styled.div`
+  ${FlexColumnCenter}
   position: relative;
   width: 100%;
   height: 100%;
   max-height: 70vh;
   padding: 30px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
   background: ${({ theme }) => theme.color.white};
   border-radius: 8px;
-
   overflow: auto;
-
-  p {
-    color: ${({ theme }) => theme.color.gray900};
-    font-family: Pretendard;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 150%;
-  }
 `;
 
 export const HalfBackground = styled.div`
@@ -37,43 +27,12 @@ export const HalfBackground = styled.div`
   opacity: 1;
 `;
 
-export const ModalHeader = styled.div`
-  ${FlexRow}
-  justify-content: 
-
-  p {
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 150%;
-  }
-`;
-
-import Close from "@/assets/icons/close.svg";
-import { clickable, FlexColumnCenter, FlexRowCenter } from "..";
-import { media } from "../media";
-export const CloseButton = styled(Close)`
-  ${clickable}
-  position: absolute;
-  top: 20px;
-  right: 20px;
-
-  background: none;
-  path {
-    stroke: ${({ theme }) => theme.color.white};
-    stroke-width: 2;
-  }
-`;
-
 export const UserImage = styled.div<{ $src: string }>`
+  ${FlexRowCenter}
   width: 14vh;
   height: 14vh;
   flex-shrink: 0;
   margin-top: calc(20vh - 7vh - 30px);
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
 
   background-image: url(${({ $src }) => $src});
   background-size: cover;
@@ -81,46 +40,40 @@ export const UserImage = styled.div<{ $src: string }>`
 
   border-radius: 100%;
   border: 2px solid #fff;
-  font-size: 18px;
-  font-weight: 700;
+
   z-index: 1;
 `;
 
 export const UserNameContainer = styled.div`
   ${FlexRowCenter}
+  ${FontBold20}
+  color: ${({ theme }) => theme.color.gray900};
   gap: 8px;
   margin-top: 16px;
-  p {
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 150%;
-    color: ${({ theme }) => theme.color.gray900};
-  }
 `;
 
 export const Name = styled.p`
-  color: ${({ theme }) => theme.color.orange400} !important;
+  color: ${({ theme }) => theme.color.orange400};
 `;
 
 export const EmailContainer = styled.div`
-  margin-top: 8px;
+  ${FontSemibold14}
+  color: ${({ theme }) => theme.color.orange400};
   border: 2px solid ${({ theme }) => theme.color.orange400};
   border-radius: 9999px;
+  margin-top: 8px;
   padding: 4px 12px;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 150%;
-  color: ${({ theme }) => theme.color.orange400} !important;
+
+  ${media.tablet} {
+    border: 1px solid ${({ theme }) => theme.color.orange400};
+  }
 `;
 
 export const UsageListContainer = styled.div`
-  ${FlexRow}
+  ${FlexRowCenter}
   margin-top: 6vh;
   margin-bottom: 6vh;
   width: 100%;
-  justify-content: center;
   gap: 16px;
 
   & > *:not(:last-child) {
@@ -130,60 +83,34 @@ export const UsageListContainer = styled.div`
       content: "";
       position: absolute;
       top: 0;
-      right: -7px; /* gap의 절반 */
+      right: -7px;
       width: 1px;
       height: 80%;
       background-color: ${({ theme }) => theme.color.gray200};
     }
   }
-
-  ${media.tablet} {
-    flex-direction: row;
-  }
 `;
 
 export const UsageContainer = styled.div`
   ${FlexColumnCenter}
+  ${FontBold24}
+  color: ${({ theme }) => theme.color.gray700};
   width: 100px;
-  font-size: 32px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 100%;
   text-align: center;
-  color: ${({ theme }) => theme.color.gray900};
-
-  p {
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 200%;
-    color: ${({ theme }) => theme.color.gray900};
+  & > p {
+    ${FontSemibold14}
   }
-
   ${media.tablet} {
     width: 70px;
-    font-size: 22px;
-    p {
-      font-size: 12px;
-    }
   }
 `;
 
 export const FooterContainer = styled.div`
-  ${FlexRow}
-  justify-content: space-between;
-  align-items: flex-end;
+  ${FlexRowSpaceBetween}
+  ${FontSemibold14}
   color: ${({ theme }) => theme.color.gray400};
-
-  p {
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 150%;
-    text-align: center;
-    color: ${({ theme }) => theme.color.gray400};
-  }
-
+  width: 100%;
+  align-items: flex-end;
   ${media.tablet} {
     flex-direction: row;
     gap: 0;
@@ -193,7 +120,6 @@ export const FooterContainer = styled.div`
 export const PolicyLinks = styled.div`
   margin-right: 1rem;
   font-size: 12px;
-  color: ${({ theme }) => theme.color.gray400};
   a {
     color: inherit;
     text-decoration: none;
@@ -210,4 +136,11 @@ export const Logout = styled.a`
   &:hover {
     text-decoration: underline;
   }
+`;
+
+export const CloseButton = styled(Close)`
+  ${WhiteXButton}
+  position: absolute;
+  top: 20px;
+  right: 20px;
 `;

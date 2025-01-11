@@ -65,6 +65,7 @@ export interface TFolderWithOptions extends TFolder {
  * 작품 정보 타입
  */
 export type TWorkInfo = {
+  mainPlot: TPlot | null;
   cover: string;
   title: string;
   genre: string;
@@ -137,6 +138,12 @@ export type TPlotEvent = {
   event_name: string;
   event_description: string;
   character_list: TSimpleCharacter[];
+};
+
+export type TScript = {
+  id: string;
+  script_name: string;
+  script_content: string;
 };
 
 /**

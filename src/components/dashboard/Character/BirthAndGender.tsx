@@ -1,10 +1,10 @@
 import { CharacterItemContext } from "@/hooks/dashboard/character/characterItem";
+import { Input } from "@/styles";
 import {
-  BirthAndGenderContainer,
-  BirthContainer,
-  GenderContainer,
-  Input,
-} from "@/styles/dashboard/IdeaBox/Modal";
+  Container,
+  SubTitle,
+  TextWithDropMenu,
+} from "@/styles/workspace/Info.style";
 import { useContext } from "react";
 
 export default function MCharacterBirthAndGender() {
@@ -12,25 +12,25 @@ export default function MCharacterBirthAndGender() {
     useContext(CharacterItemContext);
 
   return (
-    <BirthAndGenderContainer>
-      <BirthContainer>
-        <p>탄생일</p>
+    <TextWithDropMenu style={{ maxWidth: "748px", alignSelf: "flex-start" }}>
+      <Container>
+        <SubTitle>출생일</SubTitle>
         <Input
           className="birth"
           defaultValue={character.birthday}
           onChange={onChangeBirthday}
-          placeholder="인물의 생년월일을 입력하세요."
+          placeholder={"출생일을 입력해주세요."}
         />
-      </BirthContainer>
-      <GenderContainer>
-        <p>성별</p>
+      </Container>
+      <Container>
+        <SubTitle>성별</SubTitle>
         <Input
           className="gender"
           defaultValue={character.gender}
           onChange={onChangeGender}
-          placeholder="인물의 성별을 입력하세요."
+          placeholder={"성별을 입력해주세요."}
         />
-      </GenderContainer>
-    </BirthAndGenderContainer>
+      </Container>
+    </TextWithDropMenu>
   );
 }

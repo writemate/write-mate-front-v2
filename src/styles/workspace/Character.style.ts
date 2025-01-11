@@ -1,6 +1,6 @@
 "use client";
 import { styled } from "styled-components";
-import {  DropdownMenuWrapper, DropdownSelector } from "@/styles";
+import { DropdownMenuWrapper, DropdownSelector } from "@/styles";
 import {
   Button,
   clickable,
@@ -10,7 +10,10 @@ import {
   FlexRowLeftStart,
 } from "..";
 import Link from "next/link";
+import { media } from "../media";
+import { Title } from ".";
 
+// 네비게이션 바
 export const TabContainer = styled.div`
   ${FlexRowLeftStart};
   margin-top: 45px;
@@ -20,6 +23,12 @@ export const TabContainer = styled.div`
   gap: 48px;
   padding-left: 18px;
   flex-shrink: 0;
+
+  ${media.tablet} {
+    margin-top: 24px;
+    padding-left: 9px;
+    gap: 24px;
+  }
 `;
 
 export const TabButton = styled.div<{ $isSelected: boolean }>`
@@ -46,24 +55,39 @@ export const TabButton = styled.div<{ $isSelected: boolean }>`
       background-color: ${theme.color.orange400};
     }
   `}
+
+  ${media.tablet} {
+    font-size: 14px;
+  }
 `;
 
+// 메인
 export const ContentsContainer = styled.div`
   ${FlexColumnCenter};
   width: 100%;
   flex-grow: 1;
   margin-top: 36px;
+
+  ${media.tablet} {
+    margin-top: 24px;
+  }
 `;
 
+// 키워드
 export const KeywordTitle = styled.div`
   ${FlexRowLeftStart};
   width: 100%;
+  margin-bottom: 20px;
 `;
 
 export const SubTitle = styled.span`
   font-size: 20px;
   font-weight: 700;
   color: ${({ theme }) => theme.color.gray400};
+
+  ${media.tablet} {
+    font-size: 14px;
+  }
 `;
 
 export const OpenManagement = styled.span`
@@ -72,16 +96,45 @@ export const OpenManagement = styled.span`
   font-weight: 500;
   color: ${({ theme }) => theme.color.gray300};
   margin-left: auto;
+
+  ${media.tablet} {
+    font-size: 12px;
+  }
 `;
 
 export const KeywordListContainer = styled.div`
   ${FlexRowLeftStart};
   width: 100%;
-  margin-top: 20px;
   gap: 8px;
   flex-wrap: wrap;
   font-size: 14px;
   line-height: 21px;
+  height: fit-content;
+  align-items: flex-start;
+
+  ${media.tablet} {
+    margin-top: 16px;
+    gap: 6px;
+    font-size: 12px;
+    align-items: center;
+  }
+`;
+
+export const KeywordAddDiv = styled.div`
+  width: 33px;
+  height: 33px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  svg {
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+    border: 1px solid ${({ theme }) => theme.color.gray400};
+  }
 `;
 
 export const KeywordListContainerForCharacterCard = styled(
@@ -90,9 +143,13 @@ export const KeywordListContainerForCharacterCard = styled(
   margin-top: 0;
   font-size: 12px;
   line-height: 18px;
-  height: 78px;
+  height: fit-content;
+  flex-wrap: wrap;
   overflow: hidden;
-  align-items: flex-end;
+  align-items: baseline;
+  align-content: flex-start;
+
+  ${media.tablet}
 `;
 
 export const KeywordContainer = styled.div<{
@@ -101,6 +158,7 @@ export const KeywordContainer = styled.div<{
 }>`
   ${FlexRowCenter};
   ${clickable};
+  height: 33px !important;
   gap: 6px;
   padding: 6px 10px;
   border-radius: 30px;
@@ -111,26 +169,58 @@ export const KeywordContainer = styled.div<{
   line-height: 150%;
   border: 1px solid
     ${({ theme, $darkColor }) => $darkColor ?? theme.color.gray400};
+
+  & > svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  ${media.tablet} {
+    font-size: 12px;
+  }
 `;
 
-export const CharacterListContainer = styled.div`
+// 캐릭터 리스트
+export const CharacterListContainer = styled.div<{ $forInfoPage: boolean }>`
+  position: relative;
   ${FlexRowLeftStart};
   width: 100%;
-  margin-top: 36px;
+  margin-top: ${({ $forInfoPage }) => ($forInfoPage ? "0" : "36px")};
   gap: 12px;
   flex-wrap: wrap;
   align-items: flex-start;
+
+  & > div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  ${media.tablet} {
+    margin-top: ${({ $forInfoPage }) => ($forInfoPage ? "0" : "24px")};
+    align-items: center;
+    justify-content: center;
+  }
 `;
-export const CharacterCard = styled(Link)`
+
+export const CharacterCardContainer = styled(Link)`
   ${FlexColumnLeftStart};
   ${clickable};
   width: 244px;
-  height: 228px;
+  height: fit-content;
   padding: 20px;
   border-radius: 12px;
   gap: 10px;
   background-color: ${({ theme }) => theme.color.white};
   box-shadow: 0px 0px 12px #00000033;
+
+  ${media.tablet} {
+    padding: 16px;
+    gap: 8px;
+  }
 `;
 export const CharacterCardTitle = styled.div`
   ${FlexRowLeftStart};
@@ -164,7 +254,8 @@ export const CharacterName = styled.div<{ $isNew?: boolean }>`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  color: ${({ theme, $isNew }) => ($isNew ? theme.color.gray300 : theme.color.gray900)};
+  color: ${({ theme, $isNew }) =>
+    $isNew ? theme.color.gray300 : theme.color.gray900};
 `;
 export const CharacterRole = styled.div`
   font-size: 13px;
@@ -178,7 +269,8 @@ export const CharacterDescription = styled.div<{ $isNew?: boolean }>`
   font-size: 14px;
   line-height: 21px;
   height: 42px;
-  color: ${({ theme, $isNew }) => ($isNew ? theme.color.gray200 : theme.color.gray400)};
+  color: ${({ theme, $isNew }) =>
+    $isNew ? theme.color.gray200 : theme.color.gray400};
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -213,7 +305,7 @@ export const CreateRelationButton = styled(CreateCharacterButton)`
 export const MiniModal = styled.div<{ $left: number }>`
   ${FlexColumnLeftStart};
   position: absolute;
-  top: 20px;
+  top: calc(100% + 8px);
   left: ${({ $left }) => $left}px;
   width: 320px;
   border-radius: 8px;
@@ -255,23 +347,42 @@ export const CharacteristicListContainer = styled.div`
 `;
 
 export const CharacteristicContainer = styled.div`
-  ${FlexRowLeftStart};
+  ${FlexColumnCenter};
   width: 100%;
-  flex-wrap: wrap;
   padding: 26px 20px;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.1);
   gap: 6px;
+
+  svg {
+    width: 32px;
+    height: 32px;
+
+    ${media.tablet} {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  ${media.tablet} {
+    padding: 20px 16px;
+  }
 `;
 export const CharacteristicTitle = styled.input`
   flex-grow: 1;
+  flex-shrink: 1;
   border: none;
   outline: none;
   font-size: 24px;
   font-style: normal;
   font-weight: 600;
   line-height: 150%;
+  width: 100%;
+
+  ${media.tablet} {
+    font-size: 16px;
+  }
 `;
 export const CharacteristicContent = styled.textarea`
   width: 100%;
@@ -282,6 +393,11 @@ export const CharacteristicContent = styled.textarea`
   font-style: normal;
   font-weight: 500;
   line-height: 150%;
+
+  ${media.tablet} {
+    font-size: 14px;
+    font-weight: 400;
+  }
 `;
 
 export const CharacteristicAdd = styled.button`
@@ -300,6 +416,11 @@ export const CharacteristicAdd = styled.button`
   line-height: 21px; /* 150% */
   letter-spacing: -0.16px;
   color: ${({ theme }) => theme.color.orange400};
+
+  ${media.tablet} {
+    padding: 6px;
+    font-size: 12px;
+  }
 `;
 
 export const EditRelationContainer = styled.div`
@@ -430,6 +551,10 @@ export const ManageKeywordContainer = styled.div`
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.2);
+
+  & > ${Title} {
+    margin-bottom: 20px;
+  }
 `;
 
 export const ManageRowWrapper = styled.div`
@@ -526,15 +651,63 @@ export const CharacterDropdownMenuWrapper = styled(DropdownMenuWrapper)`
 export const CharacterDropdownSelector = styled(DropdownSelector)`
   box-shadow: none;
   color: ${({ theme }) => theme.color.red400};
-  &>svg{
+  & > svg {
     flex-shrink: 0;
   }
   & path {
     fill: ${({ theme }) => theme.color.red400};
   }
-  &>span{
+  & > span {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+`;
+
+export const AddMemoButtonContainer = styled(Link)`
+  ${clickable}
+  position:relative;
+
+  width: fit-content;
+  padding: 12px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100px;
+  background: ${({ theme }) => theme.color.orange400};
+  border: none;
+
+  color: ${({ theme }) => theme.color.white};
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 100%;
+  letter-spacing: 0.32px;
+
+  &:hover {
+    filter: brightness(95%);
+  }
+
+  ${media.tablet} {
+    font-size: 12px;
+    padding: 8px;
+  }
+`;
+
+export const LoadingMessage = styled.div`
+  position: relative;
+  width: 100%;
+  height: fit-content;
+
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  font-size: 16px;
+  font-weight: 500;
+  color: ${({ theme }) => theme.color.gray300};
+
+  ${media.tablet} {
+    font-size: 14px;
   }
 `;
