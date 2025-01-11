@@ -1,10 +1,10 @@
-import { useCharacterList } from "@/hooks/workspace/character/useCharacterList";
+import { CharacterListContext } from "@/hooks/workspace/character/characterList";
 import {
-  AddMemoButtonContainer,
   CharacterListContainer,
   LoadingMessage,
 } from "@/styles/workspace/Character.style";
 import { CharacterCard } from "./CharacterCard";
+import { useContext } from "react";
 
 interface CharacterCardListProps {
   forInfoPage?: boolean;
@@ -14,7 +14,7 @@ export function CharacterCardList({
   forInfoPage = false,
 }: CharacterCardListProps) {
   const { keywordList, characterList, isKeywordsLoading, isCharactersLoading } =
-    useCharacterList();
+    useContext(CharacterListContext);
 
   return (
     <CharacterListContainer $forInfoPage={forInfoPage}>
@@ -39,19 +39,13 @@ export function CharacterCardList({
               <CharacterCard key={index} index={index} character={character} />
             )
         )}
-
-      <div>
-        {forInfoPage &&
-          characterList &&
-          characterList.filter((character) => character.isMain).length ===
-            0 && (
-            <>
-              <LoadingMessage>
-                주요인물이 없습니다. 주요인물을 설정해주세요.
-              </LoadingMessage>
-            </>
-          )}
-      </div>
+      {forInfoPage &&
+        characterList &&
+        characterList.filter((character) => character.isMain).length === 0 && (
+          <LoadingMessage>
+            주요인물이 없습니다. 주요인물을 설정해주세요.
+          </LoadingMessage>
+        )}
     </CharacterListContainer>
   );
 }

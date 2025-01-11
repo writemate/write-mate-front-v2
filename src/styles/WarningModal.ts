@@ -36,6 +36,8 @@ export const ModalContainer = styled.div`
 export const DangerIcon = styled(Danger)`
   margin-top: 10px;
   margin-bottom: 5px;
+  width: 44px;
+  height: 44px;
 `;
 
 export const ButtonContainer = styled.div`

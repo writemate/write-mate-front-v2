@@ -1,13 +1,14 @@
 "use client";
 import { media } from "@/styles/media";
-import {
-  FlexRowLeftStart,
-  clickable,
-  FlexColumnCenter,
-  Button,
-} from "@/styles";
+import { FlexRowLeftStart, FlexColumnCenter } from "@/styles";
 import { styled } from "styled-components";
-import { HighlghtCssForHoberAfter } from ".";
+import { FontBold28 } from "../Font";
+import {
+  BlackTextIconHoverBackgroundButton,
+  HighlghtCssForHoberAfter,
+  OrangeBlodTextIconHoverBackgroundButton,
+  underLineHighlight,
+} from "../Button";
 
 export const TitleAndNavigationBar = styled.div`
   ${FlexColumnCenter}
@@ -17,10 +18,9 @@ export const TitleAndNavigationBar = styled.div`
 
 export const Title = styled.div`
   ${FlexRowLeftStart}
-  width: 100%;
-  font-size: 28px;
-  font-weight: 700;
+  ${FontBold28}
   color: ${({ theme }) => theme.color.gray900};
+  width: 100%;
   margin-bottom: 48px;
 
   ${media.tablet} {
@@ -32,47 +32,27 @@ export const Title = styled.div`
 export const NavigationBar = styled.div`
   ${FlexRowLeftStart}
   width: 100%;
-  align-items: center;
-  border-bottom: 1px solid #cacdda;
+  border-bottom: 1px solid ${({ theme }) => theme.color.gray400};
   margin-bottom: 4px;
+  gap: 32px;
 `;
 
-export const NavigationButton = styled(Button)<{ $isActivated?: boolean }>`
-  ${clickable}
-  display: flex;
+export const NavigationButton = styled.button<{ $isActivated?: boolean }>`
+  ${({ $isActivated }) =>
+    $isActivated
+      ? OrangeBlodTextIconHoverBackgroundButton
+      : BlackTextIconHoverBackgroundButton}
+  ${underLineHighlight}
+  position: relative;
   width: fit-content;
   margin-left: 16px;
-  font-weight: ${({ $isActivated }) => ($isActivated ? "bold" : "normal")};
-  color: ${({ theme, $isActivated }) =>
-    $isActivated ? theme.color.orange400 : theme.color.gray300};
-  position: relative;
   background-color: transparent;
+  padding-bottom: 4px;
 
   &:hover::after {
     ${HighlghtCssForHoberAfter}
-    width: 90%;
+    left: -8px;
+    width: calc(100% + 16px);
     height: 70%;
-    z-index: -1;
-  }
-
-  &::before {
-    content: "";
-    position: absolute;
-    bottom: -2px;
-    justify-self: center;
-    width: 32.941px;
-    height: 4px;
-    background-color: ${({ theme, $isActivated }) =>
-      $isActivated ? theme.color.orange400 : "transparent"};
-    border-radius: 10px;
-    transition: background-color 0.1s;
-  }
-  ${media.tablet} {
-    margin-left: 0;
-    scale: 0.9;
-
-    &::before {
-      bottom: -4px;
-    }
   }
 `;

@@ -5,15 +5,15 @@ import {
   SideTabAndFooterContainer,
   FooterContainer,
 } from "@/styles/dashboard/index";
+import {
+  TabletHeaderButton,
+  TabletHeaderMenuContainer,
+} from "@/styles/dashboard/Header";
 import SideTab from "@/components/dashboard/SideTab";
 import Header from "@/components/dashboard/Header";
 import Footer from "@/assets/dashboard/footer.svg";
 import { useLogin } from "@/stores/useLogin";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import {
-  HamburgerMenuButton,
-  HamburgerMenuContainer,
-} from "@/styles/dashboard/Header";
 import { useState } from "react";
 
 export default function WorkspaceLayout({
@@ -22,9 +22,9 @@ export default function WorkspaceLayout({
   children: React.ReactNode;
 }) {
   const logout = useLogin((state) => state.logout);
-  const [isHambugerMenuOpen, setIsHambugerMenuOpen] = useState(false);
+  const [isTabletHeaderMenuOpen, setIsHambugerMenuOpen] = useState(false);
   const onClickHamburgerMenu = () => {
-    setIsHambugerMenuOpen(!isHambugerMenuOpen);
+    setIsHambugerMenuOpen(!isTabletHeaderMenuOpen);
     console.log("click");
   };
 
@@ -35,15 +35,15 @@ export default function WorkspaceLayout({
         <FooterContainer onClick={logout}>
           <Footer /> 로그아웃
         </FooterContainer>
-        <HamburgerMenuButton onClick={onClickHamburgerMenu} />
+        <TabletHeaderButton onClick={onClickHamburgerMenu} />
       </SideTabAndFooterContainer>
-      {isHambugerMenuOpen && (
-        <HamburgerMenuContainer>
+      {isTabletHeaderMenuOpen && (
+        <TabletHeaderMenuContainer>
           <Header />
-        </HamburgerMenuContainer>
+        </TabletHeaderMenuContainer>
       )}
       <HeaderAndMainContainer>
-        {!isHambugerMenuOpen && <Header />}
+        {!isTabletHeaderMenuOpen && <Header />}
         {children}
       </HeaderAndMainContainer>
       <DevTool />

@@ -72,6 +72,7 @@ export const Title = styled.div`
   ${media.tablet} {
     font-size: 16px;
     line-height: 150%;
+    margin-bottom: 20px;
   }
 `;
 

@@ -1,13 +1,15 @@
-import { useCharacterList } from "@/hooks/workspace/character/useCharacterList";
+import { CharacterListContext } from "@/hooks/workspace/character/characterList";
 import { Input } from "@/styles";
 import {
   KeywordListContainer,
   KeywordContainer,
   MiniModal,
   InputWithButton,
+  KeywordAddDiv,
 } from "@/styles/workspace/Character.style";
-import { AddButton } from "@/styles/workspace/IdeaBox.styles";
+import AddButton from "@/assets/icons/addButton.svg";
 import KeywordCancel from "@/assets/workspace/character/keywordCancel.svg";
+import { useContext } from "react";
 
 export function KeywordList() {
   const {
@@ -26,7 +28,7 @@ export function KeywordList() {
     onChangeMiniKeywordInput,
     onEnterPressAtMiniModal,
     onClickAddKeywordAtMiniModal,
-  } = useCharacterList();
+  } = useContext(CharacterListContext);
   return (
     <KeywordListContainer ref={keywordListRef}>
       {isKeywordsLoading && <div>키워드 로딩중...</div>}
@@ -61,7 +63,7 @@ export function KeywordList() {
             </KeywordContainer>
           );
         })}
-      <div style={{ position: "relative", display: "flex" }} ref={addButtonRef}>
+      <KeywordAddDiv ref={addButtonRef}>
         <AddButton onClick={openMiniModal} />
         {miniModalOpen && (
           <MiniModal
@@ -81,7 +83,7 @@ export function KeywordList() {
             </InputWithButton>
           </MiniModal>
         )}
-      </div>
+      </KeywordAddDiv>
     </KeywordListContainer>
   );
 }

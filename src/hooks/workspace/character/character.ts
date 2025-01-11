@@ -345,6 +345,7 @@ export function useCharacter(characterId?: string) {
     error,
     isLoading,
     characteristicList,
+
     keywordList,
     isKeywordsLoading,
     keywordListRef,
@@ -355,22 +356,24 @@ export function useCharacter(characterId?: string) {
     onBlurredMiniModal,
     onChangeMiniKeywordInput,
     miniModalLeftPosition,
-    onChangeName,
-    onChangeRole,
-    onChangeGender,
-    onChangeBirthday,
-    onChangeDescription,
     onClickAddKeywordToCharacter,
     onClickRemoveKeywordFromCharacter,
+    onClickCreateAndAddKeywordToCharacter,
+    onEnterPressAtMiniModal,
+    creatingKeyword,
+
+    onChangeName,
+    onChangeRole,
+    onChangeCoverImage,
+    onChangeDescription,
+    onChangeGender,
+    onChangeBirthday,
+
     onClickAddCharacteristic,
     onClickRemoveCharacteristic,
     onChangeCharacteristicTitle,
     onChangeCharacteristicContent,
-    onClickCreateAndAddKeywordToCharacter,
-    creatingKeyword,
-    onEnterPressAtMiniModal,
     onClickDeleteCharacter,
-    onChangeCoverImage,
   };
 }
 

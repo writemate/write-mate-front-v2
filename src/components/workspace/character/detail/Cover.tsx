@@ -42,7 +42,7 @@ export default function Cover({
           defaultValue={ch_name}
           disabled={isLoading}
         />
-        <SubTitle style={{ marginTop: 46 }}>작품 속 역할</SubTitle>
+        <SubTitle>작품 속 역할</SubTitle>
         <Input
           placeholder="작품 속 인물의 역할을 적어주세요"
           onChange={onChangeRole}

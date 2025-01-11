@@ -129,6 +129,5 @@ export const CopyButton = styled(Copy)`
 export const AddButton = styled(Add)`
   width: 24px;
   height: 24px;
-  margin-top: 20px;
   ${clickable}
 `;

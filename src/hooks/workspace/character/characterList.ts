@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { createContext, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { workspaceQueryKeys } from "@/utils/APIs/queryKeys";
 import {
@@ -15,7 +15,7 @@ import { useParams } from "next/navigation";
 import useMiniModal from "./useMiniModal";
 import { useOnClickUpdate } from "@/hooks/common/useOnClickUpdate";
 
-export const useCharacterList = () => {
+export function useCharacterList() {
   const queryClient = useQueryClient();
   const { workspace_id } = useParams<{ workspace_id: string }>();
   const { data: keywordList, isLoading: isKeywordsLoading } = useQuery({
@@ -269,4 +269,8 @@ export const useCharacterList = () => {
     onClickCreateKeyword,
     onClickDeleteKeyword,
   };
-};
+}
+
+export const CharacterListContext = createContext(
+  {} as ReturnType<typeof useCharacterList>
+);

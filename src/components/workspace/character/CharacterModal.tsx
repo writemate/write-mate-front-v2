@@ -1,18 +1,23 @@
 "use client";
-import { Infos } from "@/styles/workspace/Info.style";
-import Cover from "@/components/workspace/character/detail/Cover";
-import Description from "@/components/workspace/character/detail/Description";
-import BirthDayAndGender from "@/components/workspace/character/detail/BirthDayAndGender";
-import Characteristics from "@/components/workspace/character/detail/Characteristics";
-import Keywords from "@/components/workspace/character/detail/Keywords";
-import RelatedEvents from "@/components/workspace/character/detail/RelatedEvents";
 import {
   useCharacter,
   CharacterContext,
 } from "@/hooks/workspace/character/character";
-import { CloseButton, DeleteButton } from "@/styles";
-import { SubTitle } from "@/styles/workspace/Info.style";
+import Cover from "@/components/workspace/character/detail/Cover";
+import Description from "@/components/workspace/character/detail/Description";
+import BirthDayAndGender from "@/components/workspace/character/detail/BirthDayAndGender";
+import Characteristics from "@/components/workspace/character/detail/Characteristics";
+import Keywords from "@/components/workspace/character/detail/SelectedKeywordList";
+import RelatedEvents from "@/components/workspace/character/detail/RelatedEvents";
 import Modal from "@/components/Modal";
+
+import { SubTitle } from "@/styles/workspace/Info.style";
+import {
+  ModalContentAndFooterContainer,
+  ModalTitle,
+} from "@/styles/dashboard/IdeaBox/Modal";
+import { Infos } from "@/styles/workspace/Info.style";
+import { CloseButton, DeleteButton } from "@/styles";
 
 export default function CharacterModal({
   characterId,
@@ -24,26 +29,15 @@ export default function CharacterModal({
   const value = useCharacter(characterId);
 
   return (
-    <Modal closeModal={closeModal} maxWidth={820}>
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          background: "#fff",
-          borderRadius: "8px",
-          padding: "36px",
-          overflowY: "auto",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
+    <Modal closeModal={closeModal} maxWidth={820} maxHeight="90vh">
+      <ModalContentAndFooterContainer>
         <CharacterContext.Provider value={value}>
-          <div style={{ display: "flex", alignItems: "flex-start", gap: 20 }}>
+          <ModalTitle>
             <SubTitle>인물 정보</SubTitle>
             <CloseButton onClick={closeModal} style={{ marginLeft: "auto" }}>
               닫기
             </CloseButton>
-          </div>
+          </ModalTitle>
           <Cover isDeletable={false} />
           <Infos>
             <Description />
@@ -59,7 +53,7 @@ export default function CharacterModal({
             삭제하기
           </DeleteButton>
         </CharacterContext.Provider>
-      </div>
+      </ModalContentAndFooterContainer>
     </Modal>
   );
 }

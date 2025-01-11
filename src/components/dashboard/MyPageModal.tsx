@@ -2,7 +2,6 @@ import Modal from "../Modal";
 import { useContext } from "react";
 import { MyPageContext } from "@/hooks/dashboard/useMyPage";
 import {
-  CloseButton,
   FooterContainer,
   HalfBackground,
   PolicyLinks,
@@ -14,9 +13,9 @@ import {
   UserNameContainer,
   Name,
   EmailContainer,
+  CloseButton,
 } from "@/styles/dashboard/MyPage";
 import { useLogin } from "@/stores/useLogin";
-
 export function MyPageModal() {
   const { user, usage, closeModal } = useContext(MyPageContext);
   const logout = useLogin((state) => state.logout);

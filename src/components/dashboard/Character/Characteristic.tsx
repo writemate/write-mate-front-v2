@@ -1,17 +1,16 @@
-import { CharacterItemContext } from "@/hooks/dashboard/character/characterItem";
-import { DashboardContext } from "@/hooks/dashboard/dashboard";
-
-import {
-  AddCharacteristicButton,
-  CharacteristicCard,
-  CharateristicHeader,
-  Input,
-  TextArea,
-  Delete,
-} from "@/styles/dashboard/IdeaBox/Modal";
-import { CharacteristicListContainer } from "@/styles/dashboard/IdeaBox/Modal";
+"use client";
 import { useContext } from "react";
 import { WarningModal } from "../WarningModal";
+import { CharacterItemContext } from "@/hooks/dashboard/character/characterItem";
+import {
+  CharacteristicContainer,
+  CharacteristicContent,
+  CharacteristicAdd,
+  CharacteristicListContainer,
+  CharacteristicTitle,
+} from "@/styles/workspace/Character.style";
+import { Container, SubTitle } from "@/styles/workspace/Info.style";
+import TrashCan from "@/assets/icons/trashcan.svg";
 
 export default function Characterisitc() {
   const {
@@ -27,19 +26,27 @@ export default function Characterisitc() {
   } = useContext(CharacterItemContext);
 
   return (
-    <>
-      <p>특징</p>
+    <Container>
+      <SubTitle>특징</SubTitle>
       <CharacteristicListContainer>
         {characteristicList &&
           characteristicList.map((c, i) => (
-            <CharacteristicCard key={i}>
-              <CharateristicHeader>
-                <Input
+            <CharacteristicContainer key={i}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                  width: "100%",
+                }}
+              >
+                <CharacteristicTitle
+                  type="text"
                   value={c.title}
                   placeholder="특징을 적어주세요."
                   onChange={onChangeCharacteristicTitle(i)}
                 />
-                <Delete onClick={onClickOpenDeleteModal(i)} />
+                <TrashCan onClick={onClickOpenDeleteModal(i)} />
                 {isOpenDeleteModal && deleteCharacteristic == i && (
                   <WarningModal
                     closeModal={closeDeleteModal}
@@ -49,18 +56,19 @@ export default function Characterisitc() {
                     ConfirmButtonName="삭제"
                   />
                 )}
-              </CharateristicHeader>
-              <TextArea
+              </div>
+              <CharacteristicContent
                 value={c.content}
                 placeholder="성격이나, 외향적 특징, 출생의 비밀 등 세부 내용을 적어주세요."
                 onChange={onChangeCharacteristicContent(i)}
+                rows={2}
               />
-            </CharacteristicCard>
+            </CharacteristicContainer>
           ))}
-        <AddCharacteristicButton onClick={onClickAddCharacteristic}>
+        <CharacteristicAdd onClick={onClickAddCharacteristic}>
           특징 추가
-        </AddCharacteristicButton>
+        </CharacteristicAdd>
       </CharacteristicListContainer>
-    </>
+    </Container>
   );
 }
