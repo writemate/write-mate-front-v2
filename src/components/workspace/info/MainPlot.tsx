@@ -17,7 +17,7 @@ export default function ScriptSidebar() {
       <Container>
         <SubTitleWithButton>
           <SubTitle>메인 플롯</SubTitle>
-          <CreateNewPlot />
+          <OpenSideBar />
         </SubTitleWithButton>
         <ChapterList />
       </Container>
@@ -25,7 +25,7 @@ export default function ScriptSidebar() {
   );
 }
 
-export function CreateNewPlot() {
+export function OpenSideBar() {
   const { togglePlot } = useContext(WorkspaceLayoutContext);
 
   return (

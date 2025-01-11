@@ -5,7 +5,7 @@ import Cover from "@/components/workspace/character/detail/Cover";
 import Description from "@/components/workspace/character/detail/Description";
 import BirthDayAndGender from "@/components/workspace/character/detail/BirthDayAndGender";
 import Characteristics from "@/components/workspace/character/detail/Characteristics";
-import Keywords from "@/components/workspace/character/detail/Keywords";
+import Keywords from "@/components/workspace/character/detail/SelectedKeywordList";
 import RelatedEvents from "@/components/workspace/character/detail/RelatedEvents";
 import {
   useCharacter,

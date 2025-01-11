@@ -4,18 +4,21 @@ import Close from "@/assets/icons/close.svg";
 
 export const FlexRowCenter = css`
   display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
 `;
 
 export const FlexRowSpaceBetween = css`
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
 `;
 
 export const FlexRowLeftStart = css`
   display: flex;
+  flex-direction: row;
   justify-content: flex-start;
   align-items: center;
 `;
@@ -40,15 +43,15 @@ export const FlexColumnStretchCenter = css`
 `;
 
 export const MainColorBackground = css`
-  background-color: ${({ theme }) => theme.color.red400};
   color: white;
+  background-color: ${({ theme }) => theme.color.red400};
   border: 1px solid ${({ theme }) => theme.color.red400};
   border-radius: 5px;
 `;
 
 export const ReverseMainColorBackground = css`
-  background-color: white;
   color: ${({ theme }) => theme.color.red400};
+  background-color: ${({ theme }) => theme.color.white};
   border: 1px solid ${({ theme }) => theme.color.red400};
   border-radius: 5px;
 `;
@@ -70,15 +73,12 @@ export const GrayBackground = css`
 export const clickable = css`
   cursor: pointer;
   user-select: none;
-  transition: all 0.3s;
 `;
 
 export const ButtonCss = css`
   ${FlexRowCenter};
   ${clickable};
   padding: 10px;
-  font-size: 1rem;
-  font-weight: 600;
 `;
 
 export const Button = styled.button<{
@@ -175,8 +175,11 @@ export const InputWithText = styled.div`
   }
 
   ${media.tablet} {
-    font-size: 14px;
     padding: 10px 14px;
+
+    & > input {
+      font-size: 14px;
+    }
   }
 `;
 
@@ -302,6 +305,7 @@ export const ModalContainer = styled.div`
 
 export const DeleteButton = styled.div`
   ${ButtonCss};
+  id: "delete-button";
   background-color: ${({ theme }) => theme.color.red600};
   color: #fff;
   border-radius: 30px;

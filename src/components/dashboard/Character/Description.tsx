@@ -1,22 +1,23 @@
 import { CharacterItemContext } from "@/hooks/dashboard/character/characterItem";
-import {
-  DescriptionContainer,
-  TextArea,
-} from "@/styles/dashboard/IdeaBox/Modal";
+import { TextArea } from "@/styles";
+import { Container, SubTitle } from "@/styles/workspace/Info.style";
 import { useContext } from "react";
 
 export default function MCharacterDescription() {
   const { character, onChangeDescription } = useContext(CharacterItemContext);
 
   return (
-    <DescriptionContainer>
-      <p>설명</p>
+    <Container>
+      <SubTitle>인물 소개</SubTitle>
       <TextArea
         className="description"
         defaultValue={character.description}
         onChange={onChangeDescription}
-        placeholder="인물의 설명을 입력하세요."
+        placeholder={
+          "줄거리 내용을 적어주세요.\n연재처 정보란에 들어갈 줄거리 내용을 적어도 좋아요."
+        }
+        rows={5}
       />
-    </DescriptionContainer>
+    </Container>
   );
 }

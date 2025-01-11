@@ -6,14 +6,15 @@ import {
   TextArea,
   Input,
   ModalContentAndFooterContainer,
-  ModalContentContainer,
   FooterContainer,
   DeleteButton,
-  ModalHeader,
+  ModalTitle,
+  ModalContent,
 } from "@/styles/dashboard/IdeaBox/Modal";
 import { MemoItemContext } from "@/hooks/dashboard/memo/memoItem";
 import { WarningModal } from "../WarningModal";
 import Close from "@/assets/icons/close.svg";
+import { SubTitle } from "@/styles/workspace/Info.style";
 
 export function EditModal() {
   const {
@@ -30,11 +31,10 @@ export function EditModal() {
   return (
     <Modal closeModal={closeEditModal} maxWidth="750px">
       <ModalContentAndFooterContainer>
-        <ModalHeader>
-          <p>메모</p>
+        <ModalTitle>
+          <SubTitle>메모</SubTitle>
           <Close onClick={closeEditModal} />
-        </ModalHeader>
-
+        </ModalTitle>
         <Input
           className="memo-modal-name"
           defaultValue={memo.memo_name}
@@ -42,7 +42,7 @@ export function EditModal() {
           placeholder="메모 이름을 입력하세요"
           onKeyDown={onKeyDownTitle}
         />
-        <p>내용</p>
+        <ModalContent>내용</ModalContent>
         <TextArea
           className="memo-modal-description"
           defaultValue={memo.memo_description}

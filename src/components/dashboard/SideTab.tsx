@@ -1,19 +1,16 @@
 "use client";
 import {
-  SideTabContainer,
+  AddWorkspaceButton,
   LogoLink,
+  SideTabContainer,
   SideTabLink,
   SideTabMenu,
-  AddWorkspaceButton,
 } from "@/styles/dashboard/SideTab";
 import Logo from "@/assets/logo.svg";
 import LogoWithText from "@/assets/logoWithText.svg";
-import ActiveArtStudio from "@/assets/dashboard/sideTab/active/artStudio.svg";
-import ActiveIdeaBox from "@/assets/dashboard/sideTab/active/ideaBox.svg";
-import ActiveTrash from "@/assets/dashboard/sideTab/active/trash.svg";
-import InactiveArtStudio from "@/assets/dashboard/sideTab/inactive/artStudio.svg";
-import InactiveIdeaBox from "@/assets/dashboard/sideTab/inactive/ideaBox.svg";
-import InactiveTrash from "@/assets/dashboard/sideTab/inactive/trash.svg";
+import ArtStudio from "@/assets/dashboard/sideTab/artStudio.svg";
+import IdeaBox from "@/assets/dashboard/sideTab/ideaBox.svg";
+import Trash from "@/assets/dashboard/sideTab/trash.svg";
 
 import { usePathname } from "next/navigation";
 import { useWorkList } from "@/hooks/dashboard/work/workList";
@@ -33,34 +30,22 @@ export default function SideTab() {
           href="/dashboard"
           $isActivated={usePathname() === "/dashboard"}
         >
-          {usePathname() === "/dashboard" ? (
-            <ActiveArtStudio />
-          ) : (
-            <InactiveArtStudio />
-          )}
-          <p>작품 스튜디오</p>
+          <ArtStudio />
+          작품 스튜디오
         </SideTabLink>
         <SideTabLink
           href="/dashboard/ideaBox"
           $isActivated={usePathname() === "/dashboard/ideaBox"}
         >
-          {usePathname() === "/dashboard/ideaBox" ? (
-            <ActiveIdeaBox />
-          ) : (
-            <InactiveIdeaBox />
-          )}
-          <p>아이디어 보관함</p>
+          <IdeaBox />
+          아이디어 보관함
         </SideTabLink>
         <SideTabLink
           href="/dashboard/trash"
           $isActivated={usePathname() === "/dashboard/trash"}
         >
-          {usePathname() === "/dashboard/trash" ? (
-            <ActiveTrash />
-          ) : (
-            <InactiveTrash />
-          )}
-          <p>휴지통</p>
+          <Trash />
+          휴지통
         </SideTabLink>
       </SideTabMenu>
       <AddWorkspaceButton onClick={onClickAddWork}>

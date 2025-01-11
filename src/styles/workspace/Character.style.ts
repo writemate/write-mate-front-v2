@@ -11,6 +11,7 @@ import {
 } from "..";
 import Link from "next/link";
 import { media } from "../media";
+import { Title } from ".";
 
 // 네비게이션 바
 export const TabContainer = styled.div`
@@ -76,6 +77,7 @@ export const ContentsContainer = styled.div`
 export const KeywordTitle = styled.div`
   ${FlexRowLeftStart};
   width: 100%;
+  margin-bottom: 20px;
 `;
 
 export const SubTitle = styled.span`
@@ -103,34 +105,35 @@ export const OpenManagement = styled.span`
 export const KeywordListContainer = styled.div`
   ${FlexRowLeftStart};
   width: 100%;
-  margin-top: 20px;
   gap: 8px;
   flex-wrap: wrap;
   font-size: 14px;
   line-height: 21px;
   height: fit-content;
-
-  svg {
-    width: 33px;
-    height: 100%;
-  }
-
-  & > div {
-    align-items: center;
-    align-self: center;
-    justify-content: center;
-  }
+  align-items: flex-start;
 
   ${media.tablet} {
     margin-top: 16px;
     gap: 6px;
     font-size: 12px;
     align-items: center;
+  }
+`;
 
-    svg {
-      width: 32px;
-      height: 32px;
-    }
+export const KeywordAddDiv = styled.div`
+  width: 33px;
+  height: 33px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  svg {
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+    border: 1px solid ${({ theme }) => theme.color.gray400};
   }
 `;
 
@@ -140,13 +143,13 @@ export const KeywordListContainerForCharacterCard = styled(
   margin-top: 0;
   font-size: 12px;
   line-height: 18px;
-  height: 78px;
+  height: fit-content;
+  flex-wrap: wrap;
   overflow: hidden;
-  align-items: flex-end;
+  align-items: baseline;
+  align-content: flex-start;
 
-  ${media.tablet} {
-    height: 100px;
-  }
+  ${media.tablet}
 `;
 
 export const KeywordContainer = styled.div<{
@@ -155,6 +158,7 @@ export const KeywordContainer = styled.div<{
 }>`
   ${FlexRowCenter};
   ${clickable};
+  height: 33px !important;
   gap: 6px;
   padding: 6px 10px;
   border-radius: 30px;
@@ -194,13 +198,19 @@ export const CharacterListContainer = styled.div<{ $forInfoPage: boolean }>`
     justify-content: center;
     align-items: center;
   }
+
+  ${media.tablet} {
+    margin-top: ${({ $forInfoPage }) => ($forInfoPage ? "0" : "24px")};
+    align-items: center;
+    justify-content: center;
+  }
 `;
 
 export const CharacterCardContainer = styled(Link)`
   ${FlexColumnLeftStart};
   ${clickable};
   width: 244px;
-  height: 228px;
+  height: fit-content;
   padding: 20px;
   border-radius: 12px;
   gap: 10px;
@@ -208,8 +218,8 @@ export const CharacterCardContainer = styled(Link)`
   box-shadow: 0px 0px 12px #00000033;
 
   ${media.tablet} {
-    width: 100%;
     padding: 16px;
+    gap: 8px;
   }
 `;
 export const CharacterCardTitle = styled.div`
@@ -295,7 +305,7 @@ export const CreateRelationButton = styled(CreateCharacterButton)`
 export const MiniModal = styled.div<{ $left: number }>`
   ${FlexColumnLeftStart};
   position: absolute;
-  top: 20px;
+  top: calc(100% + 8px);
   left: ${({ $left }) => $left}px;
   width: 320px;
   border-radius: 8px;
@@ -344,6 +354,20 @@ export const CharacteristicContainer = styled.div`
   border-radius: 8px;
   box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.1);
   gap: 6px;
+
+  svg {
+    width: 32px;
+    height: 32px;
+
+    ${media.tablet} {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  ${media.tablet} {
+    padding: 20px 16px;
+  }
 `;
 export const CharacteristicTitle = styled.input`
   flex-grow: 1;
@@ -355,6 +379,10 @@ export const CharacteristicTitle = styled.input`
   font-weight: 600;
   line-height: 150%;
   width: 100%;
+
+  ${media.tablet} {
+    font-size: 16px;
+  }
 `;
 export const CharacteristicContent = styled.textarea`
   width: 100%;
@@ -365,6 +393,11 @@ export const CharacteristicContent = styled.textarea`
   font-style: normal;
   font-weight: 500;
   line-height: 150%;
+
+  ${media.tablet} {
+    font-size: 14px;
+    font-weight: 400;
+  }
 `;
 
 export const CharacteristicAdd = styled.button`
@@ -383,6 +416,11 @@ export const CharacteristicAdd = styled.button`
   line-height: 21px; /* 150% */
   letter-spacing: -0.16px;
   color: ${({ theme }) => theme.color.orange400};
+
+  ${media.tablet} {
+    padding: 6px;
+    font-size: 12px;
+  }
 `;
 
 export const EditRelationContainer = styled.div`
@@ -513,6 +551,10 @@ export const ManageKeywordContainer = styled.div`
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.2);
+
+  & > ${Title} {
+    margin-bottom: 20px;
+  }
 `;
 
 export const ManageRowWrapper = styled.div`
@@ -647,8 +689,8 @@ export const AddMemoButtonContainer = styled(Link)`
   }
 
   ${media.tablet} {
-    scale: 0.75;
-    bottom: 10px;
+    font-size: 12px;
+    padding: 8px;
   }
 `;
 

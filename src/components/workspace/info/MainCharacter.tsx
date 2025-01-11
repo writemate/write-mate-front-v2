@@ -5,18 +5,25 @@ import {
   SubTitleWithButton,
 } from "@/styles/workspace/Info.style";
 import { CharacterCardList } from "../character/CharacterCardList";
-import { useCharacterList } from "@/hooks/workspace/character/useCharacterList";
+import {
+  CharacterListContext,
+  useCharacterList,
+} from "@/hooks/workspace/character/characterList";
 import { AddMemoButtonContainer } from "@/styles/workspace/Character.style";
 
 export default function ScriptSidebar() {
+  const useValue = useCharacterList();
+
   return (
-    <Container>
-      <SubTitleWithButton>
-        <SubTitle>주요인물</SubTitle>
-        <MoveToCharacter />
-      </SubTitleWithButton>
-      <CharacterCardList forInfoPage={true} />
-    </Container>
+    <CharacterListContext.Provider value={useValue}>
+      <Container>
+        <SubTitleWithButton>
+          <SubTitle>주요인물</SubTitle>
+          <MoveToCharacter />
+        </SubTitleWithButton>
+        <CharacterCardList forInfoPage={true} />
+      </Container>
+    </CharacterListContext.Provider>
   );
 }
 

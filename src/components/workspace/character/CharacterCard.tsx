@@ -1,4 +1,4 @@
-import { useCharacterList } from "@/hooks/workspace/character/useCharacterList";
+import { CharacterListContext } from "@/hooks/workspace/character/characterList";
 import {
   CharacterCardContainer,
   CharacterCardTitle,
@@ -12,6 +12,7 @@ import {
 import StarActive from "@/assets/workspace/character/starActive.svg";
 import StarInactive from "@/assets/workspace/character/starInactive.svg";
 import { TCharacter } from "@/utils/APIs/types";
+import { useContext } from "react";
 export function CharacterCard({
   index,
   character,
@@ -24,7 +25,7 @@ export function CharacterCard({
     onClickUnsetMainCharacter,
     onClickSetMainCharacter,
     isSelectedKeyword,
-  } = useCharacterList();
+  } = useContext(CharacterListContext);
 
   return (
     <CharacterCardContainer

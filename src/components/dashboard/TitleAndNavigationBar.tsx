@@ -4,8 +4,8 @@ import { WorkCategoryContext } from "@/hooks/dashboard/work/workCategory";
 import {
   Title,
   NavigationBar,
-  NavigationButton,
   TitleAndNavigationBar,
+  NavigationButton,
 } from "@/styles/dashboard/TitleAndNavigationBar";
 import { workspaceCategory } from "@/utils/APIs/types";
 import { ideaBoxCategory } from "@/utils/APIs/types";

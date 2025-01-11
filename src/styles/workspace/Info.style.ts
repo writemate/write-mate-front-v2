@@ -2,6 +2,7 @@
 import { styled } from "styled-components";
 import {
   clickable,
+  DeleteButton,
   FlexColumnCenter,
   FlexColumnLeftStart,
   FlexRowCenter,
@@ -10,15 +11,21 @@ import {
 } from "@/styles";
 import Back from "@/assets/workspace/character/back.svg";
 import { media } from "../media";
+import { FontBold20 } from "../Font";
 
 export const BackButton = styled(Back)`
   flex-shrink: 0;
   cursor: pointer;
   margin-bottom: 73px;
   margin-right: auto;
+
+  ${media.tablet} {
+    margin-bottom: 20px;
+  }
 `;
 
 export const CoverContainer = styled.div`
+  position: relative;
   ${FlexRowLeftStart};
   align-items: flex-end;
   gap: 36px;
@@ -26,7 +33,7 @@ export const CoverContainer = styled.div`
   flex-wrap: wrap;
 
   ${media.tablet} {
-    margin-top: 10px;
+    gap: 0;
   }
 `;
 export const BlurBackground = styled.div<{ $src: string | null }>`
@@ -111,52 +118,91 @@ export const ChangeCoverInput = styled.input`
 `;
 
 // 작품 정보
+export const SubTitle = styled.h2`
+  ${FontBold20}
+  height: fit-content;
+  color: ${({ theme }) => theme.color.gray900};
+  margin-bottom: 20px;
+
+  ${media.tablet} {
+    margin-bottom: 12px;
+  }
+`;
+
 export const CoverContentsContainer = styled.div`
   ${FlexColumnLeftStart};
   height: 100%;
+  width: 100%;
   min-width: 263px;
   width: calc(100% - 263px - 36px);
   justify-content: flex-end;
   flex-grow: 1;
 
+  & > ${SubTitle} {
+    margin-top: 46px;
+    ${media.tablet} {
+      margin-top: 20px;
+    }
+  }
+
   ${media.tablet} {
     width: 100%;
     justify-content: flex-start;
     height: fit-content;
-  }
+    margin-top: 20px;
 
-  & > div {
-    margin-top: 60px;
-    width: 100%;
+    & > ${DeleteButton} {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
   }
 `;
+export const AddMemoButtonContainer = styled.button`
+  ${clickable}
+  position:relative;
+  margin-left: 12px;
 
-export const SubTitle = styled.h2`
-  height: fit-content;
-  font-size: 20px;
-  font-weight: 700;
-  color: ${({ theme }) => theme.color.gray900};
-  margin-bottom: 20px;
+  width: fit-content;
+  padding: 12px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100px;
+  background: ${({ theme }) => theme.color.orange400};
+  border: none;
+
+  color: ${({ theme }) => theme.color.white};
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 100%;
+
+  &:hover {
+    filter: brightness(95%);
+  }
 
   ${media.tablet} {
-    font-size: 14px;
-    margin-bottom: 12px;
+    font-size: 12px;
+    padding: 8px;
   }
 `;
 
 export const SubTitleWithButton = styled.div`
   ${FlexRowSpaceBetween}
-
   display: flex;
   flex-direction: row;
   width: 100%;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   gap: 1rem;
   margin-bottom: 10px;
 
   & > h2 {
     margin-bottom: 0;
+  }
+
+  & > ${AddMemoButtonContainer} {
+    position: relative;
   }
 
   ${media.tablet} {
@@ -168,7 +214,7 @@ export const Infos = styled.div`
   ${FlexColumnCenter}
   gap: 60px;
   width: 100%;
-  margin-top: 100px;
+  margin-top: 60px;
 
   ${media.tablet} {
     gap: 20px;
@@ -202,36 +248,5 @@ export const DropdownMenu = styled.div`
 
   ${media.tablet} {
     font-size: 12px;
-  }
-`;
-
-export const AddMemoButtonContainer = styled.button`
-  ${clickable}
-  position:relative;
-  margin-left: 12px;
-
-  width: fit-content;
-  padding: 12px;
-  justify-content: center;
-  align-items: center;
-  border-radius: 100px;
-  background: ${({ theme }) => theme.color.orange400};
-  border: none;
-
-  color: ${({ theme }) => theme.color.white};
-  font-family: Pretendard;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 800;
-  line-height: 100%;
-  letter-spacing: 0.32px;
-
-  &:hover {
-    filter: brightness(95%);
-  }
-
-  ${media.tablet} {
-    scale: 0.75;
-    bottom: 10px;
   }
 `;

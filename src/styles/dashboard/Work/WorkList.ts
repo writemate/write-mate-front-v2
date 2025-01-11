@@ -20,7 +20,7 @@ export const TitleAndWorkListContainer = styled.div`
 export const WorkListContainer = styled.div`
   position: relative;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   height: 100%;
   align-items: start;
   justify-content: start;
@@ -32,18 +32,17 @@ export const WorkListContainer = styled.div`
 
   ${media.tablet} {
     gap: 8px;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   }
 `;
 
 export const EmptyListDiscription = styled.div`
-  display: flex;
+  ${FlexColumnCenter}
+  ${FontRegular16}
+  color: ${({ theme }) => theme.color.gray300};
   width: 100%;
   height: 100%;
-  flex-direction: column;
   justify-content: center;
-  align-items: center;
-  gap: 16px;
+  text-align: center;
 `;
 
 export const WorkCard = styled(Link)`
@@ -57,7 +56,6 @@ export const WorkCard = styled(Link)`
 
   border-radius: 12px;
   background: var(--white, #fff);
-
   box-shadow: 2px 2px 12px 0px rgba(18, 18, 18, 0.12);
 
   &:hover {
@@ -142,21 +140,13 @@ export const WorkButtonDate = styled.div`
 `;
 
 import KebabIcon from "@/assets/icons/KebabMenu.svg";
+import { FontRegular16 } from "@/styles/Font";
+import { IconCanActiveNOpenButton } from "@/styles/Button";
 export const KebabButton = styled(KebabIcon)<{
   $isOpen: boolean;
   $isActivated?: boolean;
 }>`
-  ${clickable}
-  position: relative;
-  flex-shrink: 0;
-  border-radius: 10px;
-
-  &:hover {
-    background: ${({ theme }) => theme.color.gray75};
-  }
-
-  background: ${({ $isOpen }) =>
-    $isOpen ? "var(--writemate-gray-100, #f5f5f5)" : "none"};
+  ${IconCanActiveNOpenButton}
 `;
 
 export const ChangeCoverInput = styled.input`

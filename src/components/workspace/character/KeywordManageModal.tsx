@@ -1,5 +1,5 @@
 import Modal from "@/components/Modal";
-import { useCharacterList } from "@/hooks/workspace/character/useCharacterList";
+import { CharacterListContext } from "@/hooks/workspace/character/characterList";
 import { Input } from "@/styles";
 import { Title } from "@/styles/workspace";
 import {
@@ -17,6 +17,7 @@ import {
   KeywordContainer,
 } from "@/styles/workspace/Character.style";
 import KeywordCancel from "@/assets/workspace/character/keywordCancel.svg";
+import { useContext } from "react";
 
 export function KeywordManageModal() {
   const {
@@ -29,10 +30,10 @@ export function KeywordManageModal() {
     onClickCreateKeyword,
     keywordList,
     onClickDeleteKeyword,
-  } = useCharacterList();
+  } = useContext(CharacterListContext);
 
   return (
-    <Modal closeModal={closeModal} maxWidth={800} maxHeight={326}>
+    <Modal closeModal={closeModal} maxWidth={800}>
       <ManageKeywordContainer>
         <Title>키워드 관리</Title>
         <ManageRowWrapper>
