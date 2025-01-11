@@ -1,6 +1,6 @@
 "use client";
-import { KebabButton } from "@/styles/dashboard/Work/WorkList";
-import { KebabContainer } from "@/styles/dashboard/Work/Kebab";
+import { KebabButton } from "@/styles/dashboard/Work/WorkList.style";
+import { KebabContainer } from "@/styles/dashboard/Work/Kebab.style";
 import { useContext } from "react";
 import { KebabContext, useKebab } from "@/hooks/dashboard/work/kebab";
 import { WorkCategoryContext } from "@/hooks/dashboard/work/workCategory";

@@ -4,7 +4,7 @@ import {
   SubTitle,
   TextWithDropMenu,
 } from "@/styles/workspace/Info.style";
-import { Input, InputWithText } from "@/styles";
+import { Input } from "@/styles";
 import DropdownMenu from "@/components/DropdownMenu";
 import { useContext } from "react";
 import { InfoContext } from "@/hooks/workspace/info";
@@ -21,16 +21,13 @@ export default function ScriptSidebar() {
     <Container>
       <SubTitle>예상 분량</SubTitle>
       <TextWithDropMenu style={{ maxWidth: 392 }}>
-        <InputWithText>
-          <input
-            type="number"
-            placeholder="예상 분량을 적어주세요"
-            defaultValue={realExpectedQuantity}
-            onChange={onChangeExpectedQuantity}
-            disabled={isLoading}
-          />
-          자
-        </InputWithText>
+        <Input
+          type=""
+          placeholder="예상 분량을 적어주세요"
+          defaultValue={realExpectedQuantity}
+          onChange={onChangeExpectedQuantity}
+          disabled={isLoading}
+        />
         <DropdownMenu
           placeholder="이용 등급"
           options={

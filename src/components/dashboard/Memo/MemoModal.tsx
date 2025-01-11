@@ -7,14 +7,12 @@ import {
   Input,
   ModalContentAndFooterContainer,
   FooterContainer,
-  DeleteButton,
   ModalTitle,
-  ModalContent,
-} from "@/styles/dashboard/IdeaBox/Modal";
+} from "@/styles/dashboard/IdeaBox/Modal.style";
 import { MemoItemContext } from "@/hooks/dashboard/memo/memoItem";
 import { WarningModal } from "../WarningModal";
-import Close from "@/assets/icons/close.svg";
 import { SubTitle } from "@/styles/workspace/Info.style";
+import { CloseButton, DeleteButton } from "@/styles";
 
 export function EditModal() {
   const {
@@ -33,7 +31,10 @@ export function EditModal() {
       <ModalContentAndFooterContainer>
         <ModalTitle>
           <SubTitle>메모</SubTitle>
-          <Close onClick={closeEditModal} />
+          <CloseButton
+            onClick={closeEditModal}
+            style={{ marginLeft: "auto" }}
+          />
         </ModalTitle>
         <Input
           className="memo-modal-name"
@@ -42,7 +43,7 @@ export function EditModal() {
           placeholder="메모 이름을 입력하세요"
           onKeyDown={onKeyDownTitle}
         />
-        <ModalContent>내용</ModalContent>
+        <SubTitle>내용</SubTitle>
         <TextArea
           className="memo-modal-description"
           defaultValue={memo.memo_description}
@@ -52,7 +53,16 @@ export function EditModal() {
           placeholder="메모 내용을 입력하세요"
         />
         <FooterContainer>
-          <DeleteButton onClick={onClickOpenDeleteModal}>삭제</DeleteButton>
+          <DeleteButton
+            onClick={onClickOpenDeleteModal}
+            style={{
+              marginLeft: "auto",
+              marginBottom: "auto",
+              marginTop: "16px",
+            }}
+          >
+            삭제하기
+          </DeleteButton>
           {isOpenDeleteModal && (
             <WarningModal
               closeModal={closeDeleteModal}

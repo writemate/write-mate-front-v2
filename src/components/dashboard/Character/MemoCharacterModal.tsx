@@ -14,7 +14,7 @@ import { CharacterItemContext } from "@/hooks/dashboard/character/characterItem"
 import {
   ModalContentAndFooterContainer,
   ModalTitle,
-} from "@/styles/dashboard/IdeaBox/Modal";
+} from "@/styles/dashboard/IdeaBox/Modal.style";
 import {
   CoverContainer,
   CoverContentsContainer,

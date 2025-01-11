@@ -1,7 +1,7 @@
 "use Client";
-import { LoadingMessage } from "@/styles/dashboard/Loading";
+import { LoadingMessage } from "@/styles/dashboard/Loading.style";
 import { AddMCharacterButton } from "@/components/dashboard/AddButton";
-import { CharacterListContainer } from "@/styles/dashboard/IdeaBox/MCharacter/MCharacterList";
+import { CharacterListContainer } from "@/styles/dashboard/IdeaBox/MCharacter/MCharacterList.style";
 import { CharacterItem } from "./CharacterItem";
 import { useCharacterList } from "@/hooks/dashboard/character/useCharacterList";
 
@@ -24,7 +24,6 @@ export default function CharacterList() {
           <LoadingMessage>캐릭터가 없습니다.</LoadingMessage>
         )}
       </CharacterListContainer>
-
       <AddMCharacterButton />
     </>
   );

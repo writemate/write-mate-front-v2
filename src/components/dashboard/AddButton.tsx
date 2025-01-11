@@ -1,7 +1,7 @@
 "use client";
 import { useCharacterList } from "@/hooks/dashboard/character/useCharacterList";
 import { useMemoList } from "@/hooks/dashboard/memo/useMemoList";
-import { AddMemoButtonContainer } from "@/styles/dashboard/IdeaBox/Memo/MemoList";
+import { AddMemoButtonContainer } from "@/styles/dashboard/IdeaBox/Memo/MemoList.style";
 
 export function AddMemoButton() {
   const { onClickAddMemo } = useMemoList();

@@ -1,5 +1,5 @@
 "use client";
-import { TitleAndWorkListContainer } from "@/styles/dashboard/Work/WorkList";
+import { TitleAndWorkListContainer } from "@/styles/dashboard/Work/WorkList.style";
 import { IdeaBoxTitleAndNavigationBar } from "@/components/dashboard/TitleAndNavigationBar";
 import MemoList from "@/components/dashboard/Memo/MemoList";
 import CharacterList from "@/components/dashboard/Character/CharacterList";

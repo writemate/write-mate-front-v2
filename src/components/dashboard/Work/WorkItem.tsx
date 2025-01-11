@@ -6,7 +6,7 @@ import {
   WorkButtonDate,
   TitleAndDate,
   TitleAndDateAndKebab,
-} from "@/styles/dashboard/Work/WorkList";
+} from "@/styles/dashboard/Work/WorkList.style";
 import { useContext, useRef } from "react";
 import { WorkListContext } from "@/hooks/dashboard/work/workList";
 import { useWorkItem } from "@/hooks/dashboard/work/useWorkItem";

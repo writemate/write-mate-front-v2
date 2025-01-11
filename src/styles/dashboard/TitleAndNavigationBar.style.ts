@@ -32,7 +32,7 @@ export const Title = styled.div`
 export const NavigationBar = styled.div`
   ${FlexRowLeftStart}
   width: 100%;
-  border-bottom: 1px solid ${({ theme }) => theme.color.gray400};
+  border-bottom: 1px solid ${({ theme }) => theme.color.gray200};
   margin-bottom: 4px;
   gap: 32px;
 `;
