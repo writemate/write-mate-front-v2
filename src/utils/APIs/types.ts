@@ -2,11 +2,8 @@
  * 유저 타입
  */
 export type TUser = {
-  id: string;
-  uid: string;
   user_name: string;
   user_image: string;
-  status: string;
   email: string;
 };
 

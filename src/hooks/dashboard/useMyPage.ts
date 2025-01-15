@@ -1,4 +1,5 @@
-import { getMockUsage, getMockUser } from "@/utils/APIs/dashboard";
+import { getMockUsage } from "@/utils/APIs/dashboard";
+import { getUserInfo } from "@/utils/APIs/user";
 import { useQuery } from "@tanstack/react-query";
 import { createContext, useEffect, useState } from "react";
 
@@ -7,7 +8,7 @@ export function useMyPage() {
 
   const { data: user } = useQuery({
     queryKey: ["user", "mock"],
-    queryFn: getMockUser,
+    queryFn: getUserInfo,
   });
 
   const { data: usage } = useQuery({
