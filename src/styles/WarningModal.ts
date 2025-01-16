@@ -3,9 +3,11 @@ import { media } from "@/styles/media";
 import { styled } from "styled-components";
 import { Button, FlexColumnCenter } from "@/styles";
 import Danger from "@/assets/icons/danger.svg";
+import { FontSemibold16 } from "./Font";
 
 export const ModalContainer = styled.div`
   ${FlexColumnCenter}
+  ${FontSemibold16}
   padding: 16px;
   padding-top: 48px;
 
@@ -19,9 +21,7 @@ export const ModalContainer = styled.div`
   p {
     color: ${({ theme }) => theme.color.black};
     text-align: center;
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 160%;
+    white-space: pre-line;
   }
 
   ${media.mobile} {
@@ -36,8 +36,8 @@ export const ModalContainer = styled.div`
 export const DangerIcon = styled(Danger)`
   margin-top: 10px;
   margin-bottom: 5px;
-  width: 44px;
-  height: 44px;
+  width: 44px !important;
+  height: 44px !important;
 `;
 
 export const ButtonContainer = styled.div`

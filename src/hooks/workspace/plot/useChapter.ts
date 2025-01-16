@@ -10,10 +10,14 @@ import { useParams } from "next/navigation";
 import { useInputLiveUpdate } from "@/hooks/common/useInputLiveUpdate";
 import { useOnClickUpdate } from "@/hooks/common/useOnClickUpdate";
 import { TPlot } from "@/utils/APIs/types";
+import { useState } from "react";
 
-const useChapter = (chapterId: string,isFolded:boolean) => {
+const useChapter = (chapterId: string, isFolded: boolean) => {
   const queryClient = useQueryClient();
-  const { workspace_id, plot_id } = useParams<{ workspace_id: string; plot_id: string }>();
+  const { workspace_id, plot_id } = useParams<{
+    workspace_id: string;
+    plot_id: string;
+  }>();
 
   // 챕터 삭제하기
   const onChapterDeleteClick = useOnClickUpdate({
@@ -22,25 +26,43 @@ const useChapter = (chapterId: string,isFolded:boolean) => {
     savingMessage: "챕터 삭제",
     errorMessage: "챕터 삭제에 실패했습니다.",
     onMutate: () => {
-      const previousPlot = queryClient.getQueryData<TPlot>(workspaceQueryKeys.plot(workspace_id, plot_id));
+      const previousPlot = queryClient.getQueryData<TPlot>(
+        workspaceQueryKeys.plot(workspace_id, plot_id)
+      );
       const previousChapters = previousPlot?.chapter_list;
       if (!previousChapters) return;
 
-      const newChapters = previousChapters.filter((chapter) => chapter.id !== chapterId);
-      queryClient.setQueryData<TPlot>(workspaceQueryKeys.plot(workspace_id, plot_id), {
-        ...previousPlot,
-        chapter_list: newChapters,
-      });
+      const newChapters = previousChapters.filter(
+        (chapter) => chapter.id !== chapterId
+      );
+      queryClient.setQueryData<TPlot>(
+        workspaceQueryKeys.plot(workspace_id, plot_id),
+        {
+          ...previousPlot,
+          chapter_list: newChapters,
+        }
+      );
 
       return { previousPlot };
     },
     onError: async (_, __, context) => {
-      queryClient.setQueryData<TPlot>(workspaceQueryKeys.plot(workspace_id, plot_id), context?.previousPlot);
-    }
+      queryClient.setQueryData<TPlot>(
+        workspaceQueryKeys.plot(workspace_id, plot_id),
+        context?.previousPlot
+      );
+    },
   })();
 
-  const onChapterNameChange = useInputLiveUpdate(updateChapterName(plot_id, chapterId), "챕터 이름", "챕터 이름 저장에 실패했습니다.");
-  const onChapterDescriptionChange = useInputLiveUpdate(updateChapterDescription(plot_id, chapterId), "챕터 설명", "챕터 설명 저장에 실패했습니다.");
+  const onChapterNameChange = useInputLiveUpdate(
+    updateChapterName(plot_id, chapterId),
+    "챕터 이름",
+    "챕터 이름 저장에 실패했습니다."
+  );
+  const onChapterDescriptionChange = useInputLiveUpdate(
+    updateChapterDescription(plot_id, chapterId),
+    "챕터 설명",
+    "챕터 설명 저장에 실패했습니다."
+  );
 
   // 챕터 접힘 여부 수정하기
   const updateChapterFold = useOnClickUpdate({
@@ -49,7 +71,9 @@ const useChapter = (chapterId: string,isFolded:boolean) => {
     savingMessage: "챕터 접힘 여부 수정",
     errorMessage: "챕터 접힘 여부 수정에 실패했습니다.",
     onMutate: () => {
-      const previousPlot = queryClient.getQueryData<TPlot>(workspaceQueryKeys.plot(workspace_id, plot_id));
+      const previousPlot = queryClient.getQueryData<TPlot>(
+        workspaceQueryKeys.plot(workspace_id, plot_id)
+      );
       const previousChapters = previousPlot?.chapter_list;
       if (!previousChapters) return;
 
@@ -59,16 +83,22 @@ const useChapter = (chapterId: string,isFolded:boolean) => {
         }
         return chapter;
       });
-      queryClient.setQueryData<TPlot>(workspaceQueryKeys.plot(workspace_id, plot_id), {
-        ...previousPlot,
-        chapter_list: newChapters,
-      });
+      queryClient.setQueryData<TPlot>(
+        workspaceQueryKeys.plot(workspace_id, plot_id),
+        {
+          ...previousPlot,
+          chapter_list: newChapters,
+        }
+      );
 
       return { previousPlot };
     },
     onError: async (_, __, context) => {
-      queryClient.setQueryData<TPlot>(workspaceQueryKeys.plot(workspace_id, plot_id), context?.previousPlot);
-    }
+      queryClient.setQueryData<TPlot>(
+        workspaceQueryKeys.plot(workspace_id, plot_id),
+        context?.previousPlot
+      );
+    },
   });
 
   const toggleChapterFold = updateChapterFold(!isFolded);

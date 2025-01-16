@@ -38,13 +38,12 @@ export function CharacterCard({
     >
       <CharacterCardTitle>
         <CharacterImage $src={character.ch_image} />
-        <div>
-          <CharacterName $isNew={character.ch_name === ""}>
-            {character.ch_name}
-            {character.ch_name === "" && "새 인물"}
-          </CharacterName>
-          <CharacterRole>{character.role}</CharacterRole>
-        </div>
+        <CharacterName $isNew={character.ch_name === ""}>
+          {character.ch_name}
+          {character.ch_name === "" && "새 인물"}
+        </CharacterName>
+        <CharacterRole>{character.role}</CharacterRole>
+
         {character.isMain && (
           <StarActive onClick={onClickUnsetMainCharacter(character.id)} />
         )}

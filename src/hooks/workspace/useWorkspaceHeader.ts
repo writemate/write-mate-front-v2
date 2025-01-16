@@ -48,9 +48,7 @@ export default function useWorkspaceHeader() {
   // 현재 pathname 확인
   const currentPathList = usePathname().split("/");
   const [subTitle, setSubTitle] = useState("");
-
   useEffect(() => {
-    console.log(currentPathList);
     if (currentPathList[2] === "info") {
       setSubTitle("작품 정보");
     } else if (currentPathList[2] === "plot") {

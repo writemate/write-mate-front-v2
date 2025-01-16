@@ -13,6 +13,7 @@ import {
 import { CreateRelationButton } from "@/styles/workspace/Character.style";
 import { EditRelationProps } from "@/components/workspace/character/network/EditRelation";
 import CharacterModal from "@/components/workspace/character/CharacterModal";
+import { LoadingMessage } from "@/styles/dashboard/Loading.style";
 
 export type Node = {
   id: string;
@@ -644,11 +645,14 @@ const NetworkGraph = () => {
       }}
     >
       {isLoading && (
-        <div className="flex h-full w-full flex-row items-center justify-center overflow-hidden transition-all">
-          <div className="animate-pulse text-2xl font-bold text-[#C55858]">
-            로딩중...
-          </div>
-        </div>
+        <LoadingMessage>로딩 중입니다! 잠시만 기다려주세요.</LoadingMessage>
+      )}
+      {relations?.length === 0 && !isLoading && (
+        <LoadingMessage>
+          {
+            "설정한 관계가 없습니다. \n 관계를 추가하여 인물 관계도를 확인해보세요!"
+          }
+        </LoadingMessage>
       )}
       <svg ref={ref} className={isLoading ? "invisible" : ""}>
         <rect

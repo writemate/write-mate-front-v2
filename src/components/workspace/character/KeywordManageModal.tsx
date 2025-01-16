@@ -1,7 +1,6 @@
 import Modal from "@/components/Modal";
 import { CharacterListContext } from "@/hooks/workspace/character/characterList";
 import { Input } from "@/styles";
-import { Title } from "@/styles/workspace";
 import {
   ManageKeywordContainer,
   ManageRowWrapper,
@@ -18,6 +17,9 @@ import {
 } from "@/styles/workspace/Character.style";
 import KeywordCancel from "@/assets/workspace/character/keywordCancel.svg";
 import { useContext } from "react";
+import { WarningModal } from "@/components/dashboard/WarningModal";
+import { useWarningModal } from "@/hooks/common/useWarningModal";
+import { SubTitle } from "@/styles/workspace/Info.style";
 
 export function KeywordManageModal() {
   const {
@@ -31,11 +33,13 @@ export function KeywordManageModal() {
     keywordList,
     onClickDeleteKeyword,
   } = useContext(CharacterListContext);
+  const { isOpenDeleteModal, onOpenWarningModal, closeWarningModal } =
+    useWarningModal();
 
   return (
     <Modal closeModal={closeModal} maxWidth={800}>
       <ManageKeywordContainer>
-        <Title>키워드 관리</Title>
+        <SubTitle>키워드 관리</SubTitle>
         <ManageRowWrapper>
           <ManageKeywordLeft>
             <span>키워드 입력</span>
@@ -103,7 +107,16 @@ export function KeywordManageModal() {
                     $darkColor={keyword.dark_color}
                   >
                     <span>{keyword.word}</span>
-                    <KeywordCancel onClick={onClickDeleteKeyword(keyword.id)} />
+                    <KeywordCancel onClick={onOpenWarningModal} />
+                    {isOpenDeleteModal && (
+                      <WarningModal
+                        closeModal={closeWarningModal}
+                        onClickConfirm={onClickDeleteKeyword(keyword.id)}
+                        onClickCancel={closeWarningModal}
+                        message={"키워드를 삭제하시겠습니까? "}
+                        ConfirmButtonName={"삭제"}
+                      />
+                    )}
                   </KeywordContainer>
                 ))}
             </KeywordListContainer>

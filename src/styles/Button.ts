@@ -10,7 +10,9 @@ import {
   FontRegular16,
   FontSemibold16,
   FontUnvisible,
+  FontTabletSemibold14,
 } from "./Font";
+import { media } from "./media";
 
 /*
  * 로고
@@ -142,11 +144,11 @@ export const GrayTextButton = css`
 
 export const Round9999RedBackgoundWhiteColor = css`
   ${clickable}
-  ${FontTabletRegular14}
+  ${FontTabletSemibold14}
   ${FlexRowCenter}
   ${MainColorBackground}
   color: ${({ theme }) => theme.color.white};
-  weight: fit-content;
+  width: fit-content;
   padding: 12px;
   border: none;
   border-radius: 9999px;
@@ -155,6 +157,10 @@ export const Round9999RedBackgoundWhiteColor = css`
   &:hover {
     scale: 1.02;
     transition: 0.2s;
+  }
+
+  ${media.tablet} {
+    padding: 4px 8px;
   }
 `;
 

@@ -23,6 +23,7 @@ import {
   FontTabletRegular14,
 } from "../Font";
 import { Round9999OrangeBackgoundWhiteColor } from "../Button";
+import { LoadingMessage } from "../dashboard/Loading.style";
 
 // 네비게이션 바
 export const TabContainer = styled.div`
@@ -189,6 +190,7 @@ export const CharacterListContainer = styled.div<{ $forInfoPage: boolean }>`
 `;
 
 export const CharacterCardContainer = styled(Link)`
+  position: relative;
   ${FlexColumnLeftStart};
   ${clickable};
   align-items: flex-start;
@@ -207,9 +209,12 @@ export const CharacterCardContainer = styled(Link)`
   ${media.tablet} {
     padding: 16px;
     gap: 8px;
+    width: 100%;
+    height: fit-content;
   }
 `;
 export const CharacterCardTitle = styled.div`
+  position: relative;
   ${FlexRowLeftStart};
   width: 100%;
   & > *:last-child {
@@ -235,7 +240,7 @@ export const CharacterImage = styled.div<{ $src: string }>`
 `;
 export const CharacterName = styled.div<{ $isNew?: boolean }>`
   ${FontSemibold14}
-  width: 123px;
+  width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -265,16 +270,18 @@ export const CharacterDescription = styled.div<{ $isNew?: boolean }>`
 export const CreateCharacterButton = styled.button`
   ${FlexRowCenter};
   ${clickable};
-  ${FontSemibold16}
-  padding: 12px 28px;
-  border-radius: 100px;
-  background-color: ${({ theme }) => theme.color.orange500};
-  color: #fff;
-  margin-top: auto;
-  border: none;
-  &:disabled {
-    background-color: ${({ theme }) => theme.color.gray200};
-    color: ${({ theme }) => theme.color.gray400};
+  ${Round9999OrangeBackgoundWhiteColor}
+  padding: 8px 16px;
+`;
+
+export const CharacterRelationContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  margin-top: 40px;
+  overflow: hidden;
+  position: relative;
+
+  ${LoadingMessage} {
   }
 `;
 
@@ -491,7 +498,7 @@ export const SaveButton = styled(
 }))``;
 
 export const ManageKeywordContainer = styled.div`
-  ${FlexColumnCenter};
+  ${FlexColumnLeftStart};
   gap: 16px;
   width: 100%;
   height: 100%;
@@ -608,17 +615,4 @@ export const CharacterDropdownSelector = styled(DropdownSelector)`
 export const AddMemoButtonContainer = styled(Link)`
   position: relative;
   ${Round9999OrangeBackgoundWhiteColor}
-`;
-
-export const LoadingMessage = styled.div`
-  ${FontRegular16}
-  position: relative;
-  width: 100%;
-  height: fit-content;
-
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-
-  color: ${({ theme }) => theme.color.gray300};
 `;

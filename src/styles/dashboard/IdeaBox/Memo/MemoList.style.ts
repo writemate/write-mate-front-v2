@@ -86,12 +86,7 @@ export const AddMemoButtonContainer = styled.button<AddMemoButtonProps>`
   ${Round9999OrangeBackgoundWhiteColor}
   position: fixed;
   bottom: ${({ $isEmpty }) => ($isEmpty ? "calc(50% - 120px)" : "40px")};
-  width: 160px;
-
-  ${media.tablet} {
-    scale: 0.9;
-    bottom: 10px;
-  }
+  min-width: 160px;
 `;
 
 export const MemoListContainer = styled.div`

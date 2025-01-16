@@ -10,6 +10,8 @@ import {
   CharacteristicAdd,
   CharacteristicListContainer,
 } from "@/styles/workspace/Character.style";
+import { WarningModal } from "@/components/dashboard/WarningModal";
+import { useWarningModal } from "@/hooks/common/useWarningModal";
 
 export default function Description() {
   const {
@@ -20,6 +22,8 @@ export default function Description() {
     onChangeCharacteristicTitle,
     onChangeCharacteristicContent,
   } = useContext(CharacterContext);
+  const { isOpenDeleteModal, onOpenModal, closeModal } = useWarningModal();
+
   return (
     <Container>
       <SubTitle>특징</SubTitle>
@@ -41,11 +45,17 @@ export default function Description() {
                 onChange={onChangeCharacteristicTitle(i)}
                 disabled={isLoading}
               />
-              <TrashCan
-                onClick={onClickRemoveCharacteristic(i)}
-                style={{ cursor: "pointer", flexShrink: 0 }}
-              />
+              <TrashCan onClick={onOpenModal} style={{ cursor: "pointer" }} />
             </div>
+            {isOpenDeleteModal && (
+              <WarningModal
+                closeModal={closeModal}
+                onClickConfirm={onClickRemoveCharacteristic(i)}
+                onClickCancel={closeModal}
+                message={"인물를 삭제하시겠습니까?"}
+                ConfirmButtonName={"삭제"}
+              />
+            )}
             <CharacteristicContent
               placeholder="성격이나, 외향적 특징, 출생의 비밀 등 세부 내용을 적어주세요."
               value={c.content}
