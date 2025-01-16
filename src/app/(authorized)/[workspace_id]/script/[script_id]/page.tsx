@@ -1,22 +1,27 @@
 "use client";
-import { useRef } from "react";
 import "react-quill/dist/quill.snow.css";
-import { EditorWrapper, MainContainer } from "@/styles/workspace/Script.styles";
+import {
+  ScriptMainContainer,
+  ScriptContainer,
+} from "@/styles/workspace/Script.styles";
 import CustomToolbar from "@/components/workspace/script/Toolbar";
 import QuillEditor from "@/components/workspace/script/Editor";
 import TextCount from "@/components/workspace/script/TextCount";
+import { ScriptContext, useScript } from "@/hooks/workspace/script";
 
 export default function Script() {
-  const editorRef = useRef(null);
-  const mainRef = useRef(null);
+  const useScriptValue = useScript();
+  const { editorRef, mainRef, containerRef } = useScriptValue;
 
   return (
-    <EditorWrapper>
-      <CustomToolbar editorRef={editorRef} />
-      <MainContainer ref={mainRef}>
-        <QuillEditor innerRef={editorRef} MainRef={mainRef} />
-      </MainContainer>
-      <TextCount editorRef={editorRef}></TextCount>
-    </EditorWrapper>
+    <ScriptContext.Provider value={useScriptValue}>
+      <ScriptContainer>
+        <CustomToolbar editorRef={editorRef} />
+        <ScriptMainContainer ref={mainRef}>
+          <QuillEditor />
+        </ScriptMainContainer>
+        <TextCount editorRef={editorRef}></TextCount>
+      </ScriptContainer>
+    </ScriptContext.Provider>
   );
 }

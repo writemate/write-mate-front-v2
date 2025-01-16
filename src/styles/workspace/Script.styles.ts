@@ -7,28 +7,30 @@ import {
   FlexRowCenter,
   FlexRowLeftStart,
   FlexRowSpaceBetween,
+  MainContainer,
 } from "@/styles";
 import RedoIcon from "@/assets/workspace/script/redo.svg";
 import UndoIcon from "@/assets/workspace/script/undo.svg";
+import { media } from "../media";
 
-export const TextCountContainer = styled.div`
-  position: absolute;
-  font-size: 14px;
-  color: #a0a0a0;
-  margin-left: 10px;
-  bottom: 10px;
-  right: 10px;
+export const ScriptContainer = styled.div`
+  ${FlexColumnLeftStart}
+  min-height: 100%;
+  width: 100%;
+  overflow: hidden;
 `;
 
 export const ToolbarContainer = styled.div`
-  display: flex;
+  position: relative;
+  ${FlexRowLeftStart}
   flex-wrap: wrap;
   width: 100%;
-  background: #ffffff;
+
+  background: ${({ theme }) => theme.color.white};
   border-right: none !important;
   border-left: none !important;
   border-top: none !important;
-  border-bottom: 1px solid #d7dce7 !important;
+  border-bottom: 1px solid ${({ theme }) => theme.color.gray25};
 
   .ql-line {
     border: 0.5px solid #e8eef7 !important;
@@ -41,9 +43,6 @@ export const ToolbarContainer = styled.div`
     border-radius: 0px 0px 8px 8px !important;
   }
 
-   {
-    /* 폰트 */
-  }
   .ql-font span[data-value="nanum-gothic"]::before {
     font-family: "NanumGothic";
   }
@@ -53,25 +52,30 @@ export const ToolbarContainer = styled.div`
   }
 `;
 
-export const Undo = styled(UndoIcon)`
-  ${clickable}
-  margin-left: 10px;
-`;
-export const Redo = styled(RedoIcon)`
-  ${clickable}
-  margin-right: 10px;
-`;
-
-export const EditorContainer = styled.div`
-  padding: calc(14.2857% - 12px) calc(12.0635% - 15px) calc(12.0635% - 12px)
-    calc(12.0635% - 15px); /* A4 비율에 맞게 padding 조정  */
+export const ScriptMainContainer = styled.div`
+  ${FlexColumnCenter}
+  flex-grow: 1;
+  height: 100%;
   width: 100%;
-  min-height: 100%;
+  max-width: 1012px;
+  position: relative;
+  padding: 65px 28px 60px 28px;
+  margin: 0 auto;
+  overflow-y: auto;
 
-  background: #ffffff;
+  ${media.tablet} {
+    padding: 20px 16px 20px 16px;
+  }
+`;
+
+export const TextAreaContainer = styled.div`
+  background: ${({ theme }) => theme.color.white};
+  position: relative;
+  width: 100%;
 
   .ql-container {
-    border: none !important;
+    border: none;
+    min-height: 75vh;
   }
 
   .ql-editor {
@@ -84,6 +88,23 @@ export const EditorContainer = styled.div`
       line-height: 1.6;
       font-family: "NanumGothic";
     }
+
+    padding: 119px 95px;
+    &.ql-blank::before {
+      left: 0;
+      top: 0; // 상단 위치 조정
+      font-style: normal;
+      padding: 119px 95px;
+      color: ${({ theme }) => theme.color.gray400}; /* placeholder 색상 설정 */
+    }
+
+    ${media.tablet} {
+      padding: 40px 20px;
+
+      &.ql-blank::before {
+        padding: 40px 20px;
+      }
+    }
   }
 
   .ql-font-nanum-myeongjo {
@@ -95,20 +116,20 @@ export const EditorContainer = styled.div`
   }
 `;
 
-export const MainContainer = styled.div`
-  flex-grow: 1;
-  height: 100%;
-  width: 100%;
-  padding: 20px max(28px, calc((100% - 1012px) / 2)) 0;
-  overflow-y: auto;
+export const TextCountContainer = styled.div`
+  position: absolute;
+  font-size: 14px;
+  color: #a0a0a0;
+  margin-left: 10px;
+  bottom: 10px;
+  right: 10px;
 `;
 
-export const EditorWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
+export const Undo = styled(UndoIcon)`
+  ${clickable}
+  margin-left: 10px;
+`;
+export const Redo = styled(RedoIcon)`
+  ${clickable}
+  margin-right: 10px;
 `;

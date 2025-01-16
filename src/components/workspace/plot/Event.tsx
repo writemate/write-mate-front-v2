@@ -12,6 +12,8 @@ import {
 } from "@/styles/workspace/plot/Event.styles";
 import { TPlotEvent } from "@/utils/APIs/types";
 import useEvent from "@/hooks/workspace/plot/useEvent";
+import { useWarningModal } from "@/hooks/common/useWarningModal";
+import { WarningModal } from "@/components/dashboard/WarningModal";
 
 export default function Event({
   id: eventId,
@@ -19,8 +21,7 @@ export default function Event({
   event_description: eventDescription,
   character_list: characterList,
   chapterId,
-}: TPlotEvent&{chapterId: string}) {
-
+}: TPlotEvent & { chapterId: string }) {
   const {
     selectCharacterModal,
     openSelectCharacterModal,
@@ -32,6 +33,8 @@ export default function Event({
     onEventDescriptionChange,
   } = useEvent(eventId, chapterId);
 
+  const { isOpenDeleteModal, onOpenModal, closeModal } = useWarningModal();
+
   return (
     <>
       <EventDragWrap>
@@ -39,7 +42,7 @@ export default function Event({
       </EventDragWrap>
       <EventColumnContainer>
         <EventHeader>
-          <ChooseCharacter onClick={openSelectCharacterModal}/>
+          <ChooseCharacter onClick={openSelectCharacterModal} />
           {selectCharacterModal && (
             <SelectCharacterModal
               chapterId={chapterId}
@@ -55,7 +58,21 @@ export default function Event({
               $src={character.ch_image}
             />
           ))}
-          <EventDeleteBtn onClick={onEventDeleteClick} width="24px" height="24px" viewBox="0 0 32 32"/>
+          <EventDeleteBtn
+            onClick={onOpenModal}
+            width="24px"
+            height="24px"
+            viewBox="0 0 32 32"
+          />
+          {isOpenDeleteModal && (
+            <WarningModal
+              closeModal={closeModal}
+              onClickConfirm={onEventDeleteClick}
+              onClickCancel={closeModal}
+              message={"이벤트를 삭제하시겠습니까?"}
+              ConfirmButtonName={"삭제"}
+            />
+          )}
         </EventHeader>
         <EventTitle
           defaultValue={eventName}

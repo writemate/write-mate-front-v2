@@ -29,34 +29,22 @@ export const SideBarAndMainContainer = styled.div`
 `;
 
 export const MainContainer = styled.div<{
-  $isLeftOpen: boolean;
-  $isRightOpen: boolean;
+  $isScriptPage: boolean;
 }>`
   ${FlexColumnCenter}
   flex-grow: 1;
   height: 100%;
-  width: 100%;
+  max-width: ${({ $isScriptPage }) => ($isScriptPage ? "none" : "1012px")};
   position: relative;
-  padding-top: 65px;
-  padding-left: max(
-    28px,
-    ${({ $isLeftOpen }) =>
-      $isLeftOpen
-        ? `calc((100% - 1012px) / 2 - 258px)`
-        : "calc((100% - 1012px) / 2)"}
-  );
-  padding-right: max(
-    28px,
-    ${({ $isRightOpen }) =>
-      $isRightOpen
-        ? `calc((100% - 1012px) / 2 - 309px)`
-        : "calc((100% - 1012px) / 2)"}
-  );
-  padding-bottom: 60px;
+  padding: ${({ $isScriptPage }) =>
+    $isScriptPage ? "0" : "65px 28px 60px 28px"};
+  margin-left: auto;
+  margin-right: auto;
   overflow-y: auto;
 
   ${media.tablet} {
-    padding: 15px;
+    padding: ${({ $isScriptPage }) =>
+      $isScriptPage ? "0" : "20px 16px 20px 16px"};
   }
 `;
 

@@ -15,6 +15,8 @@ import DragDrop from "@/assets/workspace/plot/dragdrop.svg";
 import ToggleFold from "@/assets/workspace/plot/toggleFold.svg";
 import useChapter from "@/hooks/workspace/plot/useChapter";
 import { TChapter } from "@/utils/APIs/types";
+import { WarningModal } from "@/components/dashboard/WarningModal";
+import { useWarningModal } from "@/hooks/common/useWarningModal";
 
 export default function Chapter({
   id: chapterId,
@@ -30,6 +32,7 @@ export default function Chapter({
     toggleChapterFold,
   } = useChapter(chapterId, isFolded);
 
+  const { isOpenDeleteModal, onOpenModal, closeModal } = useWarningModal();
   return (
     <ChapterContainer>
       <ChapterDragWrap>
@@ -50,9 +53,20 @@ export default function Chapter({
           <IconButton type="button">
             <CopyIcon />
           </IconButton>
-          <IconButton type="button" onClick={onChapterDeleteClick}>
+          <IconButton type="button" onClick={onOpenModal}>
             <DeleteIcon />
           </IconButton>
+          {isOpenDeleteModal && (
+            <WarningModal
+              closeModal={closeModal}
+              onClickConfirm={onChapterDeleteClick}
+              onClickCancel={closeModal}
+              message={
+                "챕터를 삭제하시겠습니까? \n 챕터 내의 이벤트도 함께 삭제됩니다."
+              }
+              ConfirmButtonName={"삭제"}
+            />
+          )}
         </ChapterHeader>
         <Description
           defaultValue={chapterDescription}

@@ -21,7 +21,7 @@ export default function WorkspaceLayout({
   children: React.ReactNode;
 }) {
   const workspaceLayoutValue = useWorkspaceLayout();
-  const { isPlotOpen, isScriptOpen, openIdeaBox, toggleIdeaBox, ...sidetab } =
+  const { isPlotOpen, isScriptOpen, openIdeaBox, toggleIdeaBox, isScriptPage } =
     workspaceLayoutValue;
 
   return (
@@ -33,10 +33,7 @@ export default function WorkspaceLayout({
           <SideBarAndMainContainer>
             {isPlotOpen && <Sidebar type="plot" />}
             {isScriptOpen && <Sidebar type="script" />}
-            <MainContainer
-              $isLeftOpen={isPlotOpen || isScriptOpen}
-              $isRightOpen={openIdeaBox}
-            >
+            <MainContainer $isScriptPage={isScriptPage}>
               {children}
             </MainContainer>
             {openIdeaBox && <IdeaBox toggleIdeaBox={toggleIdeaBox} />}

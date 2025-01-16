@@ -12,6 +12,7 @@ import {
 import Back from "@/assets/workspace/character/back.svg";
 import { media } from "../media";
 import { FontBold20 } from "../Font";
+import { Round9999OrangeBackgoundWhiteColor } from "../Button";
 
 export const BackButton = styled(Back)`
   flex-shrink: 0;
@@ -159,32 +160,8 @@ export const CoverContentsContainer = styled.div`
   }
 `;
 export const AddMemoButtonContainer = styled.button`
-  ${clickable}
-  position:relative;
-  margin-left: 12px;
-
-  width: fit-content;
-  padding: 12px;
-  justify-content: center;
-  align-items: center;
-  border-radius: 100px;
-  background: ${({ theme }) => theme.color.orange400};
-  border: none;
-
-  color: ${({ theme }) => theme.color.white};
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 800;
-  line-height: 100%;
-
-  &:hover {
-    filter: brightness(95%);
-  }
-
-  ${media.tablet} {
-    font-size: 12px;
-    padding: 8px;
-  }
+  position: relative;
+  ${Round9999OrangeBackgoundWhiteColor}
 `;
 
 export const SubTitleWithButton = styled.div`

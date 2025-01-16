@@ -23,10 +23,6 @@ export function useMyPage() {
     setIsOpenMyPage(false);
   };
 
-  useEffect(() => {
-    console.log("useMyPage", isOpenMyPage);
-  }, [isOpenMyPage]);
-
   return {
     user,
     usage,

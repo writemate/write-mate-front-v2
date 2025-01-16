@@ -8,6 +8,8 @@ import {
 import CoverImageBox from "@/components/workspace/character/detail/CoverImageBox";
 import { Input, DeleteButton } from "@/styles";
 import { CharacterContext } from "@/hooks/workspace/character/character";
+import { useWarningModal } from "@/hooks/common/useWarningModal";
+import { WarningModal } from "@/components/dashboard/WarningModal";
 
 export default function Cover({
   isDeletable = true,
@@ -21,6 +23,9 @@ export default function Cover({
     onChangeName,
     onChangeRole,
   } = useContext(CharacterContext);
+
+  const { isOpenDeleteModal, onOpenModal, closeModal } = useWarningModal();
+
   const { ch_name, role } = data ?? {};
   return (
     <CoverContainer>
@@ -28,11 +33,20 @@ export default function Cover({
       <CoverContentsContainer>
         {isDeletable && (
           <DeleteButton
-            onClick={onClickDeleteCharacter}
+            onClick={onOpenModal}
             style={{ marginLeft: "auto", marginBottom: "auto" }}
           >
             삭제하기
           </DeleteButton>
+        )}
+        {isOpenDeleteModal && (
+          <WarningModal
+            closeModal={closeModal}
+            onClickConfirm={onClickDeleteCharacter}
+            onClickCancel={closeModal}
+            message={"인물를 삭제하시겠습니까?"}
+            ConfirmButtonName={"삭제"}
+          />
         )}
         <SubTitle>인물 이름</SubTitle>
         <Input

@@ -11,4 +11,5 @@ export const LoadingMessage = styled.div`
   align-items: center;
   text-align: center;
   color: ${({ theme }) => theme.color.gray400};
+  white-space: pre-line;
 `;

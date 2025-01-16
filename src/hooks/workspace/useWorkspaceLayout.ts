@@ -37,6 +37,7 @@ export const useWorkspaceLayout = () => {
   const isPlotActive = getActive("plot", isPlotOpen);
   const isScriptActive = getActive("script", isScriptOpen);
   const isCharacterActive = getActive("character", false);
+  const isScriptPage = pageOn("script");
 
   return {
     togglePlot,
@@ -49,6 +50,7 @@ export const useWorkspaceLayout = () => {
     isPlotActive,
     isScriptActive,
     isCharacterActive,
+    isScriptPage,
   };
 };
 
