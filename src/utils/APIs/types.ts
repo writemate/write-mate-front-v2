@@ -7,6 +7,12 @@ export type TUser = {
   email: string;
 };
 
+export type TUsage = {
+  attendanceDays: number;
+  allWorks: number;
+  completedWorks: number;
+};
+
 /**
  * 메모 타입
  */

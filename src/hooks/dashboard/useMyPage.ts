@@ -1,4 +1,4 @@
-import { getMockUsage } from "@/utils/APIs/dashboard";
+import { getUsage } from "@/utils/APIs/dashboard";
 import { getUserInfo } from "@/utils/APIs/user";
 import { useQuery } from "@tanstack/react-query";
 import { createContext, useEffect, useState } from "react";
@@ -7,13 +7,13 @@ export function useMyPage() {
   const [isOpenMyPage, setIsOpenMyPage] = useState(false);
 
   const { data: user } = useQuery({
-    queryKey: ["user", "mock"],
+    queryKey: ["user"],
     queryFn: getUserInfo,
   });
 
   const { data: usage } = useQuery({
-    queryKey: ["usage", "mock"],
-    queryFn: getMockUsage,
+    queryKey: ["usage"],
+    queryFn: getUsage,
   });
 
   const onClickMyPage = () => {
@@ -23,10 +23,6 @@ export function useMyPage() {
   const closeModal = () => {
     setIsOpenMyPage(false);
   };
-
-  useEffect(() => {
-    console.log("useMyPage", isOpenMyPage);
-  }, [isOpenMyPage]);
 
   return {
     user,
