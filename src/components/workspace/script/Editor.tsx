@@ -6,8 +6,7 @@ import { ScriptContext } from "@/hooks/workspace/script";
 import { TextAreaContainer } from "@/styles/workspace/Script.styles";
 
 export default function QuillEditor() {
-  const { editorRef, mainRef, containerRef, value, handleChange } =
-    useContext(ScriptContext);
+  const { editorRef, handleQuillChange } = useContext(ScriptContext);
 
   const modules = {
     toolbar: {
@@ -21,15 +20,13 @@ export default function QuillEditor() {
   };
 
   return (
-    <TextAreaContainer ref={containerRef}>
+    <TextAreaContainer>
       <ReactQuill
-        value={value}
-        onChange={handleChange}
         modules={modules}
         theme="snow"
-        scrollingContainer={mainRef.current ?? undefined}
         placeholder="내용을 입력하세요."
         ref={editorRef}
+        onChange={handleQuillChange}
       ></ReactQuill>
     </TextAreaContainer>
   );

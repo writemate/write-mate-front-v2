@@ -35,6 +35,9 @@ export const DOMAIN = {
   DELETE_SCRIPT: (scriptId: string) => `/api/scripts/${scriptId}`,
   UPDATE_SCRIPT_NAME: (scriptId: string) => `/api/scripts/${scriptId}/name`,
   SET_MAIN_SCRIPT: (scriptId: string) => `/api/scripts/${scriptId}/main`,
+  GET_SCRIPT: (scriptId: string) => `/api/scripts/${scriptId}`,
+  UPDATE_SCRIPT_CONTENT: (scriptId: string) =>
+    `/api/scripts/${scriptId}/content`,
 
   GET_CHAPTER_LIST_WITH_EVENTS: (plotId: string) => `/api/plots/${plotId}`,
   CREATE_CHAPTER: (plotId: string) => `/api/plots/${plotId}/chapters`,

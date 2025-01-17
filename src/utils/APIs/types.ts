@@ -146,7 +146,8 @@ export type TPlotEvent = {
 export type TScript = {
   id: string;
   script_name: string;
-  script_content: string;
+  is_pinned: boolean;
+  content: string;
 };
 
 /**
