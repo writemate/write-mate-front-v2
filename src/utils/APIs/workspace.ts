@@ -41,7 +41,7 @@ import {
   deleteCharacterRelationMock,
   updateCharacterRelationMock,
 } from "./mock/workspace";
-import { TFolder, TWork } from "./types";
+import { TFolder, TScript, TWork } from "./types";
 import { DOMAIN } from "./domain";
 
 export const getWork = (workId: string) => async (): Promise<TWork> => {
@@ -123,6 +123,21 @@ export const updateScriptName = async ({
   );
   return response.data;
 };
+export const getScript = (scriptId: string) => async () => {
+  const response = await axiosInstance.get<TScript>(
+    DOMAIN.GET_SCRIPT(scriptId)
+  );
+  return response.data;
+};
+export const updateScriptContent =
+  (scriptId: string) => async (content: string) => {
+    const response = await axiosInstance.patch<void>(
+      DOMAIN.UPDATE_SCRIPT_CONTENT(scriptId),
+      { content }
+    );
+    return response.data;
+  };
+
 export const setMainScript = async (scriptId: string) => {
   const response = await axiosInstance.patch<void>(
     DOMAIN.SET_MAIN_SCRIPT(scriptId)

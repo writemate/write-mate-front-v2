@@ -1,10 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { workspaceQueryKeys } from "@/utils/APIs/queryKeys";
-import { getWork } from "@/utils/APIs/workspace";
+import { getScript, getWork } from "@/utils/APIs/workspace";
 import { useParams, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getPlotInfo } from "@/utils/APIs/workspace/plot";
-import { getScriptInfo } from "@/utils/APIs/workspace/script";
 import { getCharacter } from "@/utils/APIs/workspace/character";
 
 export default function useWorkspaceHeader() {
@@ -27,7 +26,7 @@ export default function useWorkspaceHeader() {
   const [script_id, setScriptId] = useState("");
   const { data: script } = useQuery({
     queryKey: workspaceQueryKeys.script(workspace_id, script_id),
-    queryFn: getScriptInfo(script_id),
+    queryFn: getScript(script_id),
   });
 
   const [character_id, setCharacterId] = useState("");

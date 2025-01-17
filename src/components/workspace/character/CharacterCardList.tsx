@@ -1,10 +1,8 @@
 import { CharacterListContext } from "@/hooks/workspace/character/characterList";
-import {
-  CharacterListContainer,
-  LoadingMessage,
-} from "@/styles/workspace/Character.style";
+import { CharacterListContainer } from "@/styles/workspace/Character.style";
 import { CharacterCard } from "./CharacterCard";
 import { useContext } from "react";
+import { LoadingMessage } from "@/styles/dashboard/Loading.style";
 
 interface CharacterCardListProps {
   forInfoPage?: boolean;

@@ -11,13 +11,13 @@ import { ScriptContext, useScript } from "@/hooks/workspace/script";
 
 export default function Script() {
   const useScriptValue = useScript();
-  const { editorRef, mainRef, containerRef } = useScriptValue;
+  const { editorRef } = useScriptValue;
 
   return (
     <ScriptContext.Provider value={useScriptValue}>
       <ScriptContainer>
         <CustomToolbar editorRef={editorRef} />
-        <ScriptMainContainer ref={mainRef}>
+        <ScriptMainContainer>
           <QuillEditor />
         </ScriptMainContainer>
         <TextCount editorRef={editorRef}></TextCount>
