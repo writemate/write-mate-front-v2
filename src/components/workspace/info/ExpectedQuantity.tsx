@@ -12,9 +12,9 @@ import { InfoContext } from "@/hooks/workspace/info";
 export default function ScriptSidebar() {
   const { data, isLoading, onChangeExpectedQuantity, onChangeGrade } =
     useContext(InfoContext);
-  const { expectedQuantity } = data ?? {};
+  const { expected_quantity } = data ?? {};
   const realExpectedQuantity =
-    (expectedQuantity ?? 0) > 0 ? expectedQuantity : undefined;
+    (expected_quantity ?? 0) > 0 ? expected_quantity : undefined;
   const grade = data?.grade ?? null;
 
   return (
