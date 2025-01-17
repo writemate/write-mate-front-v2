@@ -1,7 +1,7 @@
 import axiosInstance from "./axiosInstance";
 import { DOMAIN } from "./domain";
 import { mockUsage, mockUser } from "./mock/\bmypage";
-import { TWork } from "./types";
+import { TUsage, TWork } from "./types";
 import { workspaceCategory } from "./types";
 
 export const getWorkStudio =
@@ -57,12 +57,7 @@ export const getMemo = async () => {
   return response.data;
 };
 
-export const getMockUser = () => {
-  const response = mockUser;
-  return response;
-};
-
-export const getMockUsage = () => {
-  const response = mockUsage;
-  return response;
+export const getUsage = async () => {
+  const response = await axiosInstance.get<TUsage>(DOMAIN.GET_USAGE);
+  return response.data;
 };
