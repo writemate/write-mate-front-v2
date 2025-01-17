@@ -1,162 +1,69 @@
 import { createContext, useCallback, useEffect, useRef, useState } from "react";
 import ReactQuill from "react-quill";
 import { fontSize, font } from "@/components/workspace/script/Toolbar";
+import { useQuery } from "@tanstack/react-query";
+import { workspaceQueryKeys } from "@/utils/APIs/queryKeys";
+import { useParams } from "next/navigation";
+import { useInputLiveUpdate } from "../common/useInputLiveUpdate";
+import { getScript, updateScriptContent } from "@/utils/APIs/workspace";
 
 export function useScript() {
   const editorRef = useRef<ReactQuill | null>(null);
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const mainRef = useRef<HTMLDivElement | null>(null);
-  const [value, setValue] = useState("");
-  const handleChange = (content: string) => {
-    setValue(content);
-  };
 
-  const getCursorMetrics = useCallback(() => {
-    if (!editorRef.current)
-      return { distanceFromTop: 0, lineHeight: 0, hasFocus: false };
-    const quill = editorRef.current.getEditor();
-    let distanceFromTop = 0;
-    let lineHeight = 0;
+  const { workspace_id, script_id } = useParams<{
+    workspace_id: string;
+    script_id: string;
+  }>();
 
-    const hasFocus = quill.hasFocus();
-    if (hasFocus) {
-      const range = quill.getSelection();
-      if (range) {
-        const bounds = quill.getBounds(range.index);
-        const editorContainer = document.querySelector(
-          ".ql-editor"
-        ) as HTMLElement;
-        if (editorContainer) {
-          const lineElement = editorContainer.querySelector(
-            `p span[data-line-index="${range.index}"]`
-          ) as HTMLElement;
-          if (bounds) {
-            distanceFromTop = bounds.top;
-            lineHeight = lineElement ? lineElement.offsetHeight : bounds.height;
-          }
-        }
-      }
-    }
-    return { distanceFromTop, lineHeight, hasFocus };
-  }, [editorRef]);
+  const { data } = useQuery({
+    queryKey: workspaceQueryKeys.script(workspace_id, script_id),
+    queryFn: getScript(script_id),
+  });
 
-  const editorContainerPaddingTop = useCallback(() => {
-    if (containerRef.current) {
-      return parseFloat(
-        window.getComputedStyle(containerRef.current).paddingTop
-      );
-    }
-    return 0;
-  }, [containerRef]);
-
-  const handleAutoScroll = useCallback(() => {
-    if (!mainRef.current) return;
-
-    const container = mainRef.current;
-    const CursorMetrics = getCursorMetrics();
-
-    const currentLine =
-      50 +
-      editorContainerPaddingTop() +
-      12 +
-      CursorMetrics.distanceFromTop +
-      CursorMetrics.lineHeight;
-
-    const autoScrollStartThreshold =
-      container.scrollTop +
-      container.clientHeight -
-      editorContainerPaddingTop() * 0.7;
-
-    const isOverflow = currentLine >= autoScrollStartThreshold;
-
-    const targetAutoScrollTop =
-      currentLine + editorContainerPaddingTop() * 0.7 - container.clientHeight;
-
-    if (isOverflow) {
-      container.scrollTo(0, targetAutoScrollTop);
-    }
-  }, [mainRef, getCursorMetrics, editorContainerPaddingTop]);
-
-  const handleMouseDown = useCallback(
-    (event: MouseEvent) => {
-      if (!editorRef.current) return;
-      const quillEditor = editorRef.current.getEditor().root;
-      if (quillEditor && quillEditor.contains(event.target as Node)) {
-        return;
-      } else {
-        event.preventDefault();
-      }
-    },
-    [editorRef]
+  const onChangeScript = useInputLiveUpdate(
+    updateScriptContent(script_id),
+    "스크립트를 저장 중입니다.",
+    "스크립트를 저장하는 중에 문제가 발생했습니다."
   );
 
-  const [cursorPositionAfterPaste, setCursorPositionAfterPaste] = useState<
-    number | null
-  >(null);
+  const handleQuillChange = useCallback(() => {
+    const editor = editorRef.current?.getEditor();
+    const delta = editor?.getContents();
+    if (delta) {
+      onChangeScript({
+        target: { value: JSON.stringify(delta) },
+      } as React.ChangeEvent<HTMLTextAreaElement>);
+    }
+  }, [editorRef, onChangeScript]);
 
-  const handleEditorChange = useCallback(
-    (quill: any) =>
-      (eventName: string, ...args: any[]) => {
-        if (eventName === "selection-change") {
-          if (cursorPositionAfterPaste !== null) {
-            quill.setSelection(cursorPositionAfterPaste);
-            setCursorPositionAfterPaste(null);
-          }
-          handleAutoScroll();
-          return;
-        }
-        if (eventName === "text-change" && args[0]?.ops) {
-          if (args[0].ops.length !== 2) return;
-          const retain = args[0].ops[0]?.retain;
-          if (retain === undefined) return;
-          const insert = args[0].ops[1]?.insert;
-          if (insert === undefined) return;
-          if (typeof insert !== "string" || insert.length < 2) return;
-          setCursorPositionAfterPaste(retain + insert.length);
-        }
-      },
-    [cursorPositionAfterPaste, handleAutoScroll]
-  );
+  // 초기값 설정
+  useEffect(() => {
+    if (data && editorRef.current) {
+      const editor = editorRef.current.getEditor();
+      try {
+        // 저장된 Delta를 파싱해서 설정
+        const delta = JSON.parse(data.content);
+        editor.setContents(delta);
+      } catch (e) {
+        console.error("Failed to parse delta", e);
+      }
+    }
+  }, [data, editorRef]);
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleMouseDown);
-    return () => {
-      document.removeEventListener("mousedown", handleMouseDown);
+    const setupQuillFormat = (formatType: string, whitelist: string[]) => {
+      const Format = ReactQuill.Quill.import(formatType) as any;
+      Format.whitelist = whitelist;
+      ReactQuill.Quill.register(Format, true);
     };
-  }, [handleMouseDown]);
 
-  useEffect(() => {
-    if (!editorRef.current) return;
-    const quill = editorRef.current.getEditor();
-    const handler = handleEditorChange(quill);
-    quill.on("editor-change", handler);
-    return () => {
-      quill.off("editor-change", handler);
-    };
-  }, [editorRef, handleEditorChange]);
-
-  useEffect(() => {
-    const Font = ReactQuill.Quill.import("formats/font") as any;
-    Font.whitelist = font;
-    ReactQuill.Quill.register(Font, true);
-
-    const fontSizeStyle = ReactQuill.Quill.import(
-      "attributors/style/size"
-    ) as any;
-    fontSizeStyle.whitelist = fontSize;
-    ReactQuill.Quill.register(fontSizeStyle, true);
+    setupQuillFormat("formats/font", font);
+    setupQuillFormat("attributors/style/size", fontSize);
   }, []);
 
   return {
     editorRef,
-    mainRef,
-    containerRef,
-    value,
-    handleChange,
-    getCursorMetrics,
-    editorContainerPaddingTop,
-    handleAutoScroll,
-    handleMouseDown,
+    handleQuillChange,
   };
 }
 
