@@ -44,6 +44,6 @@ export const useMainPlot = () => {
     isLoading,
     plot_name: plot?.plot_name,
     chapterList: plot?.chapter_list,
-    plot_id: plot?.id,
+    plot_id: plot?.id!,
   };
 };
