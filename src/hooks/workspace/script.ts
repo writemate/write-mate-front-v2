@@ -9,7 +9,6 @@ import { getScript, updateScriptContent } from "@/utils/APIs/workspace";
 
 export function useScript() {
   const editorRef = useRef<ReactQuill | null>(null);
-
   const { workspace_id, script_id } = useParams<{
     workspace_id: string;
     script_id: string;
@@ -41,7 +40,6 @@ export function useScript() {
     if (data && editorRef.current) {
       const editor = editorRef.current.getEditor();
       try {
-        // 저장된 Delta를 파싱해서 설정
         const delta = JSON.parse(data.content);
         editor.setContents(delta);
       } catch (e) {
