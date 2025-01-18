@@ -36,16 +36,19 @@ export function useScript() {
     }
   }, [editorRef, onChangeScript]);
 
-  // 초기값 설정
   useEffect(() => {
     if (data && editorRef.current) {
       const editor = editorRef.current.getEditor();
       try {
-        // 저장된 Delta를 파싱해서 설정
-        const delta = JSON.parse(data.content);
-        editor.setContents(delta);
+        if (data.content) {
+          const delta = JSON.parse(data.content);
+          editor.setContents(delta);
+        } else {
+          editor.setContents([{ insert: "\n" }]);
+        }
       } catch (e) {
         console.error("Failed to parse delta", e);
+        editor.setContents([{ insert: "\n" }]);
       }
     }
   }, [data, editorRef]);

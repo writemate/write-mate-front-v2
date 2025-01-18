@@ -3,20 +3,17 @@ import { ToolbarContainer, Undo, Redo } from "@/styles/workspace/Script.styles";
 import "react-quill/dist/quill.snow.css";
 
 export const fontSize = [
-  "9pt",
-  "10pt",
-  "11pt",
-  "12pt",
-  "14pt",
-  "16pt",
-  "18pt",
-  "20pt",
-  "24pt",
-  "30pt",
-  "36pt",
-  "48pt",
-  "60pt",
-  "72pt",
+  "9px",
+  "10px",
+  "11px",
+  "12px",
+  "14px",
+  "16px",
+  "18px",
+  "20px",
+  "24px",
+  "30px",
+  "36px",
 ];
 export const font = ["nanum-gothic", "nanum-myeongjo"];
 
@@ -48,10 +45,10 @@ export default function CustomToolbar({ editorRef }: { editorRef: any }) {
       </select>
 
       {/* 헤더 크기 */}
-      <select className="ql-size" defaultValue={"11pt"}>
+      <select className="ql-size" defaultValue={"12px"}>
         {fontSize.map((val) => (
           <option key={val} value={val}>
-            {val.replace(/[^0-9]/g, "")}
+            {val}
           </option>
         ))}
       </select>
