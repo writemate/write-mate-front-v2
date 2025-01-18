@@ -1,175 +1,382 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { workspaceQueryKeys } from "@/utils/APIs/queryKeys";
-import { getCharacter, updateCharacterName, updateCharacterRole, updateCharacterGender, 
-  updateCharacterBirthday, addCharacterKeyword, removeCharacterKeyword,
-  updateCharacterCoverImage, addCharacterCharacteristic, updateCharacterCharacteristicTitle,
-  removeCharacterCharacteristic, updateCharacterCharacteristicContent,
-  updateCharacterDescription, deleteCharacter
-} from "@/utils/APIs/workspace";
-import { debounce } from "@/utils";
+import {
+  getCharacter,
+  updateCharacterName,
+  updateCharacterRole,
+  updateCharacterGender,
+  updateCharacterBirthday,
+  addKeywordToCharacter,
+  removeKeywordFromCharacter,
+  updateCharacterCoverImage,
+  addCharacterCharacteristic,
+  updateCharacterCharacteristicTitle,
+  removeCharacterCharacteristic,
+  updateCharacterCharacteristicContent,
+  updateCharacterDescription,
+  deleteCharacter,
+  getKeywordList,
+  createKeyword,
+} from "@/utils/APIs/workspace/character";
 import { useParams, useRouter } from "next/navigation";
-import { createContext } from "react";
-import { TCharacter } from "@/utils/APIs/types";
+import { createContext, useState, useEffect } from "react";
+import { TCharacter, TKeyword } from "@/utils/APIs/types";
+import { useInputLiveUpdate } from "@/hooks/common/useInputLiveUpdate";
+import { useOnClickUpdate } from "@/hooks/common/useOnClickUpdate";
+import useMiniModal from "./useMiniModal";
 
-function useUpdate<T,U>({updateFn, onMutate, onChange}:{
-  updateFn: (workspace_id: string, chraacter_id:string) => (value: T) => Promise<void>,
-  onMutate: (value: T) => void,
-  onChange: (debouncedMutate: (value: T) => void) => U,
-}) {
-  const queryClient = useQueryClient();
-  const { workspace_id, character_id } = useParams<{ workspace_id: string, character_id: string }>();
-  const { mutate, isPending } = useMutation({
-    mutationFn: updateFn(workspace_id, character_id),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: workspaceQueryKeys.characterDetail(workspace_id, character_id) }),
-    onMutate,
-  });
-  const debouncedMutate = debounce(mutate, 500);
-  return { onChange: onChange(debouncedMutate), isPending };
-}
-
-export function useCharacter() {
+export function useCharacter(characterId?: string) {
   const queryClient = useQueryClient();
   const router = useRouter();
-  const { workspace_id, character_id } = useParams<{ workspace_id: string, character_id: string }>();
+  const params = useParams<{ workspace_id: string; character_id: string }>();
+  const workspace_id = params.workspace_id;
+  const character_id = characterId ?? params.character_id;
   const { data, error, isLoading } = useQuery({
     queryKey: workspaceQueryKeys.characterDetail(workspace_id, character_id),
     queryFn: getCharacter(workspace_id, character_id),
   });
 
-  const { onChange: onChangeName, isPending: isPendingName } = useUpdate({
-    updateFn: updateCharacterName,
-    onMutate: (value) => {
-      queryClient.setQueryData(workspaceQueryKeys.characterDetail(workspace_id, character_id), (prev: TCharacter) => ({
-        ...prev,
-        ch_name: value,
-      }));
-    },
-    onChange: (debouncedMutate) => (e: React.ChangeEvent<HTMLInputElement>) => debouncedMutate(e.target.value),
+  const { data: keywordList, isLoading: isKeywordsLoading } = useQuery({
+    queryKey: workspaceQueryKeys.characterKeywordList(workspace_id),
+    queryFn: getKeywordList(workspace_id),
   });
 
-  const { mutate: deleteCharacterMutation, isPending: isPendingDeleteCharacter } = useMutation({
+  const mutateDeleteCharacter = useOnClickUpdate({
     mutationFn: deleteCharacter(workspace_id, character_id),
+    queryKey: workspaceQueryKeys.character(workspace_id),
+    savingMessage: "캐릭터 삭제 중",
+    errorMessage: "캐릭터 삭제에 실패했습니다.",
+    onMutate: () => {
+      const prevData = queryClient.getQueryData(
+        workspaceQueryKeys.characterList(workspace_id)
+      );
+      queryClient.setQueryData(
+        workspaceQueryKeys.characterList(workspace_id),
+        (prev: any) => prev.filter((c: any) => c.id !== character_id)
+      );
+      return { prevData };
+    },
+    onError: (error, variables, context) => {
+      queryClient.setQueryData(
+        workspaceQueryKeys.characterList(workspace_id),
+        context?.prevData
+      );
+    },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: workspaceQueryKeys.characterList(workspace_id) });
       router.push(`/${workspace_id}/character`);
     },
-  });
-
-  const { onChange: onChangeRole, isPending: isPendingRole } = useUpdate({
-    updateFn: updateCharacterRole,
-    onMutate: (value) => {
-      queryClient.setQueryData(workspaceQueryKeys.characterDetail(workspace_id, character_id), (prev: TCharacter) => ({
-        ...prev,
-        role: value,
-      }));
-    },
-    onChange: (debouncedMutate) => (e: React.ChangeEvent<HTMLInputElement>) => debouncedMutate(e.target.value),
-  });
-
-  const { onChange: onChangeBirthday, isPending: isPendingBirthday } = useUpdate({
-    updateFn: updateCharacterBirthday,
-    onMutate: (value) => {
-      queryClient.setQueryData(workspaceQueryKeys.characterDetail(workspace_id, character_id), (prev: TCharacter) => ({
-        ...prev,
-        birthday: value,
-      }));
-    },
-    onChange: (debouncedMutate) => (e: React.ChangeEvent<HTMLInputElement>) => debouncedMutate(e.target.value),
-  });
-
-  const { onChange: onChangeGender, isPending: isPendingGender } = useUpdate({
-    updateFn: updateCharacterGender,
-    onMutate: (value) => {
-      queryClient.setQueryData(workspaceQueryKeys.characterDetail(workspace_id, character_id), (prev: TCharacter) => ({
-        ...prev,
-        gender: value,
-      }));
-    },
-    onChange: (debouncedMutate) => (e: React.ChangeEvent<HTMLInputElement>) => debouncedMutate(e.target.value),
-  });
-
-  const { onChange: onChangeDescription, isPending: isPendingDescription } = useUpdate({
-    updateFn: updateCharacterDescription,
-    onMutate: (value) => {
-      queryClient.setQueryData(workspaceQueryKeys.characterDetail(workspace_id, character_id), (prev: TCharacter) => ({
-        ...prev,
-        description: value,
-      }));
-    },
-    onChange: (debouncedMutate) => (e: React.ChangeEvent<HTMLTextAreaElement>) => debouncedMutate(e.target.value),
-  });
-
-  const { mutate: mutateAddKeyword, isPending: isPendingAddKeyword } = useMutation({
-    mutationFn: addCharacterKeyword(workspace_id, character_id),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: workspaceQueryKeys.characterDetail(workspace_id, character_id) }),
-  });
-
-  const { mutate: mutateRemoveKeyword, isPending: isPendingRemoveKeyword } = useMutation({
-    mutationFn: removeCharacterKeyword(workspace_id, character_id),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: workspaceQueryKeys.characterDetail(workspace_id, character_id) }),
-  });
-
-  const onClickRemoveKeyword = (id: string) => mutateRemoveKeyword(id);
-
-  const { mutate: mutateAddCharacteristic, isPending: isPendingAddCharacteristic } = useMutation({
-    mutationFn: addCharacterCharacteristic(workspace_id, character_id),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: workspaceQueryKeys.characterDetail(workspace_id, character_id) }),
-  });
-
-  const onClickAddCharacteristic = () => mutateAddCharacteristic();
-
-  const { mutate: mutateRemoveCharacteristic, isPending: isPendingRemoveCharacteristic } = useMutation({
-    mutationFn: removeCharacterCharacteristic(workspace_id, character_id),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: workspaceQueryKeys.characterDetail(workspace_id, character_id) }),
-  });
-
-  const onClickRemoveCharacteristic = (index: number) => () => mutateRemoveCharacteristic(index);
-
-  const { onChange: onChangeCharacteristicTitle, isPending: isPendingCharacteristicTitle } = useUpdate({
-    updateFn: updateCharacterCharacteristicTitle,
-    onMutate: ({ index, title }) => {
-      queryClient.setQueryData(workspaceQueryKeys.characterDetail(workspace_id, character_id), (prev: TCharacter) => ({
-        ...prev,
-        characteristic: prev.characteristic.map((c, i) => i === index ? { ...c, title } : c),
-      }));
-    },
-    onChange: (debouncedMutate) =>(index:number)=>(e: React.ChangeEvent<HTMLInputElement>) => debouncedMutate({index, title: e.target.value}),
-  });
-
-  const { onChange: onChangeCharacteristicContent, isPending: isPendingCharacteristicContent } = useUpdate({
-    updateFn: updateCharacterCharacteristicContent,
-    onMutate: ({ index, content }) => {
-      queryClient.setQueryData(workspaceQueryKeys.characterDetail(workspace_id, character_id), (prev: TCharacter) => ({
-        ...prev,
-        characteristic: prev.characteristic.map((c, i) => i === index ? { ...c, content } : c),
-      }));
-    },
-    onChange: (debouncedMutate) => (index:number)=>(e: React.ChangeEvent<HTMLInputElement>) => debouncedMutate({index, content: e.target.value}),
-  });
-  
-  const { mutate: mutateCoverImage, isPending: isPendingCoverImage } = useMutation({
-    mutationFn: updateCharacterCoverImage(workspace_id, character_id),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: workspaceQueryKeys.characterDetail(workspace_id, character_id) }),
-    onMutate:(value) => {
-      queryClient.setQueryData(workspaceQueryKeys.info(workspace_id), (prev: any) => ({
-        ...prev,
-        cover: URL.createObjectURL(value),
-      }));
-    },
-  });
-  const onChangeCoverImage =(e: React.ChangeEvent<HTMLInputElement>) => {
-      const file = e.target.files?.[0];
-      if (!file) return;
-      mutateCoverImage(file);
+  })();
+  const onClickDeleteCharacter = () => {
+    if (confirm("정말 삭제하시겠습니까?")) {
+      mutateDeleteCharacter();
+    }
   };
 
-  return { data, error, isLoading, isPendingName, isPendingRole, isPendingGender, isPendingBirthday, isPendingDescription,
-    isPendingAddKeyword, isPendingRemoveKeyword, isPendingAddCharacteristic, isPendingRemoveCharacteristic,
-    isPendingCharacteristicTitle, isPendingCharacteristicContent, isPendingCoverImage,
-    onChangeName, onChangeRole, onChangeGender, onChangeBirthday, onChangeDescription,
-    onClickRemoveKeyword, onClickAddCharacteristic, onClickRemoveCharacteristic,
-    onChangeCharacteristicTitle, onChangeCharacteristicContent, onChangeCoverImage,
-    deleteCharacter: deleteCharacterMutation,};
+  const onChangeName = useInputLiveUpdate(
+    updateCharacterName(workspace_id, character_id),
+    "캐릭터 이름 변경",
+    "캐릭터 이름 변경에 실패했습니다."
+  );
+  const onChangeRole = useInputLiveUpdate(
+    updateCharacterRole(workspace_id, character_id),
+    "역할 변경",
+    "역할 변경에 실패했습니다."
+  );
+  const onChangeGender = useInputLiveUpdate(
+    updateCharacterGender(workspace_id, character_id),
+    "성별 변경",
+    "성별 변경에 실패했습니다."
+  );
+  const onChangeBirthday = useInputLiveUpdate(
+    updateCharacterBirthday(workspace_id, character_id),
+    "생일 변경",
+    "생일 변경에 실패했습니다."
+  );
+  const onChangeDescription = useInputLiveUpdate(
+    updateCharacterDescription(workspace_id, character_id),
+    "설명 변경",
+    "설명 변경에 실패했습니다."
+  );
+
+  const {
+    keywordListRef,
+    addButtonRef,
+    miniModalOpen,
+    openMiniModal,
+    miniKeywordInput,
+    onBlurredMiniModal,
+    onChangeMiniKeywordInput,
+    miniModalLeftPosition,
+  } = useMiniModal();
+
+  const { mutateAsync: mutateCreateKeywordAsync, isPending: creatingKeyword } =
+    useMutation({
+      mutationFn: createKeyword(workspace_id),
+      onMutate: () => {
+        queryClient.cancelQueries({
+          queryKey: workspaceQueryKeys.characterKeywordList(workspace_id),
+        });
+      },
+      onSuccess: () => {
+        queryClient.setQueryData(
+          workspaceQueryKeys.characterKeywordList(workspace_id),
+          (prev: any) => {
+            return [
+              ...prev,
+              {
+                id: "",
+                word: miniKeywordInput,
+                light_color: "",
+                dark_color: "",
+              },
+            ];
+          }
+        );
+        queryClient.invalidateQueries({
+          queryKey: workspaceQueryKeys.characterKeywordList(workspace_id),
+        });
+      },
+    });
+
+  const onClickAddKeywordToCharacter = useOnClickUpdate({
+    mutationFn: addKeywordToCharacter(workspace_id, character_id),
+    queryKey: workspaceQueryKeys.characterDetail(workspace_id, character_id),
+    savingMessage: "캐릭터에 키워드 추가 중",
+    errorMessage: "캐릭터 키워드 추가에 실패했습니다.",
+    onMutate: (keyword_id: string) => {
+      const prevData = queryClient.getQueryData(
+        workspaceQueryKeys.characterDetail(workspace_id, character_id)
+      );
+      const keywordData = queryClient.getQueryData<TKeyword[]>(
+        workspaceQueryKeys.characterKeywordList(workspace_id)
+      );
+      if (!prevData || !keywordData) return;
+      const keyword = keywordData.find((k) => k.id === keyword_id);
+      if (!keyword) return;
+      queryClient.setQueryData(
+        workspaceQueryKeys.characterDetail(workspace_id, character_id),
+        (prev: any) => {
+          return {
+            ...prev,
+            keyword: [...prev.keyword, keyword],
+          };
+        }
+      );
+      return { prevData };
+    },
+    onError: (error, variables, context) => {
+      queryClient.setQueryData(
+        workspaceQueryKeys.characterDetail(workspace_id, character_id),
+        context?.prevData
+      );
+    },
+  });
+
+  const onClickCreateAndAddKeywordToCharacter = async () => {
+    if (miniKeywordInput === "") return;
+    const keyword = await mutateCreateKeywordAsync({ word: miniKeywordInput });
+    if (keyword) {
+      onClickAddKeywordToCharacter(keyword)();
+    }
+    onBlurredMiniModal();
+  };
+
+  const onEnterPressAtMiniModal = (
+    e: React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (e.key === "Enter") {
+      onClickCreateAndAddKeywordToCharacter();
+    }
+  };
+
+  const onClickRemoveKeywordFromCharacter = useOnClickUpdate({
+    mutationFn: removeKeywordFromCharacter(workspace_id, character_id),
+    queryKey: workspaceQueryKeys.characterDetail(workspace_id, character_id),
+    savingMessage: "캐릭터에서 키워드 삭제 중",
+    errorMessage: "캐릭터 키워드 삭제에 실패했습니다.",
+    onMutate: (keyword_id: string) => {
+      const prevData = queryClient.getQueryData(
+        workspaceQueryKeys.characterDetail(workspace_id, character_id)
+      );
+      if (!prevData) return;
+      queryClient.setQueryData(
+        workspaceQueryKeys.characterDetail(workspace_id, character_id),
+        (prev: any) => {
+          return {
+            ...prev,
+            keyword: prev.keyword.filter((k: any) => k.id !== keyword_id),
+          };
+        }
+      );
+      return { prevData };
+    },
+    onError: (error, variables, context) => {
+      queryClient.setQueryData(
+        workspaceQueryKeys.characterDetail(workspace_id, character_id),
+        context?.prevData
+      );
+    },
+  });
+
+  const [characteristicList, setCharacteristicList] = useState<
+    TCharacter["characteristic"]
+  >([]);
+
+  useEffect(() => {
+    if (data) {
+      setCharacteristicList(data.characteristic);
+    }
+  }, [data]);
+
+  const onClickAddCharacteristic = useOnClickUpdate({
+    mutationFn: addCharacterCharacteristic(workspace_id, character_id),
+    queryKey: workspaceQueryKeys.characterDetail(workspace_id, character_id),
+    savingMessage: "캐릭터에 특징 추가 중",
+    errorMessage: "캐릭터 특징 추가에 실패했습니다.",
+    onMutate: () => {
+      const prevData = queryClient.getQueryData(
+        workspaceQueryKeys.characterDetail(workspace_id, character_id)
+      );
+      if (!prevData) return;
+      queryClient.setQueryData(
+        workspaceQueryKeys.characterDetail(workspace_id, character_id),
+        (prev: any) => {
+          return {
+            ...prev,
+            characteristic: [
+              ...prev.characteristic,
+              { title: "", content: "" },
+            ],
+          };
+        }
+      );
+      return { prevData };
+    },
+    onError: (error, variables, context) => {
+      queryClient.setQueryData(
+        workspaceQueryKeys.characterDetail(workspace_id, character_id),
+        context?.prevData
+      );
+    },
+  })();
+
+  const onClickRemoveCharacteristic = useOnClickUpdate({
+    mutationFn: removeCharacterCharacteristic(workspace_id, character_id),
+    queryKey: workspaceQueryKeys.characterDetail(workspace_id, character_id),
+    savingMessage: "캐릭터에서 특징 삭제 중",
+    errorMessage: "캐릭터 특징 삭제에 실패했습니다.",
+    onMutate: (index: number) => {
+      const prevData = queryClient.getQueryData<TCharacter>(
+        workspaceQueryKeys.characterDetail(workspace_id, character_id)
+      );
+      if (!prevData) return;
+      queryClient.setQueryData(
+        workspaceQueryKeys.characterDetail(workspace_id, character_id),
+        {
+          ...prevData,
+          characteristic: prevData.characteristic.filter((_, i) => i !== index),
+        }
+      );
+      return { prevData };
+    },
+    onError: (error, variables, context) => {
+      queryClient.setQueryData(
+        workspaceQueryKeys.characterDetail(workspace_id, character_id),
+        context?.prevData
+      );
+    },
+  });
+
+  const onChangeCharacteristicTitle = useInputLiveUpdate(
+    updateCharacterCharacteristicTitle(workspace_id, character_id),
+    "특징 제목 변경",
+    "특징 제목 변경에 실패했습니다.",
+    (value, index) =>
+      setCharacteristicList((prev) =>
+        prev.map((c, i) => (i === index ? { ...c, title: value } : c))
+      ),
+    (value, index) => ({ index, title: value })
+  );
+
+  const onChangeCharacteristicContent = useInputLiveUpdate(
+    updateCharacterCharacteristicContent(workspace_id, character_id),
+    "특징 내용 변경",
+    "특징 내용 변경에 실패했습니다.",
+    (value, index) =>
+      setCharacteristicList((prev) =>
+        prev.map((c, i) => (i === index ? { ...c, content: value } : c))
+      ),
+    (value, index) => ({ index, content: value })
+  );
+
+  const mutateCoverImage = useOnClickUpdate({
+    mutationFn: updateCharacterCoverImage(workspace_id, character_id),
+    queryKey: workspaceQueryKeys.characterDetail(workspace_id, character_id),
+    savingMessage: "캐릭터 이미지 변경 중",
+    errorMessage: "캐릭터 이미지 변경에 실패했습니다.",
+    onMutate: (value: File) => {
+      const prevData = queryClient.getQueryData(
+        workspaceQueryKeys.characterDetail(workspace_id, character_id)
+      );
+      queryClient.setQueryData(
+        workspaceQueryKeys.characterDetail(workspace_id, character_id),
+        (prev: any) => ({
+          ...prev,
+          ch_image: URL.createObjectURL(value),
+        })
+      );
+      return { prevData };
+    },
+    onError: (error, variables, context) => {
+      queryClient.setQueryData(
+        workspaceQueryKeys.characterDetail(workspace_id, character_id),
+        context?.prevData
+      );
+    },
+  });
+  const onChangeCoverImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    mutateCoverImage(file)();
+  };
+
+  return {
+    data,
+    error,
+    isLoading,
+    characteristicList,
+
+    keywordList,
+    isKeywordsLoading,
+    keywordListRef,
+    addButtonRef,
+    miniModalOpen,
+    openMiniModal,
+    miniKeywordInput,
+    onBlurredMiniModal,
+    onChangeMiniKeywordInput,
+    miniModalLeftPosition,
+    onClickAddKeywordToCharacter,
+    onClickRemoveKeywordFromCharacter,
+    onClickCreateAndAddKeywordToCharacter,
+    onEnterPressAtMiniModal,
+    creatingKeyword,
+
+    onChangeName,
+    onChangeRole,
+    onChangeCoverImage,
+    onChangeDescription,
+    onChangeGender,
+    onChangeBirthday,
+
+    onClickAddCharacteristic,
+    onClickRemoveCharacteristic,
+    onChangeCharacteristicTitle,
+    onChangeCharacteristicContent,
+    onClickDeleteCharacter,
+  };
 }
 
-export const CharacterContext = createContext({} as ReturnType<typeof useCharacter>);
+export const CharacterContext = createContext(
+  {} as ReturnType<typeof useCharacter>
+);

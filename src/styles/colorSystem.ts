@@ -32,4 +32,7 @@ export const colorSystem = {
   gray900: "#353535",
 
   black: "#191919",
+  white: "#FFFFFF",
+
+  dangerRed: "#E04C4C",
 };

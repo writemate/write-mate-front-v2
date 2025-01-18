@@ -1,18 +1,25 @@
-'use client';
-import { FlexColumnCenter, FlexRowLeftStart } from '@/styles';
-import { styled } from 'styled-components';
+"use client";
+import { FlexColumnCenter, FlexRowLeftStart } from "@/styles";
+import { styled } from "styled-components";
+import { media } from "../media";
 
 export const WorkspaceContainer = styled.div`
   ${FlexRowLeftStart}
   width: 100%;
   height: 100%;
   background-color: #f8f9fb;
+
+  ${media.tablet} {
+    flex-direction: column;
+  }
 `;
 
 export const HeaderAndMainContainer = styled.div`
   ${FlexColumnCenter}
   flex-grow: 1;
+  width: 100%;
   height: 100%;
+  background-color: ${({ theme }) => theme.color.gray25};
 `;
 
 export const SideBarAndMainContainer = styled.div`
@@ -21,18 +28,24 @@ export const SideBarAndMainContainer = styled.div`
   height: calc(100% - 72px);
 `;
 
-export const MainContainer = styled.div<{ $isLeftOpen: boolean; $isRightOpen: boolean }>`
+export const MainContainer = styled.div<{
+  $isScriptPage: boolean;
+}>`
   ${FlexColumnCenter}
   flex-grow: 1;
   height: 100%;
-  width: 100%;
-  //최대 너비가 1012px이면서 최소 패딩이 28px이도록
-  //left open일때는 왼쪽에서 258px 빼고, right open일때는 오른쪽에서 309px 빼고
-  padding-top: 65px;
-  padding-left: max(28px, ${({ $isLeftOpen }) => ($isLeftOpen ? `calc((100% - 1012px) / 2 - 258px)` : 'calc((100% - 1012px) / 2)')});
-  padding-right: max(28px, ${({ $isRightOpen }) => ($isRightOpen ? `calc((100% - 1012px) / 2 - 309px)` : 'calc((100% - 1012px) / 2)')});
-  padding-bottom: 60px;
+  max-width: ${({ $isScriptPage }) => ($isScriptPage ? "none" : "1012px")};
+  position: relative;
+  padding: ${({ $isScriptPage }) =>
+    $isScriptPage ? "0" : "65px 28px 60px 28px"};
+  margin-left: auto;
+  margin-right: auto;
   overflow-y: auto;
+
+  ${media.tablet} {
+    padding: ${({ $isScriptPage }) =>
+      $isScriptPage ? "0" : "20px 16px 20px 16px"};
+  }
 `;
 
 export const Title = styled.div`
@@ -42,4 +55,16 @@ export const Title = styled.div`
   line-height: 42px;
   font-weight: 700;
   color: ${({ theme }) => theme.color.gray900};
+  margin-bottom: 69px;
+
+  ${media.tablet} {
+    font-size: 16px;
+    line-height: 150%;
+    margin-bottom: 20px;
+  }
+`;
+
+export const TitleContainer = styled.h1`
+  width: 100%;
+  padding-top: 36px;
 `;

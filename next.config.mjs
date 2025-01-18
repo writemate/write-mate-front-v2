@@ -1,4 +1,8 @@
 /** @type {import('next').NextConfig} */
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 const nextConfig = {
     reactStrictMode: false,
     compiler:{
@@ -16,7 +20,7 @@ const nextConfig = {
         return [
         {
             source: '/api/:path*',
-            destination: 'https://fuk1eiks47.execute-api.ap-northeast-2.amazonaws.com/dev/:path*',
+            destination: `${process.env.API_URL}/:path*`,
         },
         ];
     },

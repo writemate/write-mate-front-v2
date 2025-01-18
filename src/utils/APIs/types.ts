@@ -1,18 +1,59 @@
+/**
+ * 유저 타입
+ */
+export type TUser = {
+  user_name: string;
+  user_image: string;
+  email: string;
+};
+
+export type TUsage = {
+  attendanceDays: number;
+  allWorks: number;
+  completedWorks: number;
+};
+
+/**
+ * 메모 타입
+ */
+export const ideaBoxCategory = {
+  memo: "memo",
+  character: "character",
+} as const;
+
+export type TMemo = {
+  id: string;
+  memo_name: string;
+  memo_description: string;
+  updatedAt: string;
+};
+
+export type TMCharacter = {
+  id: string;
+  ch_name: string;
+  ch_image: string;
+  description: string;
+  role: string;
+  gender: string;
+  birthday: string;
+  characteristic: Array<{ title: string; content: string }>;
+  updatedAt: string;
+};
+
 export interface TFile {
-  _id: string;
+  id: string;
   isFolder: false;
   file_name: string;
   isPinned: boolean;
-};
+}
 
 export interface TFolder {
   isFolder: true;
   folder_name: string;
-  files: Array<TFile|TFolder>;
-};
+  files: Array<TFile | TFolder>;
+}
 
 export interface TFileWithOptions extends TFile {
-  isSelect: boolean;
   isEditing: boolean;
 }
 
@@ -20,38 +61,38 @@ export interface TFolderWithOptions extends TFolder {
   isOpen: boolean;
   isSelect: boolean;
   isEditing: boolean;
-  files: Array<TFileWithOptions|TFolderWithOptions>;
+  files: Array<TFileWithOptions | TFolderWithOptions>;
 }
 
 /**
  * 작품 정보 타입
  */
 export type TWorkInfo = {
+  mainPlot: TPlot | null;
   cover: string;
   title: string;
   genre: string;
   logline: string;
-  expectedQuantity: number;
+  expected_quantity: number;
   grade: null | "전체 이용가" | "12세 이용가" | "15세 이용가" | "19세 이용가";
   introduction: string;
-  keyword: string[];
 };
 
 /**
  * 키워드 타입
  */
 export type TKeyword = {
-  _id: string;
-  keyword_name: string;
-  darkColor: string;
-  lightColor: string;
+  id: string;
+  word: string;
+  dark_color: string;
+  light_color: string;
 };
 
 /**
  * 인물 타입
  */
 export type TCharacter = {
-  _id: string;
+  id: string;
   ch_name: string;
   ch_image: string;
   description: string;
@@ -59,61 +100,54 @@ export type TCharacter = {
   role: string;
   birthday: string;
   gender: string;
-  characteristic: Array<{title: string, content: string}>;
+  characteristic: Array<{ title: string; content: string }>;
+  keyword: TKeyword[];
+  relatedEvent: TChapter[];
+};
+
+export type TSimpleCharacter = {
+  id: string;
+  ch_name: string;
+  ch_image: string;
+};
+
+export type TCharacterOfList = {
+  id: string;
+  ch_name: string;
+  ch_image: string;
+  description: string;
   keyword: string[];
-  relatedEvent: string[];
 };
 
 /**
  * 플롯 타입
  */
 export type TPlot = {
-  _id: string;
+  id: string;
   plot_name: string;
-  plot_description: string;
-  order: number;
-  pevent: TPlotEvent[];
-  is_starred: boolean;
+  chapter_list: TChapter[];
+};
+
+export type TChapter = {
+  id: string;
+  chapter_name: string;
+  chapter_description: string;
+  pevent_list: TPlotEvent[];
   is_folded: boolean;
 };
 
-/**
- * 플롯 이벤트 타입
- */
 export type TPlotEvent = {
-  _id: string;
-  event_description: string;
-  event_name: string;
-  plot_id: string;
-  order: number;
-  author: string;
-  work_id: string;
-  last_modify_date: string;
-  pevent_character: TPlotEventCharacter[];
-};
-
-/**
- * 플롯 이벤트 연관 인물 타입
- */
-export type TPlotEventCharacter = {
-  _id: string;
-  ch_image: string;
-  is_starred: boolean;
-  author: string;
-  work_id: string;
-  last_modify_date: string;
-  created_at: string;
-  ch_name: string;
   id: string;
+  event_name: string;
+  event_description: string;
+  character_list: TSimpleCharacter[];
 };
 
-/**
- * 스토리지 메모 타입
- */
-export type TStorageMemo = {
-  _id: string;
-  memo_name: string;
-  memo_description: string;
+export type TScript = {
+  id: string;
+  script_name: string;
+  is_pinned: boolean;
+  content: string;
 };
 
 /**
@@ -132,31 +166,13 @@ export type TStorageCharacter = {
 };
 
 /**
- * 스토리지 이벤트 타입
- */
-export type TStorageEvent = {
-  _id: string;
-  event_name: string;
-  event_description: string;
-};
-
-/**
- * 유저 타입
- */
-export type TUser = {
-  member_name: string;
-  member_image: string;
-};
-
-/**
  * 설정집 타입
  */
 export type TWork = {
-  _id: string;
-  work_name: string;
-  category: string;
-  work_image: string;
-  last_modify_date: string; // ISO 날짜 문자열로 정의
+  id: string;
+  title: string;
+  cover: string;
+  updatedAt: string; // ISO 날짜 문자열로 정의
 };
 
 /**
@@ -170,11 +186,12 @@ export type CreateWorkRes = {
 /**
  * 설정집 카테고리
  */
-export const category = {
-  before: 'before',
-  ongoing: 'ongoing',
-  completed: 'completed',
-};
+export const workspaceCategory = {
+  before: "before",
+  ongoing: "ongoing",
+  completed: "completed",
+  trash: "trash",
+} as const;
 
 /**
  * 설정집 인물 타입
@@ -191,7 +208,8 @@ export type TWorkCharacter = {
   created_at: string;
 };
 
-export type TWorkCategory = (typeof category)[keyof typeof category];
+export type TWorkCategory =
+  (typeof workspaceCategory)[keyof typeof workspaceCategory];
 
 export type TSynopsis = {
   _id: string;
@@ -207,17 +225,13 @@ export type TSynopsis = {
 };
 
 export type TRelation = {
-  _id: string;
+  id: string;
   arrow_right: boolean;
   arrow_left: boolean;
   arrow_text_right: string;
   arrow_text_left: string;
   start_ch: string;
   end_ch: string;
-  start_ch_image: string;
-  end_ch_image: string;
-  start_ch_name: string;
-  end_ch_name: string;
 };
 
 /* 스냅샷 관련 타입 */
