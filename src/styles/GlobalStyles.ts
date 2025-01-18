@@ -1,5 +1,5 @@
-import { createGlobalStyle } from "styled-components";
-import { colorSystem } from "./colorSystem";
+import { createGlobalStyle } from 'styled-components';
+import { colorSystem } from './colorSystem';
 
 export const GlobalStyles = createGlobalStyle`
   body,
@@ -31,6 +31,4 @@ export const GlobalStyles = createGlobalStyle`
     text-decoration: none;
     color: inherit
   }
-
-  
 `;
