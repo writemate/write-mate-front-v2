@@ -19,13 +19,13 @@ const mockPlotFolderList: TFolder = {
       files: [
         {
           isFolder: false,
-          _id: "1",
+          id: "1",
           file_name: "플로리다의 롯데호텔에서",
           isPinned: false,
         },
         {
           isFolder: false,
-          _id: "2",
+          id: "2",
           file_name: "플레이보이가 롯폰기에서",
           isPinned: false,
         },
@@ -35,13 +35,13 @@ const mockPlotFolderList: TFolder = {
           files: [
             {
               isFolder: false,
-              _id: "5",
+              id: "5",
               file_name: "플롯1",
               isPinned: false,
             },
             {
               isFolder: false,
-              _id: "6",
+              id: "6",
               file_name: "플롯2",
               isPinned: false,
             },
@@ -51,13 +51,13 @@ const mockPlotFolderList: TFolder = {
     },
     {
       isFolder: false,
-      _id: "3",
+      id: "3",
       file_name: "플래티넘 롯데리아버거",
       isPinned: false,
     },
     {
       isFolder: false,
-      _id: "4",
+      id: "4",
       file_name: "플라토닉러브로 롯데인수하기",
       isPinned: false,
     },
@@ -97,13 +97,13 @@ const mockScriptFolderList: TFolder = {
       files: [
         {
           isFolder: false,
-          _id: "1",
+          id: "1",
           file_name: "원치 않았던 고백",
           isPinned: false,
         },
         {
           isFolder: false,
-          _id: "2",
+          id: "2",
           file_name: "원숭이도 고장날 때가 있다",
           isPinned: false,
         },
@@ -113,13 +113,13 @@ const mockScriptFolderList: TFolder = {
           files: [
             {
               isFolder: false,
-              _id: "5",
+              id: "5",
               file_name: "원고1",
               isPinned: false,
             },
             {
               isFolder: false,
-              _id: "6",
+              id: "6",
               file_name: "원고2",
               isPinned: false,
             },
@@ -129,13 +129,13 @@ const mockScriptFolderList: TFolder = {
     },
     {
       isFolder: false,
-      _id: "3",
+      id: "3",
       file_name: "원하는 만큼, 고지식하게",
       isPinned: false,
     },
     {
       isFolder: false,
-      _id: "4",
+      id: "4",
       file_name: "원더풀 고양이",
       isPinned: false,
     },
@@ -166,9 +166,10 @@ const mockInfo: TWorkInfo = {
   title: "",
   genre: "",
   logline: "",
-  expectedQuantity: -1,
+  expected_quantity: -1,
   grade: null,
   introduction: "",
+  mainPlot: null,
 };
 
 export const getInfoMock = (workId: string) => async () => {
@@ -188,7 +189,7 @@ export const updateTitleMock = generateUpdateInfoMock("title");
 export const updateGenreMock = generateUpdateInfoMock("genre");
 export const updateLoglineMock = generateUpdateInfoMock("logline");
 export const updateExpectedQuantityMock =
-  generateUpdateInfoMock("expectedQuantity");
+  generateUpdateInfoMock("expected_quantity");
 export const updateGradeMock = generateUpdateInfoMock("grade");
 export const updateIntroductionMock = generateUpdateInfoMock("introduction");
 export const updateCoverImageMock = (workId: string) => async (file: File) => {
@@ -204,94 +205,94 @@ export const updateCoverImageMock = (workId: string) => async (file: File) => {
 
 const mockKeywordList: TKeyword[] = [
   {
-    _id: "1",
-    keyword_name: "주연",
-    lightColor: colorSystem.red200,
-    darkColor: colorSystem.red600,
+    id: "1",
+    word: "주연",
+    light_color: colorSystem.red200,
+    dark_color: colorSystem.red600,
   },
   {
-    _id: "2",
-    keyword_name: "중립",
-    lightColor: colorSystem.orange200,
-    darkColor: colorSystem.orange500,
+    id: "2",
+    word: "중립",
+    light_color: colorSystem.orange200,
+    dark_color: colorSystem.orange500,
   },
   {
-    _id: "3",
-    keyword_name: "빌런",
-    lightColor: colorSystem.blue200,
-    darkColor: colorSystem.blue500,
+    id: "3",
+    word: "빌런",
+    light_color: colorSystem.blue200,
+    dark_color: colorSystem.blue500,
   },
   {
-    _id: "4",
-    keyword_name: "알고보면 착한 빌런",
-    lightColor: colorSystem.green200,
-    darkColor: colorSystem.green500,
+    id: "4",
+    word: "알고보면 착한 빌런",
+    light_color: colorSystem.green200,
+    dark_color: colorSystem.green500,
   },
   {
-    _id: "5",
-    keyword_name: "바보",
-    lightColor: colorSystem.purple200,
-    darkColor: colorSystem.purple500,
+    id: "5",
+    word: "바보",
+    light_color: colorSystem.purple200,
+    dark_color: colorSystem.purple500,
   },
   {
-    _id: "6",
-    keyword_name: "호라 모 젠젠 라인",
-    lightColor: colorSystem.darkYellow200,
-    darkColor: colorSystem.darkYellow600,
+    id: "6",
+    word: "호라 모 젠젠 라인",
+    light_color: colorSystem.darkYellow200,
+    dark_color: colorSystem.darkYellow600,
   },
   {
-    _id: "7",
-    keyword_name: "콩라인",
-    lightColor: colorSystem.green200,
-    darkColor: colorSystem.green500,
+    id: "7",
+    word: "콩라인",
+    light_color: colorSystem.green200,
+    dark_color: colorSystem.green500,
   },
   {
-    _id: "8",
-    keyword_name: "츤데레",
-    lightColor: colorSystem.red200,
-    darkColor: colorSystem.red500,
+    id: "8",
+    word: "츤데레",
+    light_color: colorSystem.red200,
+    dark_color: colorSystem.red500,
   },
   {
-    _id: "9",
-    keyword_name: "설명충",
-    lightColor: colorSystem.orange200,
-    darkColor: colorSystem.orange500,
+    id: "9",
+    word: "설명충",
+    light_color: colorSystem.orange200,
+    dark_color: colorSystem.orange500,
   },
   {
-    _id: "10",
-    keyword_name: "집착",
-    lightColor: colorSystem.darkYellow200,
-    darkColor: colorSystem.darkYellow600,
+    id: "10",
+    word: "집착",
+    light_color: colorSystem.darkYellow200,
+    dark_color: colorSystem.darkYellow600,
   },
   {
-    _id: "11",
-    keyword_name: "열혈",
-    lightColor: colorSystem.green200,
-    darkColor: colorSystem.green500,
+    id: "11",
+    word: "열혈",
+    light_color: colorSystem.green200,
+    dark_color: colorSystem.green500,
   },
   {
-    _id: "12",
-    keyword_name: "갭모에",
-    lightColor: colorSystem.blue200,
-    darkColor: colorSystem.blue500,
+    id: "12",
+    word: "갭모에",
+    light_color: colorSystem.blue200,
+    dark_color: colorSystem.blue500,
   },
   {
-    _id: "13",
-    keyword_name: "금태양",
-    lightColor: colorSystem.purple200,
-    darkColor: colorSystem.purple500,
+    id: "13",
+    word: "금태양",
+    light_color: colorSystem.purple200,
+    dark_color: colorSystem.purple500,
   },
   {
-    _id: "14",
-    keyword_name: "병약",
-    lightColor: colorSystem.red200,
-    darkColor: colorSystem.red500,
+    id: "14",
+    word: "병약",
+    light_color: colorSystem.red200,
+    dark_color: colorSystem.red500,
   },
 ];
 
 const mockCharacterList: TCharacter[] = [
   {
-    _id: "1",
+    id: "1",
     ch_name: "주인공",
     ch_image: "",
     isMain: true,
@@ -301,11 +302,11 @@ const mockCharacterList: TCharacter[] = [
     description:
       "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Asperiores ea aliquam doloribus delectus est ipsam dolorum magni, ducimus rem quas reiciendis pariatur beatae? Sapiente, obcaecati optio asperiores quia voluptatum harum.",
     characteristic: [],
-    keyword: ["1", "5", "9"],
+    keyword: [],
     relatedEvent: [],
   },
   {
-    _id: "2",
+    id: "2",
     ch_name: "ㄴㅇ라ㅣㅜㄴㅇ라ㅣㅜㄴㅇ라ㅣㅜㄴㅇ라ㅣㅜㄴㅇ라ㅣㅜㄴㅇ",
     ch_image:
       "https://artmugfile2.cafe24.com/image/goods_img1/2/24621.jpg?ver=1657860911",
@@ -316,11 +317,11 @@ const mockCharacterList: TCharacter[] = [
     description:
       "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Asperiores ea aliquam doloribus delectus est ipsam dolorum magni, ducimus rem quas reiciendis pariatur beatae? Sapiente, obcaecati optio asperiores quia voluptatum harum.",
     characteristic: [],
-    keyword: ["7", "2", "3", "4"],
+    keyword: [],
     relatedEvent: [],
   },
   {
-    _id: "3",
+    id: "3",
     ch_name: "ㄷㅅㄹㅎㅇㅍㅇㄹㅍ",
     ch_image:
       "https://artmugfile2.cafe24.com/image/goods_img1/2/24621.jpg?ver=1657860911",
@@ -331,11 +332,11 @@ const mockCharacterList: TCharacter[] = [
     description:
       "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Asperiores ea aliquam doloribus delectus est ipsam dolorum magni, ducimus rem quas reiciendis pariatur beatae? Sapiente, obcaecati optio asperiores quia voluptatum harum.",
     characteristic: [],
-    keyword: ["9", "2", "1"],
+    keyword: [],
     relatedEvent: [],
   },
   {
-    _id: "4",
+    id: "4",
     ch_name: "ㅇ롱ㄹ혿ㄱ욯ㅇㄹ퓽류",
     ch_image:
       "https://artmugfile2.cafe24.com/image/goods_img1/2/24621.jpg?ver=1657860911",
@@ -346,30 +347,30 @@ const mockCharacterList: TCharacter[] = [
     description:
       "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Asperiores ea aliquam doloribus delectus est ipsam dolorum magni, ducimus rem quas reiciendis pariatur beatae? Sapiente, obcaecati optio asperiores quia voluptatum harum.",
     characteristic: [],
-    keyword: ["3", "6", "7", "14"],
+    keyword: [],
     relatedEvent: [],
   },
 ];
 
 export const getCharacterKeywordListMock =
-  (workspace_id: string) => async () => {
+  (workspaceid: string) => async () => {
     return JSON.parse(JSON.stringify(mockKeywordList)) as TKeyword[];
   };
 
-export const getCharacterListMock = (workspace_id: string) => async () => {
+export const getCharacterListMock = (workspaceid: string) => async () => {
   return JSON.parse(JSON.stringify(mockCharacterList)) as TCharacter[];
 };
 
 export const createCharacterKeywordMock =
-  (workspace_id: string) =>
+  (workspaceid: string) =>
   async ({
-    keyword_name,
-    lightColor,
-    darkColor,
+    word,
+    light_color,
+    dark_color,
   }: {
-    keyword_name: string;
-    lightColor?: string;
-    darkColor?: string;
+    word: string;
+    light_color?: string;
+    dark_color?: string;
   }) => {
     const randomColorList = [
       [
@@ -390,27 +391,27 @@ export const createCharacterKeywordMock =
       ],
     ];
 
-    if (lightColor === undefined)
-      lightColor =
+    if (light_color === undefined)
+      light_color =
         randomColorList[0][
           Math.floor(Math.random() * randomColorList[0].length)
         ];
-    if (darkColor === undefined)
-      darkColor =
+    if (dark_color === undefined)
+      dark_color =
         randomColorList[1][
           Math.floor(Math.random() * randomColorList[1].length)
         ];
     mockKeywordList.push({
-      _id: Math.random().toString(36).substring(7),
-      keyword_name,
-      lightColor,
-      darkColor,
+      id: Math.random().toString(36).substring(7),
+      word,
+      light_color,
+      dark_color,
     });
   };
 
-export const createCharacterMock = (workspace_id: string) => async () => {
+export const createCharacterMock = (workspaceid: string) => async () => {
   mockCharacterList.push({
-    _id: Math.random().toString(36).substring(7),
+    id: Math.random().toString(36).substring(7),
     ch_name: "새인물",
     ch_image: "",
     isMain: false,
@@ -425,31 +426,31 @@ export const createCharacterMock = (workspace_id: string) => async () => {
 };
 
 export const deleteCharacterKeywordMock =
-  (workspace_id: string) => async (keyword_id: string) => {
-    const index = mockKeywordList.findIndex((k) => k._id === keyword_id);
+  (workspaceid: string) => async (keywordid: string) => {
+    const index = mockKeywordList.findIndex((k) => k.id === keywordid);
     if (index === -1) return;
     mockKeywordList.splice(index, 1);
   };
 
 export const deleteCharacterMock =
-  (workspace_id: string, character_id: string) => async () => {
-    const index = mockCharacterList.findIndex((c) => c._id === character_id);
+  (workspaceid: string, characterid: string) => async () => {
+    const index = mockCharacterList.findIndex((c) => c.id === characterid);
     if (index === -1) return;
     mockCharacterList.splice(index, 1);
   };
 
 export const getCharacterMock =
-  (workspace_id: string, character_id: string) => async () => {
+  (workspaceid: string, characterid: string) => async () => {
     return JSON.parse(
-      JSON.stringify(mockCharacterList.find((c) => c._id === character_id))
+      JSON.stringify(mockCharacterList.find((c) => c.id === characterid))
     ) as TCharacter;
   };
 
 const generateUpdateCharacterMock =
   <T extends keyof TCharacter>(key: T) =>
-  (workspace_id: string, character_id: string) =>
+  (workspaceid: string, characterid: string) =>
   async (value: TCharacter[T]) => {
-    const character = mockCharacterList.find((c) => c._id === character_id);
+    const character = mockCharacterList.find((c) => c.id === characterid);
     if (!character) return;
     character[key] = value;
   };
@@ -463,18 +464,18 @@ export const updateCharacterDescriptionMock =
   generateUpdateCharacterMock("description");
 
 export const setMainCharacterMock =
-  (workspace_id: string) => async (character_id: string) => {
-    generateUpdateCharacterMock("isMain")(workspace_id, character_id)(true);
+  (workspaceid: string) => async (characterid: string) => {
+    generateUpdateCharacterMock("isMain")(workspaceid, characterid)(true);
   };
 
 export const removeMainCharacterMock =
-  (workspace_id: string) => async (character_id: string) => {
-    generateUpdateCharacterMock("isMain")(workspace_id, character_id)(false);
+  (workspaceid: string) => async (characterid: string) => {
+    generateUpdateCharacterMock("isMain")(workspaceid, characterid)(false);
   };
 
 export const updateCharacterCoverImageMock =
-  (workspace_id: string, character_id: string) => async (file: File) => {
-    const character = mockCharacterList.find((c) => c._id === character_id);
+  (workspaceid: string, characterid: string) => async (file: File) => {
+    const character = mockCharacterList.find((c) => c.id === characterid);
     if (!character) return;
     await new Promise((resolve) => {
       const reader = new FileReader();
@@ -487,54 +488,52 @@ export const updateCharacterCoverImageMock =
   };
 
 export const addCharacterKeywordMock =
-  (workspace_id: string, character_id: string) =>
-  async (keyword_id: string) => {
-    const character = mockCharacterList.find((c) => c._id === character_id);
+  (workspaceid: string, characterid: string) => async (keywordid: string) => {
+    const character = mockCharacterList.find((c) => c.id === characterid);
     if (!character) return;
-    character.keyword.push(keyword_id);
+    //character.keyword.push(keywordid);
   };
 
 export const removeCharacterKeywordMock =
-  (workspace_id: string, character_id: string) =>
-  async (keyword_id: string) => {
-    const character = mockCharacterList.find((c) => c._id === character_id);
+  (workspaceid: string, characterid: string) => async (keywordid: string) => {
+    const character = mockCharacterList.find((c) => c.id === characterid);
     if (!character) return;
-    character.keyword = character.keyword.filter((k) => k !== keyword_id);
+    character.keyword = character.keyword.filter((k) => k.id !== keywordid);
   };
 
 export const addCharacterCharacteristicMock =
-  (workspace_id: string, character_id: string) => async () => {
-    const character = mockCharacterList.find((c) => c._id === character_id);
+  (workspaceid: string, characterid: string) => async () => {
+    const character = mockCharacterList.find((c) => c.id === characterid);
     if (!character) return;
     character.characteristic.push({ title: "", content: "" });
   };
 
 export const updateCharacterCharacteristicTitleMock =
-  (workspace_id: string, character_id: string) =>
+  (workspaceid: string, characterid: string) =>
   async ({ index, title }: { index: number; title: string }) => {
-    const character = mockCharacterList.find((c) => c._id === character_id);
+    const character = mockCharacterList.find((c) => c.id === characterid);
     if (!character) return;
     character.characteristic[index].title = title;
   };
 
 export const updateCharacterCharacteristicContentMock =
-  (workspace_id: string, character_id: string) =>
+  (workspaceid: string, characterid: string) =>
   async ({ index, content }: { index: number; content: string }) => {
-    const character = mockCharacterList.find((c) => c._id === character_id);
+    const character = mockCharacterList.find((c) => c.id === characterid);
     if (!character) return;
     character.characteristic[index].content = content;
   };
 
 export const removeCharacterCharacteristicMock =
-  (workspace_id: string, character_id: string) => async (index: number) => {
-    const character = mockCharacterList.find((c) => c._id === character_id);
+  (workspaceid: string, characterid: string) => async (index: number) => {
+    const character = mockCharacterList.find((c) => c.id === characterid);
     if (!character) return;
     character.characteristic.splice(index, 1);
   };
 
 const CharacterRelationMock: TRelation[] = [
   {
-    _id: "1",
+    id: "1",
     arrow_right: true,
     arrow_left: true,
     arrow_text_right: "좋아함",
@@ -543,7 +542,7 @@ const CharacterRelationMock: TRelation[] = [
     end_ch: "2",
   },
   {
-    _id: "2",
+    id: "2",
     arrow_right: true,
     arrow_left: true,
     arrow_text_right: "좋아함",
@@ -552,7 +551,7 @@ const CharacterRelationMock: TRelation[] = [
     end_ch: "3",
   },
   {
-    _id: "3",
+    id: "3",
     arrow_right: true,
     arrow_left: true,
     arrow_text_right: "좋아함",
@@ -561,7 +560,7 @@ const CharacterRelationMock: TRelation[] = [
     end_ch: "4",
   },
   {
-    _id: "4",
+    id: "4",
     arrow_right: true,
     arrow_left: true,
     arrow_text_right: "좋아함",
@@ -570,7 +569,7 @@ const CharacterRelationMock: TRelation[] = [
     end_ch: "3",
   },
   {
-    _id: "5",
+    id: "5",
     arrow_right: true,
     arrow_left: true,
     arrow_text_right: "좋아함",
@@ -579,7 +578,7 @@ const CharacterRelationMock: TRelation[] = [
     end_ch: "4",
   },
   {
-    _id: "6",
+    id: "6",
     arrow_right: true,
     arrow_left: true,
     arrow_text_right: "좋아함",
@@ -589,12 +588,12 @@ const CharacterRelationMock: TRelation[] = [
   },
 ];
 
-export const getCharacterRelationMock = (workspace_id: string) => async () => {
+export const getCharacterRelationMock = (workspaceid: string) => async () => {
   return JSON.parse(JSON.stringify(CharacterRelationMock)) as TRelation[];
 };
 
 export const createCharacterRelationMock =
-  (workspace_id: string) =>
+  (workspaceid: string) =>
   async ({
     arrow_text_right,
     arrow_text_left,
@@ -607,7 +606,7 @@ export const createCharacterRelationMock =
     end_ch: string;
   }) => {
     CharacterRelationMock.push({
-      _id: Math.random().toString(36).substring(7),
+      id: Math.random().toString(36).substring(7),
       arrow_right: true,
       arrow_left: true,
       arrow_text_right,
@@ -618,24 +617,24 @@ export const createCharacterRelationMock =
   };
 
 export const deleteCharacterRelationMock =
-  (workspace_id: string) => async (relation_id: string) => {
-    const index = CharacterRelationMock.findIndex((r) => r._id === relation_id);
+  (workspaceid: string) => async (relationid: string) => {
+    const index = CharacterRelationMock.findIndex((r) => r.id === relationid);
     if (index === -1) return;
     CharacterRelationMock.splice(index, 1);
   };
 
 export const updateCharacterRelationMock =
-  (workspace_id: string) =>
+  (workspaceid: string) =>
   async ({
-    relation_id,
+    relationid,
     arrow_text_right,
     arrow_text_left,
   }: {
-    relation_id: string;
+    relationid: string;
     arrow_text_right: string;
     arrow_text_left: string;
   }) => {
-    const relation = CharacterRelationMock.find((r) => r._id === relation_id);
+    const relation = CharacterRelationMock.find((r) => r.id === relationid);
     if (!relation) return;
     relation.arrow_text_right = arrow_text_right;
     relation.arrow_text_left = arrow_text_left;

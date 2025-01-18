@@ -9,7 +9,6 @@ import { getScript, updateScriptContent } from "@/utils/APIs/workspace";
 
 export function useScript() {
   const editorRef = useRef<ReactQuill | null>(null);
-
   const { workspace_id, script_id } = useParams<{
     workspace_id: string;
     script_id: string;
@@ -36,19 +35,15 @@ export function useScript() {
     }
   }, [editorRef, onChangeScript]);
 
+  // 초기값 설정
   useEffect(() => {
     if (data && editorRef.current) {
       const editor = editorRef.current.getEditor();
       try {
-        if (data.content) {
-          const delta = JSON.parse(data.content);
-          editor.setContents(delta);
-        } else {
-          editor.setContents([{ insert: "\n" }]);
-        }
+        const delta = JSON.parse(data.content);
+        editor.setContents(delta);
       } catch (e) {
         console.error("Failed to parse delta", e);
-        editor.setContents([{ insert: "\n" }]);
       }
     }
   }, [data, editorRef]);

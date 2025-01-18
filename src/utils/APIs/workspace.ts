@@ -1,20 +1,5 @@
 import axiosInstance from "./axiosInstance";
 import {
-  getChapterListMock,
-  getPlotFolderListMock,
-  updatePlotFolderMock,
-  getInfoMock,
-  updateCoverImageMock,
-  updateTitleMock,
-  updateGenreMock,
-  updateLoglineMock,
-  updateExpectedQuantityMock,
-  updateIntroductionMock,
-  updateGradeMock,
-  createPlotMock,
-  getScriptFolderListMock,
-  updateScriptFolderMock,
-  createScriptMock,
   getCharacterListMock,
   getCharacterKeywordListMock,
   createCharacterKeywordMock,
@@ -41,6 +26,8 @@ import {
   deleteCharacterRelationMock,
   updateCharacterRelationMock,
 } from "./mock/workspace";
+
+import { TWorkInfo } from "./types";
 import { TFolder, TScript, TWork } from "./types";
 import { DOMAIN } from "./domain";
 
@@ -152,7 +139,9 @@ export const deleteScript = async (scriptId: string) => {
 };
 
 export const getInfo = (workspace_id: string) => async () => {
-  const response = await axiosInstance.get(DOMAIN.GET_WORK(workspace_id));
+  const response = await axiosInstance.get<TWorkInfo>(
+    DOMAIN.GET_WORK(workspace_id)
+  );
   return response.data;
 };
 export const updateCoverImage =

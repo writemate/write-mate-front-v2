@@ -2,12 +2,15 @@
  * 유저 타입
  */
 export type TUser = {
-  id: string;
-  uid: string;
   user_name: string;
   user_image: string;
-  status: string;
   email: string;
+};
+
+export type TUsage = {
+  attendanceDays: number;
+  allWorks: number;
+  completedWorks: number;
 };
 
 /**
@@ -70,7 +73,7 @@ export type TWorkInfo = {
   title: string;
   genre: string;
   logline: string;
-  quantity: number;
+  expected_quantity: number;
   grade: null | "전체 이용가" | "12세 이용가" | "15세 이용가" | "19세 이용가";
   introduction: string;
 };

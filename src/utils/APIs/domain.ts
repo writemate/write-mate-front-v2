@@ -2,6 +2,7 @@ import { workspaceCategory } from "./types";
 
 export const DOMAIN = {
   GET_USER: "/api/users",
+  GET_USAGE: "/api/users/profile",
   CREATE_USER: "/api/users",
 
   GET_WORKLIST: (
