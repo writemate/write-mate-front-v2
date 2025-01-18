@@ -26,6 +26,7 @@ import {
   deleteCharacterRelationMock,
   updateCharacterRelationMock,
 } from "./mock/workspace";
+
 import { TWorkInfo } from "./types";
 import { TFolder, TScript, TWork } from "./types";
 import { DOMAIN } from "./domain";

@@ -52,49 +52,40 @@ export const ToolbarContainer = styled.div`
   }
 `;
 
-export const ScriptMainContainer = styled.div`
+export const GrayMainContainer = styled.div`
   ${FlexColumnCenter}
-  flex-grow: 1;
-  height: 100%;
   width: 100%;
-  max-width: 1012px;
-  position: relative;
-  padding: 65px 28px 60px 28px;
-  margin: 0 auto;
+  height: 100%;
   overflow-y: auto;
-
-  ${media.tablet} {
-    padding: 20px 16px 20px 16px;
-  }
 `;
 
-export const TextAreaContainer = styled.div`
-  background: ${({ theme }) => theme.color.white};
-  position: relative;
+export const WhiteInputSpaceContainer = styled.div`
   width: 100%;
+  max-width: 1012px;
+  padding: 0 28px;
+  margin: 25vh auto;
+
+  ${media.tablet} {
+    padding: 0 10px;
+    margin: 2vh auto;
+  }
 
   .ql-container {
+    position: relative;
+    background: ${({ theme }) => theme.color.white};
+    width: 100%;
     border: none;
-    min-height: 75vh;
+    min-height: 100vh;
+    flex: 1;
   }
 
   .ql-editor {
-    p,
-    ol,
-    ul,
-    pre,
-    blockquote {
-      font-size: 11pt;
-      line-height: 1.6;
-      font-family: "NanumGothic";
-    }
-
     padding: 119px 95px;
+
     &.ql-blank::before {
-      left: 0;
-      top: 0; // 상단 위치 조정
-      font-style: normal;
       padding: 119px 95px;
+      left: 0;
+      top: 0;
       color: ${({ theme }) => theme.color.gray400}; /* placeholder 색상 설정 */
     }
 
@@ -111,8 +102,8 @@ export const TextAreaContainer = styled.div`
     font-family: "NanumMyeongjo";
   }
 
-  .ql-clipboard {
-    display: none;
+  .ql-font-nanum-gothic {
+    font-family: "NanumGothic";
   }
 `;
 

@@ -1,7 +1,7 @@
 "use client";
 import "react-quill/dist/quill.snow.css";
 import {
-  ScriptMainContainer,
+  GrayMainContainer,
   ScriptContainer,
 } from "@/styles/workspace/Script.styles";
 import CustomToolbar from "@/components/workspace/script/Toolbar";
@@ -17,9 +17,9 @@ export default function Script() {
     <ScriptContext.Provider value={useScriptValue}>
       <ScriptContainer>
         <CustomToolbar editorRef={editorRef} />
-        <ScriptMainContainer>
+        <GrayMainContainer>
           <QuillEditor />
-        </ScriptMainContainer>
+        </GrayMainContainer>
         <TextCount editorRef={editorRef}></TextCount>
       </ScriptContainer>
     </ScriptContext.Provider>
