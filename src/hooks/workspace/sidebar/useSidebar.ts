@@ -174,7 +174,12 @@ export default function usePlotSidebar(type: "plot" | "script") {
     await mutateName({ id: newFile.id, name: newFile.file_name });
     setRootFolder({ ...rootFolder });
     setIsCreatingFile(false);
-    router.push(`/${workspace_id}/plot/${newFile.id}`);
+    if (type === "plot") {
+      router.push(`/${workspace_id}/plot/${newFile.id}`);
+    }
+    if (type === "script") {
+      router.push(`/${workspace_id}/script/${newFile.id}`);
+    }
     queryClient.invalidateQueries({
       queryKey: workspaceQueryKeys.plot(workspace_id, newFile.id),
     });

@@ -22,10 +22,6 @@ export const SidebarContainer = styled.div`
   flex-grow: 0;
   z-index: 500;
   box-shadow: 4px 0 8px 0 rgba(30, 33, 43, 0.1);
-  svg {
-    width: 24px;
-    height: 24px;
-  }
 
   ${media.tablet} {
     position: fixed;
@@ -108,16 +104,19 @@ export const FileListContainer = styled.div`
 `;
 
 export const FolderContainer = styled.div`
-  width: 100%;
   position: relative;
+  width: 100%;
+
   & > div:nth-child(1) {
-    margin-bottom: 6px;
   }
 `;
 
 export const KebabWrapper = styled.div`
   margin-left: auto;
   position: relative;
+  display: flex;
+  align-items: center;
+  height: 100%;
 `;
 
 export const Kebab = styled(KebabIcon)`
@@ -133,6 +132,7 @@ export const Kebab = styled(KebabIcon)`
 `;
 
 export const FolderName = styled.div`
+  width: 100%;
   font-weight: 400;
   margin-left: 6px;
   line-height: 24px;
@@ -168,9 +168,8 @@ const FileOrFolderContainer = css<{
   $dragOver?: boolean;
   $isEditing?: boolean;
 }>`
-  ${FlexRowLeftStart};
+  ${FlexRowCenter};
   ${clickable};
-  align-items: flex-start;
   position: relative;
   width: 100%;
   padding: 6px 10px 6px 0px;
@@ -212,6 +211,9 @@ const FileOrFolderContainer = css<{
     margin-left: 6px;
     font-weight: 400;
   }
+  svg {
+    flex-shrink: 0;
+  }
 `;
 
 export const FolderFileContainer = styled.div<{
@@ -222,7 +224,6 @@ export const FolderFileContainer = styled.div<{
 }>`
   ${FileOrFolderContainer};
   padding-left: ${({ $nestedLevel = 0 }) => `${$nestedLevel * 12}px`};
-  align-items: center;
 `;
 
 export const FileContainer = styled(Link)<{
@@ -233,7 +234,6 @@ export const FileContainer = styled(Link)<{
 }>`
   ${FileOrFolderContainer};
   padding-left: ${({ $nestedLevel = 0 }) => `${$nestedLevel * 12 + 16}px`};
-  align-items: center;
 `;
 
 export const KebabItem = styled.div`
