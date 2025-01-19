@@ -27,16 +27,16 @@ export const ChapterDragWrap = styled.div`
   width: 40px;
   padding: 10px;
   flex-shrink: 0;
-  svg {
-    width: 20px;
-    height: 20px;
+  & > svg {
+    width: 16px;
+    height: 16px;
   }
 
   ${media.tablet} {
     padding: 4px;
     width: 20px;
 
-    svg {
+    & > svg {
       width: 12px;
       height: 12px;
     }
@@ -46,30 +46,24 @@ export const ChapterDragWrap = styled.div`
 export const ChapterCard = styled.div`
   ${FlexColumnCenter};
   width: 100%;
-
-  & > svg {
-    width: 32px;
-    height: 32px;
-  }
-
-  ${media.tablet} {
-    & > svg {
-      width: 24px;
-      height: 24px;
-    }
-  }
 `;
 
 export const IconButton = styled.button`
-  width: 32px;
-  flex: 0 0 auto;
+  width: fit-content;
   background: none;
   border: none;
   cursor: pointer;
   display: flex;
+  svg {
+    width: 28px;
+    height: 28px;
+  }
 
   ${media.tablet} {
-    width: 24px;
+    svg {
+      width: 24px;
+      height: 24px;
+    }
   }
 `;
 

@@ -27,7 +27,7 @@ export default function MemoList() {
   );
 }
 
-function Error() {
+export function Error() {
   return (
     <LoadingMessage>
       에러가 발생했습니다. 새로고침을 하시거나, 채팅 버튼을 이용해 문의해주세요.
@@ -35,10 +35,10 @@ function Error() {
   );
 }
 
-function Loading() {
+export function Loading() {
   return <LoadingMessage>로딩 중...</LoadingMessage>;
 }
 
-function Creating() {
+export function Creating() {
   return <LoadingMessage>메모를 생성하는 중...</LoadingMessage>;
 }

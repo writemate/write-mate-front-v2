@@ -10,6 +10,7 @@ import { useInputLiveUpdate } from "@/hooks/common/useInputLiveUpdate";
 import { useOnClickUpdate } from "@/hooks/common/useOnClickUpdate";
 import { TPlot } from "@/utils/APIs/types";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { copy } from "@/utils/copy";
 
 const useEvent = (eventId: string, chapterId: string) => {
   const queryClient = useQueryClient();
@@ -105,6 +106,18 @@ const useEvent = (eventId: string, chapterId: string) => {
     "사건 설명 저장에 실패했습니다."
   );
 
+  const onCopyEventDescription = () => {
+    const plot = queryClient.getQueryData<TPlot>(
+      workspaceQueryKeys.plot(workspace_id, plot_id)
+    );
+    const chapter = plot?.chapter_list.find(
+      (chapter) => chapter.id === chapterId
+    );
+    const event = chapter?.pevent_list.find((event) => event.id === eventId);
+    if (!event) return;
+    return copy(event.event_description);
+  };
+
   return {
     selectModalRef,
     selectCharacterModal,
@@ -116,6 +129,7 @@ const useEvent = (eventId: string, chapterId: string) => {
     onEventDeleteClick,
     onEventNameChange,
     onEventDescriptionChange,
+    onCopyEventDescription,
   };
 };
 

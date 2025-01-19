@@ -9,6 +9,9 @@ import {
 import { TMemo } from "@/utils/APIs/types";
 import { EditModal } from "./MemoModal";
 import { MemoItemContext, useMemoItem } from "@/hooks/dashboard/memo/memoItem";
+import { IconButton } from "@/styles/workspace/plot/Chapter.styles";
+import { copy } from "@/utils/copy";
+import CopyIcon from "@/assets/workspace/plot/copy.svg";
 
 export default function MemoItem({ memo }: { memo: TMemo }) {
   const memoItemValue = useMemoItem(memo);
@@ -39,11 +42,14 @@ export default function MemoItem({ memo }: { memo: TMemo }) {
             readOnly={true}
             onClick={onClickMemoTitle}
           />
+          <IconButton type="button" onClick={copy(memo.memo_description)}>
+            <CopyIcon />
+          </IconButton>
         </MemoHeader>
         <MemoContent
           value={memo.memo_description}
           placeholder="메모 내용을 입력하세요"
-          maxRows={6}
+          maxRows={3}
           readOnly={true}
           onClick={onClickMemoContent}
         />
