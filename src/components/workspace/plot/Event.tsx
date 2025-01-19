@@ -58,6 +58,7 @@ export default function Event({
               $src={character.ch_image}
             />
           ))}
+          {editCharacterModal}
           <EventDeleteBtn
             onClick={onOpenModal}
             width="24px"
@@ -69,7 +70,7 @@ export default function Event({
               closeModal={closeModal}
               onClickConfirm={onEventDeleteClick}
               onClickCancel={closeModal}
-              message={"이벤트를 삭제하시겠습니까?"}
+              message={"사건을 삭제하시겠습니까?"}
               ConfirmButtonName={"삭제"}
             />
           )}
@@ -85,7 +86,6 @@ export default function Event({
           placeholder="사건 내용을 적어주세요."
         />
       </EventColumnContainer>
-      {/* {editCharacterModal} */}
     </>
   );
 }
