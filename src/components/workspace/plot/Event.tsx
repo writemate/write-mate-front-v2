@@ -14,6 +14,7 @@ import { TPlotEvent } from "@/utils/APIs/types";
 import useEvent from "@/hooks/workspace/plot/useEvent";
 import { useWarningModal } from "@/hooks/common/useWarningModal";
 import { WarningModal } from "@/components/dashboard/WarningModal";
+import CharacterModal from "../character/CharacterModal";
 
 export default function Event({
   id: eventId,
@@ -25,6 +26,7 @@ export default function Event({
   const {
     selectCharacterModal,
     openSelectCharacterModal,
+    closeEditCharacterModal,
     editCharacterModal,
     selectModalRef,
     openEditCharacterModal,
@@ -58,7 +60,6 @@ export default function Event({
               $src={character.ch_image}
             />
           ))}
-          {editCharacterModal}
           <EventDeleteBtn
             onClick={onOpenModal}
             width="24px"
@@ -86,6 +87,12 @@ export default function Event({
           placeholder="사건 내용을 적어주세요."
         />
       </EventColumnContainer>
+      {editCharacterModal && (
+        <CharacterModal
+          characterId={editCharacterModal}
+          closeModal={closeEditCharacterModal}
+        />
+      )}
     </>
   );
 }
