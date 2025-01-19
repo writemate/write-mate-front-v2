@@ -31,7 +31,6 @@ export const CoverContainer = styled.div`
   align-items: flex-end;
   gap: 36px;
   width: 100%;
-  flex-wrap: wrap;
 
   ${media.tablet} {
     gap: 0;
