@@ -110,7 +110,6 @@ export const MemoContent = styled(TextareaAutosize)`
     color: ${({ theme }) => theme.color.gray200};
   }
 `;
-
 export const MemoTitle = styled.input`
   width: 100%;
   color: ${({ theme }) => theme.color.gray900};
@@ -130,4 +129,7 @@ export const AddButton = styled(Add)`
   width: 24px;
   height: 24px;
   ${clickable}
+  border-radius: 100%;
+  border: 1px solid ${({ theme }) => theme.color.gray400};
+  margin-top: 10px;
 `;

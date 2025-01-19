@@ -3,14 +3,18 @@ import Event from "./Event";
 import useEventList from "@/hooks/workspace/plot/useEventList";
 import Add from "@/assets/workspace/plot/add.svg";
 import { TPlotEvent } from "@/utils/APIs/types";
-import { EventContainer, EventListContainer } from "@/styles/workspace/plot/Event.styles";
+import {
+  EventContainer,
+  EventListContainer,
+} from "@/styles/workspace/plot/Event.styles";
+import { IconButton } from "@/styles/workspace/plot/Chapter.styles";
 
 interface EventListProps {
   pevent: TPlotEvent[];
   chapterId: string;
 }
 
-export const EventList = ({ pevent,chapterId }: EventListProps) => {
+export const EventList = ({ pevent, chapterId }: EventListProps) => {
   const { onClickCreate, handleDragAndDrop } = useEventList(chapterId);
 
   return (
@@ -40,7 +44,9 @@ export const EventList = ({ pevent,chapterId }: EventListProps) => {
           )}
         </Droppable>
       </DragDropContext>
-      <Add onClick={onClickCreate}/>
+      <IconButton onClick={onClickCreate}>
+        <Add />
+      </IconButton>
     </>
   );
 };
