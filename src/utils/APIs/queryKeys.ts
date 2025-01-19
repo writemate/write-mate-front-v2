@@ -10,6 +10,8 @@ export const dashboardQueryKeys = {
 
 export const userQueryKeys = {
   all: ["user"] as const,
+  profile: () => [...userQueryKeys.all, "profile"] as const,
+  usage: () => [...userQueryKeys.all, "usage"] as const,
 };
 
 export const workspaceQueryKeys = {
