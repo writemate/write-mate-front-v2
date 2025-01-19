@@ -1,6 +1,9 @@
 import Modal from "../Modal";
 import { useContext } from "react";
 import { MyPageContext } from "@/hooks/dashboard/useMyPage";
+import { getUsage } from "@/utils/APIs/dashboard";
+import { getUserInfo } from "@/utils/APIs/user";
+import { useQuery } from "@tanstack/react-query";
 import {
   FooterContainer,
   HalfBackground,
@@ -16,8 +19,18 @@ import {
   CloseButton,
 } from "@/styles/dashboard/MyPage.style";
 import { useLogin } from "@/stores/useLogin";
+import { userQueryKeys } from "@/utils/APIs/queryKeys";
 export function MyPageModal() {
-  const { user, usage, closeModal } = useContext(MyPageContext);
+  const { closeModal } = useContext(MyPageContext);
+  const { data: user } = useQuery({
+    queryKey: userQueryKeys.profile(),
+    queryFn: getUserInfo,
+  });
+
+  const { data: usage } = useQuery({
+    queryKey: userQueryKeys.usage(),
+    queryFn: getUsage,
+  });
   const logout = useLogin((state) => state.logout);
 
   return (
