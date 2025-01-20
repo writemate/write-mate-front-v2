@@ -137,6 +137,13 @@ export default function usePlotSidebar(type: "plot" | "script") {
     setRootFolder({ ...rootFolder });
   };
 
+  const onClickFile = () => {
+    if (rootFolder === null) return;
+    //파일을 클릭하면 나머지 폴더와 파일들의 선택을 해제하고 해당 파일을 선택한다.
+    recursiveUnselect(rootFolder);
+    setRootFolder({ ...rootFolder });
+  };
+
   const createFolder = () => {
     if (rootFolder === null) return;
     let selectedFolder = getSelectedFolder(rootFolder);
@@ -316,6 +323,7 @@ export default function usePlotSidebar(type: "plot" | "script") {
     createFile,
     onBlur,
     onKeyDown,
+    onClickFile,
     changeName,
     deleteFolderOrFile,
     setMainPlot,
