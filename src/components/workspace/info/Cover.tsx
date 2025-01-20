@@ -10,6 +10,7 @@ import CoverImageBox from "@/components/workspace/info/CoverImageBox";
 import { Input, TextArea } from "@/styles";
 import { InfoContext } from "@/hooks/workspace/info";
 import DropdownMenu from "@/components/DropdownMenu";
+import { Help } from "@/components/Help";
 
 export default function Cover() {
   const {
@@ -26,7 +27,10 @@ export default function Cover() {
     <CoverContainer>
       <CoverImageBox />
       <CoverContentsContainer>
-        <SubTitle>제목</SubTitle>
+        <SubTitle>
+          제목
+          <Help messageKey="TITLE" />
+        </SubTitle>
         <TextWithDropMenu>
           <Input
             type="text"
@@ -53,7 +57,9 @@ export default function Cover() {
             setSelected={onChangeGenre}
           />
         </TextWithDropMenu>
-        <SubTitle>로그라인</SubTitle>
+        <SubTitle>
+          로그라인 <Help messageKey="LOGLINE" />
+        </SubTitle>
         <TextArea
           placeholder="내 작품을 한 줄로 요약한 내용을 적어주세요."
           onChange={onChangeLogline}

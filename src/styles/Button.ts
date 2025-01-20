@@ -121,6 +121,14 @@ export const IconCanActiveNOpenButton = css<{
   }
 `;
 
+export const IconSmallButton = css`
+  ${clickable}
+  display: block;
+  width: 20px;
+  height: 20px;
+  padding: 2px;
+`;
+
 /*
  * 텍스트 버튼
  */
@@ -149,7 +157,7 @@ export const Round9999RedBackgoundWhiteColor = css`
   ${MainColorBackground}
   color: ${({ theme }) => theme.color.white};
   width: fit-content;
-  padding: 12px;
+  padding: 6px 12px;
   border: none;
   border-radius: 9999px;
   gap: 8px;
@@ -170,6 +178,29 @@ export const Round9999OrangeBackgoundWhiteColor = css`
   background: ${({ theme }) => theme.color.orange400};
   color: ${({ theme }) => theme.color.white};
   padding: 8px;
+`;
+
+export const Round9999EmptyBackgoundOrangeColor = css`
+  ${clickable}
+  ${FontTabletSemibold14}
+  ${FlexRowCenter}
+  color: ${({ theme }) => theme.color.orange400};
+  width: fit-content;
+  padding: 6px 12px;
+  border: 1px solid ${({ theme }) => theme.color.orange400};
+  border-radius: 9999px;
+  gap: 8px;
+  background: none;
+
+  &:hover {
+    background: ${({ theme }) => theme.color.orange400};
+    color: ${({ theme }) => theme.color.white};
+    transition: 0.2s;
+  }
+
+  ${media.tablet} {
+    padding: 4px 8px;
+  }
 `;
 
 /*

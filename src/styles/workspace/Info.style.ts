@@ -12,7 +12,11 @@ import {
 import Back from "@/assets/workspace/character/back.svg";
 import { media } from "../media";
 import { FontBold20 } from "../Font";
-import { Round9999OrangeBackgoundWhiteColor } from "../Button";
+import {
+  Round9999EmptyBackgoundOrangeColor,
+  Round9999OrangeBackgoundWhiteColor,
+} from "../Button";
+import Link from "next/link";
 
 export const BackButton = styled(Back)`
   flex-shrink: 0;
@@ -33,7 +37,8 @@ export const CoverContainer = styled.div`
   width: 100%;
 
   ${media.tablet} {
-    gap: 0;
+    ${FlexColumnCenter}
+    gap: 20px;
   }
 `;
 export const BlurBackground = styled.div<{ $src: string | null }>`
@@ -119,6 +124,7 @@ export const ChangeCoverInput = styled.input`
 
 // 작품 정보
 export const SubTitle = styled.h2`
+  ${FlexRowLeftStart}
   ${FontBold20}
   height: fit-content;
   color: ${({ theme }) => theme.color.gray900};
@@ -165,13 +171,12 @@ export const AddMemoButtonContainer = styled.button`
 
 export const SubTitleWithButton = styled.div`
   ${FlexRowSpaceBetween}
-  display: flex;
-  flex-direction: row;
+  align-items: center;
   width: 100%;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 1rem;
+  height: fit-content;
+  min-height: 30px;
   margin-bottom: 10px;
+  position: relative;
 
   & > h2 {
     margin-bottom: 0;
@@ -225,4 +230,14 @@ export const DropdownMenu = styled.div`
   ${media.tablet} {
     font-size: 12px;
   }
+`;
+
+export const TextNavigationLink = styled(Link)`
+  ${Round9999EmptyBackgoundOrangeColor}
+  position: relative;
+`;
+
+export const TextNavigationButton = styled.button`
+  ${Round9999EmptyBackgoundOrangeColor}
+  position: relative;
 `;
