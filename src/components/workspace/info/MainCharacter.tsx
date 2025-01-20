@@ -3,13 +3,14 @@ import {
   Container,
   SubTitle,
   SubTitleWithButton,
+  TextNavigationLink,
 } from "@/styles/workspace/Info.style";
 import { CharacterCardList } from "../character/CharacterCardList";
 import {
   CharacterListContext,
   useCharacterList,
 } from "@/hooks/workspace/character/characterList";
-import { AddMemoButtonContainer } from "@/styles/workspace/Character.style";
+import { Help } from "@/components/Help";
 
 export default function ScriptSidebar() {
   const useValue = useCharacterList();
@@ -18,7 +19,10 @@ export default function ScriptSidebar() {
     <CharacterListContext.Provider value={useValue}>
       <Container>
         <SubTitleWithButton>
-          <SubTitle>주요인물</SubTitle>
+          <SubTitle>
+            주요 인물
+            <Help messageKey="MAIN_CHARACTER" />
+          </SubTitle>
           <MoveToCharacter />
         </SubTitleWithButton>
         <CharacterCardList forInfoPage={true} />
@@ -30,8 +34,8 @@ export default function ScriptSidebar() {
 export function MoveToCharacter() {
   const { workspace_id } = useCharacterList();
   return (
-    <AddMemoButtonContainer href={`/${workspace_id}/character`}>
-      인물 관리하러 가기
-    </AddMemoButtonContainer>
+    <TextNavigationLink href={`/${workspace_id}/character`}>
+      인물 추가하러 가기
+    </TextNavigationLink>
   );
 }

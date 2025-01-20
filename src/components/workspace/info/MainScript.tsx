@@ -6,9 +6,9 @@ import {
   SubTitleWithButton,
   TextNavigationButton,
 } from "@/styles/workspace/Info.style";
-import ChapterList from "../plot/ChapterList";
 import { useContext } from "react";
 import { WorkspaceLayoutContext } from "@/hooks/workspace/useWorkspaceLayout";
+import { LoadingMessage } from "@/styles/dashboard/Loading.style";
 import { Help } from "@/components/Help";
 
 export default function ScriptSidebar() {
@@ -18,22 +18,26 @@ export default function ScriptSidebar() {
       <Container>
         <SubTitleWithButton>
           <SubTitle>
-            메인 플롯 <Help messageKey="MAIN_PLOT" />
+            원고 작성 <Help messageKey="WRITE_MANUSCRIPT" />
           </SubTitle>
           <OpenSideBar />
         </SubTitleWithButton>
-        <ChapterList />
+        <SubTitleWithButton>
+          <LoadingMessage>
+            지금까지 작성한 기획을 바탕으로 작품을 집필해보세요.
+          </LoadingMessage>
+        </SubTitleWithButton>
       </Container>
     </PlotContext.Provider>
   );
 }
 
 export function OpenSideBar() {
-  const { togglePlot } = useContext(WorkspaceLayoutContext);
+  const { toggleScript } = useContext(WorkspaceLayoutContext);
 
   return (
-    <TextNavigationButton onClick={togglePlot}>
-      플롯 관리하러 가기
+    <TextNavigationButton onClick={toggleScript}>
+      원고 관리하러 가기
     </TextNavigationButton>
   );
 }

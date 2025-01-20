@@ -8,6 +8,7 @@ import { Input } from "@/styles";
 import DropdownMenu from "@/components/DropdownMenu";
 import { useContext } from "react";
 import { InfoContext } from "@/hooks/workspace/info";
+import { Help } from "@/components/Help";
 
 export default function ScriptSidebar() {
   const { data, isLoading, onChangeExpectedQuantity, onChangeGrade } =
@@ -19,7 +20,10 @@ export default function ScriptSidebar() {
 
   return (
     <Container>
-      <SubTitle>예상 분량</SubTitle>
+      <SubTitle>
+        예상 분량
+        <Help messageKey="EXPECTED_VOLUME" />
+      </SubTitle>
       <TextWithDropMenu style={{ maxWidth: 392 }}>
         <Input
           type=""

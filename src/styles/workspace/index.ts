@@ -37,18 +37,19 @@ export const MainContainer = styled.div<{
   max-width: ${({ $isScriptPage }) => ($isScriptPage ? "none" : "1012px")};
   position: relative;
   padding: ${({ $isScriptPage }) =>
-    $isScriptPage ? "0" : "65px 28px 60px 28px"};
+    $isScriptPage ? "0" : "65px 28px 100px 28px"};
   margin-left: auto;
   margin-right: auto;
   overflow-y: auto;
 
   ${media.tablet} {
     padding: ${({ $isScriptPage }) =>
-      $isScriptPage ? "0" : "20px 16px 20px 16px"};
+      $isScriptPage ? "0" : "20px 16px 40px 16px"};
   }
 `;
 
 export const Title = styled.div`
+  position: relative;
   ${FlexRowLeftStart}
   width: 100%;
   font-size: 28px;
@@ -56,6 +57,7 @@ export const Title = styled.div`
   font-weight: 700;
   color: ${({ theme }) => theme.color.gray900};
   margin-bottom: 69px;
+  align-items: center;
 
   ${media.tablet} {
     font-size: 16px;

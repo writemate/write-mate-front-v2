@@ -8,6 +8,14 @@ export const FontUnvisible = css`
 /*
  * 타블렛 용 폰트 사이즈
  */
+export const FontTabletRegular12 = css`
+  font-family: Pretendard;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%; /* 18px */
+`;
+
 export const FontTabletRegular13 = css`
   font-family: Pretendard;
   font-size: 13px;
@@ -67,6 +75,19 @@ export const FontTabletBold24 = css`
 /*
  * 데스크탑용 폰트 사이즈
  */
+
+export const FontRegular13 = css`
+  font-family: Pretendard;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%; /* 18px */
+
+  ${media.tablet} {
+    ${FontTabletRegular12}
+  }
+`;
+
 export const FontSemibold14 = css`
   font-family: Pretendard;
   font-size: 14px;
