@@ -36,6 +36,7 @@ export default function File({
     deleteFolderOrFile,
     setMainPlot,
     isSelectedFolderExist,
+    onClickFile,
   } = useContext(SidebarContext);
   const { isKebabOpen, openKebab, closeKebab } = useKebab();
   const {
@@ -46,23 +47,28 @@ export default function File({
     onDragLeave,
     onDrop,
   } = useDrag(file);
-  const { plot_id, script_id } = useParams<{ plot_id?: string; script_id?: string }>();
+  const { plot_id, script_id } = useParams<{
+    plot_id?: string;
+    script_id?: string;
+  }>();
   const isSelect = (() => {
-    if(file.isEditing) return true;
-    if(isSelectedFolderExist) return false;
-    if(type === "plot") return plot_id === file.id;
+    if (file.isEditing) return true;
+    if (isSelectedFolderExist) return false;
+    if (type === "plot") return plot_id === file.id;
     return script_id === file.id;
   })();
 
   return (
     <FileContainer
       $nestedLevel={nestedLevel}
+      $isSelect={isSelect}
       $isEditing={file.isEditing}
       onDragStart={onDragStart}
       onDragOver={onDragOver}
       onDragLeave={onDragLeave}
       draggable={true}
       onDrop={onDrop}
+      onClick={onClickFile}
       href={`/${workspace_id}/${type}/${file.id}`}
     >
       <TopDropLine $nestedLevel={nestedLevel} $active={isDragOverBefore} />

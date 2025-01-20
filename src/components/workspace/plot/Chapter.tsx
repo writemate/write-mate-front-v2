@@ -17,6 +17,8 @@ import useChapter from "@/hooks/workspace/plot/useChapter";
 import { TChapter } from "@/utils/APIs/types";
 import { WarningModal } from "@/components/dashboard/WarningModal";
 import { useWarningModal } from "@/hooks/common/useWarningModal";
+import { copy } from "@/utils/copy";
+import { useCallback, useRef } from "react";
 
 export default function Chapter({
   id: chapterId,
@@ -31,6 +33,12 @@ export default function Chapter({
     onChapterDescriptionChange,
     toggleChapterFold,
   } = useChapter(chapterId, isFolded);
+  const descRef = useRef<HTMLTextAreaElement>(null);
+  const handleCopy = useCallback(() => {
+    if (descRef.current) {
+      copy(descRef.current.value)();
+    }
+  }, []);
 
   const { isOpenDeleteModal, onOpenModal, closeModal } = useWarningModal();
   return (
@@ -50,7 +58,7 @@ export default function Chapter({
             {isFolded && <ToggleFold />}
             {!isFolded && <ToggleIcon />}
           </IconButton>
-          <IconButton type="button">
+          <IconButton type="button" onClick={handleCopy}>
             <CopyIcon />
           </IconButton>
           <IconButton type="button" onClick={onOpenModal}>
@@ -72,6 +80,7 @@ export default function Chapter({
           defaultValue={chapterDescription}
           onChange={onChapterDescriptionChange}
           placeholder="챕터 내용을 적어주세요."
+          ref={descRef}
         />
         {!isFolded && <EventList pevent={pevent} chapterId={chapterId} />}
       </ChapterCard>

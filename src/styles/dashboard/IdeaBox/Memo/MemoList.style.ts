@@ -1,12 +1,18 @@
 "use client";
 import { styled } from "styled-components";
 import { media } from "@/styles/media";
-import { clickable, FlexColumnLeftStart, FlexRowSpaceBetween } from "@/styles";
+import {
+  clickable,
+  FlexColumnCenter,
+  FlexColumnLeftStart,
+  FlexRowSpaceBetween,
+} from "@/styles";
 import OpenModal from "@/assets/icons/openModal.svg";
 import Copy from "@/assets/icons/copy.svg";
 import TextareaAutosize from "react-textarea-autosize";
 import { FontSemibold14, FontTabletRegular14 } from "@/styles/Font";
 import { Round9999OrangeBackgoundWhiteColor } from "@/styles/Button";
+import { IconButton } from "@/styles/workspace/plot/Chapter.styles";
 
 interface MemoCardProps {
   $isSelected?: boolean;
@@ -36,6 +42,10 @@ export const MemoCard = styled.div<MemoCardProps>`
 export const MemoHeader = styled.div`
   ${FlexRowSpaceBetween};
   width: 100%;
+  svg {
+    width: 24px !important;
+    height: 24px !important;
+  }
 `;
 
 export const MemoContent = styled(TextareaAutosize)`
@@ -45,7 +55,7 @@ export const MemoContent = styled(TextareaAutosize)`
   border: none;
   outline: none;
   resize: none;
-  min-height: calc(14px * 1.5 * 6);
+  min-height: calc(14px * 1.5 * 3);
 
   &::placeholder {
     color: ${({ theme }) => theme.color.gray200};
@@ -104,5 +114,9 @@ export const MemoListContainer = styled.div`
 
   ${media.tablet} {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+
+  ${IconButton} {
+    display: none;
   }
 `;

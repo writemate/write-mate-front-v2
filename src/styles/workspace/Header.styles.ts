@@ -22,6 +22,8 @@ export const HeaderContainer = styled.header`
 `;
 
 export const HeaderTitle = styled.h1`
+  overflow: auto;
+  white-space: nowrap;
   padding-left: 28px;
   padding-right: 16px;
 
@@ -34,6 +36,10 @@ export const HeaderTitle = styled.h1`
   flex-direction: row;
   gap: 8px;
 
+  svg {
+    flex-shrink: 0;
+  }
+
   ${media.tablet} {
     padding: 0;
     font-size: 16px;
@@ -45,6 +51,8 @@ export const SaveStatus = styled.div`
   ${FlexRowCenter};
   font-size: 14px;
   color: ${({ theme }) => theme.color.gray400};
+  width: fit-content;
+  white-space: nowrap;
 
   ${media.tablet} {
     font-size: 12px;
@@ -54,6 +62,7 @@ export const SaveStatus = styled.div`
 export const VersionControlButton = styled.div`
   ${clickable}
   ${FlexRowCenter};
+  flex-shrink: 0;
   margin-left: auto;
   font-size: 16px;
   color: var(--cod-gray);

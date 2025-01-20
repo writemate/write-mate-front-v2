@@ -10,7 +10,10 @@ import {
 import useSelectCharacterModal from "@/hooks/workspace/plot/useSelectCharacterModal";
 import { TSimpleCharacter } from "@/utils/APIs/types";
 import { useContext } from "react";
-import { CharacterListContext } from "@/hooks/workspace/character/characterList";
+import {
+  CharacterListContext,
+  useCharacterList,
+} from "@/hooks/workspace/character/characterList";
 
 interface CharacterModalProps {
   chapterId: string;
@@ -25,7 +28,7 @@ export default function SelectCharacterModal({
   modalRef,
   selectedCharacterList,
 }: CharacterModalProps) {
-  const { characterList } = useContext(CharacterListContext);
+  const { characterList } = useCharacterList();
   const {
     onSelectCharacterClick,
     onUnselectCharacterClick,
@@ -43,10 +46,10 @@ export default function SelectCharacterModal({
   return (
     <ModalContainer ref={modalRef}>
       <SelectBtnWrapper>
-        {/* <AutoBtn onClick={handleAutoChatacter}>
+        <AutoBtn onClick={handleAutoChatacter}>
           <Circulation style={{ marginRight: "6px" }} />
           자동 연동
-        </AutoBtn> */}
+        </AutoBtn>
         {selectedCharacterList.map((selectCharacter) => (
           <CharacterCheckBtn
             type="button"

@@ -6,12 +6,13 @@ export const ModalContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 30px;
-  gap: 10px;
+  padding: 15px;
   z-index: 1;
 
   position: absolute;
-  width: 564px;
+  max-width: 564px;
+  width: 100%;
+  height: fit-content;
 
   left: 10px;
   top: 100%;
@@ -40,12 +41,11 @@ export const SelectBtnWrapper = styled.div`
 export const AutoBtn = styled.button`
   display: flex;
   padding: 12px 20px 12px 16px;
-  margin: 0 18px 20px 0;
+  margin: 5px;
 
   height: 44px;
   border: none;
 
-  /* Orange/Orange 500 */
   background: ${colorSystem.orange400};
   color: white;
   border-radius: 100px;
@@ -66,7 +66,7 @@ export const AutoBtn = styled.button`
 
 export const CharacterDefaultBtn = styled.button`
   box-sizing: border-box;
-  margin: 0 8px 8px 0;
+  margin: 5px;
   cursor: pointer;
 
   display: inline-block;

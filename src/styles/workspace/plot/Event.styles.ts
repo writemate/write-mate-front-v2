@@ -55,7 +55,6 @@ export const EventHeader = styled.div`
 export const EventDeleteBtn = styled(DeleteIcon)`
   width: 32px;
   cursor: pointer;
-  margin-left: auto;
 
   ${media.tablet} {
     width: 24px;
