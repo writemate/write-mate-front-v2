@@ -28,7 +28,7 @@ export const CharacterListContainer = styled.div`
 
 export const CharacterCard = styled.div<{ $isSelected?: boolean }>`
   ${FlexColumnLeftStart};
-  height: 200px;
+  height: 160px;
   width: 100%;
   visibility: ${({ $isSelected }) => ($isSelected ? "hidden" : "visible")};
   background-color: ${({ theme }) => theme.color.white};

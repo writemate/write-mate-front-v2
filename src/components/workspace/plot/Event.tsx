@@ -14,6 +14,11 @@ import { TPlotEvent } from "@/utils/APIs/types";
 import useEvent from "@/hooks/workspace/plot/useEvent";
 import { useWarningModal } from "@/hooks/common/useWarningModal";
 import { WarningModal } from "@/components/dashboard/WarningModal";
+import CharacterModal from "../character/CharacterModal";
+import { IconButton } from "@/styles/workspace/plot/Chapter.styles";
+import CopyIcon from "@/assets/workspace/plot/copy.svg";
+import { useCallback, useRef } from "react";
+import { copy } from "@/utils/copy";
 
 export default function Event({
   id: eventId,
@@ -25,6 +30,7 @@ export default function Event({
   const {
     selectCharacterModal,
     openSelectCharacterModal,
+    closeEditCharacterModal,
     editCharacterModal,
     selectModalRef,
     openEditCharacterModal,
@@ -34,6 +40,12 @@ export default function Event({
   } = useEvent(eventId, chapterId);
 
   const { isOpenDeleteModal, onOpenModal, closeModal } = useWarningModal();
+  const descRef = useRef<HTMLTextAreaElement>(null);
+  const handleCopy = useCallback(() => {
+    if (descRef.current) {
+      copy(descRef.current.value)();
+    }
+  }, []);
 
   return (
     <>
@@ -58,21 +70,29 @@ export default function Event({
               $src={character.ch_image}
             />
           ))}
-          <EventDeleteBtn
-            onClick={onOpenModal}
-            width="24px"
-            height="24px"
-            viewBox="0 0 32 32"
-          />
-          {isOpenDeleteModal && (
-            <WarningModal
-              closeModal={closeModal}
-              onClickConfirm={onEventDeleteClick}
-              onClickCancel={closeModal}
-              message={"이벤트를 삭제하시겠습니까?"}
-              ConfirmButtonName={"삭제"}
-            />
-          )}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              marginLeft: "auto",
+            }}
+          >
+            <IconButton type="button" onClick={handleCopy}>
+              <CopyIcon />
+            </IconButton>
+            <IconButton onClick={onOpenModal}>
+              <EventDeleteBtn />
+            </IconButton>
+            {isOpenDeleteModal && (
+              <WarningModal
+                closeModal={closeModal}
+                onClickConfirm={onEventDeleteClick}
+                onClickCancel={closeModal}
+                message={"사건을 삭제하시겠습니까?"}
+                ConfirmButtonName={"삭제"}
+              />
+            )}
+          </div>
         </EventHeader>
         <EventTitle
           defaultValue={eventName}
@@ -83,9 +103,15 @@ export default function Event({
           defaultValue={eventDescription}
           onChange={onEventDescriptionChange}
           placeholder="사건 내용을 적어주세요."
+          ref={descRef}
         />
       </EventColumnContainer>
-      {/* {editCharacterModal} */}
+      {editCharacterModal && (
+        <CharacterModal
+          characterId={editCharacterModal}
+          closeModal={closeEditCharacterModal}
+        />
+      )}
     </>
   );
 }

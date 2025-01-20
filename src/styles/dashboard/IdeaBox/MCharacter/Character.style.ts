@@ -56,10 +56,14 @@ export const CharacterRole = styled.div`
 export const CharacterDescription = styled.div`
   ${FontTabletRegular13}
   color: ${({ theme }) => theme.color.gray400};
+  display: flex;
   height: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  width: 100%;
+  flex-wrap: wrap;
+  overflow: auto;
+  word-break: break-word;
+  white-space: pre-wrap;
+  line-height: 1.5;
+  padding: 8px;
+  box-sizing: border-box;
 `;
