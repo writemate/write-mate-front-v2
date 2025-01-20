@@ -2,10 +2,7 @@ import { CharacterListContext } from "@/hooks/workspace/character/characterList"
 import { CharacterListContainer } from "@/styles/workspace/Character.style";
 import { CharacterCard } from "./CharacterCard";
 import { useContext } from "react";
-import {
-  LoadingMessage,
-  RelativContainer,
-} from "@/styles/dashboard/Loading.style";
+import { StateMessage } from "@/components/EmptyMessage";
 
 interface CharacterCardListProps {
   forInfoPage?: boolean;
@@ -20,7 +17,7 @@ export function CharacterCardList({
   return (
     <CharacterListContainer $forInfoPage={forInfoPage}>
       {(isKeywordsLoading || isCharactersLoading) && (
-        <div>캐릭터 로딩중...</div>
+        <StateMessage messageKey="LOADING" absolute />
       )}
       {!forInfoPage &&
         characterList &&
@@ -29,9 +26,7 @@ export function CharacterCardList({
           <CharacterCard key={index} index={index} character={character} />
         ))}
       {!forInfoPage && characterList && characterList.length === 0 && (
-        <RelativContainer>
-          <LoadingMessage>인물이 없습니다. 인물을 생성해주세요.</LoadingMessage>
-        </RelativContainer>
+        <StateMessage messageKey="CHARACTER_EMPTY" absolute />
       )}
       {forInfoPage &&
         characterList &&
@@ -45,11 +40,7 @@ export function CharacterCardList({
       {forInfoPage &&
         characterList &&
         characterList.filter((character) => character.isMain).length === 0 && (
-          <RelativContainer>
-            <LoadingMessage>
-              주요 등장인물이 없습니다. 주요 등장인물을 선택해주세요.
-            </LoadingMessage>
-          </RelativContainer>
+          <StateMessage messageKey="MAIN_CHARACTER_EMPTY" absolute />
         )}
     </CharacterListContainer>
   );

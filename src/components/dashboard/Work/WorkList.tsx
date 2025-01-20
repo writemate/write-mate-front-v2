@@ -1,15 +1,12 @@
 "use client";
-import {
-  WorkListContainer,
-  EmptyListDiscription,
-} from "@/styles/dashboard/Work/WorkList.style";
+import { WorkListContainer } from "@/styles/dashboard/Work/WorkList.style";
 import { useContext } from "react";
 import WorkButton from "./WorkItem";
 import { workspaceCategory } from "@/utils/APIs/types";
 import { AddWork, MoveToOngoing } from "@/components/dashboard/Work/Button";
-import { LoadingMessage } from "@/styles/dashboard/Loading.style";
 import { WorkListContext } from "@/hooks/dashboard/work/workList";
 import { WorkCategoryContext } from "@/hooks/dashboard/work/workCategory";
+import { StateMessage } from "@/components/EmptyMessage";
 
 export default function WorkList() {
   const { workCategory } = useContext(WorkCategoryContext);
@@ -17,13 +14,8 @@ export default function WorkList() {
 
   return (
     <>
-      {isLoading && <LoadingMessage>로딩중...</LoadingMessage>}
-      {error && (
-        <LoadingMessage>
-          에러가 발생했습니다. <br />
-          새로고침을 하시거나, 채팅 버튼을 이용해 문의해주세요.
-        </LoadingMessage>
-      )}
+      {isLoading && <StateMessage messageKey="LOADING" />}
+      {error && <StateMessage messageKey="LOADING_ERROR" />}
       {workList && (
         <>
           {workList.length > 0 && (
@@ -40,23 +32,19 @@ export default function WorkList() {
           {workList.length === 0 && (
             <>
               {workCategory === workspaceCategory.ongoing && (
-                <EmptyListDiscription>
-                  새로운 작품을 집필해보세요!
+                <StateMessage messageKey="ONGOING_EMPTY">
                   <AddWork />
-                </EmptyListDiscription>
+                </StateMessage>
               )}
               {workCategory === workspaceCategory.completed && (
-                <EmptyListDiscription>
-                  완료된 작품이 없습니다. <br />
-                  새로운 작품을 집필해보세요!
+                <StateMessage messageKey="COMPLETED_EMPTY">
                   <MoveToOngoing />
-                </EmptyListDiscription>
+                </StateMessage>
               )}
               {workCategory === workspaceCategory.trash && (
-                <EmptyListDiscription>
-                  휴지통이 비어있습니다.
+                <StateMessage messageKey="TRASH_EMPTY">
                   <MoveToOngoing />
-                </EmptyListDiscription>
+                </StateMessage>
               )}
             </>
           )}

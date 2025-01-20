@@ -14,6 +14,7 @@ import { CreateRelationButton } from "@/styles/workspace/Character.style";
 import { EditRelationProps } from "@/components/workspace/character/network/EditRelation";
 import CharacterModal from "@/components/workspace/character/CharacterModal";
 import { LoadingMessage } from "@/styles/dashboard/Loading.style";
+import { StateMessage } from "@/components/EmptyMessage";
 
 export type Node = {
   id: string;
@@ -635,60 +636,56 @@ const NetworkGraph = () => {
   };
 
   return (
-    <div
-      style={{
-        width: "100%",
-        height: "100%",
-        marginTop: "40px",
-        overflow: "hidden",
-        position: "relative",
-      }}
-    >
-      {isLoading && (
-        <LoadingMessage>로딩 중입니다! 잠시만 기다려주세요.</LoadingMessage>
-      )}
-      {relations?.length === 0 && !isLoading && (
-        <LoadingMessage>
-          {
-            "설정한 관계가 없습니다. \n 관계를 추가하여 인물 관계도를 확인해보세요!"
-          }
-        </LoadingMessage>
-      )}
-      <svg ref={ref} className={isLoading ? "invisible" : ""}>
-        <rect
-          width="100%"
-          height="100%"
-          fill="#EFF1F7"
-          className={isLoading ? "invisible" : ""}
-        ></rect>
-      </svg>
+    <>
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          marginTop: "40px",
+          overflow: "hidden",
+          position: "relative",
+        }}
+      >
+        {isLoading && <StateMessage messageKey="LOADING" absolute />}
+        {relations?.length === 0 && !isLoading && (
+          <StateMessage messageKey="CHARACTER_NETWORK_EMPTY" absolute />
+        )}
+        <svg ref={ref} className={isLoading ? "invisible" : ""}>
+          <rect
+            width="100%"
+            height="100%"
+            fill="#EFF1F7"
+            className={isLoading ? "invisible" : ""}
+          ></rect>
+        </svg>
+        {modalContent && (
+          <Modal
+            closeModal={() => setModalContent(null)}
+            maxWidth={972}
+            maxHeight="100%"
+          >
+            <EditRelation
+              {...modalContent}
+              closeModal={() => setModalContent(null)}
+            />
+          </Modal>
+        )}
+        {characterModal && (
+          <CharacterModal
+            characterId={characterModal}
+            closeModal={() => {
+              setcharacterModal(null);
+              queryClient.invalidateQueries({
+                queryKey: workspaceQueryKeys.character(workspace_id),
+              });
+            }}
+          />
+        )}
+      </div>
       <CreateRelationButton onClick={onClickCreateModalOpen}>
         관계 추가하기
       </CreateRelationButton>
-      {modalContent && (
-        <Modal
-          closeModal={() => setModalContent(null)}
-          maxWidth={972}
-          maxHeight="100%"
-        >
-          <EditRelation
-            {...modalContent}
-            closeModal={() => setModalContent(null)}
-          />
-        </Modal>
-      )}
-      {characterModal && (
-        <CharacterModal
-          characterId={characterModal}
-          closeModal={() => {
-            setcharacterModal(null);
-            queryClient.invalidateQueries({
-              queryKey: workspaceQueryKeys.character(workspace_id),
-            });
-          }}
-        />
-      )}
-    </div>
+    </>
   );
 };
 

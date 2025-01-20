@@ -6,10 +6,11 @@ import {
   CoverContentsContainer,
 } from "@/styles/workspace/Info.style";
 import CoverImageBox from "@/components/workspace/character/detail/CoverImageBox";
-import { Input, DeleteButton } from "@/styles";
+import { Input } from "@/styles";
 import { CharacterContext } from "@/hooks/workspace/character/character";
 import { useWarningModal } from "@/hooks/common/useWarningModal";
 import { WarningModal } from "@/components/dashboard/WarningModal";
+import { DeleteButton } from "@/styles/Button";
 
 export default function Cover({
   isDeletable = true,

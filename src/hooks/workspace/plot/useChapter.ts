@@ -51,6 +51,11 @@ const useChapter = (chapterId: string, isFolded: boolean) => {
         context?.previousPlot
       );
     },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: workspaceQueryKeys.info(workspace_id),
+      });
+    },
   })();
 
   const onChapterNameChange = useInputLiveUpdate(
@@ -98,6 +103,11 @@ const useChapter = (chapterId: string, isFolded: boolean) => {
         workspaceQueryKeys.plot(workspace_id, plot_id),
         context?.previousPlot
       );
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: workspaceQueryKeys.info(workspace_id),
+      });
     },
   });
 

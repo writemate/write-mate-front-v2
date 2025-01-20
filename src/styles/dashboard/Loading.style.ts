@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { FontRegular13, FontRegular16, FontTabletRegular13 } from "../Font";
+import { FontRegular16 } from "../Font";
+import { FlexColumnCenter } from "..";
 
 export const LoadingMessage = styled.div`
   ${FontRegular16}
@@ -16,6 +17,7 @@ export const LoadingMessage = styled.div`
 
 export const RelativContainer = styled.div`
   position: relative;
+  ${FlexColumnCenter}
   width: 100%;
   height: 100%;
   min-height: 60px;

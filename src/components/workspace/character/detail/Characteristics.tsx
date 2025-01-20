@@ -12,6 +12,7 @@ import {
 } from "@/styles/workspace/Character.style";
 import { WarningModal } from "@/components/dashboard/WarningModal";
 import { useWarningModal } from "@/hooks/common/useWarningModal";
+import { StateMessage } from "@/components/EmptyMessage";
 
 export default function Description() {
   const {
@@ -65,6 +66,9 @@ export default function Description() {
             />
           </CharacteristicContainer>
         ))}
+        {characteristicList.length === 0 && (
+          <StateMessage messageKey="CHARACTERISTIC_EMPTY" />
+        )}
         <CharacteristicAdd
           onClick={onClickAddCharacteristic}
           disabled={isLoading}
