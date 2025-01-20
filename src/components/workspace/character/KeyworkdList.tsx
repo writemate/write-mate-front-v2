@@ -10,6 +10,7 @@ import {
 import AddButton from "@/assets/icons/addButton.svg";
 import KeywordCancel from "@/assets/workspace/character/keywordCancel.svg";
 import { useContext } from "react";
+import { StateMessage } from "@/components/EmptyMessage";
 
 export function KeywordList() {
   const {
@@ -31,7 +32,10 @@ export function KeywordList() {
   } = useContext(CharacterListContext);
   return (
     <KeywordListContainer ref={keywordListRef}>
-      {isKeywordsLoading && <div>키워드 로딩중...</div>}
+      {isKeywordsLoading && <StateMessage messageKey="LOADING" absolute />}
+      {!isKeywordsLoading && keywordList && keywordList.length === 0 && (
+        <StateMessage messageKey="KEYWORD_EMPTY" absolute />
+      )}
       {keywordList &&
         keywordList.map((keyword, index) => {
           if (keyword.id === null)

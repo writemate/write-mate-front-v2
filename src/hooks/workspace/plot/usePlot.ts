@@ -2,7 +2,7 @@
 
 import { getPlotInfo } from "@/utils/APIs/workspace/plot";
 import { workspaceQueryKeys } from "@/utils/APIs/queryKeys";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { createContext, useEffect } from "react";
 
@@ -33,6 +33,7 @@ export const PlotContext = createContext({} as ReturnType<typeof usePlot>);
 import { getInfo } from "@/utils/APIs/workspace";
 export const useMainPlot = () => {
   const { workspace_id } = useParams<{ workspace_id: string }>();
+
   const { data, error, isLoading } = useQuery({
     queryKey: workspaceQueryKeys.info(workspace_id),
     queryFn: getInfo(workspace_id),

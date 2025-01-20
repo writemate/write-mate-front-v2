@@ -4,7 +4,7 @@ import { AddMCharacterButton } from "@/components/dashboard/AddButton";
 import { CharacterListContainer } from "@/styles/dashboard/IdeaBox/MCharacter/MCharacterList.style";
 import { CharacterItem } from "./CharacterItem";
 import { useCharacterList } from "@/hooks/dashboard/character/useCharacterList";
-import { Error, Loading } from "../Memo/MemoList";
+import { StateMessage } from "@/components/EmptyMessage";
 
 export default function CharacterList() {
   const { characterList, error, isLoading } = useCharacterList();
@@ -19,10 +19,10 @@ export default function CharacterList() {
             .map((character) => (
               <CharacterItem key={character.id} character={character} />
             ))}
-        {error && <Error />}
-        {isLoading && <Loading />}
+        {error && <StateMessage messageKey="LOADING_ERROR" absolute />}
+        {isLoading && <StateMessage messageKey="LOADING" absolute />}
         {characterList && characterList.length === 0 && (
-          <LoadingMessage>캐릭터가 없습니다.</LoadingMessage>
+          <StateMessage messageKey="CHARACTER_EMPTY" absolute />
         )}
       </CharacterListContainer>
       <AddMCharacterButton />

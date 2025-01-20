@@ -1,4 +1,4 @@
-import { css } from "styled-components";
+import styled, { css } from "styled-components";
 import {
   clickable,
   FlexRowCenter,
@@ -124,8 +124,8 @@ export const IconCanActiveNOpenButton = css<{
 export const IconSmallButton = css`
   ${clickable}
   display: block;
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   padding: 2px;
 `;
 
@@ -177,7 +177,7 @@ export const Round9999OrangeBackgoundWhiteColor = css`
   ${FontSemibold16}
   background: ${({ theme }) => theme.color.orange400};
   color: ${({ theme }) => theme.color.white};
-  padding: 8px;
+  padding: 6px 12px;
 `;
 
 export const Round9999EmptyBackgoundOrangeColor = css`
@@ -201,6 +201,23 @@ export const Round9999EmptyBackgoundOrangeColor = css`
   ${media.tablet} {
     padding: 4px 8px;
   }
+`;
+
+export const Round9999EmptyBackgoundRed600Color = css`
+  ${Round9999EmptyBackgoundOrangeColor}
+  color: ${({ theme }) => theme.color.red600};
+  border: 1px solid ${({ theme }) => theme.color.red600};
+
+  &:hover {
+    background: ${({ theme }) => theme.color.red600};
+    color: ${({ theme }) => theme.color.white};
+    transition: 0.2s;
+  }
+`;
+
+export const DeleteButton = styled.div`
+  ${Round9999EmptyBackgoundRed600Color};
+  id: "delete-button";
 `;
 
 /*

@@ -16,13 +16,19 @@ import {
   FontBold20,
   FontBold24,
   FontBold28,
+  FontRegular13,
+  FontRegular14,
   FontRegular16,
   FontSemibold14,
   FontSemibold16,
   FontTabletRegular13,
   FontTabletRegular14,
 } from "../Font";
-import { Round9999OrangeBackgoundWhiteColor } from "../Button";
+import {
+  GrayTextButton,
+  Round9999EmptyBackgoundOrangeColor,
+  Round9999OrangeBackgoundWhiteColor,
+} from "../Button";
 import { LoadingMessage } from "../dashboard/Loading.style";
 
 // 네비게이션 바
@@ -168,6 +174,7 @@ export const CharacterListContainer = styled.div<{ $forInfoPage: boolean }>`
   position: relative;
   ${FlexRowLeftStart};
   width: 100%;
+  height: ${({ $forInfoPage }) => ($forInfoPage ? "auto" : "100%")};
   margin-top: ${({ $forInfoPage }) => ($forInfoPage ? "0" : "36px")};
   gap: 12px;
   flex-wrap: wrap;
@@ -271,7 +278,6 @@ export const CreateCharacterButton = styled.button`
   ${FlexRowCenter};
   ${clickable};
   ${Round9999OrangeBackgoundWhiteColor}
-  padding: 8px 16px;
 `;
 
 export const CharacterRelationContainer = styled.div`
@@ -375,19 +381,12 @@ export const CharacteristicContent = styled.textarea`
 `;
 
 export const CharacteristicAdd = styled.button`
-  ${FontTabletRegular14}
-  ${FlexColumnLeftStart}
-  ${clickable};
-  padding: 10px;
-  gap: 10px;
-  margin: 0 auto;
-  background: none;
-  border: none;
-
-  color: ${({ theme }) => theme.color.orange400};
-
-  ${media.tablet} {
-    padding: 6px;
+  ${GrayTextButton}
+  ${FontRegular14}
+  margin-top: 12px;
+  &:hover {
+    underline: none;
+    color: ${({ theme }) => theme.color.orange400};
   }
 `;
 

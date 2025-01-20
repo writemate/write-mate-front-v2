@@ -21,10 +21,13 @@ export const ExplainMessage = styled.p`
   word-break: keep-all;
   width: max-content;
   max-width: 400px;
+
+  z-index: 100;
 `;
 
 export const HelpIcon = styled(HelpSVG)`
   ${IconSmallButton}
+  fill: ${({ theme }) => theme.color.gray400};
 `;
 
 export const HelpContainer = styled.div`
@@ -35,7 +38,7 @@ export const HelpContainer = styled.div`
     display: block;
   }
   &:hover ${HelpIcon} {
-    fill: ${({ theme }) => theme.color.gray400};
+    fill: ${({ theme }) => theme.color.orange500};
   }
 
   ${media.tablet} {

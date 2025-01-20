@@ -67,6 +67,11 @@ const useSelectCharacterModal = (
         context?.previousPlot
       );
     },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: workspaceQueryKeys.info(workspace_id),
+      });
+    },
   });
 
   const onUnselectCharacterClick = useOnClickUpdate({
@@ -117,6 +122,11 @@ const useSelectCharacterModal = (
         workspaceQueryKeys.plot(workspace_id, plot_id),
         context?.previousPlot
       );
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: workspaceQueryKeys.info(workspace_id),
+      });
     },
   });
 

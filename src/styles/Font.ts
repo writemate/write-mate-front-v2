@@ -88,6 +88,18 @@ export const FontRegular13 = css`
   }
 `;
 
+export const FontRegular14 = css`
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%; /* 21px */
+
+  ${media.tablet} {
+    ${FontTabletRegular13}
+  }
+`;
+
 export const FontSemibold14 = css`
   font-family: Pretendard;
   font-size: 14px;

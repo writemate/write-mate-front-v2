@@ -17,7 +17,8 @@ import {
   ModalTitle,
 } from "@/styles/dashboard/IdeaBox/Modal.style";
 import { Infos } from "@/styles/workspace/Info.style";
-import { CloseButton, DeleteButton } from "@/styles";
+import { CloseButton } from "@/styles";
+import { DeleteButton } from "@/styles/Button";
 
 export default function CharacterModal({
   characterId,

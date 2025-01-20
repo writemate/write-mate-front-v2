@@ -22,7 +22,8 @@ import {
 } from "@/styles/workspace/Info.style";
 import { Infos } from "@/styles/workspace/Info.style";
 import { WarningModal } from "../WarningModal";
-import { CloseButton, DeleteButton } from "@/styles";
+import { CloseButton } from "@/styles";
+import { DeleteButton } from "@/styles/Button";
 
 export default function MCharacterModal() {
   const {

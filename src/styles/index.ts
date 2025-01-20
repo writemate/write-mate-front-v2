@@ -1,7 +1,6 @@
-import { styled, css, keyframes } from "styled-components";
+import { styled, css } from "styled-components";
 import { media } from "./media";
 import Close from "@/assets/icons/close.svg";
-import { FontSemibold14 } from "./Font";
 
 export const FlexRowCenter = css`
   display: flex;
@@ -302,16 +301,6 @@ export const ModalContainer = styled.div`
   ${media.tablet} {
     padding: 20px;
   }
-`;
-
-export const DeleteButton = styled.div`
-  ${ButtonCss};
-  ${FontSemibold14}
-  id: "delete-button";
-  background-color: ${({ theme }) => theme.color.red600};
-  color: #fff;
-  border-radius: 30px;
-  padding: 8px 12px;
 `;
 
 export const CloseButton = styled(Close)`

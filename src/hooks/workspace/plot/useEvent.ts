@@ -93,6 +93,11 @@ const useEvent = (eventId: string, chapterId: string) => {
         context?.previousPlot
       );
     },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: workspaceQueryKeys.info(workspace_id),
+      });
+    },
   })();
 
   const onEventNameChange = useInputLiveUpdate(
