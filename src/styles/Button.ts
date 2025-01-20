@@ -157,7 +157,7 @@ export const Round9999RedBackgoundWhiteColor = css`
   ${MainColorBackground}
   color: ${({ theme }) => theme.color.white};
   width: fit-content;
-  padding: 6px 12px;
+  padding: 12px;
   border: none;
   border-radius: 9999px;
   gap: 8px;
