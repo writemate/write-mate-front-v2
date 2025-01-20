@@ -1,8 +1,5 @@
 "use client";
-import {
-  WorkListContainer,
-  EmptyListDiscription,
-} from "@/styles/dashboard/Work/WorkList.style";
+import { WorkListContainer } from "@/styles/dashboard/Work/WorkList.style";
 import { useContext } from "react";
 import WorkButton from "./WorkItem";
 import { workspaceCategory } from "@/utils/APIs/types";
