@@ -1,8 +1,8 @@
 "use client";
 import MemoItem from "@/components/dashboard/Memo/MemoItem";
+import { StateMessage } from "@/components/EmptyMessage";
 import { useMemoItem } from "@/hooks/dashboard/memo/memoItem";
 import { useMemoList } from "@/hooks/dashboard/memo/useMemoList";
-import { LoadingMessage } from "@/styles/dashboard/Loading.style";
 import {
   MemoContent,
   MemoHeader,
@@ -11,7 +11,6 @@ import {
   AddButton,
 } from "@/styles/workspace/IdeaBox.styles";
 import { TMemo } from "@/utils/APIs/types";
-import { Error, Loading } from "@/components/dashboard/Memo/MemoList";
 import { copy } from "@/utils/copy";
 
 export default function Memo() {
@@ -27,10 +26,10 @@ export default function Memo() {
           .slice()
           .reverse()
           .map((memo) => <MemoItem key={memo.id} memo={memo} />)}
-      {error && <Error />}
-      {isLoading && <Loading />}
+      {error && <StateMessage messageKey="LOADING_ERROR" absolute />}
+      {isLoading && <StateMessage messageKey="LOADING" absolute />}
       {memoList && memoList.length === 0 && (
-        <LoadingMessage>메모가 없습니다.</LoadingMessage>
+        <StateMessage messageKey="MEMO_EMPTY" absolute />
       )}
       <AddButton onClick={onClickAddMemo} />
     </>

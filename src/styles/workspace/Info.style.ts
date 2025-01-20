@@ -2,7 +2,6 @@
 import { styled } from "styled-components";
 import {
   clickable,
-  DeleteButton,
   FlexColumnCenter,
   FlexColumnLeftStart,
   FlexRowCenter,
@@ -13,6 +12,7 @@ import Back from "@/assets/workspace/character/back.svg";
 import { media } from "../media";
 import { FontBold20 } from "../Font";
 import {
+  DeleteButton,
   Round9999EmptyBackgoundOrangeColor,
   Round9999OrangeBackgoundWhiteColor,
 } from "../Button";

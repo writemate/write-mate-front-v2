@@ -8,11 +8,12 @@ import {
   ModalContentAndFooterContainer,
   FooterContainer,
   ModalTitle,
+  DeleteButton,
 } from "@/styles/dashboard/IdeaBox/Modal.style";
 import { MemoItemContext } from "@/hooks/dashboard/memo/memoItem";
 import { WarningModal } from "../WarningModal";
 import { SubTitle } from "@/styles/workspace/Info.style";
-import { CloseButton, DeleteButton } from "@/styles";
+import { CloseButton } from "@/styles";
 
 export function EditModal() {
   const {
