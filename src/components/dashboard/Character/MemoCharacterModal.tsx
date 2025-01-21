@@ -47,6 +47,21 @@ export default function MCharacterModal() {
         <CoverContainer>
           <Image />
           <CoverContentsContainer>
+            <DeleteButton
+              onClick={onClickOpenDeleteModal()}
+              style={{ marginLeft: "auto", marginBottom: "auto" }}
+            >
+              삭제하기
+            </DeleteButton>
+            {isOpenDeleteModal && deleteCharacteristic == -1 && (
+              <WarningModal
+                closeModal={closeDeleteModal}
+                onClickConfirm={onDeleteMCharacter}
+                onClickCancel={closeDeleteModal}
+                message="정말로 삭제하시겠습니까?"
+                ConfirmButtonName="삭제"
+              />
+            )}
             <Name />
             <Role />
           </CoverContentsContainer>
@@ -56,21 +71,6 @@ export default function MCharacterModal() {
           <BirthAndGender />
           <Characteristic />
         </Infos>
-        <DeleteButton
-          onClick={onClickOpenDeleteModal()}
-          style={{ marginLeft: "auto", marginBottom: "auto" }}
-        >
-          삭제하기
-        </DeleteButton>
-        {isOpenDeleteModal && deleteCharacteristic == -1 && (
-          <WarningModal
-            closeModal={closeDeleteModal}
-            onClickConfirm={onDeleteMCharacter}
-            onClickCancel={closeDeleteModal}
-            message="정말로 삭제하시겠습니까?"
-            ConfirmButtonName="삭제"
-          />
-        )}
       </ModalContentAndFooterContainer>
     </Modal>
   );
