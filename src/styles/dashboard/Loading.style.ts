@@ -5,7 +5,7 @@ import { FlexColumnCenter } from "..";
 export const LoadingMessage = styled.div`
   ${FontRegular16}
   position: absolute;
-  top: calc(50% - 8px);
+  top: calc(50% - 16px);
   width: 100%;
   height: fit-content;
   justify-content: center;
@@ -13,6 +13,7 @@ export const LoadingMessage = styled.div`
   text-align: center;
   color: ${({ theme }) => theme.color.gray400};
   white-space: pre-line;
+  min-height: 60px;
 `;
 
 export const RelativContainer = styled.div`

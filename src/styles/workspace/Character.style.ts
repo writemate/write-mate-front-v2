@@ -190,9 +190,7 @@ export const CharacterListContainer = styled.div<{ $forInfoPage: boolean }>`
   }
 
   ${media.tablet} {
-    margin-top: ${({ $forInfoPage }) => ($forInfoPage ? "0" : "24px")};
-    align-items: center;
-    justify-content: center;
+    width: 80%;
   }
 `;
 
