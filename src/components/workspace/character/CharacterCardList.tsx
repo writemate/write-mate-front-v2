@@ -40,7 +40,7 @@ export function CharacterCardList({
       {forInfoPage &&
         characterList &&
         characterList.filter((character) => character.isMain).length === 0 && (
-          <StateMessage messageKey="MAIN_CHARACTER_EMPTY" absolute />
+          <StateMessage messageKey="MAIN_CHARACTER_EMPTY" />
         )}
     </CharacterListContainer>
   );
