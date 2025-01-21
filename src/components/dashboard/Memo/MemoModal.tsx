@@ -8,6 +8,7 @@ import {
   ModalContentAndFooterContainer,
   FooterContainer,
   ModalTitle,
+  FlexRowDiv,
 } from "@/styles/dashboard/IdeaBox/Modal.style";
 import { MemoItemContext } from "@/hooks/dashboard/memo/memoItem";
 import { WarningModal } from "../WarningModal";
@@ -37,23 +38,14 @@ export function EditModal() {
             style={{ marginLeft: "auto" }}
           />
         </ModalTitle>
-        <Input
-          className="memo-modal-name"
-          defaultValue={memo.memo_name}
-          onChange={onChangeName}
-          placeholder="메모 이름을 입력하세요"
-          onKeyDown={onKeyDownTitle}
-        />
-        <SubTitle>내용</SubTitle>
-        <TextArea
-          className="memo-modal-description"
-          defaultValue={memo.memo_description}
-          onChange={onChangeDescription}
-          cacheMeasurements
-          minRows={10}
-          placeholder="메모 내용을 입력하세요"
-        />
-        <FooterContainer>
+        <FlexRowDiv>
+          <Input
+            className="memo-modal-name"
+            defaultValue={memo.memo_name}
+            onChange={onChangeName}
+            placeholder="메모 이름을 입력하세요"
+            onKeyDown={onKeyDownTitle}
+          />
           <DeleteButton
             onClick={onClickOpenDeleteModal}
             style={{
@@ -73,7 +65,16 @@ export function EditModal() {
               ConfirmButtonName="삭제"
             />
           )}
-        </FooterContainer>
+        </FlexRowDiv>
+        <TextArea
+          className="memo-modal-description"
+          defaultValue={memo.memo_description}
+          onChange={onChangeDescription}
+          cacheMeasurements
+          minRows={10}
+          placeholder="메모 내용을 입력하세요"
+        />
+        <FooterContainer></FooterContainer>
       </ModalContentAndFooterContainer>
     </Modal>
   );

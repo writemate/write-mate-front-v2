@@ -18,6 +18,7 @@ import {
   FontTabletRegular14,
 } from "@/styles/Font";
 import { SubTitle } from "@/styles/workspace/Info.style";
+import { DeleteButton } from "@/styles/Button";
 
 /* Css */
 export const ModalInputBoxContainer = css`
@@ -93,6 +94,18 @@ export const ModalTitle = styled.div`
   ${media.tablet} {
     flex-direction: row;
     gap: 12px;
+  }
+`;
+
+export const FlexRowDiv = styled.div`
+  ${FlexRowSpaceBetween}
+  width: 100%;
+  gap: 12px;
+  margin-bottom: 24px;
+  ${DeleteButton} {
+    margin-top: auto !important;
+    width: max-content;
+    flex-shrink: 0;
   }
 `;
 
@@ -287,18 +300,6 @@ export const defaultButton = styled.button`
   align-items: center;
   border-radius: 9999px;
   border: 1px solid ${({ theme }) => theme.color.gray900};
-
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 350;
-  line-height: 21px;
-`;
-
-export const DeleteButton = styled.button`
-  cursor: pointer;
-  color: ${({ theme }) => theme.color.red600};
-  background: none;
-  border: none;
 
   font-size: 14px;
   font-style: normal;

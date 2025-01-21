@@ -39,7 +39,7 @@ export default function CharacterModal({
               닫기
             </CloseButton>
           </ModalTitle>
-          <Cover isDeletable={false} />
+          <Cover isDeletable={true} />
           <Infos>
             <Description />
             <BirthDayAndGender />
@@ -47,12 +47,12 @@ export default function CharacterModal({
             <Keywords />
             <RelatedEvents />
           </Infos>
-          <DeleteButton
+          {/* <DeleteButton
             onClick={value.onClickDeleteCharacter}
             style={{ marginLeft: "auto", marginBottom: "auto" }}
           >
             삭제하기
-          </DeleteButton>
+          </DeleteButton> */}
         </CharacterContext.Provider>
       </ModalContentAndFooterContainer>
     </Modal>

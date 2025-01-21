@@ -102,7 +102,7 @@ export const AddMemoButtonContainer = styled.button<AddMemoButtonProps>`
 export const MemoListContainer = styled.div`
   position: relative;
   display: grid;
-  height: calc(100vh - 80px);
+  height: 100%;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   align-items: flex-start;
   justify-content: flex-start;
