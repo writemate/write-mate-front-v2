@@ -5,7 +5,7 @@ import { FlexColumnCenter } from "..";
 export const LoadingMessage = styled.div`
   ${FontRegular16}
   position: absolute;
-  top: calc(50% - 8px);
+  top: calc(50% - 16px);
   width: 100%;
   height: fit-content;
   justify-content: center;
