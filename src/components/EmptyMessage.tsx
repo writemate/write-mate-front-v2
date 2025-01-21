@@ -16,12 +16,10 @@ export function StateMessage({
 }: StateMessageProps) {
   const message = STATE_MESSAGES[messageKey].replace(/\\n/g, "\n");
 
-  // absolute이 true면 LoadingMessage만 반환
   if (absolute) {
     return <LoadingMessage>{message}</LoadingMessage>;
   }
 
-  // 기본적으로는 RelativContainer와 함께 반환
   return (
     <RelativContainer>
       <LoadingMessage>{message}</LoadingMessage>

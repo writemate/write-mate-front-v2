@@ -104,8 +104,9 @@ export const MemoListContainer = styled.div`
   display: grid;
   height: calc(100vh - 80px);
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  align-items: start;
-  justify-content: start;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-content: flex-start;
   gap: 16px;
   padding: 16px;
   padding-bottom: 100px;
