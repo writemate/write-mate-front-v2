@@ -27,6 +27,7 @@ export default function Sidebar({ type }: { type: "plot" | "script" }) {
   } = hookValues;
   const { isDragOver, onDragOver, onDragLeave, onDrop } =
     useRootDrag(hookValues);
+
   return (
     <SidebarContext.Provider value={hookValues}>
       <SidebarContainer onClick={clearSelect}>
@@ -46,13 +47,13 @@ export default function Sidebar({ type }: { type: "plot" | "script" }) {
           onDrop={onDrop}
         >
           {rootFolder &&
-            rootFolder.files.map((file) => {
+            rootFolder.files.map((file,i) => {
               if (file.isFolder) {
                 return (
-                  <Folder key={file.folder_name} folder={file} type={type} />
+                  <Folder key={i+1} folder={file} type={type} />
                 );
               }
-              return <File key={file.file_name} file={file} type={type} />;
+              return <File key={i+1} file={file} type={type} />;
             })}
           <DropLine $active={isDragOver} />
         </SidebarContentsContainer>
