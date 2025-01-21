@@ -191,6 +191,7 @@ export const CharacterListContainer = styled.div<{ $forInfoPage: boolean }>`
 
   ${media.tablet} {
     padding: 0 16px;
+
   }
 `;
 
