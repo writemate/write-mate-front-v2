@@ -190,7 +190,7 @@ export const CharacterListContainer = styled.div<{ $forInfoPage: boolean }>`
   }
 
   ${media.tablet} {
-    width: 80%;
+    padding: 0 16px;
   }
 `;
 
