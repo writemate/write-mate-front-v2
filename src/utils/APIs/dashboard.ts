@@ -1,6 +1,6 @@
 import axiosInstance from "./axiosInstance";
 import { DOMAIN } from "./domain";
-import { mockUsage, mockUser } from "./mock/\bmypage";
+import { mockUsage, mockUser } from "./mock/mypage";
 import { TUsage, TWork } from "./types";
 import { workspaceCategory } from "./types";
 
