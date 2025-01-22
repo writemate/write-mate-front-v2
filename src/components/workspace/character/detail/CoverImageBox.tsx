@@ -19,7 +19,7 @@ export default function CoverImageBox() {
   };
 
   return (
-    <CoverImageContainer>
+    <CoverImageContainer $isCharacter={true}>
       <BlurBackground $src={src} />
       {src && <CoverImage src={src} />}
       <ChangeCoverInput

@@ -27,7 +27,7 @@ export default function Character() {
 
   return (
     <CharacterContext.Provider value={value}>
-      <BackButton onClick={() => history.back()} />
+      {/* <BackButton onClick={() => history.back()} /> */}
       <Title>
         <div style={{ display: "flex", flexDirection: "row", width: "100%" }}>
           <input

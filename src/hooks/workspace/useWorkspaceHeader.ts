@@ -47,28 +47,36 @@ export default function useWorkspaceHeader() {
   // 현재 pathname 확인
   const currentPathList = usePathname().split("/");
   const [subTitle, setSubTitle] = useState("");
+  const [subTitleLink, setSubTitleLink] = useState("");
   useEffect(() => {
     if (currentPathList[2] === "info") {
       setSubTitle("작품 정보");
+      setSubTitleLink(`/${workspace_id}/info`);
     } else if (currentPathList[2] === "plot") {
       setPlotId(currentPathList[3]);
       setSubTitle(plot?.plot_name ?? "플롯");
+      setSubTitleLink(`/${workspace_id}/plot/${plot_id}`);
     } else if (currentPathList[2] === "script") {
       setScriptId(currentPathList[3]);
       setSubTitle(script?.script_name ?? "스크립트");
+      setSubTitleLink(`/${workspace_id}/script/${script_id}`);
     } else if (currentPathList[2] === "character") {
       if (!currentPathList[3]) {
         setSubTitle("캐릭터 목록");
+        setSubTitleLink(`/${workspace_id}/character`);
       } else {
         setCharacterId(currentPathList[3]);
         setSubTitle(character?.ch_name ?? "캐릭터");
+        setSubTitleLink(`/${workspace_id}/character/${character_id}`);
       }
     }
   }, [currentPathList]);
 
   return {
     work,
+    workspace_id,
     subTitle,
+    subTitleLink,
     workError,
     workIsLoading,
     isOpenVersionControl,
