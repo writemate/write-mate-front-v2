@@ -19,9 +19,11 @@ import {
 import Link from "next/link";
 
 export const BackButton = styled(Back)`
-  flex-shrink: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
   cursor: pointer;
-  margin-bottom: 73px;
+  margin-bottom: px;
   margin-right: auto;
 
   ${media.tablet} {
@@ -61,6 +63,7 @@ export const CoverImage = styled.img<{ src: string }>`
   height: 100%;
   border-radius: 8px;
   border: 1px solid #ffffff57;
+  object-fit: cover;
   z-index: 1;
 `;
 export const ChangeCover = styled.div`
@@ -91,13 +94,13 @@ export const ChangeCover = styled.div`
     }
   }
 `;
-export const CoverImageContainer = styled.div`
+export const CoverImageContainer = styled.div<{ $isCharacter?: boolean }>`
   ${FlexRowCenter}
   flex-shrink: 0;
-  width: 263px;
+  width: ${({ $isCharacter }) => ($isCharacter ? "341px" : "263px")};
   height: 341px;
-  border-radius: 4.72px;
-  padding: 55px 44px;
+  border-radius: 10px;
+  padding: ${({ $isCharacter }) => ($isCharacter ? "0" : "0px")};
   position: relative;
   overflow: hidden;
 

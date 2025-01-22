@@ -5,6 +5,7 @@ import {
   SaveStatus,
   VersionControlButton,
   RightContainer,
+  HeaderLink,
 } from "@/styles/workspace/Header.styles";
 import IdeaBox from "@/assets/icons/ideabox.svg";
 import Help from "@/assets/dashboard/header/help.svg";
@@ -35,7 +36,9 @@ export default function Header({
 }) {
   const {
     work,
+    workspace_id,
     subTitle,
+    subTitleLink,
     workIsLoading,
     isOpenVersionControl,
     onClickVersionControl,
@@ -48,10 +51,10 @@ export default function Header({
   return (
     <HeaderContainer>
       <HeaderTitle>
-        {work?.title}
-        <HeaderSeparator />
-        {subTitle}
         {workIsLoading && "로딩 중..."}
+        <HeaderLink href={`/${workspace_id}/info`}>{work?.title}</HeaderLink>
+        <HeaderSeparator />
+        <HeaderLink href={subTitleLink ?? ""}>{subTitle}</HeaderLink>
       </HeaderTitle>
       <SaveStatus>
         {isSaving ? "저장 중" : "저장 완료"}

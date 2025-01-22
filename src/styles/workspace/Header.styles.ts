@@ -5,6 +5,9 @@ import IdeaBox from "@/assets/icons/ideabox.svg";
 import Download from "@/assets/icons/download.svg";
 import Profile from "@/assets/icons/profile.svg";
 import { media } from "../media";
+import Link from "next/link";
+import { GrayTextButton } from "../Button";
+import { FontSemibold16 } from "../Font";
 
 export const HeaderContainer = styled.header`
   ${FlexRowLeftStart};
@@ -21,16 +24,11 @@ export const HeaderContainer = styled.header`
   }
 `;
 
-export const HeaderTitle = styled.h1`
+export const HeaderTitle = styled.div`
   overflow: auto;
   white-space: nowrap;
   padding-left: 28px;
   padding-right: 16px;
-
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 150%;
 
   display: flex;
   flex-direction: row;
@@ -45,6 +43,12 @@ export const HeaderTitle = styled.h1`
     font-size: 16px;
     margin: 0 8px 0 0;
   }
+`;
+
+export const HeaderLink = styled(Link)`
+  ${GrayTextButton}
+  ${FontSemibold16}
+  color: ${({ theme }) => theme.color.gray500};
 `;
 
 export const SaveStatus = styled.div`
