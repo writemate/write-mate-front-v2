@@ -43,7 +43,6 @@ export const MainContainer = styled.div<{
     $isScriptPage ? "0" : "65px 40px 40px 40px"};
   margin: 0 auto;
   max-width: 1024px;
-
   overflow-y: auto;
 
   width: 100%;
@@ -64,6 +63,7 @@ export const Title = styled.div`
   color: ${({ theme }) => theme.color.gray900};
   margin-bottom: 52px;
   align-items: flex-start;
+
 
   input {
     ${FontBold28}
