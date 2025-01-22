@@ -32,7 +32,6 @@ export const SideBarAndMainContainer = styled.div`
   width: 100%;
   height: calc(100% - 72px);
 `;
-
 export const MainContainer = styled.div<{
   $isScriptPage: boolean;
 }>`
@@ -40,15 +39,15 @@ export const MainContainer = styled.div<{
   flex-grow: 1;
   height: 100%;
   position: relative;
-  padding-top: 65px;
-  padding-bottom: 100px;
-  padding-left: ${({ $isScriptPage }) =>
-    $isScriptPage ? "0" : "max(28px, calc(50% - 512px))"};
-  padding-right: ${({ $isScriptPage }) =>
-    $isScriptPage ? "0" : "max(28px, calc(50% - 512px))"};
-  margin-left: auto;
-  margin-right: auto;
+  padding: ${({ $isScriptPage }) =>
+    $isScriptPage ? "0" : "65px 40px 40px 40px"};
+  margin: 0 auto;
+  max-width: 1024px;
   overflow-y: auto;
+
+  width: 100%;
+  max-width: calc(1024px + ${({ $isScriptPage }) =>
+    $isScriptPage ? "0" : "max(28px, calc(50% - 512px))"}) * 2);
 
   ${media.tablet} {
     padding: ${({ $isScriptPage }) =>
@@ -63,7 +62,8 @@ export const Title = styled.div`
   width: 100%;
   color: ${({ theme }) => theme.color.gray900};
   margin-bottom: 52px;
-  align-items: center;
+  align-items: flex-start;
+
 
   input {
     ${FontBold28}

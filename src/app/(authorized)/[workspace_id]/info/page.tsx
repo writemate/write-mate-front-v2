@@ -6,7 +6,6 @@ import MainCharacter from "@/components/workspace/info/MainCharacter";
 import MainPlot from "@/components/workspace/info/MainPlot";
 import { useInfo, InfoContext } from "@/hooks/workspace/info";
 import MainScript from "@/components/workspace/info/MainScript";
-import { Help } from "@/components/Help";
 
 export default function Info() {
   const value = useInfo();
