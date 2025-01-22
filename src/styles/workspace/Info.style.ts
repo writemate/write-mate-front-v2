@@ -143,6 +143,7 @@ export const CoverContentsContainer = styled.div`
   width: calc(100% - 263px - 36px);
   justify-content: flex-end;
   flex-grow: 1;
+  gap: 36px;
 
   & > ${SubTitle} {
     margin-top: 46px;

@@ -1,7 +1,12 @@
 "use client";
-import { FlexColumnCenter, FlexRowLeftStart } from "@/styles";
+import {
+  FlexColumnCenter,
+  FlexColumnLeftStart,
+  FlexRowLeftStart,
+} from "@/styles";
 import { styled } from "styled-components";
 import { media } from "../media";
+import { FontBold28, FontSemibold16 } from "../Font";
 
 export const WorkspaceContainer = styled.div`
   ${FlexRowLeftStart}
@@ -31,13 +36,16 @@ export const SideBarAndMainContainer = styled.div`
 export const MainContainer = styled.div<{
   $isScriptPage: boolean;
 }>`
-  ${FlexColumnCenter}
+  ${FlexColumnLeftStart}
   flex-grow: 1;
   height: 100%;
-  max-width: ${({ $isScriptPage }) => ($isScriptPage ? "none" : "1012px")};
   position: relative;
-  padding: ${({ $isScriptPage }) =>
-    $isScriptPage ? "0" : "65px 28px 100px 28px"};
+  padding-top: 65px;
+  padding-bottom: 100px;
+  padding-left: ${({ $isScriptPage }) =>
+    $isScriptPage ? "0" : "max(28px, calc(50% - 512px))"};
+  padding-right: ${({ $isScriptPage }) =>
+    $isScriptPage ? "0" : "max(28px, calc(50% - 512px))"};
   margin-left: auto;
   margin-right: auto;
   overflow-y: auto;
@@ -50,14 +58,42 @@ export const MainContainer = styled.div<{
 
 export const Title = styled.div`
   position: relative;
-  ${FlexRowLeftStart}
+  ${FlexColumnLeftStart}
+  ${FontBold28}
   width: 100%;
-  font-size: 28px;
-  line-height: 42px;
-  font-weight: 700;
   color: ${({ theme }) => theme.color.gray900};
-  margin-bottom: 69px;
+  margin-bottom: 52px;
   align-items: center;
+
+  input {
+    ${FontBold28}
+    color: ${({ theme }) => theme.color.gray900};
+    border: none;
+    outline: none;
+    background-color: transparent;
+    width: 100%;
+  }
+
+  ${media.tablet} {
+    font-size: 16px;
+    line-height: 150%;
+    margin-bottom: 20px;
+  }
+`;
+
+export const Subtitle = styled.div`
+  position: relative;
+  ${FontSemibold16}
+  width: 100%;
+  color: ${({ theme }) => theme.color.gray400};
+  input {
+    ${FontSemibold16}
+    color: ${({ theme }) => theme.color.gray400};
+    border: none;
+    outline: none;
+    background-color: transparent;
+    width: 100%;
+  }
 
   ${media.tablet} {
     font-size: 16px;
