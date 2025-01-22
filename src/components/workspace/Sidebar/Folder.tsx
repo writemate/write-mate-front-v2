@@ -39,7 +39,6 @@ export default function Folder({ folder, nestedLevel = 0, type}:
           <Kebab onClick={openKebab} />
           {isKebabOpen && <KebabContainer onClick={closeKebab}>
             <KebabItem onClick={changeName(folder)}>이름 변경</KebabItem>
-            <KebabItem>복제하기</KebabItem>
             <KebabItem onClick={deleteFolderOrFile(folder)}>삭제하기</KebabItem>
           </KebabContainer>}
         </KebabWrapper>

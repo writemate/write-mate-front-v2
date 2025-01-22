@@ -24,6 +24,8 @@ export default function Sidebar({ type }: { type: "plot" | "script" }) {
     createFolder,
     createFile,
     clearSelect,
+    isCreatingDuplicate,
+    isCreatingFile,
   } = hookValues;
   const { isDragOver, onDragOver, onDragLeave, onDrop } =
     useRootDrag(hookValues);

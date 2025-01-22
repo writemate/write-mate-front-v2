@@ -37,6 +37,7 @@ export default function File({
     setMainPlot,
     isSelectedFolderExist,
     onClickFile,
+    duplicateFile,
   } = useContext(SidebarContext);
   const { isKebabOpen, openKebab, closeKebab } = useKebab();
   const {
@@ -95,7 +96,7 @@ export default function File({
                 메인플롯으로 지정
               </KebabItem>
             )}
-            <KebabItem>복제하기</KebabItem>
+            <KebabItem onClick={duplicateFile(file)}>복제하기</KebabItem>
             {!file.isPinned && (
               <KebabItem onClick={deleteFolderOrFile(file)}>삭제하기</KebabItem>
             )}

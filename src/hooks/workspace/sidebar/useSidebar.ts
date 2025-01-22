@@ -15,6 +15,8 @@ import {
   deletePlot,
   setMainScript,
   deleteScript,
+  duplicatePlot,
+  duplicateScript,
 } from "@/utils/APIs/workspace";
 import { useParams, useRouter } from "next/navigation";
 import { TFileWithOptions, TFolderWithOptions } from "@/utils/APIs/types";
@@ -27,6 +29,7 @@ import {
   recursiveFindParent,
   isExistSelect,
 } from "@/utils/controlFolders";
+import { useOnClickUpdate } from "@/hooks/common/useOnClickUpdate";
 
 const getAPIFunctionsAndQueryKey = (type: "plot" | "script") => {
   if (type === "plot")
@@ -38,6 +41,7 @@ const getAPIFunctionsAndQueryKey = (type: "plot" | "script") => {
       setMain: setMainPlot,
       deleteItem: deletePlot,
       queryKey: workspaceQueryKeys.plotSidebar,
+      duplicateItem: duplicatePlot,
     };
   return {
     getFolderList: getScriptFolderList,
@@ -47,6 +51,7 @@ const getAPIFunctionsAndQueryKey = (type: "plot" | "script") => {
     setMain: setMainScript,
     deleteItem: deleteScript,
     queryKey: workspaceQueryKeys.scriptSidebar,
+    duplicateItem: duplicateScript,
   };
 };
 
@@ -60,6 +65,7 @@ export default function usePlotSidebar(type: "plot" | "script") {
     updateName,
     setMain,
     deleteItem,
+    duplicateItem,
   } = getAPIFunctionsAndQueryKey(type);
   const { workspace_id } = useParams<{
     workspace_id: string;
@@ -91,6 +97,7 @@ export default function usePlotSidebar(type: "plot" | "script") {
   });
   const { mutate: mutateSetMain } = useMutation({ mutationFn: setMain });
   const { mutate: mutateDelete } = useMutation({ mutationFn: deleteItem });
+  const { mutateAsync: mutateDuplicateAsync } = useMutation({ mutationFn: duplicateItem });
 
   const isSelectedFolderExist =
     rootFolder !== null &&
@@ -178,7 +185,7 @@ export default function usePlotSidebar(type: "plot" | "script") {
     };
     selectedFolder.files.push(newFile);
     await mutateFolderAsync(rootFolder);
-    await mutateName({ id: newFile.id, name: newFile.file_name });
+    mutateName({ id: newFile.id, name: newFile.file_name });
     setRootFolder({ ...rootFolder });
     setIsCreatingFile(false);
     if (type === "plot") {
@@ -187,10 +194,36 @@ export default function usePlotSidebar(type: "plot" | "script") {
     if (type === "script") {
       router.push(`/${workspace_id}/script/${newFile.id}`);
     }
-    queryClient.invalidateQueries({
-      queryKey: workspaceQueryKeys.plot(workspace_id, newFile.id),
-    });
   };
+
+  const [isCreatingDuplicate, setIsCreatingDuplicate] = useState(false);
+  const duplicateFile = (file:TFileWithOptions) => async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    if (rootFolder === null) return;
+    if (isCreatingDuplicate) return;
+    setIsCreatingDuplicate(true);
+    const parentFolder = recursiveFindParent(rootFolder,file);
+    if (parentFolder === null) return;
+    const newItemFromServer = await mutateDuplicateAsync(file.id);
+    const newItem = {
+      id: newItemFromServer.id,
+      isFolder: file.isFolder,
+      file_name: newItemFromServer.name,
+      isEditing: false,
+      isPinned: false,
+    }
+    parentFolder.files.push(newItem);
+    await mutateFolderAsync(rootFolder);
+    setRootFolder({ ...rootFolder });
+    setIsCreatingDuplicate(false);
+    if (type === "plot") {
+      router.push(`/${workspace_id}/plot/${newItemFromServer.id}`);
+    }
+    if (type === "script") {
+      router.push(`/${workspace_id}/script/${newItemFromServer.id}`);
+    }
+  }
 
   const applyChangeName = (
     folderOrfile: TFolderWithOptions | TFileWithOptions,
@@ -337,5 +370,8 @@ export default function usePlotSidebar(type: "plot" | "script") {
     changeOrderAfterItem,
     changeOrderBeforeItem,
     changeOrderLastOfFolder,
+    duplicateFile,
+    isCreatingDuplicate,
+    isCreatingFile,
   };
 }
