@@ -218,6 +218,7 @@ export const Round9999EmptyBackgoundRed600Color = css`
 export const DeleteButton = styled.div`
   ${Round9999EmptyBackgoundRed600Color};
   id: "delete-button";
+  min-width: 80px;
 `;
 
 /*
