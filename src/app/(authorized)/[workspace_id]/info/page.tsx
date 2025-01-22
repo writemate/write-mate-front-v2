@@ -2,8 +2,6 @@
 import { Title } from "@/styles/workspace";
 import { Infos } from "@/styles/workspace/Info.style";
 import Cover from "@/components/workspace/info/Cover";
-import Introduction from "@/components/workspace/info/Introduction";
-import ExpectedQuantity from "@/components/workspace/info/ExpectedQuantity";
 import MainCharacter from "@/components/workspace/info/MainCharacter";
 import MainPlot from "@/components/workspace/info/MainPlot";
 import { useInfo, InfoContext } from "@/hooks/workspace/info";
@@ -12,17 +10,22 @@ import { Help } from "@/components/Help";
 
 export default function Info() {
   const value = useInfo();
+  const { data, isLoading, onChangeTitle, onBlurTitle } = value;
 
   return (
     <InfoContext.Provider value={value}>
       <Title>
-        작품 기획
-        <Help messageKey="PLAN" />
+        <input
+          type="text"
+          placeholder="작품의 제목을 적어주세요."
+          onChange={onChangeTitle}
+          defaultValue={data?.title}
+          disabled={isLoading}
+          onBlur={onBlurTitle}
+        />
       </Title>
       <Cover />
       <Infos>
-        <Introduction />
-        <ExpectedQuantity />
         <MainCharacter />
         <MainPlot />
         <MainScript />
