@@ -65,6 +65,7 @@ export const Title = styled.div`
   margin-bottom: 40px;
   align-items: flex-start;
 
+
   input {
     ${FontBold28}
     color: ${({ theme }) => theme.color.gray900};
