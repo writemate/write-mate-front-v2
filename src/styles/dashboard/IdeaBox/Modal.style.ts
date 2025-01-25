@@ -16,6 +16,7 @@ import {
   FontSemibold14,
   FontSemibold16,
   FontTabletRegular14,
+  FontTabletRegular16,
 } from "@/styles/Font";
 import { SubTitle } from "@/styles/workspace/Info.style";
 import { DeleteButton } from "@/styles/Button";
@@ -116,7 +117,7 @@ export const FlexRowDiv = styled.div`
 /* Input */
 export const Input = styled.input`
   ${ModalInputBoxContainer}
-  ${FontTabletRegular14}
+  ${FontTabletRegular16}
   color: ${({ theme }) => theme.color.gray700};
   border: none;
   outline: none;
@@ -124,7 +125,7 @@ export const Input = styled.input`
 
 export const TextArea = styled(TextareaAutosize)`
   ${ModalInputBoxContainer}
-  ${FontTabletRegular14}
+  ${FontTabletRegular16}
   color: ${({ theme }) => theme.color.gray700};
   border: none;
   outline: none;
