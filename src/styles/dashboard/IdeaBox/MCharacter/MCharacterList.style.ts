@@ -16,7 +16,6 @@ export const CharacterListContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
   width: 100%;
-  height: 100%;
 
   align-items: start;
   justify-content: start;
