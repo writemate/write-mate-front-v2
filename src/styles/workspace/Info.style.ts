@@ -97,8 +97,8 @@ export const ChangeCover = styled.div`
 export const CoverImageContainer = styled.div<{ $isCharacter?: boolean }>`
   ${FlexRowCenter}
   flex-shrink: 0;
-  width: ${({ $isCharacter }) => ($isCharacter ? "341px" : "263px")};
-  height: 341px;
+  width: ${({ $isCharacter }) => ($isCharacter ? "308px" : "263px")};
+  height: ${({ $isCharacter }) => ($isCharacter ? "308px" : "341px")};
   border-radius: 10px;
   padding: ${({ $isCharacter }) => ($isCharacter ? "0" : "0px")};
   position: relative;
@@ -132,9 +132,11 @@ export const SubTitle = styled.h2`
   height: fit-content;
   color: ${({ theme }) => theme.color.gray900};
   margin-bottom: 20px;
+  margin-top: 32px;
 
   ${media.tablet} {
     margin-bottom: 12px;
+    margin-top: 20px;
   }
 `;
 
@@ -146,14 +148,6 @@ export const CoverContentsContainer = styled.div`
   width: calc(100% - 263px - 36px);
   justify-content: flex-end;
   flex-grow: 1;
-  gap: 36px;
-
-  & > ${SubTitle} {
-    margin-top: 46px;
-    ${media.tablet} {
-      margin-top: 20px;
-    }
-  }
 
   ${media.tablet} {
     width: 100%;

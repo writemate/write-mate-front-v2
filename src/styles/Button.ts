@@ -216,9 +216,17 @@ export const Round9999EmptyBackgoundRed600Color = css`
 `;
 
 export const DeleteButton = styled.div`
-  ${Round9999EmptyBackgoundRed600Color};
-  id: "delete-button";
+  ${GrayTextButton}
+  width: auto;
   min-width: 80px;
+  text-align: right;
+  justify-content: flex-end;
+  color: ${({ theme }) => theme.color.gray400};
+
+  &:hover {
+    color: ${({ theme }) => theme.color.red600};
+    text-decoration: none;
+  }
 `;
 
 /*

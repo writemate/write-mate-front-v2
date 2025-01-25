@@ -15,7 +15,7 @@ export default function MCharacterImage() {
     useContext(CharacterItemContext);
 
   return (
-    <CoverImageContainer>
+    <CoverImageContainer $isCharacter={true}>
       <BlurBackground $src={character.ch_image} />
       {character.ch_image && <CoverImage src={character.ch_image} />}
       {!character.ch_image && character.ch_name && (

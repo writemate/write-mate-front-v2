@@ -62,9 +62,8 @@ export const Title = styled.div`
   ${FontBold28}
   width: 100%;
   color: ${({ theme }) => theme.color.gray900};
-  margin-bottom: 52px;
+  margin-bottom: 40px;
   align-items: flex-start;
-
 
   input {
     ${FontBold28}
@@ -79,6 +78,11 @@ export const Title = styled.div`
     font-size: 16px;
     line-height: 150%;
     margin-bottom: 20px;
+  }
+
+  svg {
+    width: 32px;
+    height: 32px;
   }
 `;
 

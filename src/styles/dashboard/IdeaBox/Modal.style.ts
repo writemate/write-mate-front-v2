@@ -19,6 +19,7 @@ import {
 } from "@/styles/Font";
 import { SubTitle } from "@/styles/workspace/Info.style";
 import { DeleteButton } from "@/styles/Button";
+import { Title } from "@/styles/workspace";
 
 /* Css */
 export const ModalInputBoxContainer = css`
@@ -70,6 +71,9 @@ export const ModalContentAndFooterContainer = styled.div`
 
   overflow: auto;
 
+  ${Title} {
+    margin-bottom: 0;
+  }
   ${SubTitle} {
     ${FontSemibold16}
     margin-top: 32px;

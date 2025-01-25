@@ -3,27 +3,20 @@ import { useContext } from "react";
 
 import Modal from "@/components/Modal";
 import Image from "@/components/dashboard/Character/Image";
-import Name from "@/components/dashboard/Character/Name";
 import BirthAndGender from "@/components/dashboard/Character/BirthAndGender";
-import Role from "@/components/dashboard/Character/Role";
 import Description from "@/components/dashboard/Character/Description";
 import Characteristic from "@/components/dashboard/Character/Characteristic";
 
 import { CharacterItemContext } from "@/hooks/dashboard/character/characterItem";
 
-import {
-  ModalContentAndFooterContainer,
-  ModalTitle,
-} from "@/styles/dashboard/IdeaBox/Modal.style";
+import { ModalContentAndFooterContainer } from "@/styles/dashboard/IdeaBox/Modal.style";
 import {
   CoverContainer,
   CoverContentsContainer,
-  SubTitle,
 } from "@/styles/workspace/Info.style";
-import { Infos } from "@/styles/workspace/Info.style";
 import { WarningModal } from "../WarningModal";
-import { CloseButton } from "@/styles";
 import { DeleteButton } from "@/styles/Button";
+import { Subtitle, Title } from "@/styles/workspace";
 
 export default function MCharacterModal() {
   const {
@@ -33,25 +26,27 @@ export default function MCharacterModal() {
     onClickOpenDeleteModal,
     onDeleteMCharacter,
     deleteCharacteristic,
+    character,
+    onChangeName,
+    onChangeRole,
   } = useContext(CharacterItemContext);
 
   return (
     <Modal closeModal={closeEditModal} maxWidth={820} maxHeight="90vh">
       <ModalContentAndFooterContainer>
-        <ModalTitle>
-          <SubTitle>인물 정보</SubTitle>
-          <CloseButton onClick={closeEditModal} style={{ marginLeft: "auto" }}>
-            닫기
-          </CloseButton>
-        </ModalTitle>
-        <CoverContainer>
-          <Image />
-          <CoverContentsContainer>
+        <Title>
+          <div style={{ display: "flex", flexDirection: "row", width: "100%" }}>
+            <input
+              className="name"
+              defaultValue={character.ch_name}
+              onChange={onChangeName}
+              placeholder="인물의 이름을 입력하세요."
+            />
             <DeleteButton
               onClick={onClickOpenDeleteModal()}
               style={{ marginLeft: "auto", marginBottom: "auto" }}
             >
-              삭제하기
+              삭제
             </DeleteButton>
             {isOpenDeleteModal && deleteCharacteristic == -1 && (
               <WarningModal
@@ -62,15 +57,24 @@ export default function MCharacterModal() {
                 ConfirmButtonName="삭제"
               />
             )}
-            <Name />
-            <Role />
+          </div>
+          <Subtitle>
+            <input
+              className="role"
+              defaultValue={character.role}
+              onChange={onChangeRole}
+              placeholder="인물의 역할을 입력하세요."
+            />
+          </Subtitle>
+        </Title>
+        <CoverContainer>
+          <Image />
+          <CoverContentsContainer>
+            <BirthAndGender />
+            <Description />
           </CoverContentsContainer>
         </CoverContainer>
-        <Infos>
-          <Description />
-          <BirthAndGender />
-          <Characteristic />
-        </Infos>
+        <Characteristic />
       </ModalContentAndFooterContainer>
     </Modal>
   );

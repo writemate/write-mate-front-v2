@@ -191,7 +191,6 @@ export const CharacterListContainer = styled.div<{ $forInfoPage: boolean }>`
 
   ${media.tablet} {
     padding: 0 16px;
-
   }
 `;
 
@@ -350,8 +349,8 @@ export const CharacteristicContainer = styled.div`
   gap: 6px;
 
   svg {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
 
     ${media.tablet} {
       width: 24px;
