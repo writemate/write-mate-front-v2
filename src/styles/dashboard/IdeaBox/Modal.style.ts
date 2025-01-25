@@ -16,9 +16,11 @@ import {
   FontSemibold14,
   FontSemibold16,
   FontTabletRegular14,
+  FontTabletRegular16,
 } from "@/styles/Font";
 import { SubTitle } from "@/styles/workspace/Info.style";
 import { DeleteButton } from "@/styles/Button";
+import { Title } from "@/styles/workspace";
 
 /* Css */
 export const ModalInputBoxContainer = css`
@@ -70,6 +72,9 @@ export const ModalContentAndFooterContainer = styled.div`
 
   overflow: auto;
 
+  ${Title} {
+    margin-bottom: 0;
+  }
   ${SubTitle} {
     ${FontSemibold16}
     margin-top: 32px;
@@ -112,7 +117,7 @@ export const FlexRowDiv = styled.div`
 /* Input */
 export const Input = styled.input`
   ${ModalInputBoxContainer}
-  ${FontTabletRegular14}
+  ${FontTabletRegular16}
   color: ${({ theme }) => theme.color.gray700};
   border: none;
   outline: none;
@@ -120,7 +125,7 @@ export const Input = styled.input`
 
 export const TextArea = styled(TextareaAutosize)`
   ${ModalInputBoxContainer}
-  ${FontTabletRegular14}
+  ${FontTabletRegular16}
   color: ${({ theme }) => theme.color.gray700};
   border: none;
   outline: none;

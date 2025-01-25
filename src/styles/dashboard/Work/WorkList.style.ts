@@ -32,7 +32,7 @@ export const WorkListContainer = styled.div`
 
   ${media.tablet} {
     gap: 8px;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   }
 `;
 

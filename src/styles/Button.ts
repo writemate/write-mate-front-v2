@@ -215,10 +215,36 @@ export const Round9999EmptyBackgoundRed600Color = css`
   }
 `;
 
+export const CloseButton = styled.button`
+  ${GrayTextButton}
+  width: auto;
+  min-width: 50px;
+  text-align: right;
+  justify-content: flex-end;
+  color: ${({ theme }) => theme.color.gray400};
+  margin-left: auto;
+  margin-bottom: auto;
+
+  &:hover {
+    text-decoration: none;
+    color: ${({ theme }) => theme.color.gray900};
+  }
+`;
+
 export const DeleteButton = styled.div`
-  ${Round9999EmptyBackgoundRed600Color};
-  id: "delete-button";
-  min-width: 80px;
+  ${GrayTextButton}
+  width: auto;
+  min-width: 50px;
+  text-align: right;
+  justify-content: flex-end;
+  color: ${({ theme }) => theme.color.gray400};
+  margin-left: auto;
+  margin-bottom: auto;
+
+  &:hover {
+    color: ${({ theme }) => theme.color.red600};
+    text-decoration: none;
+  }
 `;
 
 /*

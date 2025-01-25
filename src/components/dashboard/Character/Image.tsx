@@ -1,5 +1,4 @@
 import { CharacterItemContext } from "@/hooks/dashboard/character/characterItem";
-
 import { useContext } from "react";
 import OrangePlusIcon from "@/assets/icons/orangePlus.svg";
 import {
@@ -15,7 +14,7 @@ export default function MCharacterImage() {
     useContext(CharacterItemContext);
 
   return (
-    <CoverImageContainer>
+    <CoverImageContainer $isCharacter={true}>
       <BlurBackground $src={character.ch_image} />
       {character.ch_image && <CoverImage src={character.ch_image} />}
       {!character.ch_image && character.ch_name && (
