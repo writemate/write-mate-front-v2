@@ -1,5 +1,4 @@
 import { CharacterItemContext } from "@/hooks/dashboard/character/characterItem";
-
 import { useContext } from "react";
 import OrangePlusIcon from "@/assets/icons/orangePlus.svg";
 import {

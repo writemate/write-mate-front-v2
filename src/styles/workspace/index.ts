@@ -6,7 +6,7 @@ import {
 } from "@/styles";
 import { styled } from "styled-components";
 import { media } from "../media";
-import { FontBold28, FontSemibold16 } from "../Font";
+import { FontBold20, FontBold24, FontBold28, FontSemibold16 } from "../Font";
 
 export const WorkspaceContainer = styled.div`
   ${FlexRowLeftStart}
@@ -75,9 +75,10 @@ export const Title = styled.div`
   }
 
   ${media.tablet} {
-    font-size: 16px;
-    line-height: 150%;
-    margin-bottom: 20px;
+    ${FontBold24}
+    input {
+      ${FontBold24}
+    }
   }
 
   svg {
@@ -98,12 +99,6 @@ export const Subtitle = styled.div`
     outline: none;
     background-color: transparent;
     width: 100%;
-  }
-
-  ${media.tablet} {
-    font-size: 16px;
-    line-height: 150%;
-    margin-bottom: 20px;
   }
 `;
 

@@ -417,6 +417,11 @@ export const RelationContentsContainer = styled.div`
   padding: 48px 0 26px;
   margin: 0 auto;
   max-width: 760px;
+
+  ${media.tablet} {
+    ${FontRegular13}
+    ${FlexColumnCenter}
+  }
 `;
 
 export const RelationCharacterContainer = styled.div`
@@ -440,14 +445,15 @@ export const RelationCharacterName = styled.div`
 export const RelationCharacterDescription = styled.div`
   ${FontTabletRegular13}
   width: 150px;
+  height: fit-content;
   padding: 4px;
-  height: calc(13px * 1.4 * 5);
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
   color: ${({ theme }) => theme.color.gray400};
+  max -height: calc(13px * 1.4 * 5);
 `;
 
 export const RelationArrowContainer = styled.div`
@@ -516,6 +522,11 @@ export const ManageRowWrapper = styled.div`
   height: 100%;
   gap: 20px;
   align-items: stretch;
+
+  ${media.tablet} {
+    flex-direction: column;
+    gap: 0;
+  }
 `;
 
 export const ManageKeywordLeft = styled.div`
@@ -531,6 +542,12 @@ export const VerticalLine = styled.div`
   height: 228px;
   background-color: ${({ theme }) => theme.color.gray200};
   flex-shrink: 0;
+
+  ${media.tablet} {
+    width: 100%;
+    height: 1px;
+    margin: 20px 0;
+  }
 `;
 
 export const ManageKeywordRight = styled.div`

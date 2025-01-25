@@ -28,7 +28,6 @@ export default function Character() {
   return (
     <CharacterContext.Provider value={value}>
       {/* <BackButton onClick={() => history.back()} /> */}
-
       <Title>
         <div style={{ display: "flex", flexDirection: "row", width: "100%" }}>
           <input
@@ -43,7 +42,7 @@ export default function Character() {
               onClick={onOpenModal}
               style={{ marginLeft: "auto", marginBottom: "auto" }}
             >
-              삭제하기
+              삭제
             </DeleteButton>
           }
           {isOpenDeleteModal && (

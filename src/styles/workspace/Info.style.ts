@@ -40,7 +40,7 @@ export const CoverContainer = styled.div`
 
   ${media.tablet} {
     ${FlexColumnCenter}
-    gap: 20px;
+    gap: 0;
   }
 `;
 export const BlurBackground = styled.div<{ $src: string | null }>`
@@ -111,8 +111,9 @@ export const CoverImageContainer = styled.div<{ $isCharacter?: boolean }>`
   }
 
   ${media.tablet} {
-    width: 150px;
-    height: 196px;
+    margin-top: 20px;
+    width: ${({ $isCharacter }) => ($isCharacter ? "160px" : "150px")};
+    height: ${({ $isCharacter }) => ($isCharacter ? "160px" : "180px")};
     padding: 20px 16px;
   }
 `;

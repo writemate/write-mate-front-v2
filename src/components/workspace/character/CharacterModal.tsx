@@ -19,6 +19,9 @@ import {
 import { Infos } from "@/styles/workspace/Info.style";
 import { CloseButton } from "@/styles";
 import { DeleteButton } from "@/styles/Button";
+import { WarningModal } from "@/components/dashboard/WarningModal";
+import { Title, Subtitle } from "@/styles/workspace";
+import { useWarningModal } from "@/hooks/common/useWarningModal";
 
 export default function CharacterModal({
   characterId,
@@ -28,31 +31,67 @@ export default function CharacterModal({
   closeModal: () => void;
 }) {
   const value = useCharacter(characterId);
+  const {
+    data,
+    isLoading,
+    onChangeName,
+    onChangeRole,
+    onClickDeleteCharacter,
+  } = value;
+  const {
+    isOpenDeleteModal,
+    onOpenModal,
+    closeModal: closeDeleteModal,
+  } = useWarningModal();
 
   return (
-    <Modal closeModal={closeModal} maxWidth={820} maxHeight="90vh">
+    <Modal closeModal={closeModal} maxWidth={820} maxHeight="85vh">
       <ModalContentAndFooterContainer>
         <CharacterContext.Provider value={value}>
-          <ModalTitle>
-            <SubTitle>인물 정보</SubTitle>
-            <CloseButton onClick={closeModal} style={{ marginLeft: "auto" }}>
-              닫기
-            </CloseButton>
-          </ModalTitle>
-          <Cover isDeletable={true} />
+          <Title>
+            <div
+              style={{ display: "flex", flexDirection: "row", width: "100%" }}
+            >
+              <input
+                type="text"
+                placeholder="인물의 이름을 적어주세요"
+                onChange={onChangeName}
+                defaultValue={data?.ch_name}
+                disabled={isLoading}
+              />
+              {
+                <DeleteButton
+                  onClick={onOpenModal}
+                  style={{ marginLeft: "auto", marginBottom: "auto" }}
+                >
+                  삭제
+                </DeleteButton>
+              }
+              {isOpenDeleteModal && (
+                <WarningModal
+                  closeModal={closeDeleteModal}
+                  onClickConfirm={onClickDeleteCharacter}
+                  onClickCancel={closeDeleteModal}
+                  message={"인물를 삭제하시겠습니까?"}
+                  ConfirmButtonName={"삭제"}
+                />
+              )}
+            </div>
+            <Subtitle>
+              <input
+                placeholder="작품 속 인물의 역할을 적어주세요"
+                onChange={onChangeRole}
+                defaultValue={data?.role}
+                disabled={isLoading}
+              />
+            </Subtitle>
+          </Title>
+          <Cover />
           <Infos>
-            <Description />
-            <BirthDayAndGender />
             <Characteristics />
             <Keywords />
             <RelatedEvents />
           </Infos>
-          {/* <DeleteButton
-            onClick={value.onClickDeleteCharacter}
-            style={{ marginLeft: "auto", marginBottom: "auto" }}
-          >
-            삭제하기
-          </DeleteButton> */}
         </CharacterContext.Provider>
       </ModalContentAndFooterContainer>
     </Modal>
