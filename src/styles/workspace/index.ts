@@ -75,9 +75,9 @@ export const Title = styled.div`
   }
 
   ${media.tablet} {
-    ${FontBold24}
+    ${FontBold20}
     input {
-      ${FontBold24}
+      ${FontBold20}
     }
   }
 

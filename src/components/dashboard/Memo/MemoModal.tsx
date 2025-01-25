@@ -9,7 +9,7 @@ import {
 } from "@/styles/dashboard/IdeaBox/Modal.style";
 import { MemoItemContext } from "@/hooks/dashboard/memo/memoItem";
 import { WarningModal } from "../WarningModal";
-import { DeleteButton } from "@/styles/Button";
+import { CloseButton, DeleteButton } from "@/styles/Button";
 import { Title } from "@/styles/workspace";
 
 export function EditModal() {
@@ -46,6 +46,7 @@ export function EditModal() {
                 ConfirmButtonName="삭제"
               />
             )}
+            <CloseButton onClick={closeEditModal}>닫기</CloseButton>
           </div>
         </Title>
         <br />
@@ -56,6 +57,7 @@ export function EditModal() {
           cacheMeasurements
           minRows={10}
           placeholder="메모 내용을 입력하세요"
+          style={{ boxShadow: "none", padding: "0", outline: "none" }}
         />
         <FooterContainer></FooterContainer>
       </ModalContentAndFooterContainer>

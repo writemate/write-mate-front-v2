@@ -15,7 +15,7 @@ import {
   CoverContentsContainer,
 } from "@/styles/workspace/Info.style";
 import { WarningModal } from "../WarningModal";
-import { DeleteButton } from "@/styles/Button";
+import { CloseButton, DeleteButton } from "@/styles/Button";
 import { Subtitle, Title } from "@/styles/workspace";
 
 export default function MCharacterModal() {
@@ -42,12 +42,7 @@ export default function MCharacterModal() {
               onChange={onChangeName}
               placeholder="인물의 이름을 입력하세요."
             />
-            <DeleteButton
-              onClick={onClickOpenDeleteModal()}
-              style={{ marginLeft: "auto", marginBottom: "auto" }}
-            >
-              삭제
-            </DeleteButton>
+            <DeleteButton onClick={onClickOpenDeleteModal()}>삭제</DeleteButton>
             {isOpenDeleteModal && deleteCharacteristic == -1 && (
               <WarningModal
                 closeModal={closeDeleteModal}
@@ -57,6 +52,7 @@ export default function MCharacterModal() {
                 ConfirmButtonName="삭제"
               />
             )}
+            <CloseButton onClick={closeEditModal}>닫기</CloseButton>
           </div>
           <Subtitle>
             <input

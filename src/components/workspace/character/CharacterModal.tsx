@@ -4,21 +4,13 @@ import {
   CharacterContext,
 } from "@/hooks/workspace/character/character";
 import Cover from "@/components/workspace/character/detail/Cover";
-import Description from "@/components/workspace/character/detail/Description";
-import BirthDayAndGender from "@/components/workspace/character/detail/BirthDayAndGender";
 import Characteristics from "@/components/workspace/character/detail/Characteristics";
 import Keywords from "@/components/workspace/character/detail/SelectedKeywordList";
 import RelatedEvents from "@/components/workspace/character/detail/RelatedEvents";
 import Modal from "@/components/Modal";
-
-import { SubTitle } from "@/styles/workspace/Info.style";
-import {
-  ModalContentAndFooterContainer,
-  ModalTitle,
-} from "@/styles/dashboard/IdeaBox/Modal.style";
+import { ModalContentAndFooterContainer } from "@/styles/dashboard/IdeaBox/Modal.style";
 import { Infos } from "@/styles/workspace/Info.style";
-import { CloseButton } from "@/styles";
-import { DeleteButton } from "@/styles/Button";
+import { CloseButton, DeleteButton } from "@/styles/Button";
 import { WarningModal } from "@/components/dashboard/WarningModal";
 import { Title, Subtitle } from "@/styles/workspace";
 import { useWarningModal } from "@/hooks/common/useWarningModal";
@@ -59,14 +51,12 @@ export default function CharacterModal({
                 defaultValue={data?.ch_name}
                 disabled={isLoading}
               />
-              {
-                <DeleteButton
-                  onClick={onOpenModal}
-                  style={{ marginLeft: "auto", marginBottom: "auto" }}
-                >
-                  삭제
-                </DeleteButton>
-              }
+              <DeleteButton
+                onClick={onOpenModal}
+                style={{ marginLeft: "auto", marginBottom: "auto" }}
+              >
+                삭제
+              </DeleteButton>
               {isOpenDeleteModal && (
                 <WarningModal
                   closeModal={closeDeleteModal}
@@ -76,6 +66,7 @@ export default function CharacterModal({
                   ConfirmButtonName={"삭제"}
                 />
               )}
+              <CloseButton onClick={closeModal}>닫기</CloseButton>
             </div>
             <Subtitle>
               <input
