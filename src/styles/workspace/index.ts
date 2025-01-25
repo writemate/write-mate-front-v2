@@ -6,7 +6,7 @@ import {
 } from "@/styles";
 import { styled } from "styled-components";
 import { media } from "../media";
-import { FontBold28, FontSemibold16 } from "../Font";
+import { FontBold20, FontBold24, FontBold28, FontSemibold16 } from "../Font";
 
 export const WorkspaceContainer = styled.div`
   ${FlexRowLeftStart}
@@ -62,7 +62,7 @@ export const Title = styled.div`
   ${FontBold28}
   width: 100%;
   color: ${({ theme }) => theme.color.gray900};
-  margin-bottom: 52px;
+  margin-bottom: 40px;
   align-items: flex-start;
 
 
@@ -76,9 +76,15 @@ export const Title = styled.div`
   }
 
   ${media.tablet} {
-    font-size: 16px;
-    line-height: 150%;
-    margin-bottom: 20px;
+    ${FontBold20}
+    input {
+      ${FontBold20}
+    }
+  }
+
+  svg {
+    width: 32px;
+    height: 32px;
   }
 `;
 
@@ -94,12 +100,6 @@ export const Subtitle = styled.div`
     outline: none;
     background-color: transparent;
     width: 100%;
-  }
-
-  ${media.tablet} {
-    font-size: 16px;
-    line-height: 150%;
-    margin-bottom: 20px;
   }
 `;
 

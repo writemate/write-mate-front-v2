@@ -38,14 +38,13 @@ export default function Character() {
             defaultValue={data?.ch_name}
             disabled={isLoading}
           />
-          {
-            <DeleteButton
-              onClick={onOpenModal}
-              style={{ marginLeft: "auto", marginBottom: "auto" }}
-            >
-              삭제하기
-            </DeleteButton>
-          }
+          <DeleteButton
+            onClick={onOpenModal}
+            style={{ marginLeft: "auto", marginBottom: "auto" }}
+          >
+            삭제
+          </DeleteButton>
+
           {isOpenDeleteModal && (
             <WarningModal
               closeModal={closeModal}

@@ -662,7 +662,7 @@ const NetworkGraph = () => {
           <Modal
             closeModal={() => setModalContent(null)}
             maxWidth={972}
-            maxHeight="100%"
+            maxHeight="85vh"
           >
             <EditRelation
               {...modalContent}

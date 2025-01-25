@@ -40,7 +40,7 @@ export const CoverContainer = styled.div`
 
   ${media.tablet} {
     ${FlexColumnCenter}
-    gap: 20px;
+    gap: 0;
   }
 `;
 export const BlurBackground = styled.div<{ $src: string | null }>`
@@ -97,8 +97,8 @@ export const ChangeCover = styled.div`
 export const CoverImageContainer = styled.div<{ $isCharacter?: boolean }>`
   ${FlexRowCenter}
   flex-shrink: 0;
-  width: ${({ $isCharacter }) => ($isCharacter ? "341px" : "263px")};
-  height: 341px;
+  width: ${({ $isCharacter }) => ($isCharacter ? "308px" : "263px")};
+  height: ${({ $isCharacter }) => ($isCharacter ? "308px" : "341px")};
   border-radius: 10px;
   padding: ${({ $isCharacter }) => ($isCharacter ? "0" : "0px")};
   position: relative;
@@ -111,8 +111,9 @@ export const CoverImageContainer = styled.div<{ $isCharacter?: boolean }>`
   }
 
   ${media.tablet} {
-    width: 150px;
-    height: 196px;
+    margin-top: 20px;
+    width: ${({ $isCharacter }) => ($isCharacter ? "160px" : "150px")};
+    height: ${({ $isCharacter }) => ($isCharacter ? "160px" : "180px")};
     padding: 20px 16px;
   }
 `;
@@ -132,9 +133,11 @@ export const SubTitle = styled.h2`
   height: fit-content;
   color: ${({ theme }) => theme.color.gray900};
   margin-bottom: 20px;
+  margin-top: 32px;
 
   ${media.tablet} {
     margin-bottom: 12px;
+    margin-top: 20px;
   }
 `;
 
@@ -146,14 +149,6 @@ export const CoverContentsContainer = styled.div`
   width: calc(100% - 263px - 36px);
   justify-content: flex-end;
   flex-grow: 1;
-  gap: 36px;
-
-  & > ${SubTitle} {
-    margin-top: 46px;
-    ${media.tablet} {
-      margin-top: 20px;
-    }
-  }
 
   ${media.tablet} {
     width: 100%;
