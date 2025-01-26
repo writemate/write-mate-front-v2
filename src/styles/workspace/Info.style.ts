@@ -107,6 +107,7 @@ export const CoverImageContainer = styled.div<{ $isCharacter?: boolean }>`
   &:hover {
     ${ChangeCover} {
       display: flex;
+      border-radius: 100%;
     }
   }
 
@@ -119,9 +120,9 @@ export const CoverImageContainer = styled.div<{ $isCharacter?: boolean }>`
 `;
 export const ChangeCoverInput = styled.input`
   display: none;
+
   ${media.tablet} {
     width: 100%;
-    aspect-ratio: 263 / 341;
     padding: 0;
   }
 `;

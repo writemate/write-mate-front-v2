@@ -19,6 +19,8 @@ import { IconButton } from "@/styles/workspace/plot/Chapter.styles";
 import CopyIcon from "@/assets/workspace/plot/copy.svg";
 import { useCallback, useRef } from "react";
 import { copy } from "@/utils/copy";
+import { CharacterImage } from "@/styles/workspace/Character.style";
+import { getName } from "@/hooks/dashboard/character/characterItem";
 
 export default function Event({
   id: eventId,
@@ -64,11 +66,17 @@ export default function Event({
             />
           )}
           {characterList.map((character) => (
-            <CharacterImg
+            <CharacterImage
               key={character.id}
               onClick={openEditCharacterModal(character.id)}
               $src={character.ch_image}
-            />
+              $heightPx={32}
+              $widthPx={32}
+            >
+              {!character.ch_image && character && (
+                <p>{getName(character)[0]}</p>
+              )}
+            </CharacterImage>
           ))}
           <div
             style={{

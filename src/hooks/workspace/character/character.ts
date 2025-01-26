@@ -24,6 +24,7 @@ import { TCharacter, TKeyword } from "@/utils/APIs/types";
 import { useInputLiveUpdate } from "@/hooks/common/useInputLiveUpdate";
 import { useOnClickUpdate } from "@/hooks/common/useOnClickUpdate";
 import useMiniModal from "./useMiniModal";
+import { getName } from "@/hooks/dashboard/character/characterItem";
 
 export function useCharacter(characterId?: string) {
   const queryClient = useQueryClient();
@@ -374,6 +375,8 @@ export function useCharacter(characterId?: string) {
     onChangeCharacteristicTitle,
     onChangeCharacteristicContent,
     onClickDeleteCharacter,
+
+    getName,
   };
 }
 

@@ -11,20 +11,6 @@ export const AddMemoButton = styled.button<{ $isEmpty?: boolean }>`
   width: 160px;
 `;
 
-export const CharacterListContainer = styled.div`
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-  width: 100%;
-
-  align-items: start;
-  justify-content: start;
-  gap: 16px;
-  padding: 16px;
-  padding-bottom: 100px;
-  overflow-y: auto;
-`;
-
 export const CharacterCard = styled.div<{ $isSelected?: boolean }>`
   ${FlexColumnLeftStart};
   height: 160px;

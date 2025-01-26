@@ -31,13 +31,6 @@ export const CharacterImage = styled.div<{ $src: string }>`
   margin-right: 12px;
 `;
 
-export const NameAndRole = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  width: calc(100% - 60px);
-`;
-
 export const CharacterName = styled.div`
   ${FontSemibold14}
   width: 100%;
@@ -47,11 +40,11 @@ export const CharacterName = styled.div`
 `;
 export const CharacterRole = styled.div`
   ${FontTabletRegular13}
-  color: ${({ theme }) => theme.color.gray400};
+  width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  width: 100%;
+  color: ${({ theme }) => theme.color.gray400};
 `;
 export const CharacterDescription = styled.div`
   ${FontTabletRegular13}

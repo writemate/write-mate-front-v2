@@ -82,6 +82,7 @@ export const OpenButton = styled(OpenModal)`
 
 export const MemoUpdatedDate = styled.div`
   ${FontTabletRegular14}
+  margin-top: auto;
   width: 100%;
   font-size: 12px;
   text-align: right;
@@ -100,9 +101,10 @@ export const AddMemoButtonContainer = styled.button<AddMemoButtonProps>`
 `;
 
 export const MemoListContainer = styled.div`
+  width: 100%;
+  height: 100%;
   position: relative;
   display: grid;
-  height: 100%;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   align-items: flex-start;
   justify-content: flex-start;
@@ -110,7 +112,6 @@ export const MemoListContainer = styled.div`
   gap: 16px;
   padding: 16px;
   padding-bottom: 100px;
-  width: 100%;
   overflow-y: auto;
 
   ${media.tablet} {
