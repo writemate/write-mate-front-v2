@@ -47,6 +47,16 @@ export default function Description() {
                 placeholder="특징을 적어주세요."
                 value={c.title}
                 onChange={onChangeCharacteristicTitle(i)}
+                onKeyDown={(e) => {
+                  if (e.nativeEvent.isComposing) return;
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    (
+                      (e.target as HTMLInputElement).parentElement
+                        ?.nextElementSibling as HTMLTextAreaElement
+                    ).focus();
+                  }
+                }}
                 disabled={isLoading}
               />
               <TrashCan
