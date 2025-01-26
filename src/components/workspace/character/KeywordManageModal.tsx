@@ -16,7 +16,7 @@ import {
   KeywordContainer,
 } from "@/styles/workspace/Character.style";
 import KeywordCancel from "@/assets/workspace/character/keywordCancel.svg";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { WarningModal } from "@/components/dashboard/WarningModal";
 import { useWarningModal } from "@/hooks/common/useWarningModal";
 import { SubTitle } from "@/styles/workspace/Info.style";
@@ -33,8 +33,13 @@ export function KeywordManageModal() {
     keywordList,
     onClickDeleteKeyword,
   } = useContext(CharacterListContext);
-  const { isOpenDeleteModal, onOpenWarningModal, closeWarningModal } =
-    useWarningModal();
+  const [deletingKeywordId, setDeletingKeywordId] = useState<string | null>(
+    null
+  );
+  const isOpenDeleteModal = deletingKeywordId !== null;
+  const openWarningModal = (keywordId: string) => () =>
+    setDeletingKeywordId(keywordId);
+  const closeWarningModal = () => setDeletingKeywordId(null);
 
   return (
     <Modal closeModal={closeModal} maxWidth={800}>
@@ -107,18 +112,21 @@ export function KeywordManageModal() {
                     $darkColor={keyword.dark_color}
                   >
                     <span>{keyword.word}</span>
-                    <KeywordCancel onClick={onOpenWarningModal} />
-                    {isOpenDeleteModal && (
-                      <WarningModal
-                        closeModal={closeWarningModal}
-                        onClickConfirm={onClickDeleteKeyword(keyword.id)}
-                        onClickCancel={closeWarningModal}
-                        message={"키워드를 삭제하시겠습니까? "}
-                        ConfirmButtonName={"삭제"}
-                      />
-                    )}
+                    <KeywordCancel onClick={openWarningModal(keyword.id)} />
                   </KeywordContainer>
                 ))}
+              {isOpenDeleteModal && (
+                <WarningModal
+                  closeModal={closeWarningModal}
+                  onClickConfirm={() => {
+                    onClickDeleteKeyword(deletingKeywordId)();
+                    closeWarningModal();
+                  }}
+                  onClickCancel={closeWarningModal}
+                  message={"키워드를 삭제하시겠습니까? "}
+                  ConfirmButtonName={"삭제"}
+                />
+              )}
             </KeywordListContainer>
           </ManageKeywordRight>
         </ManageRowWrapper>

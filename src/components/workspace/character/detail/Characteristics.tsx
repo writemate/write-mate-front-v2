@@ -1,5 +1,5 @@
 "use client";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { CharacterContext } from "@/hooks/workspace/character/character";
 import TrashCan from "@/assets/icons/trashcan.svg";
 import { Container, SubTitle } from "@/styles/workspace/Info.style";
@@ -23,7 +23,10 @@ export default function Description() {
     onChangeCharacteristicTitle,
     onChangeCharacteristicContent,
   } = useContext(CharacterContext);
-  const { isOpenDeleteModal, onOpenModal, closeModal } = useWarningModal();
+  const [deletingIndex, setDeletingIndex] = useState<number | null>(null);
+  const isOpenDeleteModal = deletingIndex !== null;
+  const openWarningModal = (index: number) => () => setDeletingIndex(index);
+  const closeWarningModal = () => setDeletingIndex(null);
 
   return (
     <Container>
@@ -46,17 +49,11 @@ export default function Description() {
                 onChange={onChangeCharacteristicTitle(i)}
                 disabled={isLoading}
               />
-              <TrashCan onClick={onOpenModal} style={{ cursor: "pointer" }} />
-            </div>
-            {isOpenDeleteModal && (
-              <WarningModal
-                closeModal={closeModal}
-                onClickConfirm={onClickRemoveCharacteristic(i)}
-                onClickCancel={closeModal}
-                message={"인물를 삭제하시겠습니까?"}
-                ConfirmButtonName={"삭제"}
+              <TrashCan
+                onClick={openWarningModal(i)}
+                style={{ cursor: "pointer" }}
               />
-            )}
+            </div>
             <CharacteristicContent
               placeholder="성격이나, 외향적 특징, 출생의 비밀 등 세부 내용을 적어주세요."
               value={c.content}
@@ -66,6 +63,18 @@ export default function Description() {
             />
           </CharacteristicContainer>
         ))}
+        {isOpenDeleteModal && (
+          <WarningModal
+            closeModal={closeWarningModal}
+            onClickConfirm={() => {
+              onClickRemoveCharacteristic(deletingIndex)();
+              closeWarningModal();
+            }}
+            onClickCancel={closeWarningModal}
+            message={"인물를 삭제하시겠습니까?"}
+            ConfirmButtonName={"삭제"}
+          />
+        )}
         {characteristicList.length === 0 && (
           <StateMessage messageKey="CHARACTERISTIC_EMPTY" />
         )}
