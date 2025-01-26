@@ -55,7 +55,7 @@ export default function Header({
       </HeaderTitle>
       <SaveStatus>
         {isSaving ? "저장 중" : "저장 완료"}
-        {isSaving ? <SavingIcon /> : <SavedIcon />}
+        {isSaving ? <SavingIcon style={{ width: 20 }} /> : <SavedIcon />}
       </SaveStatus>
       <VersionControlButton onClick={onClickVersionControl}>
         버전 관리
