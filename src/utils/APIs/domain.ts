@@ -30,12 +30,14 @@ export const DOMAIN = {
   DELETE_PLOT: (plotId: string) => `/api/plots/${plotId}`,
   UPDATE_PLOT_NAME: (plotId: string) => `/api/plots/${plotId}/name`,
   SET_MAIN_PLOT: (plotId: string) => `/api/plots/${plotId}/main`,
+  DUPLICATE_PLOT: (plotId: string) => `/api/plots/${plotId}/replication`,
 
   CREATE_SCRIPT: (workId: string) => `/api/scripts?workId=${workId}`,
   DELETE_SCRIPT: (scriptId: string) => `/api/scripts/${scriptId}`,
   UPDATE_SCRIPT_NAME: (scriptId: string) => `/api/scripts/${scriptId}/name`,
   SET_MAIN_SCRIPT: (scriptId: string) => `/api/scripts/${scriptId}/main`,
   GET_SCRIPT: (scriptId: string) => `/api/scripts/${scriptId}`,
+  DUPLICATE_SCRIPT: (scriptId: string) => `/api/scripts/${scriptId}/replication`,
   UPDATE_SCRIPT_CONTENT: (scriptId: string) =>
     `/api/scripts/${scriptId}/content`,
 

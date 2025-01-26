@@ -24,6 +24,8 @@ export const useWorkspaceLayout = () => {
   const isPlotOpen = sidebarType === SidebarType.plot;
   const isScriptOpen = sidebarType === SidebarType.script;
 
+  const closeSidebar = () => setSidebarType(null);
+
   const pageOn = (page: string) => pathname.includes("/" + page);
 
   // 사이드바가 열려있다면, 해당 항목 아이콘 활성화
@@ -51,6 +53,7 @@ export const useWorkspaceLayout = () => {
     isScriptActive,
     isCharacterActive,
     isScriptPage,
+    closeSidebar,
   };
 };
 
