@@ -25,7 +25,7 @@ export function EditModal() {
     onClickOpenDeleteModal,
   } = useContext(MemoItemContext);
   return (
-    <Modal closeModal={closeEditModal} maxWidth="750px">
+    <Modal closeModal={closeEditModal} maxWidth="1024px" maxHeight="80vh">
       <ModalContentAndFooterContainer>
         <Title>
           <div style={{ display: "flex", flexDirection: "row", width: "100%" }}>

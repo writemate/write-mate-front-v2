@@ -19,16 +19,7 @@ import { MemoUpdatedDate } from "@/styles/dashboard/IdeaBox/Memo/MemoList.style"
 export function CharacterItem({ character }: { character: TMCharacter }) {
   const characterItemValue: ReturnType<typeof useCharacterItem> =
     useCharacterItem(character);
-  const { isOpenEditModal, onClickItem } = characterItemValue;
-
-  const getName = () => {
-    if (!character.description && !character.ch_name) return "이름 없음";
-    if (!character.ch_name)
-      return "" + character.description.slice(0, 10) + "...";
-    if (character.ch_name.length > 10)
-      return character.ch_name.slice(0, 10) + "...";
-    return character.ch_name;
-  };
+  const { isOpenEditModal, onClickItem, getName } = characterItemValue;
 
   return (
     <CharacterItemContext.Provider value={characterItemValue}>

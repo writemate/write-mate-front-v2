@@ -226,6 +226,15 @@ export function useCharacterItem(curCharacter: TMCharacter) {
     setIsOpenDeleteModal(false);
   };
 
+  const getName = () => {
+    if (!character.description && !character.ch_name) return "이름 없음";
+    if (!character.ch_name)
+      return "" + character.description.slice(0, 10) + "...";
+    if (character.ch_name.length > 10)
+      return character.ch_name.slice(0, 10) + "...";
+    return character.ch_name;
+  };
+
   return {
     character,
 
@@ -250,6 +259,7 @@ export function useCharacterItem(curCharacter: TMCharacter) {
     onDeleteMCharacter,
     closeEditModal,
     closeDeleteModal,
+    getName,
   };
 }
 
