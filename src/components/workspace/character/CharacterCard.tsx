@@ -13,6 +13,8 @@ import StarActive from "@/assets/workspace/character/starActive.svg";
 import StarInactive from "@/assets/workspace/character/starInactive.svg";
 import { TCharacter } from "@/utils/APIs/types";
 import { useContext } from "react";
+import { getName } from "@/hooks/dashboard/character/characterItem";
+import { NameAndRole } from "@/styles/workspace/Character.style";
 export function CharacterCard({
   index,
   character,
@@ -37,13 +39,15 @@ export function CharacterCard({
       }
     >
       <CharacterCardTitle>
-        <CharacterImage $src={character.ch_image} />
-        <CharacterName $isNew={character.ch_name === ""}>
-          {character.ch_name}
-          {character.ch_name === "" && "새 인물"}
-        </CharacterName>
-        <CharacterRole>{character.role}</CharacterRole>
-
+        <CharacterImage $src={character.ch_image} $heightPx={42} $widthPx={42}>
+          {!character.ch_image && <p>{getName(character)[0]}</p>}
+        </CharacterImage>
+        <NameAndRole>
+          <CharacterName $isNew={character.ch_name === ""}>
+            {getName(character)}
+          </CharacterName>
+          <CharacterRole>{character.role}</CharacterRole>
+        </NameAndRole>
         {character.isMain && (
           <StarActive onClick={onClickUnsetMainCharacter(character.id)} />
         )}

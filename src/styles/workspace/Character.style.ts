@@ -218,30 +218,43 @@ export const CharacterCardContainer = styled(Link)`
     height: fit-content;
   }
 `;
+
+export const NameAndRole = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  width: calc(100% - 60px);
+  margin-left: 12px;
+`;
 export const CharacterCardTitle = styled.div`
   position: relative;
   ${FlexRowLeftStart};
   width: 100%;
-  & > *:last-child {
-    margin-left: auto;
-    flex-shrink: 0;
-  }
 `;
-export const CharacterImage = styled.div<{ $src: string }>`
-  ${FontBold20}
+export const CharacterImage = styled.div<{
+  $src: string;
+  $widthPx: number;
+  $heightPx: number;
+}>`
   display: flex;
   justify-content: center;
   align-items: center;
   background-image: url(${({ $src }) => $src});
   background-size: cover;
-  width: 48px;
-  height: 48px;
+  width: ${({ $widthPx }) => $widthPx}px;
+  height: ${({ $heightPx }) => $heightPx}px;
   border-radius: 100%;
   background-color: ${({ theme }) => theme.color.gray200};
-  box-shadow: 2px 2px 8px #323f4d33;
+  box-shadow: 1px 1px ${({ $widthPx }) => $widthPx / 28}px #323f4d33;
   border: 2px solid #fff;
+  margin: ${({ $widthPx }) => $widthPx / 28}px;
   flex-shrink: 0;
-  margin-right: 12px;
+
+  p {
+    ${FontSemibold16}
+    font-size: max( calc(${({ $widthPx }) => $widthPx}px / 3), 18px);
+    color: ${({ theme }) => theme.color.gray25};
+  }
 `;
 export const CharacterName = styled.div<{ $isNew?: boolean }>`
   ${FontSemibold14}
@@ -254,11 +267,11 @@ export const CharacterName = styled.div<{ $isNew?: boolean }>`
 `;
 export const CharacterRole = styled.div`
   ${FontTabletRegular13}
-  color: ${({ theme }) => theme.color.gray400};
+  color: ${({ theme }) => theme.color.gray300};
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  width: 123px;
+  width: 100%;
 `;
 export const CharacterDescription = styled.div<{ $isNew?: boolean }>`
   ${FontTabletRegular14}

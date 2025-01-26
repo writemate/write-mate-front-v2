@@ -109,6 +109,7 @@ export type TSimpleCharacter = {
   id: string;
   ch_name: string;
   ch_image: string;
+  description: string;
 };
 
 export type TCharacterOfList = {

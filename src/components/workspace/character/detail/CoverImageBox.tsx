@@ -9,9 +9,11 @@ import {
 import { useContext, useRef } from "react";
 import OrangePlusIcon from "@/assets/icons/orangePlus.svg";
 import { CharacterContext } from "@/hooks/workspace/character/character";
+import { CharacterImage } from "@/styles/workspace/Character.style";
 
 export default function CoverImageBox() {
-  const { data, isLoading, onChangeCoverImage } = useContext(CharacterContext);
+  const { data, isLoading, onChangeCoverImage, getName } =
+    useContext(CharacterContext);
   const src = data?.ch_image ?? null;
   const ref = useRef<HTMLInputElement>(null);
   const onClickChangeCover = () => {
@@ -20,8 +22,11 @@ export default function CoverImageBox() {
 
   return (
     <CoverImageContainer $isCharacter={true}>
-      <BlurBackground $src={src} />
-      {src && <CoverImage src={src} />}
+      <CharacterImage $src={src ?? ""} $heightPx={290} $widthPx={290}>
+        {!src && data && <p>{getName(data)[0]}</p>}
+      </CharacterImage>
+      {/* <BlurBackground $src={src} />
+      {src && <CoverImage src={src} />} */}
       <ChangeCoverInput
         type="file"
         accept="image/*"

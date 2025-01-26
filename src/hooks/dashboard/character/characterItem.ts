@@ -15,7 +15,7 @@ import {
   updateMCharacterRole,
 } from "@/utils/APIs/memo";
 import { dashboardQueryKeys } from "@/utils/APIs/queryKeys";
-import { TMCharacter } from "@/utils/APIs/types";
+import { TCharacter, TMCharacter, TSimpleCharacter } from "@/utils/APIs/types";
 import { notifySuccess } from "@/utils/showToast";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createContext, useEffect, useRef, useState } from "react";
@@ -228,7 +228,6 @@ export function useCharacterItem(curCharacter: TMCharacter) {
 
   return {
     character,
-
     imageInputRef,
     isOpenEditModal,
     isOpenDeleteModal,
@@ -250,6 +249,7 @@ export function useCharacterItem(curCharacter: TMCharacter) {
     onDeleteMCharacter,
     closeEditModal,
     closeDeleteModal,
+    getName,
   };
 }
 
@@ -262,3 +262,17 @@ function focusInput(ref: HTMLCollectionOf<Element>) {
     if (ref.length > 0) (ref[0] as HTMLElement).focus();
   }, 0);
 }
+
+export const getName = (
+  character: TMCharacter | TCharacter | TSimpleCharacter
+) => {
+  const DEFAULT_NAME = "새 인물";
+
+  if (!character) return DEFAULT_NAME;
+  if (!character.description && !character.ch_name) return DEFAULT_NAME;
+  if (!character.ch_name)
+    return "" + character.description.slice(0, 10) + "...";
+  if (character.ch_name.length > 10)
+    return character.ch_name.slice(0, 10) + "...";
+  return character.ch_name;
+};

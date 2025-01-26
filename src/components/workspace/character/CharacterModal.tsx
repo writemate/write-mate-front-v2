@@ -37,7 +37,7 @@ export default function CharacterModal({
   } = useWarningModal();
 
   return (
-    <Modal closeModal={closeModal} maxWidth={820} maxHeight="85vh">
+    <Modal closeModal={closeModal} maxWidth="1024px" maxHeight="85vh">
       <ModalContentAndFooterContainer>
         <CharacterContext.Provider value={value}>
           <Title>

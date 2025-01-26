@@ -1,17 +1,16 @@
 "use Client";
-import { LoadingMessage } from "@/styles/dashboard/Loading.style";
 import { AddMCharacterButton } from "@/components/dashboard/AddButton";
-import { CharacterListContainer } from "@/styles/dashboard/IdeaBox/MCharacter/MCharacterList.style";
 import { CharacterItem } from "./CharacterItem";
 import { useCharacterList } from "@/hooks/dashboard/character/useCharacterList";
 import { StateMessage } from "@/components/EmptyMessage";
+import { MemoListContainer } from "@/styles/dashboard/IdeaBox/Memo/MemoList.style";
 
 export default function CharacterList() {
   const { characterList, error, isLoading } = useCharacterList();
 
   return (
     <>
-      <CharacterListContainer>
+      <MemoListContainer>
         {Array.isArray(characterList) &&
           characterList
             .slice()
@@ -24,7 +23,7 @@ export default function CharacterList() {
         {characterList && characterList.length === 0 && (
           <StateMessage messageKey="CHARACTER_EMPTY" absolute />
         )}
-      </CharacterListContainer>
+      </MemoListContainer>
       <AddMCharacterButton />
     </>
   );

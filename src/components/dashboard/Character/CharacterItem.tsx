@@ -6,29 +6,20 @@ import {
 import { CharacterCard } from "@/styles/dashboard/IdeaBox/MCharacter/MCharacterList.style";
 import { TMCharacter } from "@/utils/APIs/types";
 import MCharacterModal from "./MemoCharacterModal";
+import { MemoUpdatedDate } from "@/styles/dashboard/IdeaBox/Memo/MemoList.style";
 import {
   CharacterCardTitle,
+  CharacterDescription,
   CharacterImage,
   CharacterName,
   CharacterRole,
-  CharacterDescription,
-  NameAndRole,
-} from "@/styles/dashboard/IdeaBox/MCharacter/Character.style";
-import { MemoUpdatedDate } from "@/styles/dashboard/IdeaBox/Memo/MemoList.style";
+} from "@/styles/workspace/Character.style";
+import { NameAndRole } from "@/styles/workspace/Character.style";
 
 export function CharacterItem({ character }: { character: TMCharacter }) {
   const characterItemValue: ReturnType<typeof useCharacterItem> =
     useCharacterItem(character);
-  const { isOpenEditModal, onClickItem } = characterItemValue;
-
-  const getName = () => {
-    if (!character.description && !character.ch_name) return "이름 없음";
-    if (!character.ch_name)
-      return "" + character.description.slice(0, 10) + "...";
-    if (character.ch_name.length > 10)
-      return character.ch_name.slice(0, 10) + "...";
-    return character.ch_name;
-  };
+  const { isOpenEditModal, onClickItem, getName } = characterItemValue;
 
   return (
     <CharacterItemContext.Provider value={characterItemValue}>
@@ -37,12 +28,21 @@ export function CharacterItem({ character }: { character: TMCharacter }) {
         style={{ border: "1px solid black" }}
       >
         <CharacterCardTitle>
-          {!character.ch_image && (
-            <CharacterImage $src="">{getName().slice(0, 1)}</CharacterImage>
-          )}
-          {character.ch_image && <CharacterImage $src={character.ch_image} />}
+          <CharacterImage
+            $src={character.ch_image}
+            $heightPx={42}
+            $widthPx={42}
+          >
+            {!character.ch_image && <p>{getName(character)[0]}</p>}
+          </CharacterImage>
           <NameAndRole>
-            <CharacterName>{getName()}</CharacterName>
+            <CharacterName
+              $isNew={
+                character.ch_name === "" || (character.ch_name ? false : true)
+              }
+            >
+              {getName(character)}
+            </CharacterName>
             <CharacterRole>{character.role}</CharacterRole>
           </NameAndRole>
         </CharacterCardTitle>
