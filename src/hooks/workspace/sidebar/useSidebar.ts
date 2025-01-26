@@ -28,6 +28,7 @@ import {
   recursiveFileUnpin,
   recursiveFindParent,
   isExistSelect,
+  openCurrentFolder,
 } from "@/utils/controlFolders";
 import { useOnClickUpdate } from "@/hooks/common/useOnClickUpdate";
 
@@ -42,7 +43,8 @@ const getAPIFunctionsAndQueryKey = (type: "plot" | "script") => {
       deleteItem: deletePlot,
       queryKey: workspaceQueryKeys.plotSidebar,
       duplicateItem: duplicatePlot,
-    };
+      param_id: "plot_id",
+    } as const;
   return {
     getFolderList: getScriptFolderList,
     create: createScript,
@@ -52,7 +54,8 @@ const getAPIFunctionsAndQueryKey = (type: "plot" | "script") => {
     deleteItem: deleteScript,
     queryKey: workspaceQueryKeys.scriptSidebar,
     duplicateItem: duplicateScript,
-  };
+    param_id: "script_id",
+  } as const;
 };
 
 export default function usePlotSidebar(type: "plot" | "script") {
@@ -66,9 +69,11 @@ export default function usePlotSidebar(type: "plot" | "script") {
     setMain,
     deleteItem,
     duplicateItem,
+    param_id,
   } = getAPIFunctionsAndQueryKey(type);
-  const { workspace_id } = useParams<{
+  const { workspace_id, [param_id]: id } = useParams<{
     workspace_id: string;
+    script_id?: string;
     plot_id?: string;
   }>();
   const [rootFolder, setRootFolder] = useState<TFolderWithOptions | null>(null);
@@ -108,6 +113,7 @@ export default function usePlotSidebar(type: "plot" | "script") {
   useEffect(() => {
     if (data) {
       const rootFolder = recursiveFolderAddOptions(data);
+      if (id) openCurrentFolder(rootFolder, id);
       setRootFolder(rootFolder);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
