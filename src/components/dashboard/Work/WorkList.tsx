@@ -1,12 +1,13 @@
 "use client";
 import { WorkListContainer } from "@/styles/dashboard/Work/WorkList.style";
 import { useContext } from "react";
-import WorkButton from "./WorkItem";
+import { WorkButtonCard } from "./WorkItem";
 import { workspaceCategory } from "@/utils/APIs/types";
 import { AddWork, MoveToOngoing } from "@/components/dashboard/Work/Button";
 import { WorkListContext } from "@/hooks/dashboard/work/workList";
 import { WorkCategoryContext } from "@/hooks/dashboard/work/workCategory";
 import { StateMessage } from "@/components/EmptyMessage";
+import WorkLinkCard from "./WorkItem";
 
 export default function WorkList() {
   const { workCategory } = useContext(WorkCategoryContext);
@@ -18,15 +19,26 @@ export default function WorkList() {
       {error && <StateMessage messageKey="LOADING_ERROR" />}
       {workList && (
         <>
-          {workList.length > 0 && (
+          {workCategory !== "trash" && workList.length > 0 && (
             <>
               <WorkListContainer>
                 {!isLoading &&
                   workList.map((work) => (
-                    <WorkButton key={work.id} workId={work.id} />
+                    <WorkLinkCard key={work.id} workId={work.id} />
                   ))}
               </WorkListContainer>
               {workCategory === workspaceCategory.ongoing && <AddWork />}
+            </>
+          )}
+          {workCategory === "trash" && workList.length > 0 && (
+            <>
+              <WorkListContainer>
+                {!isLoading &&
+                  workList.map((work) => (
+                    <WorkButtonCard key={work.id} workId={work.id} />
+                  ))}
+              </WorkListContainer>
+              <MoveToOngoing />
             </>
           )}
           {workList.length === 0 && (
