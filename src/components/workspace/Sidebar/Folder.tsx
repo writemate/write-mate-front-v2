@@ -1,5 +1,5 @@
 "use client";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useKebab } from "@/hooks/workspace/sidebar/useKebab";
 import { TFolderWithOptions } from "@/utils/APIs/types";
 import OpendDropButton from "@/assets/workspace/sideBar/opendDropButton.svg";
@@ -20,6 +20,7 @@ import {
 } from "@/styles/workspace/SideBar.styles";
 import { useDrag } from "@/hooks/workspace/sidebar/useDrag";
 import File from "@/components/workspace/Sidebar/File";
+import { WarningModal } from "@/components/dashboard/WarningModal";
 
 export default function Folder({
   folder,
@@ -47,6 +48,13 @@ export default function Folder({
     onDragLeave,
     onDrop,
   } = useDrag(folder);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const openDeleteModal = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    e.preventDefault();
+    setDeleteModalOpen(true);
+  };
+  const closeDeleteModal = () => setDeleteModalOpen(false);
 
   return (
     <FolderContainer>
@@ -82,9 +90,7 @@ export default function Folder({
           {isKebabOpen && (
             <KebabContainer onClick={closeKebab}>
               <KebabItem onClick={changeName(folder)}>이름 변경</KebabItem>
-              <KebabItem onClick={deleteFolderOrFile(folder)}>
-                삭제하기
-              </KebabItem>
+              <KebabItem onClick={openDeleteModal}>삭제하기</KebabItem>
             </KebabContainer>
           )}
         </KebabWrapper>
@@ -112,6 +118,15 @@ export default function Folder({
             );
           })}
       </FileListContainer>
+      {deleteModalOpen && (
+        <WarningModal
+          closeModal={closeDeleteModal}
+          onClickConfirm={deleteFolderOrFile(folder)}
+          onClickCancel={closeDeleteModal}
+          message={`폴더 "${folder.folder_name}"을(를) 삭제하시겠습니까?\n폴더 내 파일도 함께 삭제됩니다.`}
+          ConfirmButtonName="삭제"
+        />
+      )}
     </FolderContainer>
   );
 }

@@ -97,7 +97,9 @@ export default function usePlotSidebar(type: "plot" | "script") {
   });
   const { mutate: mutateSetMain } = useMutation({ mutationFn: setMain });
   const { mutate: mutateDelete } = useMutation({ mutationFn: deleteItem });
-  const { mutateAsync: mutateDuplicateAsync } = useMutation({ mutationFn: duplicateItem });
+  const { mutateAsync: mutateDuplicateAsync } = useMutation({
+    mutationFn: duplicateItem,
+  });
 
   const isSelectedFolderExist =
     rootFolder !== null &&
@@ -197,33 +199,34 @@ export default function usePlotSidebar(type: "plot" | "script") {
   };
 
   const [isCreatingDuplicate, setIsCreatingDuplicate] = useState(false);
-  const duplicateFile = (file:TFileWithOptions) => async (e: React.MouseEvent) => {
-    e.stopPropagation();
-    e.preventDefault();
-    if (rootFolder === null) return;
-    if (isCreatingDuplicate) return;
-    setIsCreatingDuplicate(true);
-    const parentFolder = recursiveFindParent(rootFolder,file);
-    if (parentFolder === null) return;
-    const newItemFromServer = await mutateDuplicateAsync(file.id);
-    const newItem = {
-      id: newItemFromServer.id,
-      isFolder: file.isFolder,
-      file_name: newItemFromServer.name,
-      isEditing: false,
-      isPinned: false,
-    }
-    parentFolder.files.push(newItem);
-    await mutateFolderAsync(rootFolder);
-    setRootFolder({ ...rootFolder });
-    setIsCreatingDuplicate(false);
-    if (type === "plot") {
-      router.push(`/${workspace_id}/plot/${newItemFromServer.id}`);
-    }
-    if (type === "script") {
-      router.push(`/${workspace_id}/script/${newItemFromServer.id}`);
-    }
-  }
+  const duplicateFile =
+    (file: TFileWithOptions) => async (e: React.MouseEvent) => {
+      e.stopPropagation();
+      e.preventDefault();
+      if (rootFolder === null) return;
+      if (isCreatingDuplicate) return;
+      setIsCreatingDuplicate(true);
+      const parentFolder = recursiveFindParent(rootFolder, file);
+      if (parentFolder === null) return;
+      const newItemFromServer = await mutateDuplicateAsync(file.id);
+      const newItem = {
+        id: newItemFromServer.id,
+        isFolder: file.isFolder,
+        file_name: newItemFromServer.name,
+        isEditing: false,
+        isPinned: false,
+      };
+      parentFolder.files.push(newItem);
+      await mutateFolderAsync(rootFolder);
+      setRootFolder({ ...rootFolder });
+      setIsCreatingDuplicate(false);
+      if (type === "plot") {
+        router.push(`/${workspace_id}/plot/${newItemFromServer.id}`);
+      }
+      if (type === "script") {
+        router.push(`/${workspace_id}/script/${newItemFromServer.id}`);
+      }
+    };
 
   const applyChangeName = (
     folderOrfile: TFolderWithOptions | TFileWithOptions,
@@ -269,15 +272,7 @@ export default function usePlotSidebar(type: "plot" | "script") {
   const deleteFolderOrFile =
     (folderOrfile: TFolderWithOptions | TFileWithOptions) =>
     (e: React.MouseEvent) => {
-      e.stopPropagation();
-      e.preventDefault();
       if (rootFolder === null) return;
-      if (
-        confirm(
-          `정말 ${folderOrfile.isFolder ? `폴더 "${folderOrfile.folder_name}"` : `파일 "${folderOrfile.file_name}"`}을 삭제하시겠습니까?`
-        ) === false
-      )
-        return;
       const parent = recursiveFindParent(rootFolder, folderOrfile);
       if (parent === null) return;
       const index = parent.files.indexOf(folderOrfile);
