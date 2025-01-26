@@ -3,20 +3,20 @@ import TextareaAutosize from "react-textarea-autosize";
 import { FlexColumnCenter, FlexRowCenter, FlexRowLeftStart } from "@/styles";
 import { media } from "@/styles/media";
 
-export const ChapterContainer = styled.section<{ isDraggable?: boolean }>`
+export const ChapterContainer = styled.section<{ $isDraggable?: boolean }>`
   ${FlexRowLeftStart};
   width: 100%;
   background: #ffffff;
   border: 1px solid ${({ theme }) => theme.color.orange400};
   margin-bottom: 18.18px;
   padding: 20px 20px 20px
-    ${({ isDraggable = true }) => (isDraggable ? "0" : "20px")};
+    ${({ $isDraggable = true }) => ($isDraggable ? "0" : "20px")};
   box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
 
   ${media.tablet} {
     padding: 12px 12px 12px
-      ${({ isDraggable = true }) => (isDraggable ? "0" : "12px")};
+      ${({ $isDraggable = true }) => ($isDraggable ? "0" : "12px")};
     margin-bottom: 12px;
   }
 `;
