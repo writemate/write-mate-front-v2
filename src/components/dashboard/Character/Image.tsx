@@ -5,10 +5,8 @@ import {
 import { useContext } from "react";
 import OrangePlusIcon from "@/assets/icons/orangePlus.svg";
 import {
-  BlurBackground,
   ChangeCover,
   ChangeCoverInput,
-  CoverImage,
   CoverImageContainer,
 } from "@/styles/workspace/Info.style";
 import { CharacterImage } from "@/styles/workspace/Character.style";

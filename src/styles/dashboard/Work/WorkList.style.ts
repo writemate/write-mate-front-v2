@@ -46,7 +46,7 @@ export const EmptyListDiscription = styled.div`
   text-align: center;
 `;
 
-export const WorkCard = styled(Link)`
+export const WorkLinkCardContainer = styled(Link)`
   -webkit-user-drag: none;
   width: 100%;
   border: none;
@@ -62,6 +62,21 @@ export const WorkCard = styled(Link)`
   &:hover {
     outline: 1px solid ${({ theme }) => theme.color.orange400};
   }
+`;
+
+export const WorkButtonCardContainer = styled.div`
+  width: 100%;
+  border: none;
+  display: flex;
+  padding: 8px 8px 12px 8px;
+  flex-direction: column;
+  flex-shrink: 0;
+
+  border-radius: 12px;
+  background: var(--white, #fff);
+  box-shadow: 2px 2px 12px 0px rgba(18, 18, 18, 0.12);
+
+  ${clickable}
 `;
 
 export const WorkButtonImage = styled.div<{
