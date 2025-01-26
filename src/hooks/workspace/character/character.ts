@@ -185,7 +185,9 @@ export function useCharacter(characterId?: string) {
   const onEnterPressAtMiniModal = (
     e: React.KeyboardEvent<HTMLInputElement>
   ) => {
+    if (e.nativeEvent.isComposing) return;
     if (e.key === "Enter") {
+      console.log("onEnterPressAtMiniModal");
       onClickCreateAndAddKeywordToCharacter();
     }
   };
