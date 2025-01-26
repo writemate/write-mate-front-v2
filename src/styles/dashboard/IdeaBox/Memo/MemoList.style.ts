@@ -82,6 +82,7 @@ export const OpenButton = styled(OpenModal)`
 
 export const MemoUpdatedDate = styled.div`
   ${FontTabletRegular14}
+  margin-top: auto;
   width: 100%;
   font-size: 12px;
   text-align: right;

@@ -1,4 +1,7 @@
-import { CharacterItemContext } from "@/hooks/dashboard/character/characterItem";
+import {
+  CharacterItemContext,
+  getName,
+} from "@/hooks/dashboard/character/characterItem";
 import { useContext } from "react";
 import OrangePlusIcon from "@/assets/icons/orangePlus.svg";
 import {
@@ -8,6 +11,7 @@ import {
   CoverImage,
   CoverImageContainer,
 } from "@/styles/workspace/Info.style";
+import { CharacterImage } from "@/styles/workspace/Character.style";
 
 export default function MCharacterImage() {
   const { character, imageInputRef, onClickChangeImage, onChangeImage } =
@@ -15,12 +19,15 @@ export default function MCharacterImage() {
 
   return (
     <CoverImageContainer $isCharacter={true}>
-      <BlurBackground $src={character.ch_image} />
+      <CharacterImage $src={character.ch_image} $heightPx={290} $widthPx={290}>
+        {!character.ch_image && <p>{getName(character)[0]}</p>}
+      </CharacterImage>
+      {/* <BlurBackground $src={character.ch_image} />
       {character.ch_image && <CoverImage src={character.ch_image} />}
       {!character.ch_image && character.ch_name && (
         <p>{character.ch_name[0]}</p>
       )}
-      {!character.ch_image && !character.ch_name && <p>이</p>}
+      {!character.ch_image && !character.ch_name && <p>이</p>} */}
       <ChangeCoverInput
         onChange={onChangeImage}
         type="file"
