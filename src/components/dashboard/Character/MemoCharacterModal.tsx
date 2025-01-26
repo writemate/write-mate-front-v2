@@ -32,7 +32,7 @@ export default function MCharacterModal() {
   } = useContext(CharacterItemContext);
 
   return (
-    <Modal closeModal={closeEditModal} maxWidth="950px" maxHeight="80vh">
+    <Modal closeModal={closeEditModal} maxWidth="1024px" maxHeight="80vh">
       <ModalContentAndFooterContainer>
         <Title>
           <div style={{ display: "flex", flexDirection: "row", width: "100%" }}>

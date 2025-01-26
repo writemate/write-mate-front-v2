@@ -63,7 +63,7 @@ export const ModalContentAndFooterContainer = styled.div`
   ${FontRegular16}
   ${FlexColumnLeftStart}
   color: ${({ theme }) => theme.color.gray900};
-  padding: 30px;
+  padding: 40px;
   max-height: 90vh;
 
   background-color: ${({ theme }) => theme.color.white};
