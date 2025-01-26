@@ -643,3 +643,39 @@ export const AddMemoButtonContainer = styled(Link)`
   position: relative;
   ${Round9999OrangeBackgoundWhiteColor}
 `;
+
+export const ChapterContainer = styled(Link)<{ $isDraggable?: boolean }>`
+  ${FlexRowLeftStart};
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid ${({ theme }) => theme.color.orange400};
+  margin-bottom: 18.18px;
+  padding: 20px 20px 20px
+    ${({ $isDraggable = true }) => ($isDraggable ? "0" : "20px")};
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+
+  ${media.tablet} {
+    padding: 12px 12px 12px
+      ${({ $isDraggable = true }) => ($isDraggable ? "0" : "12px")};
+    margin-bottom: 12px;
+  }
+`;
+
+export const EventContainer = styled(Link)<{ $isDraggable?: boolean }>`
+  ${FlexRowLeftStart};
+  padding: 5px 20px 5px
+    ${({ $isDraggable = true }) => ($isDraggable ? "0" : "20px")};
+  width: 100%;
+  margin-bottom: 12px;
+
+  background: ${({ theme }) => theme.color.gray25};
+  border: 1px solid #d7ddea;
+  border-radius: 8px;
+
+  ${media.tablet} {
+    padding: 12px 12px 12px
+      ${({ $isDraggable = true }) => ($isDraggable ? "0" : "12px")};
+    margin-bottom: 8px;
+  }
+`;

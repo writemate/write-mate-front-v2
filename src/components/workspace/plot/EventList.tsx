@@ -33,6 +33,7 @@ export const EventList = ({ pevent, chapterId }: EventListProps) => {
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
+                      id={"e" + event.id}
                     >
                       <Event {...event} chapterId={chapterId} />
                     </EventContainer>

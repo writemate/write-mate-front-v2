@@ -42,7 +42,7 @@ export default function Chapter({
 
   const { isOpenDeleteModal, onOpenModal, closeModal } = useWarningModal();
   return (
-    <ChapterContainer>
+    <ChapterContainer id={"c" + chapterId}>
       <ChapterDragWrap>
         <DragDrop />
       </ChapterDragWrap>

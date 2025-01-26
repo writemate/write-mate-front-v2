@@ -16,6 +16,17 @@ const usePlot = () => {
     queryFn: getPlotInfo(plot_id),
   });
 
+  useEffect(() => {
+    //plot 로딩 후 주소에 #chapter_id가 있으면 해당 챕터로 이동, #event_id가 있으면 해당 이벤트로 이동
+    const { hash } = window.location;
+    if (hash) {
+      const target = document.querySelector(hash);
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [plot]);
+
   return {
     isLoading,
     plot_name: plot?.plot_name,
