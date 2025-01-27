@@ -19,18 +19,8 @@ import {
   CloseButton,
 } from "@/styles/dashboard/MyPage.style";
 import { useLogin } from "@/stores/useLogin";
-import { userQueryKeys } from "@/utils/APIs/queryKeys";
 export function MyPageModal() {
-  const { closeModal } = useContext(MyPageContext);
-  const { data: user } = useQuery({
-    queryKey: userQueryKeys.profile(),
-    queryFn: getUserInfo,
-  });
-
-  const { data: usage } = useQuery({
-    queryKey: userQueryKeys.usage(),
-    queryFn: getUsage,
-  });
+  const { closeModal, user, usage } = useContext(MyPageContext);
   const logout = useLogin((state) => state.logout);
 
   return (

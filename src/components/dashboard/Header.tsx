@@ -11,12 +11,12 @@ import Profile from "@/assets/dashboard/header/profile.svg";
 import Help from "@/assets/dashboard/header/help.svg";
 import Chat from "@/assets/dashboard/header/chat.svg";
 import Separator from "@/assets/dashboard/header/separator.svg";
-import { MyPageContext, useMyPage } from "@/hooks/dashboard/useMyPage";
+import { MyPageContext } from "@/hooks/dashboard/useMyPage";
 import { MyPageModal } from "./MyPageModal";
+import { useContext } from "react";
 
 export default function Header() {
-  const myPageValue = useMyPage();
-  const { isOpenMyPage, onClickMyPage } = myPageValue;
+  const { isOpenMyPage, onClickMyPage } = useContext(MyPageContext);
 
   return (
     <HeaderContainer>
@@ -44,13 +44,11 @@ export default function Header() {
           <p>문의하기</p>
         </HeaderRightButton>
         <Separator />
-        <MyPageContext.Provider value={myPageValue}>
-          <HearderProfileButton onClick={onClickMyPage}>
-            <Profile />
-            <p>프로필</p>
-          </HearderProfileButton>
-          {isOpenMyPage && <MyPageModal />}
-        </MyPageContext.Provider>
+        <HearderProfileButton onClick={onClickMyPage}>
+          <Profile />
+          <p>프로필</p>
+        </HearderProfileButton>
+        {isOpenMyPage && <MyPageModal />}
       </HeaderRightButtonList>
     </HeaderContainer>
   );
