@@ -58,6 +58,7 @@ export const BlurBackground = styled.div<{ $src: string | null }>`
   background-repeat: no-repeat;
   filter: blur(10px);
 `;
+
 export const CoverImage = styled.img<{ src: string }>`
   width: 100%;
   height: 100%;
@@ -66,6 +67,7 @@ export const CoverImage = styled.img<{ src: string }>`
   object-fit: cover;
   z-index: 1;
 `;
+
 export const ChangeCover = styled.div`
   ${FlexRowCenter}
   display: none;
@@ -107,7 +109,7 @@ export const CoverImageContainer = styled.div<{ $isCharacter?: boolean }>`
   &:hover {
     ${ChangeCover} {
       display: flex;
-      border-radius: 100%;
+      border-radius: ${({ $isCharacter }) => ($isCharacter ? "100%" : "10px")};
     }
   }
 
