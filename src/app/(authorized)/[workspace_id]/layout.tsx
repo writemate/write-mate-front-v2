@@ -33,7 +33,11 @@ export default function WorkspaceLayout({
           <SideBarAndMainContainer>
             {isPlotOpen && <Sidebar type="plot" />}
             {isScriptOpen && <Sidebar type="script" />}
-            <MainContainer $isScriptPage={isScriptPage}>
+            <MainContainer
+              $isLeftOpen={isPlotOpen || isScriptOpen}
+              $isRightOpen={openIdeaBox}
+              $isScriptPage={isScriptPage}
+            >
               {children}
             </MainContainer>
             {openIdeaBox && <IdeaBox toggleIdeaBox={toggleIdeaBox} />}

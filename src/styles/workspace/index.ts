@@ -34,26 +34,33 @@ export const SideBarAndMainContainer = styled.div`
 `;
 export const MainContainer = styled.div<{
   $isScriptPage: boolean;
+  $isLeftOpen: boolean;
+  $isRightOpen: boolean;
 }>`
-  ${FlexColumnLeftStart}
+  ${FlexColumnCenter}
   flex-grow: 1;
   height: 100%;
-  position: relative;
-  padding: ${({ $isScriptPage }) =>
-    $isScriptPage ? "0" : "65px 40px 40px 40px"};
-  margin: 0 auto;
-  max-width: 1024px;
-
-  overflow-y: auto;
-
   width: 100%;
-  max-width: calc(1024px + ${({ $isScriptPage }) =>
-    $isScriptPage ? "0" : "max(28px, calc(50% - 512px))"}) * 2);
-
-  ${media.tablet} {
-    padding: ${({ $isScriptPage }) =>
-      $isScriptPage ? "0" : "20px 16px 40px 16px"};
-  }
+  position: relative;
+  padding-top: ${({ $isScriptPage }) => ($isScriptPage ? "0" : "65px")};
+  padding-left: ${({ $isScriptPage, $isLeftOpen }) =>
+    $isScriptPage
+      ? "0"
+      : `max(28px, ${
+          $isLeftOpen
+            ? `calc((100% - 1012px) / 2 - 258px)`
+            : "calc((100% - 1012px) / 2)"
+        })`};
+  padding-right: ${({ $isScriptPage, $isRightOpen }) =>
+    $isScriptPage
+      ? "0"
+      : `max(28px, ${
+          $isRightOpen
+            ? `calc((100% - 1012px) / 2 - 309px)`
+            : "calc((100% - 1012px) / 2)"
+        })`};
+  padding-bottom: ${({ $isScriptPage }) => ($isScriptPage ? "0" : "60px")};
+  overflow-y: auto;
 `;
 
 export const Title = styled.div`
