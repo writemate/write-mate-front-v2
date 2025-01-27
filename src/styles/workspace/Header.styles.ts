@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { clickable, FlexRowCenter, FlexRowLeftStart } from "..";
+import { Button, clickable, FlexRowCenter, FlexRowLeftStart } from "..";
 import Guide from "@/assets/icons/guide.svg";
 import IdeaBox from "@/assets/icons/ideabox.svg";
 import Download from "@/assets/icons/download.svg";
@@ -32,7 +32,9 @@ export const HeaderTitle = styled.div`
 
   display: flex;
   flex-direction: row;
-  gap: 8px;
+  gap: 4px;
+
+  flex-shrink: 0;
 
   svg {
     flex-shrink: 0;
@@ -43,9 +45,20 @@ export const HeaderTitle = styled.div`
     font-size: 16px;
     margin: 0 8px 0 0;
   }
+
+  div {
+    ${FlexRowCenter};
+    gap: 4px;
+  }
 `;
 
 export const HeaderLink = styled(Link)`
+  ${GrayTextButton}
+  ${FontSemibold16}
+  color: ${({ theme }) => theme.color.gray500};
+`;
+
+export const HeaderButton = styled.button`
   ${GrayTextButton}
   ${FontSemibold16}
   color: ${({ theme }) => theme.color.gray500};

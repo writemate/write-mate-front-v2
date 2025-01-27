@@ -1,5 +1,6 @@
 "use client";
 import { ideaCategoryContext } from "@/hooks/dashboard/ideaCategoy";
+import { MyPageContext } from "@/hooks/dashboard/useMyPage";
 import { WorkCategoryContext } from "@/hooks/dashboard/work/workCategory";
 import {
   Title,
@@ -15,9 +16,11 @@ export function WorkStudioTitleAndNavigationBar() {
   const { onCategoryOngoingClick, onCategoryCompletedClick, isActiveCategory } =
     useContext(WorkCategoryContext);
 
+  const { user } = useContext(MyPageContext);
+
   return (
     <TitleAndNavigationBar>
-      <Title>대시보드</Title>
+      <Title>{user?.user_name} 작가님의 작업공간 </Title>
       <NavigationBar>
         <NavigationButton
           onClick={onCategoryOngoingClick}
@@ -39,6 +42,7 @@ export function WorkStudioTitleAndNavigationBar() {
 export function IdeaBoxTitleAndNavigationBar() {
   const { onClickMemo, onClickCharacter, isActiveCategory } =
     useContext(ideaCategoryContext);
+  const { user } = useContext(MyPageContext);
 
   return (
     <TitleAndNavigationBar>
@@ -64,6 +68,7 @@ export function IdeaBoxTitleAndNavigationBar() {
 export function TrashTitleAndNavigationBar() {
   const { onCategoryTrashClick, isActiveCategory } =
     useContext(WorkCategoryContext);
+  const { user } = useContext(MyPageContext);
 
   return (
     <TitleAndNavigationBar>
