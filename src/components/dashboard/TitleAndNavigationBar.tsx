@@ -20,7 +20,8 @@ export function WorkStudioTitleAndNavigationBar() {
 
   return (
     <TitleAndNavigationBar>
-      <Title>{user?.user_name} 작가님의 작업공간 </Title>
+      <Title>{user?.user_name} 작가님의 작품집</Title>
+
       <NavigationBar>
         <NavigationButton
           onClick={onCategoryOngoingClick}
@@ -46,7 +47,7 @@ export function IdeaBoxTitleAndNavigationBar() {
 
   return (
     <TitleAndNavigationBar>
-      <Title>아이디어 보관함</Title>
+      <Title>{user?.user_name} 작가님의 아이디어</Title>
       <NavigationBar>
         <NavigationButton
           onClick={onClickMemo}
