@@ -21,6 +21,7 @@ export function WorkStudioTitleAndNavigationBar() {
   return (
     <TitleAndNavigationBar>
       <Title>{user?.user_name} 작가님의 작품집</Title>
+
       <NavigationBar>
         <NavigationButton
           onClick={onCategoryOngoingClick}

@@ -110,6 +110,7 @@ export const CoverImageContainer = styled.div<{ $isCharacter?: boolean }>`
     ${ChangeCover} {
       display: flex;
       border-radius: ${({ $isCharacter }) => ($isCharacter ? "100%" : "10px")};
+
     }
   }
 
