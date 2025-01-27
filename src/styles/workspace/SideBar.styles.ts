@@ -35,7 +35,7 @@ export const SidebarContainer = styled.div`
 `;
 
 export const SidebarTitleContainer = styled.div`
-  ${FlexRowSpaceBetween};
+  ${FlexRowLeftStart};
   width: 100%;
   padding: 12px 5px 12px 16px;
   svg {
@@ -62,6 +62,7 @@ export const SidebarTitle = styled.div`
 
 export const SidebarIconContainer = styled.div`
   ${FlexRowCenter};
+  margin-left: auto;
   & > * {
     ${clickable}
     &>rect:nth-child(1) {

@@ -29,6 +29,25 @@ export const ChangeCategory2Completed = () => {
   );
 };
 
+export const RecoverCategory2Ongoing = () => {
+  const { onClickChangeCategory } = useContext(KebabContext);
+
+  return (
+    <KebabItem onClick={onClickChangeCategory("ongoing")}>
+      집필중으로 복구
+    </KebabItem>
+  );
+};
+export const RecoverCategory2Completed = () => {
+  const { onClickChangeCategory } = useContext(KebabContext);
+
+  return (
+    <KebabItem onClick={onClickChangeCategory("completed")}>
+      완결로 복구
+    </KebabItem>
+  );
+};
+
 export const ChangeCover = () => {
   const { imageInputRef, onClickChangeCover, onChangeCoverImage } =
     useContext(KebabContext);
@@ -61,15 +80,15 @@ export const ChangeCategory2Trash = () => {
   return (
     <>
       <KebabItem $isMajor={true} $isLast={true} onClick={onClickOpenModal}>
-        휴지통으로 이동
+        삭제
       </KebabItem>
       {isOpenDeleteModal && (
         <WarningModal
           closeModal={closeModal}
           onClickConfirm={onClickChangeCategory("trash")}
           onClickCancel={onClickCancel}
-          message={"작품을 휴지통으로 이동하시겠습니까?"}
-          ConfirmButtonName={"이동"}
+          message={"작품을 삭제하시겠습니까? \n작품은 휴지통으로 이동합니다."}
+          ConfirmButtonName={"확인"}
         />
       )}
     </>

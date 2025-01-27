@@ -1,5 +1,5 @@
 "use client";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useKebab } from "@/hooks/workspace/sidebar/useKebab";
 import { TFileWithOptions } from "@/utils/APIs/types";
 import FileIcon from "@/assets/workspace/sideBar/file.svg";
@@ -18,6 +18,7 @@ import {
 } from "@/styles/workspace/SideBar.styles";
 import { useDrag } from "@/hooks/workspace/sidebar/useDrag";
 import { useParams } from "next/navigation";
+import { WarningModal } from "@/components/dashboard/WarningModal";
 
 export default function File({
   file,
@@ -37,6 +38,7 @@ export default function File({
     setMainPlot,
     isSelectedFolderExist,
     onClickFile,
+    duplicateFile,
   } = useContext(SidebarContext);
   const { isKebabOpen, openKebab, closeKebab } = useKebab();
   const {
@@ -51,6 +53,13 @@ export default function File({
     plot_id?: string;
     script_id?: string;
   }>();
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const openDeleteModal = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    e.preventDefault();
+    setDeleteModalOpen(true);
+  };
+  const closeDeleteModal = () => setDeleteModalOpen(false);
   const isSelect = (() => {
     if (file.isEditing) return true;
     if (isSelectedFolderExist) return false;
@@ -95,14 +104,23 @@ export default function File({
                 메인플롯으로 지정
               </KebabItem>
             )}
-            <KebabItem>복제하기</KebabItem>
+            <KebabItem onClick={duplicateFile(file)}>복제하기</KebabItem>
             {!file.isPinned && (
-              <KebabItem onClick={deleteFolderOrFile(file)}>삭제하기</KebabItem>
+              <KebabItem onClick={openDeleteModal}>삭제하기</KebabItem>
             )}
           </KebabContainer>
         )}
       </KebabWrapper>
       <BottomDropLine $nestedLevel={nestedLevel} $active={isDragOverAfter} />
+      {deleteModalOpen && (
+        <WarningModal
+          closeModal={closeDeleteModal}
+          onClickConfirm={deleteFolderOrFile(file)}
+          onClickCancel={closeDeleteModal}
+          message="파일을 삭제하시겠습니까?"
+          ConfirmButtonName="삭제"
+        />
+      )}
     </FileContainer>
   );
 }

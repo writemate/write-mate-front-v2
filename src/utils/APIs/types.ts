@@ -129,6 +129,11 @@ export type TPlot = {
   chapter_list: TChapter[];
 };
 
+export type TSimplePlot = {
+  id: string;
+  plot_name: string;
+};
+
 export type TChapter = {
   id: string;
   chapter_name: string;
@@ -149,6 +154,11 @@ export type TScript = {
   script_name: string;
   is_pinned: boolean;
   content: string;
+};
+
+export type TSimpleScript = {
+  id: string;
+  script_name: string;
 };
 
 /**

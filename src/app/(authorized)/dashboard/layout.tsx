@@ -15,6 +15,7 @@ import Footer from "@/assets/dashboard/footer.svg";
 import { useLogin } from "@/stores/useLogin";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useState } from "react";
+import { MyPageContext, useMyPage } from "@/hooks/dashboard/useMyPage";
 
 export default function WorkspaceLayout({
   children,
@@ -22,6 +23,8 @@ export default function WorkspaceLayout({
   children: React.ReactNode;
 }) {
   const logout = useLogin((state) => state.logout);
+  const myPageValue = useMyPage();
+
   const [isTabletHeaderMenuOpen, setIsHambugerMenuOpen] = useState(false);
   const onClickHamburgerMenu = () => {
     setIsHambugerMenuOpen(!isTabletHeaderMenuOpen);
@@ -30,22 +33,24 @@ export default function WorkspaceLayout({
 
   return (
     <DashboardContainer>
-      <SideTabAndFooterContainer>
-        <SideTab />
-        <FooterContainer onClick={logout}>
-          <Footer /> 로그아웃
-        </FooterContainer>
-        <TabletHeaderButton onClick={onClickHamburgerMenu} />
-      </SideTabAndFooterContainer>
-      {isTabletHeaderMenuOpen && (
-        <TabletHeaderMenuContainer>
-          <Header />
-        </TabletHeaderMenuContainer>
-      )}
-      <HeaderAndMainContainer>
-        {!isTabletHeaderMenuOpen && <Header />}
-        {children}
-      </HeaderAndMainContainer>
+      <MyPageContext.Provider value={myPageValue}>
+        <SideTabAndFooterContainer>
+          <SideTab />
+          <FooterContainer onClick={logout}>
+            <Footer /> 로그아웃
+          </FooterContainer>
+          <TabletHeaderButton onClick={onClickHamburgerMenu} />
+        </SideTabAndFooterContainer>
+        {isTabletHeaderMenuOpen && (
+          <TabletHeaderMenuContainer>
+            <Header />
+          </TabletHeaderMenuContainer>
+        )}
+        <HeaderAndMainContainer>
+          {!isTabletHeaderMenuOpen && <Header />}
+          {children}
+        </HeaderAndMainContainer>
+      </MyPageContext.Provider>
       <DevTool />
     </DashboardContainer>
   );

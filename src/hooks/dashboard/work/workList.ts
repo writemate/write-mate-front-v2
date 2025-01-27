@@ -2,7 +2,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { workspaceCategory } from "@/utils/APIs/types";
 import { dashboardQueryKeys } from "@/utils/APIs/queryKeys";
 import { addWorkStudio, getWorkStudio } from "@/utils/APIs/dashboard";
-import { notifySuccess } from "@/utils/showToast";
+import { notifySuccess, notifyWarning } from "@/utils/showToast";
 import { createContext } from "react";
 import { useOnClickUpdate } from "@/hooks/common/useOnClickUpdate";
 
@@ -31,11 +31,16 @@ export function useWorkList(workCategory: keyof typeof workspaceCategory) {
     },
   })();
 
+  const onClickWorkInTrash = () => {
+    notifyWarning("사용을 원하시면 작품을 복구해주세요.");
+  };
+
   return {
     workList,
     error,
     isLoading,
     onClickAddWork,
+    onClickWorkInTrash,
   };
 }
 

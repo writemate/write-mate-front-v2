@@ -15,6 +15,8 @@ import {
   deletePlot,
   setMainScript,
   deleteScript,
+  duplicatePlot,
+  duplicateScript,
 } from "@/utils/APIs/workspace";
 import { useParams, useRouter } from "next/navigation";
 import { TFileWithOptions, TFolderWithOptions } from "@/utils/APIs/types";
@@ -26,7 +28,9 @@ import {
   recursiveFileUnpin,
   recursiveFindParent,
   isExistSelect,
+  openCurrentFolder,
 } from "@/utils/controlFolders";
+import { useOnClickUpdate } from "@/hooks/common/useOnClickUpdate";
 
 const getAPIFunctionsAndQueryKey = (type: "plot" | "script") => {
   if (type === "plot")
@@ -38,7 +42,9 @@ const getAPIFunctionsAndQueryKey = (type: "plot" | "script") => {
       setMain: setMainPlot,
       deleteItem: deletePlot,
       queryKey: workspaceQueryKeys.plotSidebar,
-    };
+      duplicateItem: duplicatePlot,
+      param_id: "plot_id",
+    } as const;
   return {
     getFolderList: getScriptFolderList,
     create: createScript,
@@ -47,7 +53,9 @@ const getAPIFunctionsAndQueryKey = (type: "plot" | "script") => {
     setMain: setMainScript,
     deleteItem: deleteScript,
     queryKey: workspaceQueryKeys.scriptSidebar,
-  };
+    duplicateItem: duplicateScript,
+    param_id: "script_id",
+  } as const;
 };
 
 export default function usePlotSidebar(type: "plot" | "script") {
@@ -60,9 +68,12 @@ export default function usePlotSidebar(type: "plot" | "script") {
     updateName,
     setMain,
     deleteItem,
+    duplicateItem,
+    param_id,
   } = getAPIFunctionsAndQueryKey(type);
-  const { workspace_id } = useParams<{
+  const { workspace_id, [param_id]: id } = useParams<{
     workspace_id: string;
+    script_id?: string;
     plot_id?: string;
   }>();
   const [rootFolder, setRootFolder] = useState<TFolderWithOptions | null>(null);
@@ -91,6 +102,9 @@ export default function usePlotSidebar(type: "plot" | "script") {
   });
   const { mutate: mutateSetMain } = useMutation({ mutationFn: setMain });
   const { mutate: mutateDelete } = useMutation({ mutationFn: deleteItem });
+  const { mutateAsync: mutateDuplicateAsync } = useMutation({
+    mutationFn: duplicateItem,
+  });
 
   const isSelectedFolderExist =
     rootFolder !== null &&
@@ -99,6 +113,7 @@ export default function usePlotSidebar(type: "plot" | "script") {
   useEffect(() => {
     if (data) {
       const rootFolder = recursiveFolderAddOptions(data);
+      if (id) openCurrentFolder(rootFolder, id);
       setRootFolder(rootFolder);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -178,7 +193,7 @@ export default function usePlotSidebar(type: "plot" | "script") {
     };
     selectedFolder.files.push(newFile);
     await mutateFolderAsync(rootFolder);
-    await mutateName({ id: newFile.id, name: newFile.file_name });
+    mutateName({ id: newFile.id, name: newFile.file_name });
     setRootFolder({ ...rootFolder });
     setIsCreatingFile(false);
     if (type === "plot") {
@@ -187,10 +202,37 @@ export default function usePlotSidebar(type: "plot" | "script") {
     if (type === "script") {
       router.push(`/${workspace_id}/script/${newFile.id}`);
     }
-    queryClient.invalidateQueries({
-      queryKey: workspaceQueryKeys.plot(workspace_id, newFile.id),
-    });
   };
+
+  const [isCreatingDuplicate, setIsCreatingDuplicate] = useState(false);
+  const duplicateFile =
+    (file: TFileWithOptions) => async (e: React.MouseEvent) => {
+      e.stopPropagation();
+      e.preventDefault();
+      if (rootFolder === null) return;
+      if (isCreatingDuplicate) return;
+      setIsCreatingDuplicate(true);
+      const parentFolder = recursiveFindParent(rootFolder, file);
+      if (parentFolder === null) return;
+      const newItemFromServer = await mutateDuplicateAsync(file.id);
+      const newItem = {
+        id: newItemFromServer.id,
+        isFolder: file.isFolder,
+        file_name: newItemFromServer.name,
+        isEditing: false,
+        isPinned: false,
+      };
+      parentFolder.files.push(newItem);
+      await mutateFolderAsync(rootFolder);
+      setRootFolder({ ...rootFolder });
+      setIsCreatingDuplicate(false);
+      if (type === "plot") {
+        router.push(`/${workspace_id}/plot/${newItemFromServer.id}`);
+      }
+      if (type === "script") {
+        router.push(`/${workspace_id}/script/${newItemFromServer.id}`);
+      }
+    };
 
   const applyChangeName = (
     folderOrfile: TFolderWithOptions | TFileWithOptions,
@@ -236,15 +278,7 @@ export default function usePlotSidebar(type: "plot" | "script") {
   const deleteFolderOrFile =
     (folderOrfile: TFolderWithOptions | TFileWithOptions) =>
     (e: React.MouseEvent) => {
-      e.stopPropagation();
-      e.preventDefault();
       if (rootFolder === null) return;
-      if (
-        confirm(
-          `정말 ${folderOrfile.isFolder ? `폴더 "${folderOrfile.folder_name}"` : `파일 "${folderOrfile.file_name}"`}을 삭제하시겠습니까?`
-        ) === false
-      )
-        return;
       const parent = recursiveFindParent(rootFolder, folderOrfile);
       if (parent === null) return;
       const index = parent.files.indexOf(folderOrfile);
@@ -337,5 +371,8 @@ export default function usePlotSidebar(type: "plot" | "script") {
     changeOrderAfterItem,
     changeOrderBeforeItem,
     changeOrderLastOfFolder,
+    duplicateFile,
+    isCreatingDuplicate,
+    isCreatingFile,
   };
 }

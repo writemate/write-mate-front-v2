@@ -11,6 +11,8 @@ import {
   ChangeCategory2Trash,
   ChangeCategory2Completed,
   DeletePermanently,
+  RecoverCategory2Completed,
+  RecoverCategory2Ongoing,
 } from "./KebabItem";
 
 export const Kebab = ({
@@ -57,8 +59,8 @@ export const Kebab = ({
             )}
             {workCategory === "trash" && (
               <>
-                <ChangeCategory2Ongoing />
-                <ChangeCategory2Completed />
+                <RecoverCategory2Ongoing />
+                <RecoverCategory2Completed />
                 <DeletePermanently />
               </>
             )}
