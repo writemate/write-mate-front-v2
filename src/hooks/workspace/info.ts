@@ -34,6 +34,13 @@ export function useInfo() {
       }
     },
   });
+
+  useEffect(() => {
+    if ((error as any)?.response?.status === 403) {
+      router.push("/unauthorized");
+    }
+  }, [error, router]);
+
   const imageInputRef = useRef<HTMLInputElement>(null);
 
   const onChangeTitle = useInputLiveUpdate(
