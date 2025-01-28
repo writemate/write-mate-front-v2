@@ -2,7 +2,7 @@ import { KebabContext } from "@/hooks/dashboard/work/kebab";
 import { KebabItem } from "@/styles/dashboard/Work/Kebab.style";
 import { useContext } from "react";
 import { ChangeCoverInput } from "@/styles/dashboard/Work/WorkList.style";
-import { WarningModal } from "../WarningModal";
+import { WarningModal } from "../../WarningModal";
 
 export const ChangeTitle = () => {
   const { onClickChangeTitle } = useContext(KebabContext);
@@ -87,7 +87,7 @@ export const ChangeCategory2Trash = () => {
           closeModal={closeModal}
           onClickConfirm={onClickChangeCategory("trash")}
           onClickCancel={onClickCancel}
-          message={"작품을 삭제하시겠습니까? \n작품은 휴지통으로 이동합니다."}
+          messageKey="workDelete"
           ConfirmButtonName={"확인"}
         />
       )}
@@ -115,7 +115,7 @@ export const DeletePermanently = () => {
           closeModal={closeModal}
           onClickConfirm={onDeleteWork()}
           onClickCancel={onClickCancel}
-          message={"작품을 영구 삭제하시겠습니까?"}
+          messageKey="trashWorkDelete"
           ConfirmButtonName={"삭제"}
         />
       )}

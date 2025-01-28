@@ -15,7 +15,7 @@ import DragDrop from "@/assets/workspace/plot/dragdrop.svg";
 import ToggleFold from "@/assets/workspace/plot/toggleFold.svg";
 import useChapter from "@/hooks/workspace/plot/useChapter";
 import { TChapter } from "@/utils/APIs/types";
-import { WarningModal } from "@/components/dashboard/WarningModal";
+import { WarningModal } from "@/components/WarningModal";
 import { useWarningModal } from "@/hooks/common/useWarningModal";
 import { copy } from "@/utils/copy";
 import { useCallback, useRef } from "react";
@@ -69,9 +69,7 @@ export default function Chapter({
               closeModal={closeModal}
               onClickConfirm={onChapterDeleteClick}
               onClickCancel={closeModal}
-              message={
-                "챕터를 삭제하시겠습니까? \n 챕터 내의 이벤트도 함께 삭제됩니다."
-              }
+              messageKey="chapterDelete"
               ConfirmButtonName={"삭제"}
             />
           )}

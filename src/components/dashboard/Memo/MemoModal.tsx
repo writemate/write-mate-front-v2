@@ -8,7 +8,7 @@ import {
   TextArea,
 } from "@/styles/dashboard/IdeaBox/Modal.style";
 import { MemoItemContext } from "@/hooks/dashboard/memo/memoItem";
-import { WarningModal } from "../WarningModal";
+import { WarningModal } from "../../WarningModal";
 import { CloseButton, DeleteButton } from "@/styles/Button";
 import { Title } from "@/styles/workspace";
 
@@ -42,7 +42,7 @@ export function EditModal() {
                 closeModal={closeDeleteModal}
                 onClickConfirm={onDeleteMemo()}
                 onClickCancel={closeDeleteModal}
-                message="정말로 삭제하시겠습니까?"
+                messageKey="memoDelete"
                 ConfirmButtonName="삭제"
               />
             )}
