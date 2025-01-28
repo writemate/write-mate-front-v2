@@ -13,7 +13,7 @@ import {
 import { TPlotEvent } from "@/utils/APIs/types";
 import useEvent from "@/hooks/workspace/plot/useEvent";
 import { useWarningModal } from "@/hooks/common/useWarningModal";
-import { WarningModal } from "@/components/dashboard/WarningModal";
+import { WarningModal } from "@/components/WarningModal";
 import CharacterModal from "../character/CharacterModal";
 import { IconButton } from "@/styles/workspace/plot/Chapter.styles";
 import CopyIcon from "@/assets/workspace/plot/copy.svg";
@@ -96,7 +96,7 @@ export default function Event({
                 closeModal={closeModal}
                 onClickConfirm={onEventDeleteClick}
                 onClickCancel={closeModal}
-                message={"사건을 삭제하시겠습니까?"}
+                messageKey="eventDelete"
                 ConfirmButtonName={"삭제"}
               />
             )}

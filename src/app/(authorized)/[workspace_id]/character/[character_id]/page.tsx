@@ -12,7 +12,7 @@ import {
 import { Title, Subtitle } from "@/styles/workspace";
 import { useWarningModal } from "@/hooks/common/useWarningModal";
 import { DeleteButton } from "@/styles/Button";
-import { WarningModal } from "@/components/dashboard/WarningModal";
+import { WarningModal } from "@/components/WarningModal";
 
 export default function Character() {
   const value = useCharacter();
@@ -49,7 +49,7 @@ export default function Character() {
               closeModal={closeModal}
               onClickConfirm={onClickDeleteCharacter}
               onClickCancel={closeModal}
-              message={"인물를 삭제하시겠습니까?"}
+              messageKey={"characterDelete"}
               ConfirmButtonName={"삭제"}
             />
           )}

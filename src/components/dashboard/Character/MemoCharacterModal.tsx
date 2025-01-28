@@ -14,7 +14,7 @@ import {
   CoverContainer,
   CoverContentsContainer,
 } from "@/styles/workspace/Info.style";
-import { WarningModal } from "../WarningModal";
+import { WarningModal } from "../../WarningModal";
 import { CloseButton, DeleteButton } from "@/styles/Button";
 import { Subtitle, Title } from "@/styles/workspace";
 
@@ -48,7 +48,7 @@ export default function MCharacterModal() {
                 closeModal={closeDeleteModal}
                 onClickConfirm={onDeleteMCharacter}
                 onClickCancel={closeDeleteModal}
-                message="정말로 삭제하시겠습니까?"
+                messageKey="memoCharacterDelete"
                 ConfirmButtonName="삭제"
               />
             )}

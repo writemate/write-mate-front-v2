@@ -18,7 +18,7 @@ import {
 } from "@/styles/workspace/SideBar.styles";
 import { useDrag } from "@/hooks/workspace/sidebar/useDrag";
 import { useParams } from "next/navigation";
-import { WarningModal } from "@/components/dashboard/WarningModal";
+import { WarningModal } from "@/components/WarningModal";
 
 export default function File({
   file,
@@ -117,7 +117,7 @@ export default function File({
           closeModal={closeDeleteModal}
           onClickConfirm={deleteFolderOrFile(file)}
           onClickCancel={closeDeleteModal}
-          message="파일을 삭제하시겠습니까?"
+          messageKey="fileDelete"
           ConfirmButtonName="삭제"
         />
       )}
