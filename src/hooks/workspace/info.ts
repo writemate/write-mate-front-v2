@@ -23,16 +23,7 @@ export function useInfo() {
   const { workspace_id } = useParams<{ workspace_id: string }>();
   const { data, error, isLoading } = useQuery({
     queryKey: workspaceQueryKeys.info(workspace_id),
-    queryFn: async () => {
-      try {
-        return await getInfo(workspace_id);
-      } catch (error: any) {
-        if (error.response?.status === 403) {
-          router.push("/unauthorized");
-        }
-        throw error;
-      }
-    },
+    queryFn: getInfo(workspace_id),
   });
 
   useEffect(() => {
