@@ -10,6 +10,7 @@ import {
 import { GtagForClick } from "@/utils/GtagForClick";
 import Image from "next/image";
 import Link from "next/link";
+import { media } from "../media";
 
 export const TopTitle = styled.h1<{ $color?: boolean }>`
   user-select: none;
@@ -22,6 +23,12 @@ export const TopTitle = styled.h1<{ $color?: boolean }>`
     !$color
       ? "color: black;"
       : `color: transparent; background: linear-gradient(90deg, #d65554, #ff7d7e); -webkit-background-clip: text; background-clip: text;`}
+
+  ${media.tablet} {
+    font-size: 3rem;
+    font-weight: 600;
+    line-height: 3.5rem;
+  }
 `;
 
 export const SubTitle = styled.p`
@@ -30,6 +37,10 @@ export const SubTitle = styled.p`
   text-align: center;
   margin-top: 1.5rem;
   width: 100%;
+  word-break: keep-all;
+  ${media.tablet} {
+    margin-top: 1rem;
+  }
 `;
 
 export const LoginButton = styled.button`
@@ -78,6 +89,10 @@ export const FeatureContainer = styled.div<{ $background?: boolean }>`
       $background ? "rgb(226 232 240 / 0.4)" : "white"};
     z-index: -1;
   }
+  ${media.tablet} {
+    ${FlexColumnCenter};
+    gap: 2rem;
+  }
 `;
 
 export const FeatureTitle = styled.h2<{ $color?: boolean }>`
@@ -104,6 +119,18 @@ export const ColorableText = styled.span<{
         font-weight: 500;
     `
       : ""}
+
+  ${media.tablet} {
+    font-size: 2rem;
+    font-weight: 600;
+    ${({ $isBig }) =>
+      $isBig
+        ? `
+        font-size: 2rem;
+        font-weight: 600;
+    `
+        : ""}
+  }
 `;
 
 export const BoldableText = styled.span<{ $bold?: boolean }>`
@@ -113,6 +140,10 @@ export const BoldableText = styled.span<{ $bold?: boolean }>`
 export const FeatureImage = styled(Image)`
   max-width: 50%;
   height: auto;
+
+  ${media.tablet} {
+    max-width: 100%;
+  }
 `;
 
 export const FeatrueInfoContainer = styled.div`
@@ -120,6 +151,10 @@ export const FeatrueInfoContainer = styled.div`
   gap: 1rem;
   max-width: 50%;
   word-break: keep-all;
+
+  ${media.tablet} {
+    max-width: 100%;
+  }
 `;
 
 export const FeatureDescription = styled.p`
@@ -192,10 +227,6 @@ export const CounterContainer = styled.div`
   > div {
     ${FlexColumnCenter};
     gap: 0.5rem;
-  }
-  @media (max-width: 768px) {
-    ${FlexColumnCenter};
-    gap: 2rem;
   }
 `;
 
