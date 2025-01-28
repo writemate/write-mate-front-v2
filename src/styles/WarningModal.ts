@@ -6,17 +6,16 @@ import Danger from "@/assets/icons/danger.svg";
 import { FontSemibold16 } from "./Font";
 
 export const ModalContainer = styled.div`
+  position: relative;
   ${FlexColumnCenter}
   ${FontSemibold16}
-  padding: 16px;
-  padding-top: 48px;
+  padding: calc(12px + 53px) 12px 12px 12px;
 
   border-radius: 12px;
   background: ${({ theme }) => theme.color.white};
   box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.12);
   justify-content: center;
   align-items: center;
-  gap: 8px;
 
   p {
     color: ${({ theme }) => theme.color.black};

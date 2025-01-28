@@ -3,11 +3,9 @@
 import Modal from "@/components/Modal";
 import {
   ButtonContainer,
-  DangerIcon,
   ModalButton,
   ModalContainer,
 } from "@/styles/WarningModal";
-import { event } from "@/utils/gtag";
 
 export function WarningModal({
   closeModal,
@@ -27,7 +25,6 @@ export function WarningModal({
   return (
     <Modal closeModal={closeModal} maxWidth="450px">
       <ModalContainer>
-        <DangerIcon />
         <p>{message}</p>
         <ButtonContainer>
           <ModalButton $isDanger={true} onClick={onClickConfirm}>
@@ -43,23 +40,23 @@ export function WarningModal({
 }
 
 export const WARNING_MESSAGES = {
-  characterDelete: "인물를 삭제하시겠습니까?",
-  characteristicDelete: "특징을 삭제하시겠습니까?",
-  memoCharacterDelete: "인물 메모를 삭제하시겠습니까?",
-  memoDelete: "메모를 삭제하시겠습니까?",
-  workDelete: "작품을 삭제하시겠습니까? \n작품은 휴지통으로 이동합니다.",
-  trashWorkDelete: "작품을 영구 삭제하시겠습니까?",
-  fileDelete: "파일을 삭제하시겠습니까?",
+  characterDelete: "인물을 삭제하시겠습니까?\n삭제된 인물은 복구가 어렵습니다.",
+  characteristicDelete:
+    "특징을 삭제하시겠습니까?\n삭제된 특징은 복구가 어렵습니다.",
+  memoCharacterDelete:
+    "인물 메모를 삭제하시겠습니까?\n삭제된 메모는 복구가 어렵습니다.",
+  memoDelete: "메모를 삭제하시겠습니까?\n삭제된 메모는 복구가 어렵습니다.",
+  workDelete: "작품을 삭제하시겠습니까?\n작품은 휴지통으로 이동합니다.",
+  trashWorkDelete:
+    "작품을 영구 삭제하시겠습니까?\n영구 삭제된 작품은 복구가 어렵습니다.",
+  fileDelete: "파일을 삭제하시겠습니까?\n삭제된 파일은 복구가 어렵습니다.",
   folderDelete:
-    "폴더를 삭제하시겠습니까? \n폴더 내 모든 파일이 함께 삭제됩니다.",
-  keywordDelete: "키워드를 삭제하시겠습니까?",
+    "폴더를 삭제하시겠습니까?\n폴더 내 모든 파일이 함께 삭제되며 복구가 어렵습니다.",
+  keywordDelete:
+    "키워드를 삭제하시겠습니까?\n삭제된 키워드는 복구가 어렵습니다.",
   chapterDelete:
-    "챕터를 삭제하시겠습니까? \n 챕터 내의 이벤트도 함께 삭제됩니다.",
-  eventDelete: "이벤트를 삭제하시겠습니까?",
+    "챕터를 삭제하시겠습니까?\n챕터 내의 이벤트도 함께 삭제되며 복구가 어렵습니다.",
+  eventDelete: "이벤트를 삭제하시겠습니까?\n삭제된 이벤트는 복구가 어렵습니다.",
 } as const;
 
 export type WarningMessageKey = keyof typeof WARNING_MESSAGES;
-
-interface WarningProps {
-  messageKey: WarningMessageKey;
-}

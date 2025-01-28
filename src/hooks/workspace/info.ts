@@ -10,18 +10,29 @@ import {
   updateTitle,
   updateGrade,
 } from "@/utils/APIs/workspace";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { createContext, useEffect, useRef, useState } from "react";
 import { useInputLiveUpdate } from "../common/useInputLiveUpdate";
 import { useOnClickUpdate } from "../common/useOnClickUpdate";
 import { notifySuccess } from "@/utils/showToast";
 
 export function useInfo() {
+  const router = useRouter();
+
   const queryClient = useQueryClient();
   const { workspace_id } = useParams<{ workspace_id: string }>();
   const { data, error, isLoading } = useQuery({
     queryKey: workspaceQueryKeys.info(workspace_id),
-    queryFn: getInfo(workspace_id),
+    queryFn: async () => {
+      try {
+        return await getInfo(workspace_id);
+      } catch (error: any) {
+        if (error.response?.status === 403) {
+          router.push("/unauthorized");
+        }
+        throw error;
+      }
+    },
   });
   const imageInputRef = useRef<HTMLInputElement>(null);
 
