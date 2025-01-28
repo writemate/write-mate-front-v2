@@ -1,6 +1,9 @@
 "use client";
 import { createContext, useState } from "react";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import { workspaceQueryKeys } from "@/utils/APIs/queryKeys";
+import { getInfo } from "@/utils/APIs/workspace";
 
 enum SidebarType {
   plot,
@@ -40,8 +43,16 @@ export const useWorkspaceLayout = () => {
   const isScriptActive = getActive("script", isScriptOpen);
   const isCharacterActive = getActive("character", false);
   const isScriptPage = pageOn("script");
+  const { workspace_id } = useParams<{ workspace_id: string }>();
+  const { data, error, isLoading } = useQuery({
+    queryKey: workspaceQueryKeys.info(workspace_id),
+    queryFn: getInfo(workspace_id),
+  });
 
   return {
+    data,
+    error,
+    isLoading,
     togglePlot,
     toggleScript,
     isPlotOpen,
