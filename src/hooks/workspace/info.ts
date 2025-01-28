@@ -17,22 +17,11 @@ import { useOnClickUpdate } from "../common/useOnClickUpdate";
 import { notifySuccess } from "@/utils/showToast";
 
 export function useInfo() {
-  const router = useRouter();
-
   const queryClient = useQueryClient();
   const { workspace_id } = useParams<{ workspace_id: string }>();
   const { data, error, isLoading } = useQuery({
     queryKey: workspaceQueryKeys.info(workspace_id),
-    queryFn: async () => {
-      try {
-        return await getInfo(workspace_id);
-      } catch (error: any) {
-        if (error.response?.status === 403) {
-          router.push("/unauthorized");
-        }
-        throw error;
-      }
-    },
+    queryFn: getInfo(workspace_id),
   });
 
   const imageInputRef = useRef<HTMLInputElement>(null);
