@@ -1,6 +1,6 @@
 "use client";
 import { useContext } from "react";
-import { WarningModal } from "../WarningModal";
+import { WarningModal } from "../../WarningModal";
 import { CharacterItemContext } from "@/hooks/dashboard/character/characterItem";
 import {
   CharacteristicContainer,
@@ -52,7 +52,7 @@ export default function Characterisitc() {
                     closeModal={closeDeleteModal}
                     onClickConfirm={onDeleteCharacteristic(i)}
                     onClickCancel={closeDeleteModal}
-                    message="정말로 삭제하시겠습니까?"
+                    messageKey="characteristicDelete"
                     ConfirmButtonName="삭제"
                   />
                 )}
