@@ -13,6 +13,7 @@ import {
   getKeywordList,
 } from "@/utils/APIs/workspace/character";
 
+
 enum SidebarType {
   plot,
   script,
