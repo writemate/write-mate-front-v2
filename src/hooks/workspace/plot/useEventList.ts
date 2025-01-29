@@ -52,6 +52,12 @@ const useEventList = (chapterId: string) => {
       );
       return { previousPlot };
     },
+    onError: (error, _, context) => {
+      queryClient.setQueryData(
+        workspaceQueryKeys.plot(workspace_id, plot_id),
+        context?.previousPlot
+      );
+    },
   })();
 
   // 사건 순서 수정하기

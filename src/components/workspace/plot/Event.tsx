@@ -57,7 +57,7 @@ export default function Event({
       <EventColumnContainer>
         <EventHeader>
           <ChooseCharacter
-            onClick={eventId ? openSelectCharacterModal : () => {}}
+            onClick={eventId ? openSelectCharacterModal : undefined}
           />
           {selectCharacterModal && eventId && (
             <SelectCharacterModal
@@ -87,10 +87,13 @@ export default function Event({
               marginLeft: "auto",
             }}
           >
-            <IconButton type="button" onClick={handleCopy}>
+            <IconButton
+              type="button"
+              onClick={eventId ? handleCopy : undefined}
+            >
               <CopyIcon />
             </IconButton>
-            <IconButton onClick={eventId ? onOpenModal : () => {}}>
+            <IconButton onClick={eventId ? onOpenModal : undefined}>
               <EventDeleteBtn />
             </IconButton>
             {isOpenDeleteModal && (

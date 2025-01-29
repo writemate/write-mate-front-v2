@@ -135,7 +135,7 @@ export type TSimplePlot = {
 };
 
 export type TChapter = {
-  id: string;
+  id: string | null;
   chapter_name: string;
   chapter_description: string;
   pevent_list: TPlotEvent[];
