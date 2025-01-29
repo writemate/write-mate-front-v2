@@ -29,16 +29,15 @@ export default function WorkspaceLayout({
     openIdeaBox,
     toggleIdeaBox,
     isScriptPage,
-    data,
-    error,
+    hasError,
     isLoading,
   } = workspaceLayoutValue;
 
   return (
     <>
-      {error && <Error />}
       {isLoading && <Loading />}
-      {data && (
+      {hasError && <Error />}
+      {!isLoading && !hasError && (
         <WorkspaceContainer>
           <WorkspaceLayoutContext.Provider value={workspaceLayoutValue}>
             <SideTab />
@@ -62,6 +61,5 @@ export default function WorkspaceLayout({
         </WorkspaceContainer>
       )}
     </>
-
   );
 }
