@@ -143,7 +143,7 @@ export type TChapter = {
 };
 
 export type TPlotEvent = {
-  id: string;
+  id: string | null;
   event_name: string;
   event_description: string;
   character_list: TSimpleCharacter[];
