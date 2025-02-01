@@ -12,10 +12,11 @@ import {
 import { CharacterContext } from "@/hooks/workspace/character/character";
 import AddButton from "@/assets/icons/addButton.svg";
 import KeywordCancel from "@/assets/workspace/character/keywordCancel.svg";
+import { useCharacterKeyword } from "@/hooks/workspace/character/useCharacterKeyword";
 
 export default function Description() {
+  const { data } = useContext(CharacterContext);
   const {
-    data,
     onClickRemoveKeywordFromCharacter,
     keywordList,
     keywordListRef,
@@ -30,7 +31,7 @@ export default function Description() {
     onClickCreateAndAddKeywordToCharacter,
     creatingKeyword,
     onEnterPressAtMiniModal,
-  } = useContext(CharacterContext);
+  } = useCharacterKeyword();
   const { keyword } = data ?? {};
   return (
     <Container>

@@ -11,7 +11,7 @@ export default function CharacterList() {
   return (
     <>
       <MemoListContainer>
-        {Array.isArray(characterList) &&
+        {characterList &&
           characterList
             .slice()
             .reverse()
