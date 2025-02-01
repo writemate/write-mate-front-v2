@@ -29,7 +29,7 @@ export type TMemo = {
 };
 
 export type TMCharacter = {
-  id: string;
+  id: string | null;
   ch_name: string;
   ch_image: string;
   description: string;

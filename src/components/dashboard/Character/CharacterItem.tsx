@@ -18,14 +18,14 @@ import { useMemoCharacter } from "@/hooks/dashboard/character/useMemoCharacterDe
 
 export function CharacterItem({ character }: { character: TMCharacter }) {
   const { isOpenEditModal, onClickItem, closeEditModal } = useCharacterItem(
-    character.id
+    character.id ?? ""
   );
-  const value = useMemoCharacter(character.id);
+  const value = useMemoCharacter(character.id ?? "");
   const realCharacter = (value.data ?? character) as TMCharacter;
   return (
     <>
       <CharacterCard
-        onClick={onClickItem}
+        onClick={character.id ? onClickItem : undefined}
         style={{ border: "1px solid black" }}
       >
         <CharacterCardTitle>
@@ -43,14 +43,16 @@ export function CharacterItem({ character }: { character: TMCharacter }) {
                 (realCharacter.ch_name ? false : true)
               }
             >
-              {getName(realCharacter)}
+              {character.id ? getName(realCharacter) : "생성 중"}
             </CharacterName>
             <CharacterRole>{realCharacter.role}</CharacterRole>
           </NameAndRole>
         </CharacterCardTitle>
         <CharacterDescription>
           {realCharacter.description}
-          {!realCharacter.description && "인물 설명을 적어주세요."}
+          {character.id &&
+            !realCharacter.description &&
+            "인물 설명을 적어주세요."}
         </CharacterDescription>
         <MemoUpdatedDate>
           {new Date(realCharacter.updatedAt).toLocaleString("ko-KR", {
