@@ -54,7 +54,6 @@ export default function Description() {
                 onClickConfirm={onClickRemoveCharacteristic(i)}
                 onClickCancel={closeModal}
                 messageKey="characteristicDelete"
-                ConfirmButtonName={"삭제"}
               />
             )}
             <CharacteristicContent

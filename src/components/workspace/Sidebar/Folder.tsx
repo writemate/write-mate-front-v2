@@ -124,7 +124,6 @@ export default function Folder({
           onClickConfirm={deleteFolderOrFile(folder)}
           onClickCancel={closeDeleteModal}
           messageKey="folderDelete"
-          ConfirmButtonName="삭제"
         />
       )}
     </FolderContainer>

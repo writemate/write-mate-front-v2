@@ -70,7 +70,6 @@ export default function Chapter({
               onClickConfirm={onChapterDeleteClick}
               onClickCancel={closeModal}
               messageKey="chapterDelete"
-              ConfirmButtonName={"삭제"}
             />
           )}
         </ChapterHeader>

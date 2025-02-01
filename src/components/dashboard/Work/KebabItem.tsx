@@ -88,7 +88,6 @@ export const ChangeCategory2Trash = () => {
           onClickConfirm={onClickChangeCategory("trash")}
           onClickCancel={onClickCancel}
           messageKey="workDelete"
-          ConfirmButtonName={"확인"}
         />
       )}
     </>
@@ -116,7 +115,6 @@ export const DeletePermanently = () => {
           onClickConfirm={onDeleteWork()}
           onClickCancel={onClickCancel}
           messageKey="trashWorkDelete"
-          ConfirmButtonName={"삭제"}
         />
       )}
     </>

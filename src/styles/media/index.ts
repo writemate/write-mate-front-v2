@@ -1,8 +1,15 @@
+export const BREAKPOINT_NUM = {
+  mobile: 625,
+  tablet: 768,
+  desktop: 1024,
+  largeDesktop: 1280,
+};
+
 const breakpoints = {
-  mobile: "625px",
-  tablet: "768px",
-  desktop: "1024px",
-  largeDesktop: "1280px",
+  mobile: `${BREAKPOINT_NUM.mobile}px`,
+  tablet: `${BREAKPOINT_NUM.tablet}px`,
+  desktop: `${BREAKPOINT_NUM.desktop}px`,
+  largeDesktop: `${BREAKPOINT_NUM.largeDesktop}px`,
 };
 
 export const media = {
