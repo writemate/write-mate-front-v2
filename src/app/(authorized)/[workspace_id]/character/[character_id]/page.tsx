@@ -50,7 +50,6 @@ export default function Character() {
               onClickConfirm={onClickDeleteCharacter}
               onClickCancel={closeModal}
               messageKey={"characterDelete"}
-              ConfirmButtonName={"삭제"}
             />
           )}
         </div>

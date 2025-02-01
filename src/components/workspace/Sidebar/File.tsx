@@ -118,7 +118,6 @@ export default function File({
           onClickConfirm={deleteFolderOrFile(file)}
           onClickCancel={closeDeleteModal}
           messageKey="fileDelete"
-          ConfirmButtonName="삭제"
         />
       )}
     </FileContainer>

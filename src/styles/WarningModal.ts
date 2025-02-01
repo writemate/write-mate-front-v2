@@ -9,7 +9,7 @@ export const ModalContainer = styled.div`
   position: relative;
   ${FlexColumnCenter}
   ${FontSemibold16}
-  padding: calc(12px + 53px) 12px 12px 12px;
+  padding: calc(12px + 53px - 44px) 12px 12px 12px;
 
   border-radius: 12px;
   background: ${({ theme }) => theme.color.white};
@@ -21,6 +21,12 @@ export const ModalContainer = styled.div`
     color: ${({ theme }) => theme.color.black};
     text-align: center;
     white-space: pre-line;
+  }
+
+  svg {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 12px;
   }
 
   ${media.mobile} {

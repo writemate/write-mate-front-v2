@@ -6,29 +6,29 @@ import {
   ModalButton,
   ModalContainer,
 } from "@/styles/WarningModal";
+import WarningIcon from "@/assets/icons/danger.svg";
 
 export function WarningModal({
   closeModal,
   onClickConfirm,
   messageKey,
-  ConfirmButtonName,
   onClickCancel,
 }: {
   closeModal: () => void | ((e: React.MouseEvent<HTMLDivElement>) => void);
   onClickConfirm: (e: React.MouseEvent<HTMLButtonElement>) => void;
   onClickCancel: (e: React.MouseEvent<HTMLButtonElement>) => void;
   messageKey: WarningMessageKey;
-  ConfirmButtonName: string;
 }) {
   const message = WARNING_MESSAGES[messageKey].replace(/\\n/g, "\n");
 
   return (
     <Modal closeModal={closeModal} maxWidth="450px">
       <ModalContainer>
+        <WarningIcon />
         <p>{message}</p>
         <ButtonContainer>
           <ModalButton $isDanger={true} onClick={onClickConfirm}>
-            {ConfirmButtonName}
+            {ConfirmButtonName[messageKey]}
           </ModalButton>
           <ModalButton $isDanger={false} onClick={onClickCancel}>
             취소
@@ -39,7 +39,7 @@ export function WarningModal({
   );
 }
 
-export const WARNING_MESSAGES = {
+const WARNING_MESSAGES = {
   characterDelete: "인물을 삭제하시겠습니까?\n삭제된 인물은 복구가 어렵습니다.",
   characteristicDelete:
     "특징을 삭제하시겠습니까?\n삭제된 특징은 복구가 어렵습니다.",
@@ -57,6 +57,23 @@ export const WARNING_MESSAGES = {
   chapterDelete:
     "챕터를 삭제하시겠습니까?\n챕터 내의 이벤트도 함께 삭제되며 복구가 어렵습니다.",
   eventDelete: "이벤트를 삭제하시겠습니까?\n삭제된 이벤트는 복구가 어렵습니다.",
+  mobileAPPuse:
+    "데스크탑에 최적화된 서비스입니다.\n모바일에서는 일부 기능이 제한될 수 있습니다.",
 } as const;
+
+const ConfirmButtonName = {
+  characterDelete: "삭제",
+  characteristicDelete: "삭제",
+  memoCharacterDelete: "삭제",
+  memoDelete: "삭제",
+  workDelete: "삭제",
+  trashWorkDelete: "삭제",
+  fileDelete: "삭제",
+  folderDelete: "삭제",
+  keywordDelete: "삭제",
+  chapterDelete: "삭제",
+  eventDelete: "삭제",
+  mobileAPPuse: "확인",
+};
 
 export type WarningMessageKey = keyof typeof WARNING_MESSAGES;

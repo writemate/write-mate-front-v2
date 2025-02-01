@@ -1,6 +1,9 @@
 "use client";
 import { Loading } from "@/components/Loading";
+import { WarningModal } from "@/components/WarningModal";
+import { useWarningModal } from "@/hooks/common/useWarningModal";
 import { useLogin } from "@/stores/useLogin";
+import { BREAKPOINT_NUM } from "@/styles/media";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -11,6 +14,14 @@ export default function AuthorizedLayout({
 }) {
   const { isLogin } = useLogin();
   const router = useRouter();
+  const { isOpenDeleteModal, onOpenWarningModal, closeWarningModal } =
+    useWarningModal();
+
+  useEffect(() => {
+    if (window.innerWidth <= BREAKPOINT_NUM.tablet && !isOpenDeleteModal) {
+      onOpenWarningModal();
+    }
+  }, [isLogin]);
 
   useEffect(() => {
     if (isLogin === false) {
@@ -23,6 +34,17 @@ export default function AuthorizedLayout({
     <>
       {isLogin === null && <Loading />}
       {isLogin && children}
+      {isOpenDeleteModal && (
+        <WarningModal
+          messageKey="mobileAPPuse"
+          onClickConfirm={closeWarningModal}
+          onClickCancel={() => {
+            closeWarningModal();
+            router.back();
+          }}
+          closeModal={closeWarningModal}
+        />
+      )}
     </>
   );
 }
