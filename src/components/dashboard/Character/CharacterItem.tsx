@@ -21,6 +21,7 @@ export function CharacterItem({ character }: { character: TMCharacter }) {
     character.id
   );
   const value = useMemoCharacter(character.id);
+  const realCharacter = (value.data ?? character) as TMCharacter;
   return (
     <>
       <CharacterCard
@@ -29,29 +30,30 @@ export function CharacterItem({ character }: { character: TMCharacter }) {
       >
         <CharacterCardTitle>
           <CharacterImage
-            $src={character.ch_image}
+            $src={realCharacter.ch_image}
             $heightPx={42}
             $widthPx={42}
           >
-            {!character.ch_image && <p>{getName(character)[0]}</p>}
+            {!realCharacter.ch_image && <p>{getName(realCharacter)[0]}</p>}
           </CharacterImage>
           <NameAndRole>
             <CharacterName
               $isNew={
-                character.ch_name === "" || (character.ch_name ? false : true)
+                realCharacter.ch_name === "" ||
+                (realCharacter.ch_name ? false : true)
               }
             >
-              {getName(character)}
+              {getName(realCharacter)}
             </CharacterName>
-            <CharacterRole>{character.role}</CharacterRole>
+            <CharacterRole>{realCharacter.role}</CharacterRole>
           </NameAndRole>
         </CharacterCardTitle>
         <CharacterDescription>
-          {character.description}
-          {!character.description && "인물 설명을 적어주세요."}
+          {realCharacter.description}
+          {!realCharacter.description && "인물 설명을 적어주세요."}
         </CharacterDescription>
         <MemoUpdatedDate>
-          {new Date(character.updatedAt).toLocaleString("ko-KR", {
+          {new Date(realCharacter.updatedAt).toLocaleString("ko-KR", {
             year: "numeric",
             month: "2-digit",
             day: "2-digit",

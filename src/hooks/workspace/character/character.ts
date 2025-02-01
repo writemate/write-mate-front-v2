@@ -108,10 +108,7 @@ export function useCharacter(characterId?: string) {
         (prev: any) => {
           return {
             ...prev,
-            characteristic: [
-              ...prev.characteristic,
-              { title: "", content: "" },
-            ],
+            characteristic: [...characteristicList, { title: "", content: "" }],
           };
         }
       );
@@ -139,7 +136,7 @@ export function useCharacter(characterId?: string) {
         workspaceQueryKeys.characterDetail(workspace_id, character_id),
         {
           ...prevData,
-          characteristic: prevData.characteristic.filter((_, i) => i !== index),
+          characteristic: characteristicList.filter((_, i) => i !== index),
         }
       );
       return { prevData };
