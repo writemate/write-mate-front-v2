@@ -1,5 +1,7 @@
 import { useInputLiveUpdate } from "@/hooks/common/useInputLiveUpdate";
 import { useOnClickUpdate } from "@/hooks/common/useOnClickUpdate";
+import { useSaveLoading } from "@/stores/useSaveLoading";
+
 import {
   deleteMemo,
   updateMemoDescription,
@@ -7,13 +9,13 @@ import {
 } from "@/utils/APIs/memo";
 import { dashboardQueryKeys } from "@/utils/APIs/queryKeys";
 import { TMemo } from "@/utils/APIs/types";
-import { notifySuccess } from "@/utils/showToast";
+import { notifySuccess, notifyWarning } from "@/utils/showToast";
 import { useQueryClient } from "@tanstack/react-query";
 import { createContext, useState } from "react";
 
 export function useMemoItem(memo: TMemo) {
   const queryClient = useQueryClient();
-
+  const isSaving = useSaveLoading().checkIsSaving();
   const [isOpenEditModal, setIsOpenEditModal] = useState(false);
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
   const nameRef = document.getElementsByClassName("memo-modal-name");
@@ -32,6 +34,10 @@ export function useMemoItem(memo: TMemo) {
   };
 
   const closeEditModal = () => {
+    if (isSaving) {
+      notifyWarning("저장 중입니다. 잠시 후 다시 시도해주세요.");
+      return;
+    }
     queryClient.invalidateQueries({
       queryKey: dashboardQueryKeys.memo(),
     });
