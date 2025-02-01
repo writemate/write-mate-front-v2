@@ -20,7 +20,7 @@ import CopyIcon from "@/assets/workspace/plot/copy.svg";
 import { useCallback, useRef } from "react";
 import { copy } from "@/utils/copy";
 import { CharacterImage } from "@/styles/workspace/Character.style";
-import { getName } from "@/hooks/dashboard/character/characterItem";
+import { getName } from "@/utils/getCharacterName";
 
 export default function Event({
   id: eventId,

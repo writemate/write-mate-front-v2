@@ -10,7 +10,7 @@ import RelatedEvents from "@/components/workspace/character/detail/RelatedEvents
 import Modal from "@/components/Modal";
 import { ModalContentAndFooterContainer } from "@/styles/dashboard/IdeaBox/Modal.style";
 import { Infos } from "@/styles/workspace/Info.style";
-import { CloseButton, DeleteButton } from "@/styles/Button";
+import { CloseButton } from "@/styles/Button";
 import { Title, Subtitle } from "@/styles/workspace";
 
 export default function CharacterModal({
