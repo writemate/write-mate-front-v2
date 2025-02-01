@@ -1,6 +1,5 @@
 import { createContext, useCallback, useEffect, useRef, useState } from "react";
 import ReactQuill from "react-quill";
-import { fontSize, font } from "@/components/workspace/script/Toolbar";
 import { useQuery } from "@tanstack/react-query";
 import { workspaceQueryKeys } from "@/utils/APIs/queryKeys";
 import { useParams } from "next/navigation";
@@ -47,17 +46,6 @@ export function useScript() {
       }
     }
   }, [data, editorRef]);
-
-  useEffect(() => {
-    const setupQuillFormat = (formatType: string, whitelist: string[]) => {
-      const Format = ReactQuill.Quill.import(formatType) as any;
-      Format.whitelist = whitelist;
-      ReactQuill.Quill.register(Format, true);
-    };
-
-    setupQuillFormat("formats/font", font);
-    setupQuillFormat("attributors/style/size", fontSize);
-  }, []);
 
   return {
     editorRef,
