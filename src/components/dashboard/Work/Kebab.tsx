@@ -19,11 +19,11 @@ export const Kebab = ({
   workId,
   titleInputRef,
 }: {
-  workId: string;
+  workId: string | null;
   titleInputRef: React.RefObject<HTMLInputElement>;
 }) => {
   const { workCategory } = useContext(WorkCategoryContext);
-  const useKebabValue = useKebab(workId, titleInputRef);
+  const useKebabValue = useKebab(workId ?? "", titleInputRef);
   const { isKebabOpen, onClickKebab, menuRef, onBlurKebab } = useKebabValue;
   const onClickKebabContainer = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
@@ -38,7 +38,10 @@ export const Kebab = ({
         ref={menuRef}
         onClick={onClickKebabContainer}
       >
-        <KebabButton $isOpen={isKebabOpen} onClick={onClickKebab} />
+        <KebabButton
+          $isOpen={isKebabOpen}
+          onClick={workId ? onClickKebab : undefined}
+        />
         {isKebabOpen && (
           <KebabContainer>
             {workCategory === "ongoing" && (

@@ -1,6 +1,8 @@
 export const dashboardQueryKeys = {
   all: ["dashboard"] as const,
-  workStudio: () => [...dashboardQueryKeys.all, "workStudio"] as const,
+  allWorkStudio: () => [...dashboardQueryKeys.all, "workStudio"] as const,
+  workStudio: (category: string) =>
+    [...dashboardQueryKeys.allWorkStudio(), category] as const,
   ideaBox: () => [...dashboardQueryKeys.all, "ideaBox"] as const,
   memo: () => [...dashboardQueryKeys.ideaBox(), "memo"] as const,
   characterList: () => [...dashboardQueryKeys.ideaBox(), "character"] as const,

@@ -180,7 +180,7 @@ export type TStorageCharacter = {
  * 설정집 타입
  */
 export type TWork = {
-  id: string;
+  id: string | null;
   title: string;
   cover: string;
   updatedAt: string; // ISO 날짜 문자열로 정의

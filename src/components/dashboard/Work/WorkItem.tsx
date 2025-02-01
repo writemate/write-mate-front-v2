@@ -13,15 +13,18 @@ import { WorkListContext } from "@/hooks/dashboard/work/workList";
 import { useWorkItem } from "@/hooks/dashboard/work/useWorkItem";
 import { Kebab } from "./Kebab";
 
-export default function WorkLinkCard({ workId }: { workId: string }) {
+export default function WorkLinkCard({ workId }: { workId: string | null }) {
   const { workList } = useContext(WorkListContext);
-  const { titleInputRef, onChangeTitle } = useWorkItem(workId);
+  const { titleInputRef, onChangeTitle } = useWorkItem(workId ?? "");
   const work = workList?.find((work) => work.id === workId);
 
   return (
     <>
       {work && (
-        <WorkLinkCardContainer href={`/${work.id}/info`} passHref>
+        <WorkLinkCardContainer
+          href={workId ? `/${work.id}/info` : "#"}
+          passHref
+        >
           <WorkButtonImage $url={work.cover} />
           <TitleAndDateAndKebab>
             <TitleAndDate>
@@ -29,10 +32,11 @@ export default function WorkLinkCard({ workId }: { workId: string }) {
                 <input
                   type="text"
                   ref={titleInputRef}
-                  placeholder="작품의 제목을 적어주세요."
+                  placeholder={workId ? "작품의 제목을 적어주세요." : "생성 중"}
                   defaultValue={work.title}
                   onClick={(event) => event.preventDefault()}
                   onChange={onChangeTitle}
+                  disabled={!workId}
                 />
               </WorkButtonTitle>
               <WorkButtonDate>
@@ -53,9 +57,9 @@ export default function WorkLinkCard({ workId }: { workId: string }) {
   );
 }
 
-export function WorkButtonCard({ workId }: { workId: string }) {
+export function WorkButtonCard({ workId }: { workId: string | null }) {
   const { workList, onClickWorkInTrash } = useContext(WorkListContext);
-  const { titleInputRef } = useWorkItem(workId);
+  const { titleInputRef } = useWorkItem(workId ?? "");
 
   const work = workList?.find((work) => work.id === workId);
 
