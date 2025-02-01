@@ -11,9 +11,7 @@ import Modal from "@/components/Modal";
 import { ModalContentAndFooterContainer } from "@/styles/dashboard/IdeaBox/Modal.style";
 import { Infos } from "@/styles/workspace/Info.style";
 import { CloseButton, DeleteButton } from "@/styles/Button";
-import { WarningModal } from "@/components/dashboard/WarningModal";
 import { Title, Subtitle } from "@/styles/workspace";
-import { useWarningModal } from "@/hooks/common/useWarningModal";
 
 export default function CharacterModal({
   characterId,
@@ -23,18 +21,7 @@ export default function CharacterModal({
   closeModal: () => void;
 }) {
   const value = useCharacter(characterId);
-  const {
-    data,
-    isLoading,
-    onChangeName,
-    onChangeRole,
-    onClickDeleteCharacter,
-  } = value;
-  const {
-    isOpenDeleteModal,
-    onOpenModal,
-    closeModal: closeDeleteModal,
-  } = useWarningModal();
+  const { data, isLoading, onChangeName, onChangeRole } = value;
 
   return (
     <Modal closeModal={closeModal} maxWidth="1024px" maxHeight="85vh">
@@ -51,21 +38,6 @@ export default function CharacterModal({
                 defaultValue={data?.ch_name}
                 disabled={isLoading}
               />
-              <DeleteButton
-                onClick={onOpenModal}
-                style={{ marginLeft: "auto", marginBottom: "auto" }}
-              >
-                삭제
-              </DeleteButton>
-              {isOpenDeleteModal && (
-                <WarningModal
-                  closeModal={closeDeleteModal}
-                  onClickConfirm={onClickDeleteCharacter}
-                  onClickCancel={closeDeleteModal}
-                  message={"인물를 삭제하시겠습니까?"}
-                  ConfirmButtonName={"삭제"}
-                />
-              )}
               <CloseButton onClick={closeModal}>닫기</CloseButton>
             </div>
             <Subtitle>
