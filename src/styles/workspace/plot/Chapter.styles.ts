@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import TextareaAutosize from "react-textarea-autosize";
 import { FlexColumnCenter, FlexRowCenter, FlexRowLeftStart } from "@/styles";
 import { media } from "@/styles/media";
@@ -73,7 +73,7 @@ export const ChapterHeader = styled.div`
   padding-bottom: 8px;
 `;
 
-export const TitleInput = styled.input`
+const TitleCss = css`
   height: 36px;
   text-overflow: clip;
   width: 100%;
@@ -94,6 +94,14 @@ export const TitleInput = styled.input`
     height: 24px;
     font-size: 14px;
   }
+`;
+
+export const TitleInput = styled.input`
+  ${TitleCss}
+`;
+
+export const TitleDiv = styled.div`
+  ${TitleCss}
 `;
 
 export const Description = styled(TextareaAutosize)`
