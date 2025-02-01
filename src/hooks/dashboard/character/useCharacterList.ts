@@ -22,9 +22,6 @@ export function useCharacterList() {
     savingMessage: "캐릭터 추가 중",
     errorMessage: "캐릭터 추가에 실패했습니다.",
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: dashboardQueryKeys.characterList(),
-      });
       notifySuccess("캐릭터가 추가되었습니다.");
     },
     onMutate: () => {
@@ -46,6 +43,12 @@ export function useCharacterList() {
         },
       ]);
       return { prevData };
+    },
+    onError: (error, newCharacter, context) => {
+      queryClient.setQueryData(
+        dashboardQueryKeys.characterList(),
+        context?.prevData
+      );
     },
   })();
 

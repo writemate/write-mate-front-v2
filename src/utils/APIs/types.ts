@@ -22,7 +22,7 @@ export const ideaBoxCategory = {
 } as const;
 
 export type TMemo = {
-  id: string;
+  id: string | null;
   memo_name: string;
   memo_description: string;
   updatedAt: string;

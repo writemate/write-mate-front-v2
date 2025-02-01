@@ -39,13 +39,13 @@ export function useMemoItem(memo: TMemo) {
   };
 
   const onChangeName = useInputLiveUpdate(
-    updateMemoName(memo.id),
+    updateMemoName(memo.id ?? ""),
     "메모 이름 변경",
     "메모 이름 변경에 실패하였습니다."
   );
 
   const onChangeDescription = useInputLiveUpdate(
-    updateMemoDescription(memo.id),
+    updateMemoDescription(memo.id ?? ""),
     "메모 내용 변경",
     "메모 내용 변경에 실패하였습니다."
   );
@@ -65,14 +65,24 @@ export function useMemoItem(memo: TMemo) {
   };
 
   const onDeleteMemo = useOnClickUpdate({
-    mutationFn: deleteMemo(memo.id),
-    queryKey: ["memo", memo.id],
+    mutationFn: deleteMemo(memo.id ?? ""),
+    queryKey: dashboardQueryKeys.memo(),
     savingMessage: "메모 삭제 중",
     errorMessage: "메모 삭제에 실패하였습니다.",
-    onSuccess: () => {
-      notifySuccess("메모가 삭제되었습니다.");
+    onMutate: () => {
       closeEditModal();
       closeDeleteModal();
+      const prevData = queryClient.getQueryData(dashboardQueryKeys.memo());
+      queryClient.setQueryData(dashboardQueryKeys.memo(), (oldData: any[]) => {
+        return oldData.filter((item) => item.id !== memo.id);
+      });
+      return { prevData };
+    },
+    onError: (error, newMemo, context) => {
+      queryClient.setQueryData([dashboardQueryKeys.memo()], context?.prevData);
+    },
+    onSuccess: () => {
+      notifySuccess("메모가 삭제되었습니다.");
     },
   });
 
