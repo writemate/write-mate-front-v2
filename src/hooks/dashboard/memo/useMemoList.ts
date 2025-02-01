@@ -11,20 +11,32 @@ export function useMemoList() {
     error,
     isLoading,
   } = useQuery({
-    queryKey: [dashboardQueryKeys.memo()],
+    queryKey: dashboardQueryKeys.memo(),
     queryFn: getMemoList,
   });
 
   const onClickAddMemo = useOnClickUpdate({
     mutationFn: createMemo,
-    queryKey: [dashboardQueryKeys.memo()],
+    queryKey: dashboardQueryKeys.memo(),
     savingMessage: "메모 추가 중",
     errorMessage: "메모 추가에 실패했습니다.",
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [dashboardQueryKeys.memo()],
-      });
       notifySuccess("메모가 추가되었습니다.");
+    },
+    onMutate: () => {
+      const prevData = queryClient.getQueryData(
+        dashboardQueryKeys.memo()
+      ) as any[];
+      queryClient.setQueryData(dashboardQueryKeys.memo(), [
+        ...prevData,
+        {
+          id: null,
+          memo_name: "",
+          memo_description: "",
+          updatedAt: new Date().toISOString(),
+        },
+      ]);
+      return { prevData };
     },
   })();
 

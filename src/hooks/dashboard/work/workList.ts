@@ -14,20 +14,32 @@ export function useWorkList(workCategory: keyof typeof workspaceCategory) {
     error,
     isLoading,
   } = useQuery({
-    queryKey: [dashboardQueryKeys.workStudio(), workCategory],
+    queryKey: dashboardQueryKeys.workStudio(workCategory),
     queryFn: getWorkStudio(workCategory),
   });
 
   const onClickAddWork = useOnClickUpdate({
     mutationFn: addWorkStudio,
-    queryKey: [dashboardQueryKeys.workStudio(), workCategory],
+    queryKey: dashboardQueryKeys.workStudio(workCategory),
     savingMessage: "작품 추가 중",
     errorMessage: "작품 추가에 실패했습니다.",
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [dashboardQueryKeys.workStudio(), workCategory],
-      });
       notifySuccess("작품이 추가되었습니다.");
+    },
+    onMutate: () => {
+      const prevData = queryClient.getQueryData(
+        dashboardQueryKeys.workStudio(workCategory)
+      ) as any[];
+      queryClient.setQueryData(dashboardQueryKeys.workStudio(workCategory), [
+        ...prevData,
+        {
+          id: null,
+          title: "",
+          cover: "",
+          updatedAt: new Date().toISOString(),
+        },
+      ]);
+      return { prevData };
     },
   })();
 
