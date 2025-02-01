@@ -115,7 +115,10 @@ export default function File({
       {deleteModalOpen && (
         <WarningModal
           closeModal={closeDeleteModal}
-          onClickConfirm={deleteFolderOrFile(file)}
+          onClickConfirm={(e) => {
+            deleteFolderOrFile(file)(e);
+            closeDeleteModal();
+          }}
           onClickCancel={closeDeleteModal}
           messageKey="fileDelete"
         />
