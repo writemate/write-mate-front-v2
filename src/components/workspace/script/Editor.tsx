@@ -1,12 +1,24 @@
 "use client";
-import ReactQuill, { Range } from "react-quill";
-import { useContext } from "react";
+import React, { useEffect } from "react";
+import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { useContext } from "react";
 import { ScriptContext } from "@/hooks/workspace/script";
 import { WhiteInputSpaceContainer } from "@/styles/workspace/Script.styles";
 
 export default function QuillEditor() {
   const { editorRef, handleQuillChange } = useContext(ScriptContext);
+
+  useEffect(() => {
+    if (editorRef.current) {
+      const editor = editorRef.current.getEditor();
+      editor.focus();
+      const length = editor.getLength();
+      editor.setSelection(0, length);
+      editor.format("font", "nanum-myeongjo");
+      editor.format("size", "18px");
+    }
+  }, [editorRef]);
 
   const modules = {
     toolbar: {
@@ -22,36 +34,14 @@ export default function QuillEditor() {
     },
   };
 
-  const formats = [
-    "font",
-    "size",
-    "bold",
-    "italic",
-    "underline",
-    "strike",
-    "blockquote",
-    "color",
-    "background",
-    "link",
-    "image",
-    "video",
-    "list",
-    "indent",
-    "direction",
-    "align",
-    "clean",
-  ];
-
   return (
     <WhiteInputSpaceContainer>
       <ReactQuill
         modules={modules}
-        formats={formats} // formats 추가
         theme="snow"
-        placeholder="내용을 입력하세요."
         ref={editorRef}
         onChange={handleQuillChange}
-      ></ReactQuill>
+      />
     </WhiteInputSpaceContainer>
   );
 }
