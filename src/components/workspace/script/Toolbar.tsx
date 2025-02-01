@@ -40,7 +40,7 @@ export default function CustomToolbar({ editorRef }: { editorRef: any }) {
       </select>
 
       {/* 헤더 크기 */}
-      <select className="ql-size" defaultValue={"18px"}>
+      <select className="ql-size" defaultValue={"16px"}>
         {fontSize.map((val) => (
           <option key={val} value={val}>
             {val}

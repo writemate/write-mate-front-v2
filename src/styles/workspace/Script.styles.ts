@@ -103,7 +103,11 @@ export const WhiteInputSpaceContainer = styled.div`
     padding: 119px 95px;
     p {
       font-family: "NanumMyeongjo", sans-serif;
-      font-size: 18px;
+      font-size: 16px;
+      span {
+        font-family: "NanumMyeongjo", sans-serif;
+        font-size: 16px;
+      }
     }
 
     &.ql-blank::before {
