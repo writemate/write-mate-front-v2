@@ -27,7 +27,6 @@ export default function SideTab() {
     isCharacterActive,
     togglePlot,
     toggleScript,
-    closeSidebar,
   } = useContext(WorkspaceLayoutContext);
 
   return (
@@ -35,11 +34,7 @@ export default function SideTab() {
       <LogoLink href="/dashboard">
         <Logo />
       </LogoLink>
-      <SideTabLink
-        href={`/${workspace_id}/info`}
-        $isActivated={isInfoActive}
-        onClick={closeSidebar}
-      >
+      <SideTabLink href={`/${workspace_id}/info`} $isActivated={isInfoActive}>
         <Info /> 작품 정보
       </SideTabLink>
       <SideTabButton onClick={togglePlot} $isActivated={isPlotActive}>
@@ -51,7 +46,6 @@ export default function SideTab() {
       <SideTabLink
         href={`/${workspace_id}/character`}
         $isActivated={isCharacterActive}
-        onClick={closeSidebar}
       >
         <Character /> 인물
       </SideTabLink>

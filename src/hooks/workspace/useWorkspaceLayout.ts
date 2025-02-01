@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useRef, useState } from "react";
 import { useParams, usePathname } from "next/navigation";
 import { useQueries, useQuery } from "@tanstack/react-query";
 import { workspaceQueryKeys } from "@/utils/APIs/queryKeys";
@@ -13,7 +13,6 @@ import {
   getKeywordList,
 } from "@/utils/APIs/workspace/character";
 
-
 enum SidebarType {
   plot,
   script,
@@ -23,6 +22,7 @@ export const useWorkspaceLayout = () => {
   const [sidebarType, setSidebarType] = useState<SidebarType | null>(null);
   const [openIdeaBox, setOpenIdeaBox] = useState(false);
   const pathname = usePathname();
+  const sidebarRef = useRef<HTMLDivElement>(null);
   const toggleIdeaBox = () => setOpenIdeaBox(!openIdeaBox);
 
   const toggle = (type: SidebarType) => () => {
@@ -39,6 +39,20 @@ export const useWorkspaceLayout = () => {
   const closeSidebar = () => setSidebarType(null);
 
   const pageOn = (page: string) => pathname.includes("/" + page);
+
+  useEffect(() => {
+    if (sidebarType === null) return;
+    const handleClick = (e: MouseEvent) => {
+      if (
+        sidebarRef.current &&
+        !sidebarRef.current.contains(e.target as Node)
+      ) {
+        closeSidebar();
+      }
+    };
+    document.addEventListener("click", handleClick);
+    return () => document.removeEventListener("click", handleClick);
+  }, [sidebarType]);
 
   // 사이드바가 열려있다면, 해당 항목 아이콘 활성화
   // 사이드바가 닫혀있다면, 현재 페이지에 해당하는 아이콘 활성화
@@ -114,7 +128,7 @@ export const useWorkspaceLayout = () => {
     isScriptActive,
     isCharacterActive,
     isScriptPage,
-    closeSidebar,
+    sidebarRef,
   };
 };
 
