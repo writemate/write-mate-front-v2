@@ -132,4 +132,5 @@ export const AddButton = styled(Add)`
   border-radius: 100%;
   border: 1px solid ${({ theme }) => theme.color.gray400};
   margin-top: 10px;
+  flex-shrink: 0;
 `;
