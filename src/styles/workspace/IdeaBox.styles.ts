@@ -126,11 +126,8 @@ export const CopyButton = styled(Copy)`
 `;
 
 export const AddButton = styled(Add)`
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
   ${clickable}
-  border-radius: 100%;
-  border: 1px solid ${({ theme }) => theme.color.gray400};
-  margin-top: 10px;
   flex-shrink: 0;
 `;
