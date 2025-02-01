@@ -63,7 +63,6 @@ export default function CharacterModal({
                   onClickConfirm={onClickDeleteCharacter}
                   onClickCancel={closeDeleteModal}
                   messageKey="characterDelete"
-                  ConfirmButtonName={"삭제"}
                 />
               )}
               <CloseButton onClick={closeModal}>닫기</CloseButton>

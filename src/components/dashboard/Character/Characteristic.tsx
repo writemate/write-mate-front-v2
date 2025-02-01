@@ -53,7 +53,6 @@ export default function Characterisitc() {
                     onClickConfirm={onDeleteCharacteristic(i)}
                     onClickCancel={closeDeleteModal}
                     messageKey="characteristicDelete"
-                    ConfirmButtonName="삭제"
                   />
                 )}
               </div>

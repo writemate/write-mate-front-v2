@@ -114,7 +114,6 @@ export function KeywordManageModal() {
                         onClickConfirm={onClickDeleteKeyword(keyword.id)}
                         onClickCancel={closeWarningModal}
                         messageKey="keywordDelete"
-                        ConfirmButtonName={"삭제"}
                       />
                     )}
                   </KeywordContainer>

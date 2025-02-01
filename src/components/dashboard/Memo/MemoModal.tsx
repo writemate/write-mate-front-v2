@@ -43,7 +43,6 @@ export function EditModal() {
                 onClickConfirm={onDeleteMemo()}
                 onClickCancel={closeDeleteModal}
                 messageKey="memoDelete"
-                ConfirmButtonName="삭제"
               />
             )}
             <CloseButton onClick={closeEditModal}>닫기</CloseButton>

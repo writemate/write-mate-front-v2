@@ -49,7 +49,6 @@ export default function MCharacterModal() {
                 onClickConfirm={onDeleteMCharacter}
                 onClickCancel={closeDeleteModal}
                 messageKey="memoCharacterDelete"
-                ConfirmButtonName="삭제"
               />
             )}
             <CloseButton onClick={closeEditModal}>닫기</CloseButton>

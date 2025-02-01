@@ -97,7 +97,6 @@ export default function Event({
                 onClickConfirm={onEventDeleteClick}
                 onClickCancel={closeModal}
                 messageKey="eventDelete"
-                ConfirmButtonName={"삭제"}
               />
             )}
           </div>
