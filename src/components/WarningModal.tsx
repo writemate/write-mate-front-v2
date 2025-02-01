@@ -73,7 +73,7 @@ const ConfirmButtonName = {
   keywordDelete: "삭제",
   chapterDelete: "삭제",
   eventDelete: "삭제",
-  mobileAPPuse: "",
+  mobileAPPuse: "확인",
 };
 
 export type WarningMessageKey = keyof typeof WARNING_MESSAGES;

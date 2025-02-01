@@ -5,7 +5,7 @@ export const BREAKPOINT_NUM = {
   largeDesktop: 1280,
 };
 
-const breakpoints = {
+export const breakpoints = {
   mobile: `${BREAKPOINT_NUM.mobile}px`,
   tablet: `${BREAKPOINT_NUM.tablet}px`,
   desktop: `${BREAKPOINT_NUM.desktop}px`,
