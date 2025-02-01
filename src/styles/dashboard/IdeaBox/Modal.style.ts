@@ -64,13 +64,10 @@ export const ModalContentAndFooterContainer = styled.div`
   ${FlexColumnLeftStart}
   color: ${({ theme }) => theme.color.gray900};
   padding: 40px;
-  max-height: 90vh;
 
   background-color: ${({ theme }) => theme.color.white};
   border: 1px solid ${({ theme }) => theme.color.gray200};
   border-radius: 8px;
-
-  overflow: auto;
 
   ${Title} {
     margin-bottom: 0;

@@ -1,8 +1,5 @@
 "use Client";
-import {
-  CharacterItemContext,
-  useCharacterItem,
-} from "@/hooks/dashboard/character/characterItem";
+import { useCharacterItem } from "@/hooks/dashboard/character/characterItem";
 import { CharacterCard } from "@/styles/dashboard/IdeaBox/MCharacter/MCharacterList.style";
 import { TMCharacter } from "@/utils/APIs/types";
 import MCharacterModal from "./MemoCharacterModal";
@@ -15,14 +12,17 @@ import {
   CharacterRole,
 } from "@/styles/workspace/Character.style";
 import { NameAndRole } from "@/styles/workspace/Character.style";
+import { CharacterContext } from "@/hooks/workspace/character/character";
+import { getName } from "@/utils/getCharacterName";
+import { useMemoCharacter } from "@/hooks/dashboard/character/useMemoCharacterDetail";
 
 export function CharacterItem({ character }: { character: TMCharacter }) {
-  const characterItemValue: ReturnType<typeof useCharacterItem> =
-    useCharacterItem(character);
-  const { isOpenEditModal, onClickItem, getName } = characterItemValue;
-
+  const { isOpenEditModal, onClickItem, closeEditModal } = useCharacterItem(
+    character.id
+  );
+  const value = useMemoCharacter(character.id);
   return (
-    <CharacterItemContext.Provider value={characterItemValue}>
+    <>
       <CharacterCard
         onClick={onClickItem}
         style={{ border: "1px solid black" }}
@@ -60,7 +60,11 @@ export function CharacterItem({ character }: { character: TMCharacter }) {
           })}
         </MemoUpdatedDate>
       </CharacterCard>
-      {isOpenEditModal && <MCharacterModal />}
-    </CharacterItemContext.Provider>
+      {isOpenEditModal && (
+        <CharacterContext.Provider value={value}>
+          <MCharacterModal closeModal={closeEditModal} />
+        </CharacterContext.Provider>
+      )}
+    </>
   );
 }

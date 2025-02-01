@@ -16,10 +16,10 @@ export const EventListContainer = styled.div`
   }
 `;
 
-export const EventContainer = styled.div<{ isDraggable?: boolean }>`
+export const EventContainer = styled.div<{ $isDraggable?: boolean }>`
   ${FlexRowLeftStart};
   padding: 20px 20px 20px
-    ${({ isDraggable = true }) => (isDraggable ? "0" : "20px")};
+    ${({ $isDraggable = true }) => ($isDraggable ? "0" : "20px")};
   width: 100%;
   margin-bottom: 12px;
 
@@ -29,7 +29,7 @@ export const EventContainer = styled.div<{ isDraggable?: boolean }>`
 
   ${media.tablet} {
     padding: 12px 12px 12px
-      ${({ isDraggable = true }) => (isDraggable ? "0" : "12px")};
+      ${({ $isDraggable = true }) => ($isDraggable ? "0" : "12px")};
     margin-bottom: 8px;
   }
 `;

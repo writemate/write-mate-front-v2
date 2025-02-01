@@ -32,7 +32,7 @@ export default function Chapter({
     onChapterNameChange,
     onChapterDescriptionChange,
     toggleChapterFold,
-  } = useChapter(chapterId, isFolded);
+  } = useChapter(chapterId ?? "", isFolded);
   const descRef = useRef<HTMLTextAreaElement>(null);
   const handleCopy = useCallback(() => {
     if (descRef.current) {
@@ -42,7 +42,7 @@ export default function Chapter({
 
   const { isOpenDeleteModal, onOpenModal, closeModal } = useWarningModal();
   return (
-    <ChapterContainer>
+    <ChapterContainer id={"c" + chapterId}>
       <ChapterDragWrap>
         <DragDrop />
       </ChapterDragWrap>
@@ -52,16 +52,28 @@ export default function Chapter({
           <TitleInput
             defaultValue={chapterName}
             onChange={onChapterNameChange}
-            placeholder="챕터 제목을 적어주세요."
+            placeholder={
+              chapterId ? "챕터 이름을 입력해주세요." : "챕터 생성 중"
+            }
+            disabled={!chapterId}
           />
-          <IconButton type="button" onClick={toggleChapterFold}>
+          <IconButton
+            type="button"
+            onClick={chapterId ? toggleChapterFold : undefined}
+          >
             {isFolded && <ToggleFold />}
             {!isFolded && <ToggleIcon />}
           </IconButton>
-          <IconButton type="button" onClick={handleCopy}>
+          <IconButton
+            type="button"
+            onClick={chapterId ? handleCopy : undefined}
+          >
             <CopyIcon />
           </IconButton>
-          <IconButton type="button" onClick={onOpenModal}>
+          <IconButton
+            type="button"
+            onClick={chapterId ? onOpenModal : undefined}
+          >
             <DeleteIcon />
           </IconButton>
           {isOpenDeleteModal && (
@@ -76,10 +88,11 @@ export default function Chapter({
         <Description
           defaultValue={chapterDescription}
           onChange={onChapterDescriptionChange}
-          placeholder="챕터 내용을 적어주세요."
+          placeholder={chapterId ? "챕터 내용을 적어주세요." : ""}
+          disabled={!chapterId}
           ref={descRef}
         />
-        {!isFolded && <EventList pevent={pevent} chapterId={chapterId} />}
+        {!isFolded && <EventList pevent={pevent} chapterId={chapterId ?? ""} />}
       </ChapterCard>
     </ChapterContainer>
   );

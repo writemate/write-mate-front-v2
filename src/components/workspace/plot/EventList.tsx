@@ -27,17 +27,31 @@ export const EventList = ({ pevent, chapterId }: EventListProps) => {
               ref={provided.innerRef}
             >
               {pevent.map((event, index) => (
-                <Draggable key={event.id} draggableId={event.id} index={index}>
-                  {(provided) => (
-                    <EventContainer
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
+                <>
+                  {event.id && (
+                    <Draggable
+                      key={event.id}
+                      draggableId={event.id}
+                      index={index}
                     >
+                      {(provided) => (
+                        <EventContainer
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          id={"e" + event.id}
+                        >
+                          <Event {...event} chapterId={chapterId} />
+                        </EventContainer>
+                      )}
+                    </Draggable>
+                  )}
+                  {!event.id && (
+                    <EventContainer key={index}>
                       <Event {...event} chapterId={chapterId} />
                     </EventContainer>
                   )}
-                </Draggable>
+                </>
               ))}
               {provided.placeholder}
             </EventListContainer>

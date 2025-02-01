@@ -20,7 +20,7 @@ import CopyIcon from "@/assets/workspace/plot/copy.svg";
 import { useCallback, useRef } from "react";
 import { copy } from "@/utils/copy";
 import { CharacterImage } from "@/styles/workspace/Character.style";
-import { getName } from "@/hooks/dashboard/character/characterItem";
+import { getName } from "@/utils/getCharacterName";
 
 export default function Event({
   id: eventId,
@@ -39,7 +39,7 @@ export default function Event({
     onEventDeleteClick,
     onEventNameChange,
     onEventDescriptionChange,
-  } = useEvent(eventId, chapterId);
+  } = useEvent(eventId ?? "", chapterId);
 
   const { isOpenDeleteModal, onOpenModal, closeModal } = useWarningModal();
   const descRef = useRef<HTMLTextAreaElement>(null);
@@ -56,8 +56,10 @@ export default function Event({
       </EventDragWrap>
       <EventColumnContainer>
         <EventHeader>
-          <ChooseCharacter onClick={openSelectCharacterModal} />
-          {selectCharacterModal && (
+          <ChooseCharacter
+            onClick={eventId ? openSelectCharacterModal : undefined}
+          />
+          {selectCharacterModal && eventId && (
             <SelectCharacterModal
               chapterId={chapterId}
               eventId={eventId}
@@ -85,10 +87,13 @@ export default function Event({
               marginLeft: "auto",
             }}
           >
-            <IconButton type="button" onClick={handleCopy}>
+            <IconButton
+              type="button"
+              onClick={eventId ? handleCopy : undefined}
+            >
               <CopyIcon />
             </IconButton>
-            <IconButton onClick={onOpenModal}>
+            <IconButton onClick={eventId ? onOpenModal : undefined}>
               <EventDeleteBtn />
             </IconButton>
             {isOpenDeleteModal && (
@@ -104,13 +109,15 @@ export default function Event({
         <EventTitle
           defaultValue={eventName}
           onChange={onEventNameChange}
-          placeholder="사건 제목을 적어주세요."
+          placeholder={eventId ? "사건 제목을 적어주세요." : "사건 생성중"}
+          disabled={!eventId}
         />
         <EventDescription
           defaultValue={eventDescription}
           onChange={onEventDescriptionChange}
-          placeholder="사건 내용을 적어주세요."
+          placeholder={eventId ? "사건 내용을 적어주세요." : ""}
           ref={descRef}
+          disabled={!eventId}
         />
       </EventColumnContainer>
       {editCharacterModal && (

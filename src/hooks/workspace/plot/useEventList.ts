@@ -23,11 +23,46 @@ const useEventList = (chapterId: string) => {
         queryKey: workspaceQueryKeys.info(workspace_id),
       });
     },
+    onMutate: () => {
+      const previousPlot = queryClient.getQueryData<TPlot>(
+        workspaceQueryKeys.plot(workspace_id, plot_id)
+      );
+      const previousChapters = previousPlot?.chapter_list;
+      if (!previousChapters) return;
+      const newChapters = previousChapters.map((chapter) => {
+        if (chapter.id === chapterId) {
+          return {
+            ...chapter,
+            pevent_list: [
+              ...chapter.pevent_list,
+              {
+                id: null,
+                event_name: "",
+                event_description: "",
+                character_list: [],
+              },
+            ],
+          };
+        }
+        return chapter;
+      });
+      queryClient.setQueryData<TPlot>(
+        workspaceQueryKeys.plot(workspace_id, plot_id),
+        { ...previousPlot, chapter_list: newChapters }
+      );
+      return { previousPlot };
+    },
+    onError: (error, _, context) => {
+      queryClient.setQueryData(
+        workspaceQueryKeys.plot(workspace_id, plot_id),
+        context?.previousPlot
+      );
+    },
   })();
 
   // 사건 순서 수정하기
   const mutateEventOrder = useOnClickUpdate({
-    mutationFn: updateEventOrder(plot_id),
+    mutationFn: updateEventOrder(chapterId),
     queryKey: workspaceQueryKeys.plot(workspace_id, plot_id),
     savingMessage: "챕터 순서 수정",
     errorMessage: "챕터 순서 수정에 실패했습니다.",

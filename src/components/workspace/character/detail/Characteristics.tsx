@@ -1,5 +1,5 @@
 "use client";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { CharacterContext } from "@/hooks/workspace/character/character";
 import TrashCan from "@/assets/icons/trashcan.svg";
 import { Container, SubTitle } from "@/styles/workspace/Info.style";
@@ -11,7 +11,6 @@ import {
   CharacteristicListContainer,
 } from "@/styles/workspace/Character.style";
 import { WarningModal } from "@/components/WarningModal";
-import { useWarningModal } from "@/hooks/common/useWarningModal";
 import { StateMessage } from "@/components/EmptyMessage";
 
 export default function Description() {
@@ -23,7 +22,10 @@ export default function Description() {
     onChangeCharacteristicTitle,
     onChangeCharacteristicContent,
   } = useContext(CharacterContext);
-  const { isOpenDeleteModal, onOpenModal, closeModal } = useWarningModal();
+  const [deletingIndex, setDeletingIndex] = useState<number | null>(null);
+  const isOpenDeleteModal = deletingIndex !== null;
+  const openWarningModal = (index: number) => () => setDeletingIndex(index);
+  const closeWarningModal = () => setDeletingIndex(null);
 
   return (
     <Container>
@@ -44,18 +46,23 @@ export default function Description() {
                 placeholder="특징을 적어주세요."
                 value={c.title}
                 onChange={onChangeCharacteristicTitle(i)}
+                onKeyDown={(e) => {
+                  if (e.nativeEvent.isComposing) return;
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    (
+                      (e.target as HTMLInputElement).parentElement
+                        ?.nextElementSibling as HTMLTextAreaElement
+                    ).focus();
+                  }
+                }}
                 disabled={isLoading}
               />
-              <TrashCan onClick={onOpenModal} style={{ cursor: "pointer" }} />
-            </div>
-            {isOpenDeleteModal && (
-              <WarningModal
-                closeModal={closeModal}
-                onClickConfirm={onClickRemoveCharacteristic(i)}
-                onClickCancel={closeModal}
-                messageKey="characteristicDelete"
+              <TrashCan
+                onClick={openWarningModal(i)}
+                style={{ cursor: "pointer" }}
               />
-            )}
+            </div>
             <CharacteristicContent
               placeholder="성격이나, 외향적 특징, 출생의 비밀 등 세부 내용을 적어주세요."
               value={c.content}
@@ -65,6 +72,17 @@ export default function Description() {
             />
           </CharacteristicContainer>
         ))}
+        {isOpenDeleteModal && (
+          <WarningModal
+            closeModal={closeWarningModal}
+            onClickConfirm={() => {
+              onClickRemoveCharacteristic(deletingIndex)();
+              closeWarningModal();
+            }}
+            onClickCancel={closeWarningModal}
+            messageKey="characteristicDelete"
+          />
+        )}
         {characteristicList.length === 0 && (
           <StateMessage messageKey="CHARACTERISTIC_EMPTY" />
         )}
