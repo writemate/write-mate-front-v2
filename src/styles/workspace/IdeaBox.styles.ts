@@ -54,10 +54,11 @@ export const SelectIdeaTypeButton = styled.div<{ $isSelected: boolean }>`
   height: 100%;
   font-size: 14px;
   position: relative;
-  ${({ $isSelected }) =>
+  ${({ $isSelected, theme }) =>
     $isSelected &&
     `
     font-weight: 600;
+    color: ${theme.color.orange500};
     &::after {
       content: '';
       position: absolute;
@@ -66,7 +67,7 @@ export const SelectIdeaTypeButton = styled.div<{ $isSelected: boolean }>`
       transform: translateX(-50%);
       width: 25px;
       height: 2px;
-      background-color: #000000;
+      background-color: ${theme.color.orange500};
     }
   `}
 `;
