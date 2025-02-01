@@ -3,14 +3,15 @@ import { FontRegular13 } from "./Font";
 import HelpSVG from "@/assets/icons/Help.svg";
 import { IconSmallButton } from "./Button";
 import { FlexRowLeftStart } from ".";
-import { media } from "./media";
+import { breakpoints, media } from "./media";
 
-export const ExplainMessage = styled.p`
+export const ExplainMessage = styled.p<{ $isRight?: boolean }>`
   ${FontRegular13}
   color: ${({ theme }) => theme.color.gray400};
   display: none;
   position: absolute;
-  left: 24px;
+  left: ${({ $isRight }) => ($isRight ? "auto" : "calc(100% + 4px)")};
+  right: ${({ $isRight }) => ($isRight ? "calc(100% + 4px)" : "auto")};
   top: 50%;
   transform: translateY(-50%);
   background-color: ${({ theme }) => theme.color.white};
@@ -30,7 +31,7 @@ export const HelpIcon = styled(HelpSVG)`
   fill: ${({ theme }) => theme.color.gray400};
 `;
 
-export const HelpContainer = styled.div`
+export const HelpContainer = styled.div<{ $isRight?: boolean }>`
   position: relative;
   margin-left: 2px;
   ${FlexRowLeftStart}
@@ -44,7 +45,7 @@ export const HelpContainer = styled.div`
   ${media.tablet} {
     ${ExplainMessage} {
       z-index: 100;
-      max-width: 200px;
+      max-width: 300px;
     }
   }
 `;

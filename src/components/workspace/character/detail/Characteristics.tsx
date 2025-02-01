@@ -10,7 +10,7 @@ import {
   CharacteristicAdd,
   CharacteristicListContainer,
 } from "@/styles/workspace/Character.style";
-import { WarningModal } from "@/components/dashboard/WarningModal";
+import { WarningModal } from "@/components/WarningModal";
 import { StateMessage } from "@/components/EmptyMessage";
 
 export default function Description() {
@@ -80,8 +80,7 @@ export default function Description() {
               closeWarningModal();
             }}
             onClickCancel={closeWarningModal}
-            message={"인물 특징을 삭제하시겠습니까?"}
-            ConfirmButtonName={"삭제"}
+            messageKey="characteristicDelete"
           />
         )}
         {characteristicList.length === 0 && (

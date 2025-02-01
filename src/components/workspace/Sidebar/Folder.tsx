@@ -20,7 +20,7 @@ import {
 } from "@/styles/workspace/SideBar.styles";
 import { useDrag } from "@/hooks/workspace/sidebar/useDrag";
 import File from "@/components/workspace/Sidebar/File";
-import { WarningModal } from "@/components/dashboard/WarningModal";
+import { WarningModal } from "@/components/WarningModal";
 
 export default function Folder({
   folder,
@@ -123,8 +123,7 @@ export default function Folder({
           closeModal={closeDeleteModal}
           onClickConfirm={deleteFolderOrFile(folder)}
           onClickCancel={closeDeleteModal}
-          message={`폴더 "${folder.folder_name}"을(를) 삭제하시겠습니까?\n폴더 내 파일도 함께 삭제됩니다.`}
-          ConfirmButtonName="삭제"
+          messageKey="folderDelete"
         />
       )}
     </FolderContainer>

@@ -4,7 +4,7 @@ import { useContext } from "react";
 import Modal from "@/components/Modal";
 import Characteristic from "@/components/workspace/character/detail/Characteristics";
 import { ModalContentAndFooterContainer } from "@/styles/dashboard/IdeaBox/Modal.style";
-import { WarningModal } from "../WarningModal";
+import { WarningModal } from "../../WarningModal";
 import { CloseButton, DeleteButton } from "@/styles/Button";
 import { Subtitle, Title } from "@/styles/workspace";
 import Cover from "@/components/workspace/character/detail/Cover";
@@ -47,8 +47,7 @@ export default function MCharacterModal({
                 closeModal={closeDeleteModal}
                 onClickConfirm={onClickDeleteCharacter}
                 onClickCancel={closeDeleteModal}
-                message="정말로 삭제하시겠습니까?"
-                ConfirmButtonName="삭제"
+                messageKey="memoCharacterDelete"
               />
             )}
             <CloseButton onClick={closeModal}>닫기</CloseButton>

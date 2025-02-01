@@ -1,5 +1,6 @@
 "use client";
 import { ideaCategoryContext } from "@/hooks/dashboard/ideaCategoy";
+import { MyPageContext } from "@/hooks/dashboard/useMyPage";
 import { WorkCategoryContext } from "@/hooks/dashboard/work/workCategory";
 import {
   Title,
@@ -10,14 +11,20 @@ import {
 import { workspaceCategory } from "@/utils/APIs/types";
 import { ideaBoxCategory } from "@/utils/APIs/types";
 import { useContext } from "react";
+import { Help } from "../Help";
 
 export function WorkStudioTitleAndNavigationBar() {
   const { onCategoryOngoingClick, onCategoryCompletedClick, isActiveCategory } =
     useContext(WorkCategoryContext);
 
+  const { user } = useContext(MyPageContext);
+
   return (
     <TitleAndNavigationBar>
-      <Title>대시보드</Title>
+      <Title>
+        {user?.user_name} 작가님의 작업실
+        <Help messageKey="WORK_STUDIO" />
+      </Title>
       <NavigationBar>
         <NavigationButton
           onClick={onCategoryOngoingClick}
@@ -31,6 +38,7 @@ export function WorkStudioTitleAndNavigationBar() {
         >
           완결
         </NavigationButton>
+        <Help messageKey="WORK_STUDIO" isRight={true} />
       </NavigationBar>
     </TitleAndNavigationBar>
   );
@@ -39,10 +47,13 @@ export function WorkStudioTitleAndNavigationBar() {
 export function IdeaBoxTitleAndNavigationBar() {
   const { onClickMemo, onClickCharacter, isActiveCategory } =
     useContext(ideaCategoryContext);
+  const { user } = useContext(MyPageContext);
 
   return (
     <TitleAndNavigationBar>
-      <Title>아이디어 보관함</Title>
+      <Title>
+        {user?.user_name} 작가님의 아이디어 <Help messageKey="IDEA_BOX" />
+      </Title>
       <NavigationBar>
         <NavigationButton
           onClick={onClickMemo}
@@ -56,6 +67,7 @@ export function IdeaBoxTitleAndNavigationBar() {
         >
           인물
         </NavigationButton>
+        <Help messageKey="IDEA_BOX" isRight={true} />
       </NavigationBar>
     </TitleAndNavigationBar>
   );
@@ -64,10 +76,14 @@ export function IdeaBoxTitleAndNavigationBar() {
 export function TrashTitleAndNavigationBar() {
   const { onCategoryTrashClick, isActiveCategory } =
     useContext(WorkCategoryContext);
+  const { user } = useContext(MyPageContext);
 
   return (
     <TitleAndNavigationBar>
-      <Title>휴지통</Title>
+      <Title>
+        휴지통
+        <Help messageKey="TRASH" />
+      </Title>
       <NavigationBar>
         <NavigationButton
           onClick={onCategoryTrashClick}
@@ -75,6 +91,7 @@ export function TrashTitleAndNavigationBar() {
         >
           작품
         </NavigationButton>
+        <Help messageKey="TRASH" isRight={true} />
       </NavigationBar>
     </TitleAndNavigationBar>
   );

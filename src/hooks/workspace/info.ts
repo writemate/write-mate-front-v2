@@ -10,7 +10,7 @@ import {
   updateTitle,
   updateGrade,
 } from "@/utils/APIs/workspace";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { createContext, useEffect, useRef, useState } from "react";
 import { useInputLiveUpdate } from "../common/useInputLiveUpdate";
 import { useOnClickUpdate } from "../common/useOnClickUpdate";
@@ -23,6 +23,7 @@ export function useInfo() {
     queryKey: workspaceQueryKeys.info(workspace_id),
     queryFn: getInfo(workspace_id),
   });
+
   const imageInputRef = useRef<HTMLInputElement>(null);
 
   const onChangeTitle = useInputLiveUpdate(

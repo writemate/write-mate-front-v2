@@ -35,6 +35,19 @@ export const NavigationBar = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.color.gray200};
   margin-bottom: 4px;
   gap: 32px;
+
+  :last-child {
+    svg {
+      visibility: hidden;
+    }
+  }
+  ${media.tablet} {
+    :last-child {
+      visibility: visible;
+      margin-left: auto;
+      margin-right: 16px;
+    }
+  }
 `;
 
 export const NavigationButton = styled.button<{ $isActivated?: boolean }>`

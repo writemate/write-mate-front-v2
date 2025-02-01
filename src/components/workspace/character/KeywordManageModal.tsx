@@ -17,7 +17,7 @@ import {
 } from "@/styles/workspace/Character.style";
 import KeywordCancel from "@/assets/workspace/character/keywordCancel.svg";
 import { useContext, useState } from "react";
-import { WarningModal } from "@/components/dashboard/WarningModal";
+import { WarningModal } from "@/components/WarningModal";
 import { useWarningModal } from "@/hooks/common/useWarningModal";
 import { SubTitle } from "@/styles/workspace/Info.style";
 
@@ -123,8 +123,7 @@ export function KeywordManageModal() {
                     closeWarningModal();
                   }}
                   onClickCancel={closeWarningModal}
-                  message={"키워드를 삭제하시겠습니까? "}
-                  ConfirmButtonName={"삭제"}
+                  messageKey="keywordDelete"
                 />
               )}
             </KeywordListContainer>

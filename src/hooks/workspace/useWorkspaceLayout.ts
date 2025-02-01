@@ -1,6 +1,18 @@
 "use client";
 import { createContext, useState } from "react";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
+import { useQueries, useQuery } from "@tanstack/react-query";
+import { workspaceQueryKeys } from "@/utils/APIs/queryKeys";
+import {
+  getInfo,
+  getPlotFolderList,
+  getScriptFolderList,
+} from "@/utils/APIs/workspace";
+import {
+  getCharacterList,
+  getKeywordList,
+} from "@/utils/APIs/workspace/character";
+
 
 enum SidebarType {
   plot,
@@ -40,8 +52,57 @@ export const useWorkspaceLayout = () => {
   const isScriptActive = getActive("script", isScriptOpen);
   const isCharacterActive = getActive("character", false);
   const isScriptPage = pageOn("script");
+  const { workspace_id } = useParams<{ workspace_id: string }>();
+  const [
+    { data: info, error: infoError, isLoading: infoLoading },
+    { data: plotFolders, error: plotError, isLoading: plotLoading },
+    { data: scriptFolders, error: scriptError, isLoading: scriptLoading },
+    {
+      data: characterList,
+      error: characterError,
+      isLoading: isCharactersLoading,
+    },
+    { data: keywordList, error: keywordError, isLoading: isKeywordsLoading },
+  ] = useQueries({
+    queries: [
+      {
+        queryKey: workspaceQueryKeys.info(workspace_id),
+        queryFn: getInfo(workspace_id),
+      },
+      {
+        queryKey: workspaceQueryKeys.plotSidebar(workspace_id),
+        queryFn: getPlotFolderList(workspace_id),
+      },
+      {
+        queryKey: workspaceQueryKeys.scriptSidebar(workspace_id),
+        queryFn: getScriptFolderList(workspace_id),
+      },
+      {
+        queryKey: workspaceQueryKeys.characterKeywordList(workspace_id),
+        queryFn: getKeywordList(workspace_id),
+      },
+      {
+        queryKey: workspaceQueryKeys.characterList(workspace_id),
+        queryFn: getCharacterList(workspace_id),
+      },
+    ],
+  });
+
+  // 전체 로딩 상태 체크
+  const isLoading =
+    infoLoading ||
+    plotLoading ||
+    scriptLoading ||
+    isCharactersLoading ||
+    isKeywordsLoading;
+
+  // 에러 체크
+  const hasError =
+    infoError || plotError || scriptError || characterError || keywordError;
 
   return {
+    hasError,
+    isLoading,
     togglePlot,
     toggleScript,
     isPlotOpen,

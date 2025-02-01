@@ -4,14 +4,31 @@ import {
   clickable,
   FlexColumnCenter,
   FlexColumnLeftStart,
-  FlexRowCenter,
   FlexRowLeftStart,
-  FlexRowSpaceBetween,
-  MainContainer,
 } from "@/styles";
 import RedoIcon from "@/assets/workspace/script/redo.svg";
 import UndoIcon from "@/assets/workspace/script/undo.svg";
 import { media } from "../media";
+import Quill from "quill";
+
+// 폰트 등록
+export const Font = Quill.import("formats/font") as any;
+Font.whitelist = ["nanum-gothic", "nanum-myeongjo"];
+Quill.register(Font, true);
+
+// 사이즈 등록
+export const Size = Quill.import("attributors/style/size") as any;
+Size.whitelist = [
+  "12px",
+  "14px",
+  "16px",
+  "18px",
+  "20px",
+  "24px",
+  "30px",
+  "36px",
+];
+Quill.register(Size, true);
 
 export const ScriptContainer = styled.div`
   ${FlexColumnLeftStart}
@@ -73,14 +90,22 @@ export const WhiteInputSpaceContainer = styled.div`
   .ql-container {
     position: relative;
     background: ${({ theme }) => theme.color.white};
+    border: 1px solid ${({ theme }) => theme.color.gray75};
     width: 100%;
-    border: none;
     min-height: 100vh;
     flex: 1;
   }
 
   .ql-editor {
     padding: 119px 95px;
+    p {
+      font-family: "NanumMyeongjo", sans-serif;
+      font-size: 16px;
+      span {
+        font-family: "NanumMyeongjo", sans-serif;
+        font-size: 16px;
+      }
+    }
 
     &.ql-blank::before {
       padding: 119px 95px;
