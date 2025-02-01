@@ -11,6 +11,7 @@ import Close from "@/assets/icons/close.svg";
 import Copy from "@/assets/icons/copy.svg";
 import Add from "@/assets/icons/addButton.svg";
 import TextareaAutosize from "react-textarea-autosize";
+import { media } from "../media";
 
 export const IdeaBoxContainer = styled.div`
   ${FlexColumnCenter}
@@ -20,6 +21,10 @@ export const IdeaBoxContainer = styled.div`
   background-color: #ffffff;
   flex-shrink: 0;
   flex-grow: 0;
+
+  ${media.tablet} {
+    display: none;
+  }
 `;
 
 export const IdeaBoxHeader = styled.div`
