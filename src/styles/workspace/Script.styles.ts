@@ -4,10 +4,7 @@ import {
   clickable,
   FlexColumnCenter,
   FlexColumnLeftStart,
-  FlexRowCenter,
   FlexRowLeftStart,
-  FlexRowSpaceBetween,
-  MainContainer,
 } from "@/styles";
 import RedoIcon from "@/assets/workspace/script/redo.svg";
 import UndoIcon from "@/assets/workspace/script/undo.svg";
@@ -15,12 +12,12 @@ import { media } from "../media";
 import Quill from "quill";
 
 // 폰트 등록
-const Font = Quill.import("formats/font") as any;
+export const Font = Quill.import("formats/font") as any;
 Font.whitelist = ["nanum-gothic", "nanum-myeongjo"];
 Quill.register(Font, true);
 
 // 사이즈 등록
-const Size = Quill.import("attributors/style/size") as any;
+export const Size = Quill.import("attributors/style/size") as any;
 Size.whitelist = [
   "12px",
   "14px",

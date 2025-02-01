@@ -1,4 +1,9 @@
-import { Redo, ToolbarContainer, Undo } from "@/styles/workspace/Script.styles";
+import {
+  Redo,
+  Size,
+  ToolbarContainer,
+  Undo,
+} from "@/styles/workspace/Script.styles";
 
 export default function CustomToolbar({ editorRef }: { editorRef: any }) {
   const handleUndo = () => {
@@ -15,17 +20,6 @@ export default function CustomToolbar({ editorRef }: { editorRef: any }) {
     }
   };
 
-  const fontSize = [
-    "12px",
-    "14px",
-    "16px",
-    "18px",
-    "20px",
-    "24px",
-    "30px",
-    "36px",
-  ];
-
   return (
     <ToolbarContainer id="toolbar">
       {/* 되돌리기, 다시하기 */}
@@ -41,7 +35,7 @@ export default function CustomToolbar({ editorRef }: { editorRef: any }) {
 
       {/* 헤더 크기 */}
       <select className="ql-size" defaultValue={"16px"}>
-        {fontSize.map((val) => (
+        {Size.whitelist.map((val: string) => (
           <option key={val} value={val}>
             {val}
           </option>
