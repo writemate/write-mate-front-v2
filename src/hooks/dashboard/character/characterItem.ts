@@ -1,5 +1,4 @@
 import { dashboardQueryKeys } from "@/utils/APIs/queryKeys";
-import { TCharacter, TMCharacter, TSimpleCharacter } from "@/utils/APIs/types";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 
