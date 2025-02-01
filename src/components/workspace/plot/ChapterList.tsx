@@ -36,21 +36,30 @@ export default function ChapterList() {
                 ref={provided.innerRef}
               >
                 {chapterList.map((chapter, index) => (
-                  <Draggable
-                    key={chapter.id}
-                    draggableId={chapter.id}
-                    index={index}
-                  >
-                    {(provided) => (
-                      <div
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
+                  <>
+                    {chapter.id && (
+                      <Draggable
+                        key={chapter.id}
+                        draggableId={chapter.id}
+                        index={index}
                       >
+                        {(provided) => (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                          >
+                            <Chapter {...chapter} />
+                          </div>
+                        )}
+                      </Draggable>
+                    )}
+                    {!chapter.id && (
+                      <div key={index}>
                         <Chapter {...chapter} />
                       </div>
                     )}
-                  </Draggable>
+                  </>
                 ))}
                 {provided.placeholder}
               </div>

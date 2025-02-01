@@ -11,18 +11,18 @@ export function useCharacterList() {
     isLoading,
     error,
   } = useQuery({
-    queryKey: [dashboardQueryKeys.character()],
+    queryKey: dashboardQueryKeys.characterList(),
     queryFn: getMCharacterList,
   });
 
   const onClickAddCharacter = useOnClickUpdate({
     mutationFn: createMCharacter,
-    queryKey: [dashboardQueryKeys.character()],
+    queryKey: dashboardQueryKeys.characterList(),
     savingMessage: "캐릭터 추가 중",
     errorMessage: "캐릭터 추가에 실패했습니다.",
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [dashboardQueryKeys.character()],
+        queryKey: dashboardQueryKeys.characterList(),
       });
       notifySuccess("캐릭터가 추가되었습니다.");
     },

@@ -30,6 +30,43 @@ const useChapterList = (plot_id: string) => {
         queryKey: workspaceQueryKeys.info(workspace_id),
       });
     },
+    onMutate: () => {
+      const previousPlot = queryClient.getQueryData<TPlot>(
+        workspaceQueryKeys.plot(workspace_id, plot_id)
+      );
+      if (!previousPlot) return;
+
+      const previousChapters = previousPlot.chapter_list;
+      const newChapters = [
+        ...previousChapters,
+        {
+          id: null,
+          chapter_name: "",
+          chapter_description: "",
+          pevent_list: [
+            {
+              id: null,
+              event_name: "",
+              event_description: "",
+              character_list: [],
+            },
+          ],
+          is_folded: false,
+        },
+      ];
+
+      queryClient.setQueryData<TPlot>(
+        workspaceQueryKeys.plot(workspace_id, plot_id),
+        { ...previousPlot, chapter_list: newChapters }
+      );
+      return { previousPlot };
+    },
+    onError: (error, _, context) => {
+      queryClient.setQueryData(
+        workspaceQueryKeys.plot(workspace_id, plot_id),
+        context?.previousPlot
+      );
+    },
   })();
 
   // 챕터 순서 수정하기

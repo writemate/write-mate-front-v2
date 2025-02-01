@@ -18,11 +18,7 @@ export default function ScriptSidebar() {
     onChangeGrade,
     onChangeGenre,
   } = useContext(InfoContext);
-  const { expected_quantity } = data ?? {};
-  const realExpectedQuantity =
-    (expected_quantity ?? 0) > 0 ? expected_quantity : undefined;
-  const grade = data?.grade ?? "전체 이용가";
-  const genre = data?.genre === "" ? null : data?.genre;
+  const { expected_quantity, grade, genre } = data ?? {};
 
   return (
     <Container>
@@ -34,7 +30,7 @@ export default function ScriptSidebar() {
         <Input
           type=""
           placeholder="예상 분량을 적어주세요"
-          defaultValue={realExpectedQuantity}
+          defaultValue={expected_quantity}
           onChange={onChangeExpectedQuantity}
           disabled={isLoading}
         />
@@ -48,7 +44,7 @@ export default function ScriptSidebar() {
               "19세 이용가",
             ] as const
           }
-          selected={grade}
+          selected={grade ?? null}
           setSelected={onChangeGrade}
         />
         <DropdownMenu

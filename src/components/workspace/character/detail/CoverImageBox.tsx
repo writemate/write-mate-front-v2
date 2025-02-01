@@ -10,10 +10,10 @@ import { useContext, useRef } from "react";
 import OrangePlusIcon from "@/assets/icons/orangePlus.svg";
 import { CharacterContext } from "@/hooks/workspace/character/character";
 import { CharacterImage } from "@/styles/workspace/Character.style";
+import { getName } from "@/utils/getCharacterName";
 
 export default function CoverImageBox() {
-  const { data, isLoading, onChangeCoverImage, getName } =
-    useContext(CharacterContext);
+  const { data, isLoading, onChangeCoverImage } = useContext(CharacterContext);
   const src = data?.ch_image ?? null;
   const ref = useRef<HTMLInputElement>(null);
   const onClickChangeCover = () => {

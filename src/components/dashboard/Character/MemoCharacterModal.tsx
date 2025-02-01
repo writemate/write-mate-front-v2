@@ -2,73 +2,67 @@
 import { useContext } from "react";
 
 import Modal from "@/components/Modal";
-import Image from "@/components/dashboard/Character/Image";
-import BirthAndGender from "@/components/dashboard/Character/BirthAndGender";
-import Description from "@/components/dashboard/Character/Description";
-import Characteristic from "@/components/dashboard/Character/Characteristic";
-
-import { CharacterItemContext } from "@/hooks/dashboard/character/characterItem";
-
+import Characteristic from "@/components/workspace/character/detail/Characteristics";
 import { ModalContentAndFooterContainer } from "@/styles/dashboard/IdeaBox/Modal.style";
-import {
-  CoverContainer,
-  CoverContentsContainer,
-} from "@/styles/workspace/Info.style";
 import { WarningModal } from "../../WarningModal";
 import { CloseButton, DeleteButton } from "@/styles/Button";
 import { Subtitle, Title } from "@/styles/workspace";
+import Cover from "@/components/workspace/character/detail/Cover";
+import { CharacterContext } from "@/hooks/workspace/character/character";
+import { useWarningModal } from "@/hooks/common/useWarningModal";
 
-export default function MCharacterModal() {
+export default function MCharacterModal({
+  closeModal,
+}: {
+  closeModal: () => void;
+}) {
   const {
-    closeEditModal,
-    isOpenDeleteModal,
-    closeDeleteModal,
-    onClickOpenDeleteModal,
-    onDeleteMCharacter,
-    deleteCharacteristic,
-    character,
+    data,
+    isLoading,
     onChangeName,
     onChangeRole,
-  } = useContext(CharacterItemContext);
-
+    onClickDeleteCharacter,
+  } = useContext(CharacterContext);
+  const {
+    isOpenDeleteModal,
+    onOpenModal,
+    closeModal: closeDeleteModal,
+  } = useWarningModal();
   return (
-    <Modal closeModal={closeEditModal} maxWidth="1024px" maxHeight="80vh">
+    <Modal closeModal={closeModal} maxWidth="1024px" maxHeight="80vh">
       <ModalContentAndFooterContainer>
         <Title>
           <div style={{ display: "flex", flexDirection: "row", width: "100%" }}>
             <input
               className="name"
-              defaultValue={character.ch_name}
+              defaultValue={data?.ch_name}
               onChange={onChangeName}
               placeholder="인물의 이름을 입력하세요."
+              disabled={isLoading}
+              autoFocus
             />
-            <DeleteButton onClick={onClickOpenDeleteModal()}>삭제</DeleteButton>
-            {isOpenDeleteModal && deleteCharacteristic == -1 && (
+            <DeleteButton onClick={onOpenModal}>삭제</DeleteButton>
+            {isOpenDeleteModal && (
               <WarningModal
                 closeModal={closeDeleteModal}
-                onClickConfirm={onDeleteMCharacter}
+                onClickConfirm={onClickDeleteCharacter}
                 onClickCancel={closeDeleteModal}
                 messageKey="memoCharacterDelete"
               />
             )}
-            <CloseButton onClick={closeEditModal}>닫기</CloseButton>
+            <CloseButton onClick={closeModal}>닫기</CloseButton>
           </div>
           <Subtitle>
             <input
               className="role"
-              defaultValue={character.role}
+              defaultValue={data?.role}
               onChange={onChangeRole}
               placeholder="인물의 역할을 입력하세요."
+              disabled={isLoading}
             />
           </Subtitle>
         </Title>
-        <CoverContainer>
-          <Image />
-          <CoverContentsContainer>
-            <BirthAndGender />
-            <Description />
-          </CoverContentsContainer>
-        </CoverContainer>
+        <Cover />
         <Characteristic />
       </ModalContentAndFooterContainer>
     </Modal>

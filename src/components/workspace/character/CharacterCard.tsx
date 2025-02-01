@@ -13,7 +13,7 @@ import StarActive from "@/assets/workspace/character/starActive.svg";
 import StarInactive from "@/assets/workspace/character/starInactive.svg";
 import { TCharacter } from "@/utils/APIs/types";
 import { useContext } from "react";
-import { getName } from "@/hooks/dashboard/character/characterItem";
+import { getName } from "@/utils/getCharacterName";
 import { NameAndRole } from "@/styles/workspace/Character.style";
 export function CharacterCard({
   index,
