@@ -16,8 +16,11 @@ import Folder from "@/components/workspace/Sidebar/Folder";
 import File from "@/components/workspace/Sidebar/File";
 import { SidebarContext } from "@/stores/sidebarContext";
 import { SaveStatus } from "@/styles/workspace/Header.styles";
+import { useContext } from "react";
+import { WorkspaceLayoutContext } from "@/hooks/workspace/useWorkspaceLayout";
 
 export default function Sidebar({ type }: { type: "plot" | "script" }) {
+  const { sidebarRef } = useContext(WorkspaceLayoutContext);
   const hookValues = useSidebar(type);
   const {
     isLoading,
@@ -34,7 +37,7 @@ export default function Sidebar({ type }: { type: "plot" | "script" }) {
 
   return (
     <SidebarContext.Provider value={hookValues}>
-      <SidebarContainer onClick={clearSelect}>
+      <SidebarContainer onClick={clearSelect} ref={sidebarRef}>
         <SidebarTitleContainer>
           <SidebarTitle>{type === "plot" ? "플롯" : "원고"}</SidebarTitle>
           <SaveStatus style={{ marginLeft: "10px" }}>
