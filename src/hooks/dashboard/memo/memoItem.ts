@@ -33,7 +33,7 @@ export function useMemoItem(memo: TMemo) {
 
   const closeEditModal = () => {
     queryClient.invalidateQueries({
-      queryKey: [dashboardQueryKeys.memo()],
+      queryKey: dashboardQueryKeys.memo(),
     });
     setIsOpenEditModal(false);
   };
