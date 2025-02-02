@@ -24,6 +24,8 @@ const usePlot = () => {
       if (target) {
         target.scrollIntoView({ behavior: "smooth" });
       }
+      // 이후에는 hash를 지워준다.
+      window.location.hash = "";
     }
   }, [plot]);
 
