@@ -27,8 +27,8 @@ function Chapter({
   id: chapterId,
   chapter_name: chapterName,
   pevent_list: pevent,
-  plot_id: plotId,
-}: TChapter & { plot_id: string }) {
+  plotId: plotId,
+}: TChapter & { plotId: string }) {
   const [isFolded, setIsFolded] = useState(true);
   const { workspace_id } = useParams<{ workspace_id: string }>();
   const toggleChapterFold = (e: React.MouseEvent<HTMLButtonElement>) => {
