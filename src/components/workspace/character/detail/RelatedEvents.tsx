@@ -2,7 +2,6 @@
 import { Container, SubTitle } from "@/styles/workspace/Info.style";
 import {
   EventColumnContainer,
-  EventTitle,
   EventListContainer,
   EventTitleDiv,
 } from "@/styles/workspace/plot/Event.styles";
@@ -23,7 +22,7 @@ import { TChapter } from "@/utils/APIs/types";
 import { CharacterContext } from "@/hooks/workspace/character/character";
 import { useParams } from "next/navigation";
 
-function Chapter({
+export function Chapter({
   id: chapterId,
   chapter_name: chapterName,
   pevent_list: pevent,
