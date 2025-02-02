@@ -15,6 +15,7 @@ import { createContext, useEffect, useRef, useState } from "react";
 import { useInputLiveUpdate } from "../common/useInputLiveUpdate";
 import { useOnClickUpdate } from "../common/useOnClickUpdate";
 import { notifySuccess } from "@/utils/showToast";
+import { TWorkInfo } from "@/utils/APIs/types";
 
 export function useInfo() {
   const queryClient = useQueryClient();
@@ -58,6 +59,25 @@ export function useInfo() {
     onSuccess: () => {
       notifySuccess("장르가 변경되었습니다.");
     },
+    onMutate: (value: string) => {
+      const prevData = queryClient.getQueryData([
+        workspaceQueryKeys.info(workspace_id),
+      ]) as TWorkInfo;
+      if (prevData) {
+        queryClient.setQueryData(workspaceQueryKeys.info(workspace_id), {
+          ...prevData,
+          genre: value,
+        });
+      }
+      return { prevData };
+    },
+    onError: (error, variables, context) => {
+      if (context?.prevData)
+        queryClient.setQueryData(
+          workspaceQueryKeys.info(workspace_id),
+          context?.prevData
+        );
+    },
   });
 
   const onChangeGrade = useOnClickUpdate({
@@ -67,6 +87,18 @@ export function useInfo() {
     errorMessage: "등급을 저장하는 중에 문제가 발생했습니다.",
     onSuccess: () => {
       notifySuccess("등급이 변경되었습니다.");
+    },
+    onMutate: (value: string) => {
+      const prevData = queryClient.getQueryData([
+        workspaceQueryKeys.info(workspace_id),
+      ]) as TWorkInfo;
+      if (prevData) {
+        queryClient.setQueryData(workspaceQueryKeys.info(workspace_id), {
+          ...prevData,
+          grade: value,
+        });
+      }
+      return { prevData };
     },
   });
 

@@ -18,40 +18,44 @@ import { useMemoCharacter } from "@/hooks/dashboard/character/useMemoCharacterDe
 
 export function CharacterItem({ character }: { character: TMCharacter }) {
   const { isOpenEditModal, onClickItem, closeEditModal } = useCharacterItem(
-    character.id
+    character.id ?? ""
   );
-  const value = useMemoCharacter(character.id);
+  const value = useMemoCharacter(character.id ?? "");
+  const realCharacter = (value.data ?? character) as TMCharacter;
   return (
     <>
       <CharacterCard
-        onClick={onClickItem}
+        onClick={character.id ? onClickItem : undefined}
         style={{ border: "1px solid black" }}
       >
         <CharacterCardTitle>
           <CharacterImage
-            $src={character.ch_image}
+            $src={realCharacter.ch_image}
             $heightPx={42}
             $widthPx={42}
           >
-            {!character.ch_image && <p>{getName(character)[0]}</p>}
+            {!realCharacter.ch_image && <p>{getName(realCharacter)[0]}</p>}
           </CharacterImage>
           <NameAndRole>
             <CharacterName
               $isNew={
-                character.ch_name === "" || (character.ch_name ? false : true)
+                realCharacter.ch_name === "" ||
+                (realCharacter.ch_name ? false : true)
               }
             >
-              {getName(character)}
+              {character.id ? getName(realCharacter) : "생성 중"}
             </CharacterName>
-            <CharacterRole>{character.role}</CharacterRole>
+            <CharacterRole>{realCharacter.role}</CharacterRole>
           </NameAndRole>
         </CharacterCardTitle>
         <CharacterDescription>
-          {character.description}
-          {!character.description && "인물 설명을 적어주세요."}
+          {realCharacter.description}
+          {character.id &&
+            !realCharacter.description &&
+            "인물 설명을 적어주세요."}
         </CharacterDescription>
         <MemoUpdatedDate>
-          {new Date(character.updatedAt).toLocaleString("ko-KR", {
+          {new Date(realCharacter.updatedAt).toLocaleString("ko-KR", {
             year: "numeric",
             month: "2-digit",
             day: "2-digit",

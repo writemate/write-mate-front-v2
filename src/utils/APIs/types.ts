@@ -22,14 +22,14 @@ export const ideaBoxCategory = {
 } as const;
 
 export type TMemo = {
-  id: string;
+  id: string | null;
   memo_name: string;
   memo_description: string;
   updatedAt: string;
 };
 
 export type TMCharacter = {
-  id: string;
+  id: string | null;
   ch_name: string;
   ch_image: string;
   description: string;
@@ -102,7 +102,7 @@ export type TCharacter = {
   gender: string;
   characteristic: Array<{ title: string; content: string }>;
   keyword: TKeyword[];
-  relatedEvent: TChapter[];
+  relatedEvent: Array<TChapter & { plotId: string }>;
 };
 
 export type TSimpleCharacter = {
@@ -180,7 +180,7 @@ export type TStorageCharacter = {
  * 설정집 타입
  */
 export type TWork = {
-  id: string;
+  id: string | null;
   title: string;
   cover: string;
   updatedAt: string; // ISO 날짜 문자열로 정의

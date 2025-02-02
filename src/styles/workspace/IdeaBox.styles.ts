@@ -11,6 +11,7 @@ import Close from "@/assets/icons/close.svg";
 import Copy from "@/assets/icons/copy.svg";
 import Add from "@/assets/icons/addButton.svg";
 import TextareaAutosize from "react-textarea-autosize";
+import { media } from "../media";
 
 export const IdeaBoxContainer = styled.div`
   ${FlexColumnCenter}
@@ -20,6 +21,10 @@ export const IdeaBoxContainer = styled.div`
   background-color: #ffffff;
   flex-shrink: 0;
   flex-grow: 0;
+
+  ${media.tablet} {
+    display: none;
+  }
 `;
 
 export const IdeaBoxHeader = styled.div`
@@ -54,10 +59,11 @@ export const SelectIdeaTypeButton = styled.div<{ $isSelected: boolean }>`
   height: 100%;
   font-size: 14px;
   position: relative;
-  ${({ $isSelected }) =>
+  ${({ $isSelected, theme }) =>
     $isSelected &&
     `
     font-weight: 600;
+    color: ${theme.color.orange500};
     &::after {
       content: '';
       position: absolute;
@@ -66,7 +72,7 @@ export const SelectIdeaTypeButton = styled.div<{ $isSelected: boolean }>`
       transform: translateX(-50%);
       width: 25px;
       height: 2px;
-      background-color: #000000;
+      background-color: ${theme.color.orange500};
     }
   `}
 `;
@@ -126,10 +132,8 @@ export const CopyButton = styled(Copy)`
 `;
 
 export const AddButton = styled(Add)`
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
   ${clickable}
-  border-radius: 100%;
-  border: 1px solid ${({ theme }) => theme.color.gray400};
-  margin-top: 10px;
+  flex-shrink: 0;
 `;

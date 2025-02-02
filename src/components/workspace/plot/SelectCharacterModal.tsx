@@ -5,6 +5,7 @@ import {
   CharacterCheckBtn,
   CharacterDefaultBtn,
   ModalContainer,
+  MoveLink,
   SelectBtnWrapper,
 } from "@/styles/workspace/plot/CharacterModal.styles";
 import useSelectCharacterModal from "@/hooks/workspace/plot/useSelectCharacterModal";
@@ -14,6 +15,9 @@ import {
   CharacterListContext,
   useCharacterList,
 } from "@/hooks/workspace/character/characterList";
+import { getCharacter } from "@/utils/APIs/workspace/character";
+import { getName } from "@/utils/getCharacterName";
+import { MoveToCharacter } from "../info/MainCharacter";
 
 interface CharacterModalProps {
   chapterId: string;
@@ -28,7 +32,7 @@ export default function SelectCharacterModal({
   modalRef,
   selectedCharacterList,
 }: CharacterModalProps) {
-  const { characterList } = useCharacterList();
+  const { characterList, workspace_id } = useCharacterList();
   const {
     onSelectCharacterClick,
     onUnselectCharacterClick,
@@ -46,10 +50,13 @@ export default function SelectCharacterModal({
   return (
     <ModalContainer ref={modalRef}>
       <SelectBtnWrapper>
-        <AutoBtn onClick={handleAutoChatacter}>
+        {/* <AutoBtn onClick={handleAutoChatacter}>
           <Circulation style={{ marginRight: "6px" }} />
           자동 연동
-        </AutoBtn>
+        </AutoBtn> */}
+        <MoveLink href={`/${workspace_id}/character`}>
+          인물 생성하러 가기
+        </MoveLink>
         {selectedCharacterList.map((selectCharacter) => (
           <CharacterCheckBtn
             type="button"
@@ -57,7 +64,7 @@ export default function SelectCharacterModal({
             key={selectCharacter.id}
           >
             <Check style={{ marginRight: "6px" }} />
-            {selectCharacter.ch_name}
+            {getName(selectCharacter)}
           </CharacterCheckBtn>
         ))}
       </SelectBtnWrapper>
@@ -68,7 +75,7 @@ export default function SelectCharacterModal({
             onClick={onSelectCharacterClick(character.id)}
             key={character.id}
           >
-            {character.ch_name}
+            {getName(character)}
           </CharacterDefaultBtn>
         ))}
       </div>

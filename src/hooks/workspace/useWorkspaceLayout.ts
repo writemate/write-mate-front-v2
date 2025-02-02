@@ -50,8 +50,8 @@ export const useWorkspaceLayout = () => {
         closeSidebar();
       }
     };
-    document.addEventListener("click", handleClick);
-    return () => document.removeEventListener("click", handleClick);
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
   }, [sidebarType]);
 
   // 사이드바가 열려있다면, 해당 항목 아이콘 활성화

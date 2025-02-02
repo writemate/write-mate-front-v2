@@ -1,5 +1,5 @@
 import { colorSystem } from "@/styles/colorSystem";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { ChapterDragWrap, IconButton } from "./Chapter.styles";
 import { FlexColumnLeftStart, FlexRowLeftStart } from "@/styles";
 import DeleteIcon from "@/assets/workspace/plot/delete.svg";
@@ -86,7 +86,7 @@ export const EventColumnContainer = styled.div`
   width: 100%;
 `;
 
-export const EventTitle = styled.input`
+const EventTitleCss = css`
   height: 30px;
   width: 95%;
   font-family: "Pretendard";
@@ -115,6 +115,19 @@ export const EventTitle = styled.input`
     font-size: 14px;
     margin-top: 8px;
   }
+`;
+export const EventTitle = styled.input`
+  ${EventTitleCss}
+`;
+
+export const EventTitleDiv = styled.div<{ $isBlank: boolean }>`
+  ${EventTitleCss}
+  margin-top: 5px;
+  ${({ $isBlank, theme }) =>
+    $isBlank &&
+    `
+      color: ${theme.color.gray300};
+    `}
 `;
 
 export const EventDescription = styled(TextareaAutosize)`

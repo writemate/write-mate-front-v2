@@ -8,13 +8,15 @@ import { dashboardQueryKeys } from "@/utils/APIs/queryKeys";
 import { workspaceCategory } from "@/utils/APIs/types";
 import { notifySuccess } from "@/utils/showToast";
 import { useQueryClient } from "@tanstack/react-query";
-import { createContext, useRef, useState } from "react";
+import { createContext, useContext, useRef, useState } from "react";
+import { WorkCategoryContext } from "./workCategory";
 
 export function useKebab(
   workId: string,
   titleInputRef: React.RefObject<HTMLInputElement>
 ) {
   const queryClient = useQueryClient();
+  const { workCategory } = useContext(WorkCategoryContext);
 
   const [isKebabOpen, setIsKebabOpen] = useState(false);
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
@@ -61,30 +63,12 @@ export function useKebab(
       notifySuccess("작품 표지가 변경되었습니다.");
     },
     onMutate: (value: File) => {
-      const prevDataOngoing = queryClient.getQueryData([
-        dashboardQueryKeys.workStudio(),
-        "ongoing",
-      ]);
-      if (prevDataOngoing) {
+      const prevData = queryClient.getQueryData(
+        dashboardQueryKeys.workStudio(workCategory)
+      );
+      if (prevData) {
         queryClient.setQueryData(
-          [dashboardQueryKeys.workStudio(), "ongoing"],
-          (prev: any) => {
-            return prev.map((work: any) => {
-              if (work.id === workId) {
-                return { ...work, cover: URL.createObjectURL(value) };
-              }
-              return work;
-            });
-          }
-        );
-      }
-      const prevDataCompleted = queryClient.getQueryData([
-        dashboardQueryKeys.workStudio(),
-        "completed",
-      ]);
-      if (prevDataCompleted) {
-        queryClient.setQueryData(
-          [dashboardQueryKeys.workStudio(), "completed"],
+          dashboardQueryKeys.workStudio(workCategory),
           (prev: any) => {
             return prev.map((work: any) => {
               if (work.id === workId) {
@@ -96,19 +80,15 @@ export function useKebab(
         );
       }
       closeKebab();
-      return { prevDataOngoing, prevDataCompleted };
+      return { prevData };
     },
     onError: (error, variables, context) => {
-      if (context?.prevDataCompleted)
+      if (context?.prevData) {
         queryClient.setQueryData(
-          [dashboardQueryKeys.workStudio(), "completed"],
-          context?.prevDataCompleted
+          dashboardQueryKeys.workStudio(workCategory),
+          context.prevData
         );
-      if (context?.prevDataOngoing)
-        queryClient.setQueryData(
-          [dashboardQueryKeys.workStudio(), "ongoing"],
-          context?.prevDataOngoing
-        );
+      }
     },
   });
 
@@ -125,21 +105,34 @@ export function useKebab(
   // 카테고리 변경
   const mutateCategory = useOnClickUpdate({
     mutationFn: updateWorkCategory(workId),
-    queryKey: ["workCategory", workId],
+    queryKey: dashboardQueryKeys.allWorkStudio(),
     onSuccess: () => {
       notifySuccess("작품의 카테고리가 변경되었습니다.");
-      queryClient.invalidateQueries({
-        queryKey: [dashboardQueryKeys.workStudio(), "ongoing"],
-      });
-      queryClient.invalidateQueries({
-        queryKey: [dashboardQueryKeys.workStudio(), "completed"],
-      });
-      queryClient.invalidateQueries({
-        queryKey: [dashboardQueryKeys.workStudio(), "trash"],
-      });
     },
     savingMessage: "카테고리 변경 중",
     errorMessage: "카테고리 변경에 실패했습니다.",
+    onMutate: (value: keyof typeof workspaceCategory) => {
+      const prevData = queryClient.getQueryData(
+        dashboardQueryKeys.workStudio(workCategory)
+      );
+      if (prevData) {
+        queryClient.setQueryData(
+          dashboardQueryKeys.workStudio(workCategory),
+          (prev: any) => {
+            return prev.filter((work: any) => work.id !== workId);
+          }
+        );
+      }
+      return { prevData };
+    },
+    onError: (error, variables, context) => {
+      if (context?.prevData) {
+        queryClient.setQueryData(
+          dashboardQueryKeys.workStudio(workCategory),
+          context.prevData
+        );
+      }
+    },
   });
   const onClickChangeCategory =
     (workCategory: keyof typeof workspaceCategory) => () => {
@@ -163,15 +156,34 @@ export function useKebab(
   // 삭제하기
   const onDeleteWork = useOnClickUpdate({
     mutationFn: deleteWork(workId),
-    queryKey: [dashboardQueryKeys.workStudio(), "trash"],
+    queryKey: dashboardQueryKeys.workStudio(workCategory),
     onSuccess: () => {
       notifySuccess("작품이 삭제되었습니다.");
-      queryClient.invalidateQueries({
-        queryKey: [dashboardQueryKeys.workStudio(), "trash"],
-      });
     },
     savingMessage: "작품 삭제 중",
     errorMessage: "작품 삭제에 실패했습니다.",
+    onMutate: () => {
+      const prevData = queryClient.getQueryData(
+        dashboardQueryKeys.workStudio(workCategory)
+      );
+      if (prevData) {
+        queryClient.setQueryData(
+          dashboardQueryKeys.workStudio(workCategory),
+          (prev: any) => {
+            return prev.filter((work: any) => work.id !== workId);
+          }
+        );
+      }
+      return { prevData };
+    },
+    onError: (error, variables, context) => {
+      if (context?.prevData) {
+        queryClient.setQueryData(
+          dashboardQueryKeys.workStudio(workCategory),
+          context.prevData
+        );
+      }
+    },
   });
 
   return {

@@ -1,5 +1,6 @@
 import { colorSystem } from "@/styles/colorSystem";
 import { media } from "@/styles/media";
+import Link from "next/link";
 import styled from "styled-components";
 
 export const ModalContainer = styled.div`
@@ -39,6 +40,32 @@ export const SelectBtnWrapper = styled.div`
 `;
 
 export const AutoBtn = styled.button`
+  display: flex;
+  padding: 12px 20px 12px 16px;
+  margin: 5px;
+
+  height: 44px;
+  border: none;
+
+  background: ${colorSystem.orange400};
+  color: white;
+  border-radius: 100px;
+
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+
+  ${media.tablet} {
+    height: 32px;
+    margin: 4px 6px 6px 0;
+    padding: 8px 12px;
+    font-size: 12px;
+    line-height: 16px;
+    align-items: center;
+  }
+`;
+
+export const MoveLink = styled(Link)`
   display: flex;
   padding: 12px 20px 12px 16px;
   margin: 5px;

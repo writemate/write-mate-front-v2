@@ -19,26 +19,22 @@ export default function WorkList() {
       {error && <StateMessage messageKey="LOADING_ERROR" />}
       {workList && (
         <>
-          {workCategory !== "trash" && workList.length > 0 && (
+          {workList.length !== 0 && (
             <>
               <WorkListContainer>
-                {!isLoading &&
+                {workCategory !== workspaceCategory.trash &&
+                  !isLoading &&
                   workList.map((work) => (
                     <WorkLinkCard key={work.id} workId={work.id} />
                   ))}
-              </WorkListContainer>
-              {workCategory === workspaceCategory.ongoing && <AddWork />}
-            </>
-          )}
-          {workCategory === "trash" && workList.length > 0 && (
-            <>
-              <WorkListContainer>
-                {!isLoading &&
+                {workCategory === workspaceCategory.trash &&
+                  !isLoading &&
                   workList.map((work) => (
                     <WorkButtonCard key={work.id} workId={work.id} />
                   ))}
               </WorkListContainer>
-              <MoveToOngoing />
+              {workCategory === workspaceCategory.ongoing && <AddWork />}
+              {workCategory === workspaceCategory.trash && <MoveToOngoing />}
             </>
           )}
           {workList.length === 0 && (

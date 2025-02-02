@@ -42,8 +42,7 @@ export const STATE_MESSAGES = {
     "인물 메모가 없습니다.\n아래 버튼을 눌러 새 인물를 구상해보세요!",
   MAIN_CHARACTER_EMPTY:
     "주요 인물이 없습니다.\n우측 버튼을 눌러 이동해 주요 인물을 선택해주세요.",
-  KEYWORD_EMPTY:
-    "설정된 키워드가 없습니다. \n좌측의 '+'을 눌러 새 키워드를 추가해보세요!",
+  KEYWORD_EMPTY: "왼쪽의 + 버튼을 눌러 새 키워드를 추가해보세요!",
   CHARACTER_NETWORK_EMPTY:
     "설정한 관계가 없습니다. \n 관계를 추가하여 인물 관계도를 확인해보세요!",
   CHARACTERISTIC_EMPTY:

@@ -1,5 +1,7 @@
 import { useInputLiveUpdate } from "@/hooks/common/useInputLiveUpdate";
 import { useOnClickUpdate } from "@/hooks/common/useOnClickUpdate";
+import { useSaveLoading } from "@/stores/useSaveLoading";
+
 import {
   deleteMemo,
   updateMemoDescription,
@@ -7,13 +9,13 @@ import {
 } from "@/utils/APIs/memo";
 import { dashboardQueryKeys } from "@/utils/APIs/queryKeys";
 import { TMemo } from "@/utils/APIs/types";
-import { notifySuccess } from "@/utils/showToast";
+import { notifySuccess, notifyWarning } from "@/utils/showToast";
 import { useQueryClient } from "@tanstack/react-query";
 import { createContext, useState } from "react";
 
 export function useMemoItem(memo: TMemo) {
   const queryClient = useQueryClient();
-
+  const isSaving = useSaveLoading().checkIsSaving();
   const [isOpenEditModal, setIsOpenEditModal] = useState(false);
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
   const nameRef = document.getElementsByClassName("memo-modal-name");
@@ -32,20 +34,24 @@ export function useMemoItem(memo: TMemo) {
   };
 
   const closeEditModal = () => {
+    if (isSaving) {
+      notifyWarning("저장 중입니다. 잠시 후 다시 시도해주세요.");
+      return;
+    }
     queryClient.invalidateQueries({
-      queryKey: [dashboardQueryKeys.memo()],
+      queryKey: dashboardQueryKeys.memo(),
     });
     setIsOpenEditModal(false);
   };
 
   const onChangeName = useInputLiveUpdate(
-    updateMemoName(memo.id),
+    updateMemoName(memo.id ?? ""),
     "메모 이름 변경",
     "메모 이름 변경에 실패하였습니다."
   );
 
   const onChangeDescription = useInputLiveUpdate(
-    updateMemoDescription(memo.id),
+    updateMemoDescription(memo.id ?? ""),
     "메모 내용 변경",
     "메모 내용 변경에 실패하였습니다."
   );
@@ -65,14 +71,24 @@ export function useMemoItem(memo: TMemo) {
   };
 
   const onDeleteMemo = useOnClickUpdate({
-    mutationFn: deleteMemo(memo.id),
-    queryKey: ["memo", memo.id],
+    mutationFn: deleteMemo(memo.id ?? ""),
+    queryKey: dashboardQueryKeys.memo(),
     savingMessage: "메모 삭제 중",
     errorMessage: "메모 삭제에 실패하였습니다.",
-    onSuccess: () => {
-      notifySuccess("메모가 삭제되었습니다.");
+    onMutate: () => {
       closeEditModal();
       closeDeleteModal();
+      const prevData = queryClient.getQueryData(dashboardQueryKeys.memo());
+      queryClient.setQueryData(dashboardQueryKeys.memo(), (oldData: any[]) => {
+        return oldData.filter((item) => item.id !== memo.id);
+      });
+      return { prevData };
+    },
+    onError: (error, newMemo, context) => {
+      queryClient.setQueryData([dashboardQueryKeys.memo()], context?.prevData);
+    },
+    onSuccess: () => {
+      notifySuccess("메모가 삭제되었습니다.");
     },
   });
 

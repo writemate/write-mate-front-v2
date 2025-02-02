@@ -53,7 +53,7 @@ export default function Chapter({
             defaultValue={chapterName}
             onChange={onChapterNameChange}
             placeholder={
-              chapterId ? "챕터 이름을 입력해주세요." : "챕터 생성 중"
+              chapterId ? "챕터 제목을 입력해주세요." : "챕터 생성 중"
             }
             disabled={!chapterId}
           />

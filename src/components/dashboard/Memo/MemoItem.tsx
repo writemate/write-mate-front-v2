@@ -38,9 +38,9 @@ export default function MemoItem({ memo }: { memo: TMemo }) {
         <MemoHeader>
           <MemoTitle
             value={getTempName()}
-            placeholder="메모 이름을 입력하세요"
+            placeholder={memo.id ? "메모 이름을 입력하세요" : "메모 생성 중"}
             readOnly={true}
-            onClick={onClickMemoTitle}
+            onClick={memo.id ? onClickMemoTitle : undefined}
           />
           <IconButton type="button" onClick={copy(memo.memo_description)}>
             <CopyIcon />
@@ -48,10 +48,10 @@ export default function MemoItem({ memo }: { memo: TMemo }) {
         </MemoHeader>
         <MemoContent
           value={memo.memo_description}
-          placeholder="메모 내용을 입력하세요"
+          placeholder={memo.id ? "메모 내용을 입력하세요" : ""}
           maxRows={3}
           readOnly={true}
-          onClick={onClickMemoContent}
+          onClick={memo.id ? onClickMemoContent : undefined}
         />
         <MemoUpdatedDate>
           {new Date(memo.updatedAt).toLocaleString("ko-KR", {
