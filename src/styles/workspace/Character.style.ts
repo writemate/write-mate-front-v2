@@ -174,7 +174,7 @@ export const CharacterListContainer = styled.div<{ $forInfoPage: boolean }>`
   position: relative;
   ${FlexRowLeftStart};
   width: 100%;
-  height: ${({ $forInfoPage }) => ($forInfoPage ? "auto" : "100%")};
+  height: auto;
   margin-top: ${({ $forInfoPage }) => ($forInfoPage ? "0" : "36px")};
   gap: 12px;
   flex-wrap: wrap;
