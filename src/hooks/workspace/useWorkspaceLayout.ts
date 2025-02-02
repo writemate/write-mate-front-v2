@@ -19,10 +19,8 @@ enum SidebarType {
 }
 
 export const useWorkspaceLayout = () => {
-  const [sidebarType, setSidebarType] = useState<SidebarType | null>(
-    SidebarType.script
-  );
-  const [openIdeaBox, setOpenIdeaBox] = useState(true);
+  const [sidebarType, setSidebarType] = useState<SidebarType | null>(null);
+  const [openIdeaBox, setOpenIdeaBox] = useState(false);
   const pathname = usePathname();
   const sidebarRef = useRef<HTMLDivElement>(null);
   const toggleIdeaBox = () => setOpenIdeaBox(!openIdeaBox);
