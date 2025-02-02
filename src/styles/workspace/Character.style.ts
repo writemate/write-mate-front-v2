@@ -199,7 +199,7 @@ export const CharacterCardContainer = styled(Link)`
   ${FlexColumnLeftStart};
   ${clickable};
   align-items: flex-start;
-  width: 244px;
+  width: 239px;
   height: 220px;
   padding: 18px;
   border-radius: 12px;
@@ -223,7 +223,7 @@ export const NameAndRole = styled.div`
   display: flex;
   flex-direction: column;
 
-  width: calc(100% - 60px);
+  width: calc(100% - 74px);
   margin-left: 12px;
 `;
 export const CharacterCardTitle = styled.div`
