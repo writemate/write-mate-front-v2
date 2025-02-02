@@ -100,8 +100,13 @@ export const TitleInput = styled.input`
   ${TitleCss}
 `;
 
-export const TitleDiv = styled.div`
+export const TitleDiv = styled.div<{ $isBlank?: boolean }>`
   ${TitleCss}
+  ${({ $isBlank, theme }) =>
+    $isBlank &&
+    `
+      color: ${theme.color.gray300};
+    `}
 `;
 
 export const Description = styled(TextareaAutosize)`

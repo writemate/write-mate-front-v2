@@ -43,7 +43,11 @@ export function Chapter({
     >
       <ChapterCard>
         <ChapterHeader>
-          <TitleDiv>{chapterName}</TitleDiv>
+          <TitleDiv $isBlank={chapterName === ""}>
+            {chapterName}
+            {chapterName === "" &&
+              "챕터 제목이 없습니다. 클릭하여 작성해주세요."}
+          </TitleDiv>
           <IconButton type="button" onClick={toggleChapterFold}>
             {isFolded && <ToggleFold />}
             {!isFolded && <ToggleIcon />}
@@ -58,7 +62,11 @@ export function Chapter({
                 href={`/${workspace_id}/plot/${plotId}#e${event.id}`}
               >
                 <EventColumnContainer key={event.id}>
-                  <EventTitleDiv>{event.event_name}</EventTitleDiv>
+                  <EventTitleDiv $isBlank={event.event_name === ""}>
+                    {event.event_name}
+                    {event.event_name === "" &&
+                      "이벤트 제목이 없습니다. 클릭하여 작성해주세요."}
+                  </EventTitleDiv>
                 </EventColumnContainer>
               </EventContainer>
             ))}

@@ -120,9 +120,14 @@ export const EventTitle = styled.input`
   ${EventTitleCss}
 `;
 
-export const EventTitleDiv = styled.div`
+export const EventTitleDiv = styled.div<{ $isBlank: boolean }>`
   ${EventTitleCss}
   margin-top: 5px;
+  ${({ $isBlank, theme }) =>
+    $isBlank &&
+    `
+      color: ${theme.color.gray300};
+    `}
 `;
 
 export const EventDescription = styled(TextareaAutosize)`
