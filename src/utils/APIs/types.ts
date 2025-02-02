@@ -102,7 +102,7 @@ export type TCharacter = {
   gender: string;
   characteristic: Array<{ title: string; content: string }>;
   keyword: TKeyword[];
-  relatedEvent: TChapter[];
+  relatedEvent: Array<TChapter & { plotId: string }>;
 };
 
 export type TSimpleCharacter = {

@@ -4,13 +4,14 @@ import {
   EventColumnContainer,
   EventTitle,
   EventListContainer,
+  EventTitleDiv,
 } from "@/styles/workspace/plot/Event.styles";
 import { useContext, useState } from "react";
 import {
   ChapterCard,
   IconButton,
-  TitleInput,
   ChapterHeader,
+  TitleDiv,
 } from "@/styles/workspace/plot/Chapter.styles";
 import {
   ChapterContainer,
@@ -20,23 +21,30 @@ import ToggleIcon from "@/assets/workspace/plot/toggle.svg";
 import ToggleFold from "@/assets/workspace/plot/toggleFold.svg";
 import { TChapter } from "@/utils/APIs/types";
 import { CharacterContext } from "@/hooks/workspace/character/character";
+import { useParams } from "next/navigation";
 
 function Chapter({
   id: chapterId,
   chapter_name: chapterName,
   pevent_list: pevent,
-}: TChapter) {
+  plotId: plotId,
+}: TChapter & { plotId: string }) {
   const [isFolded, setIsFolded] = useState(true);
+  const { workspace_id } = useParams<{ workspace_id: string }>();
   const toggleChapterFold = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
+    e.preventDefault();
     setIsFolded(!isFolded);
   };
 
   return (
-    <ChapterContainer $isDraggable={false} href={`#c${chapterId}`}>
+    <ChapterContainer
+      $isDraggable={false}
+      href={`/${workspace_id}/plot/${plotId}#c${chapterId}`}
+    >
       <ChapterCard>
         <ChapterHeader>
-          <TitleInput value={chapterName} disabled />
+          <TitleDiv>{chapterName}</TitleDiv>
           <IconButton type="button" onClick={toggleChapterFold}>
             {isFolded && <ToggleFold />}
             {!isFolded && <ToggleIcon />}
@@ -48,14 +56,10 @@ function Chapter({
               <EventContainer
                 key={event.id}
                 $isDraggable={false}
-                href={`#e${event.id}`}
+                href={`/${workspace_id}/plot/${plotId}#e${event.id}`}
               >
                 <EventColumnContainer key={event.id}>
-                  <EventTitle
-                    value={event.event_name}
-                    disabled
-                    style={{ marginTop: 5 }}
-                  />
+                  <EventTitleDiv>{event.event_name}</EventTitleDiv>
                 </EventColumnContainer>
               </EventContainer>
             ))}
