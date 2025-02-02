@@ -14,6 +14,8 @@ import {
   CharacterListContext,
   useCharacterList,
 } from "@/hooks/workspace/character/characterList";
+import { getCharacter } from "@/utils/APIs/workspace/character";
+import { getName } from "@/utils/getCharacterName";
 
 interface CharacterModalProps {
   chapterId: string;
@@ -46,10 +48,11 @@ export default function SelectCharacterModal({
   return (
     <ModalContainer ref={modalRef}>
       <SelectBtnWrapper>
-        <AutoBtn onClick={handleAutoChatacter}>
+        {/* <AutoBtn onClick={handleAutoChatacter}>
           <Circulation style={{ marginRight: "6px" }} />
           자동 연동
-        </AutoBtn>
+        </AutoBtn> */}
+
         {selectedCharacterList.map((selectCharacter) => (
           <CharacterCheckBtn
             type="button"
@@ -68,7 +71,7 @@ export default function SelectCharacterModal({
             onClick={onSelectCharacterClick(character.id)}
             key={character.id}
           >
-            {character.ch_name}
+            {getName(character)}
           </CharacterDefaultBtn>
         ))}
       </div>
