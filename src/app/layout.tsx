@@ -27,6 +27,7 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.svg" />
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="naver-site-verification" content="ac8f304950e10bd871244c16c3784533707d2cd5" />
         <title>
           라이트메이트(write mate) - 웹소설 창작자를 위한 클라우드 기반 창작
           플랫폼
