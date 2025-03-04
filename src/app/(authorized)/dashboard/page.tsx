@@ -7,14 +7,23 @@ import {
   useWorkCategory,
   WorkCategoryContext,
 } from "@/hooks/dashboard/work/workCategory";
+import Popup from "@/components/Popup";
+import { usePopup } from "@/hooks/usePopup";
 
 export default function Dashboard() {
   const workCategoryValue = useWorkCategory();
   const { workCategory } = workCategoryValue;
   const WorkListValue = useWorkList(workCategory);
+  const [isPopupOpen, closePopup, closePopupForOneDay] = usePopup(0);
 
   return (
     <TitleAndWorkListContainer>
+      {isPopupOpen && (
+        <Popup
+          closePopup={closePopup}
+          closePopupForOneDay={closePopupForOneDay}
+        ></Popup>
+      )}
       <WorkCategoryContext.Provider value={workCategoryValue}>
         <WorkStudioTitleAndNavigationBar />
         <WorkListContext.Provider value={WorkListValue}>
