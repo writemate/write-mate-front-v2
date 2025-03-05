@@ -1,7 +1,9 @@
 "use client";
 import { Loading } from "@/components/Loading";
+import Popup from "@/components/Popup";
 import { WarningModal } from "@/components/WarningModal";
 import { useWarningModal } from "@/hooks/common/useWarningModal";
+import { usePopup } from "@/hooks/usePopup";
 import { useLogin } from "@/stores/useLogin";
 import { BREAKPOINT_NUM } from "@/styles/media";
 import { useRouter } from "next/navigation";

@@ -12,12 +12,29 @@ import {
   Highlight,
 } from "@/styles/Popup.style";
 
+type Info = {
+  infoTitle: string;
+  infoContent: string;
+};
+
 export default function Popup({
   closePopup,
   closePopupForOneDay,
+  title,
+  content,
+  note = null,
+  extraInfo,
+  link = null,
+  linkText = null,
 }: {
   closePopup: () => void;
   closePopupForOneDay?: () => void;
+  title: string;
+  content: string;
+  note?: string | null;
+  extraInfo: Info[];
+  link?: string | null;
+  linkText?: string | null;
 }) {
   const backRef = useRef(null);
 
@@ -35,46 +52,26 @@ export default function Popup({
     >
       <PopupContainer>
         <PopupContent>
-          <Title>
-            라이트메이트
-            <br />
-            리서치 패널 모집
-          </Title>
+          <Title>{title}</Title>
           <Description>
-            더 나은 서비스를 만들기 위해 사용자분들의 소중한 의견을 듣고자
-            합니다. <br />
-            여러분의 경험을 바탕으로 한 피드백이 라이트메이트를 발전시키는
-            원동력이 됩니다.
+            {content}
             <br />
             <br />
-            <Highlight>| 리서치 패널 모집 안내 |</Highlight>
-            <br />
-            모집 기간: 2025년 3월 15일까지
-            <br />
-            인터뷰 진행: ZOOM을 통한 비대면 인터뷰 (약 1시간 소요)
-            <br />
-            참여 혜택: 인터뷰 참여시 최대 3만원 상당의 상품권 지급
-            <br />
-            참여 방법: 서비스를 사용하고, 사용 경험을 바탕으로 신청!
-            <br />
-            선정 안내: 추첨을 통해 선정된 분들께 개별 연락드립니다
-            <br />
-            <br />
-            여러분의 소중한 의견으로 더 편리한 라이트메이트를 만들어가겠습니다.
-            <br />
-            <Note>
-              ※ 수집된 개인정보는 패널 선정 및 인터뷰 진행 목적으로만 사용되며,
-              이후 즉시 폐기됩니다.
-            </Note>
+            {extraInfo.map((info) => (
+              <div key={info.infoTitle}>
+                <Highlight>| {info.infoTitle} |</Highlight>
+                <br />
+                {info.infoContent}
+              </div>
+            ))}
+            {note != null && <Note>{note}</Note>}
             <br />
           </Description>
-          <StyledLink
-            href="https://forms.gle/FZF17AnsqWc2dPRT9"
-            target="_blank"
-            rel="noreferrer"
-          >
-            지금 바로 신청하기 →
-          </StyledLink>
+          {link != null && (
+            <StyledLink href={link} target="_blank" rel="noreferrer">
+              {linkText}
+            </StyledLink>
+          )}
         </PopupContent>
         <Footer>
           {closePopupForOneDay && (

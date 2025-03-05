@@ -11,7 +11,7 @@ export const Overlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999998;
+  z-index: 9000;
 `;
 
 export const PopupContainer = styled.div`
@@ -25,6 +25,7 @@ export const PopupContainer = styled.div`
 `;
 
 export const PopupContent = styled.div`
+  white-space: pre-line;
   display: flex;
   flex-direction: column;
   justify-content: center;
