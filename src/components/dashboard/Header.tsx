@@ -17,7 +17,7 @@ import { MyPageContext } from "@/hooks/dashboard/useMyPage";
 import { MyPageModal } from "./MyPageModal";
 import { useContext, useState } from "react";
 import Popup from "../Popup";
-import { ResearchPopup } from "@/app/(authorized)/dashboard/page";
+import { ResearchPopup } from "@/utils/popupMsg";
 
 export default function Header() {
   const { isOpenMyPage, onClickMyPage } = useContext(MyPageContext);
