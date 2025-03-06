@@ -10,31 +10,31 @@ import {
 import Popup from "@/components/Popup";
 import { usePopup } from "@/hooks/usePopup";
 
+export const ResearchPopup = {
+  title: `라이트메이트\n리서치 패널 모집`,
+  content: `더 나은 서비스를 만들기 위해 사용자분들의 소중한 의견을 듣고자합니다.\n여러분의 경험을 바탕으로 한 피드백이 라이트메이트를 발전시키는 원동력이 됩니다.`,
+  note: `※ 수집된 개인정보는 패널 선정 및 인터뷰 진행 목적으로만 사용되며, 이후 즉시 폐기됩니다.`,
+  link: "https://forms.gle/FZF17AnsqWc2dPRT9",
+  linkText: "지금 바로 신청하기 →",
+  extraInfo: [
+    {
+      infoTitle: `리서치 패널 모집 안내`,
+      infoContent: `모집 기간: 2025년 3월 15일까지
+                인터뷰 진행: ZOOM을 통한 비대면 인터뷰 (약 1시간 소요)
+                참여 혜택: 인터뷰 참여시 최대 3만원 상당의 상품권 지급
+                참여 방법: 서비스를 사용하고, 사용 경험을 바탕으로 신청!
+                선정 안내: 추첨을 통해 선정된 분들께 개별 연락드립니다
+
+                여러분의 소중한 의견으로 더 편리한 라이트메이트를 만들어가겠습니다.`,
+    },
+  ],
+};
+
 export default function Dashboard() {
   const workCategoryValue = useWorkCategory();
   const { workCategory } = workCategoryValue;
   const WorkListValue = useWorkList(workCategory);
   const [isPopupOpen, closePopup, closePopupForOneDay] = usePopup(0);
-
-  const ResearchPopup = {
-    title: `라이트메이트\n리서치 패널 모집`,
-    content: `더 나은 서비스를 만들기 위해 사용자분들의 소중한 의견을 듣고자합니다.\n여러분의 경험을 바탕으로 한 피드백이 라이트메이트를 발전시키는 원동력이 됩니다.`,
-    note: `※ 수집된 개인정보는 패널 선정 및 인터뷰 진행 목적으로만 사용되며, 이후 즉시 폐기됩니다.`,
-    link: "https://forms.gle/FZF17AnsqWc2dPRT9",
-    linkText: "지금 바로 신청하기 →",
-    extraInfo: [
-      {
-        infoTitle: `리서치 패널 모집 안내`,
-        infoContent: `모집 기간: 2025년 3월 15일까지
-                  인터뷰 진행: ZOOM을 통한 비대면 인터뷰 (약 1시간 소요)
-                  참여 혜택: 인터뷰 참여시 최대 3만원 상당의 상품권 지급
-                  참여 방법: 서비스를 사용하고, 사용 경험을 바탕으로 신청!
-                  선정 안내: 추첨을 통해 선정된 분들께 개별 연락드립니다
-
-                  여러분의 소중한 의견으로 더 편리한 라이트메이트를 만들어가겠습니다.`,
-      },
-    ],
-  };
 
   return (
     <TitleAndWorkListContainer>
