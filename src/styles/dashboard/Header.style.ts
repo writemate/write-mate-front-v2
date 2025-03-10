@@ -1,15 +1,17 @@
 "use client";
 import { media } from "@/styles/media";
 import { styled } from "styled-components";
-import { clickable, FlexRowSpaceBetween } from "@/styles";
+import { FlexRowSpaceBetween } from "@/styles";
 import {
   GrayTextButton,
   HamburgerMenuButton,
   Round12GradientBackgroundBlackIcon,
   Round9999GradientBackgroundBlackIcon,
+  Round9999OrangeBackgoundWhiteColor,
   Round9999RedBackgoundWhiteColor,
 } from "@/styles/Button";
 import HamburgerMenu from "@/assets/icons/hamburgerMenu.svg";
+import { FontTabletSemibold14 } from "../Font";
 
 export const HeaderContainer = styled.div`
   ${FlexRowSpaceBetween}
@@ -76,6 +78,16 @@ export const TabletHeaderMenuContainer = styled.div`
 
 export const HeaderLeftButton = styled.button`
   ${Round9999RedBackgoundWhiteColor}
+  ${media.tablet} {
+    ${GrayTextButton}
+  }
+`;
+
+export const PopupButton = styled.button`
+  ${Round9999OrangeBackgoundWhiteColor}
+  ${FontTabletSemibold14}
+  padding: 12px;
+  margin-left: 12px;
   ${media.tablet} {
     ${GrayTextButton}
   }
