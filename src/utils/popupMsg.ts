@@ -7,7 +7,7 @@ export const ResearchPopup = {
   extraInfo: [
     {
       infoTitle: `리서치 패널 모집 안내`,
-      infoContent: `모집 기간: 2025년 3월 15일까지
+      infoContent: `모집 기간: 2025년 4월 1일까지
                 인터뷰 진행: ZOOM을 통한 비대면 인터뷰 (약 1시간 소요)
                 참여 혜택: 인터뷰 참여시 최대 3만원 상당의 상품권 지급
                 참여 방법: 서비스를 사용하고, 사용 경험을 바탕으로 신청!
