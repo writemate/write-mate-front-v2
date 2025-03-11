@@ -19,7 +19,7 @@ export const ResearchPopup = {
 };
 
 export const ServerPopup = {
-  title: `라이트메이트 서비스\n서버 점검 안내내`,
+  title: `라이트메이트 서비스\n서버 점검 안내`,
   content: `2025년 3월 22일에 더나은 서비를 위해 서버 점검이 예정되어 있습니다.\n때문에 해당 일자의 서비스가 불안정할 수 있습니다. 참고 부탁드립니다.`,
   extraInfo: [
     {
