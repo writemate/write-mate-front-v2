@@ -9,13 +9,15 @@ import {
 } from "@/hooks/dashboard/work/workCategory";
 import Popup from "@/components/Popup";
 import { usePopup } from "@/hooks/usePopup";
-import { ResearchPopup } from "@/utils/popupMsg";
+import { ResearchPopup, ServerPopup } from "@/utils/popupMsg";
 
 export default function Dashboard() {
   const workCategoryValue = useWorkCategory();
   const { workCategory } = workCategoryValue;
   const WorkListValue = useWorkList(workCategory);
   const [isPopupOpen, closePopup, closePopupForOneDay] = usePopup(0);
+  const [isServerPopupOpen, closeServerPopup, closeServerPopupForOneDay] =
+    usePopup(1);
 
   return (
     <TitleAndWorkListContainer>
@@ -29,6 +31,15 @@ export default function Dashboard() {
           link={ResearchPopup.link}
           linkText={ResearchPopup.linkText}
           extraInfo={ResearchPopup.extraInfo}
+        ></Popup>
+      )}
+      {isServerPopupOpen && (
+        <Popup
+          closePopup={closeServerPopup}
+          closePopupForOneDay={closeServerPopupForOneDay}
+          title={ServerPopup.title}
+          content={ServerPopup.content}
+          extraInfo={ServerPopup.extraInfo}
         ></Popup>
       )}
       <WorkCategoryContext.Provider value={workCategoryValue}>

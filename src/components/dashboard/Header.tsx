@@ -17,11 +17,12 @@ import { MyPageContext } from "@/hooks/dashboard/useMyPage";
 import { MyPageModal } from "./MyPageModal";
 import { useContext, useState } from "react";
 import Popup from "../Popup";
-import { ResearchPopup } from "@/utils/popupMsg";
+import { ResearchPopup, ServerPopup } from "@/utils/popupMsg";
 
 export default function Header() {
   const { isOpenMyPage, onClickMyPage } = useContext(MyPageContext);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isServerPopupOpen, setIsServerPopupOpen] = useState(false);
 
   return (
     <HeaderContainer>
@@ -32,6 +33,17 @@ export default function Header() {
       >
         <Event /> <p>이벤트 공지</p>
       </HeaderLeftButton>
+      <HeaderLeftButton onClick={() => setIsServerPopupOpen(true)}>
+        <p>서버 점검 안내</p>
+      </HeaderLeftButton>
+      {isServerPopupOpen && (
+        <Popup
+          closePopup={() => setIsServerPopupOpen(true)}
+          title={ServerPopup.title}
+          content={ServerPopup.content}
+          extraInfo={ServerPopup.extraInfo}
+        ></Popup>
+      )}
       <PopupButton onClick={() => setIsPopupOpen(true)}>
         <ResearchPanel /> <p>리서치 패널 모집</p>
       </PopupButton>
