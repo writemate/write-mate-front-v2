@@ -38,7 +38,7 @@ export default function Header() {
       </HeaderLeftButton>
       {isServerPopupOpen && (
         <Popup
-          closePopup={() => setIsServerPopupOpen(true)}
+          closePopup={() => setIsServerPopupOpen(false)}
           title={ServerPopup.title}
           content={ServerPopup.content}
           extraInfo={ServerPopup.extraInfo}

@@ -77,6 +77,7 @@ export const TabletHeaderMenuContainer = styled.div`
 `;
 
 export const HeaderLeftButton = styled.button`
+  margin-right: 12px;
   ${Round9999RedBackgoundWhiteColor}
   ${media.tablet} {
     ${GrayTextButton}
@@ -87,7 +88,6 @@ export const PopupButton = styled.button`
   ${Round9999OrangeBackgoundWhiteColor}
   ${FontTabletSemibold14}
   padding: 12px;
-  margin-left: 12px;
   ${media.tablet} {
     ${GrayTextButton}
   }
