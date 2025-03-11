@@ -26,6 +26,7 @@ export default function Popup({
   extraInfo,
   link = null,
   linkText = null,
+  isButtonClick = false,
 }: {
   closePopup: () => void;
   closePopupForOneDay?: () => void;
@@ -35,6 +36,7 @@ export default function Popup({
   extraInfo: Info[];
   link?: string | null;
   linkText?: string | null;
+  isButtonClick?: boolean;
 }) {
   const backRef = useRef(null);
 
@@ -74,7 +76,7 @@ export default function Popup({
           )}
         </PopupContent>
         <Footer>
-          {closePopupForOneDay && (
+          {!isButtonClick && (
             <CloseButton onClick={closePopupForOneDay}>
               24시간 동안 보지 않기
             </CloseButton>
