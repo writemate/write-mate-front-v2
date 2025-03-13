@@ -9,7 +9,6 @@ import { colorSystem } from "@/styles/colorSystem";
 import { GlobalStyles } from "@/styles/GlobalStyles";
 import { ThemeProvider } from "styled-components";
 import { ToastContainer } from "react-toastify";
-import { useEffect } from "react";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +24,10 @@ export default function RootLayout({
     <html lang="ko">
       <head>
         <link rel="icon" href="/favicon.svg" />
+        <meta
+          name="naver-site-verification"
+          content="86ac6c099da226633a34b0676dfef267a15105b9"
+        />
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>
