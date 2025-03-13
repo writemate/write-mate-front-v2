@@ -37,11 +37,11 @@ export const PopupContent = styled.div`
   overflow: auto;
 `;
 
-export const Title = styled.div`
+export const Title = styled.div<{ isNoti?: boolean }>`
   font-size: 28px;
   font-weight: 700;
   line-height: 1.5;
-  color: #f49661;
+  color: ${(isNoti) => (isNoti ? "#C55858" : "#f49661")};
   margin-bottom: 10px;
 `;
 
@@ -52,8 +52,8 @@ export const Description = styled.div`
   color: #353535;
 `;
 
-export const Highlight = styled.span`
-  color: #f49661;
+export const Highlight = styled.span<{ isNoti?: boolean }>`
+  color: ${(isNoti) => (isNoti ? "#C55858" : "#f49661")};
 `;
 
 export const Note = styled.span`
@@ -61,10 +61,10 @@ export const Note = styled.span`
   font-weight: 400;
 `;
 
-export const StyledLink = styled(Link)`
+export const StyledLink = styled(Link)<{ isNoti?: boolean }>`
   padding: 5px 20px;
   border-radius: 100px;
-  background-color: #f49661;
+  background-color: ${(isNoti) => (isNoti ? "#C55858" : "#f49661")};
   text-align: center;
   cursor: pointer;
   color: white;

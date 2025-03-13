@@ -27,6 +27,7 @@ export default function Popup({
   link = null,
   linkText = null,
   isButtonClick = false,
+  isNoti = false,
 }: {
   closePopup: () => void;
   closePopupForOneDay?: () => void;
@@ -37,6 +38,7 @@ export default function Popup({
   link?: string | null;
   linkText?: string | null;
   isButtonClick?: boolean;
+  isNoti?: boolean;
 }) {
   const backRef = useRef(null);
 
@@ -54,14 +56,14 @@ export default function Popup({
     >
       <PopupContainer>
         <PopupContent>
-          <Title>{title}</Title>
+          <Title isNoti={isNoti}>{title}</Title>
           <Description>
             {content}
             <br />
             <br />
             {extraInfo.map((info) => (
               <div key={info.infoTitle}>
-                <Highlight>| {info.infoTitle} |</Highlight>
+                <Highlight isNoti={isNoti}>| {info.infoTitle} |</Highlight>
                 <br />
                 {info.infoContent}
               </div>
@@ -70,7 +72,12 @@ export default function Popup({
             <br />
           </Description>
           {link != null && (
-            <StyledLink href={link} target="_blank" rel="noreferrer">
+            <StyledLink
+              isNoti={isNoti}
+              href={link}
+              target="_blank"
+              rel="noreferrer"
+            >
               {linkText}
             </StyledLink>
           )}
