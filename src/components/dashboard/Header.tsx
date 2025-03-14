@@ -15,7 +15,7 @@ import Chat from "@/assets/dashboard/header/chat.svg";
 import Separator from "@/assets/dashboard/header/separator.svg";
 import { MyPageContext } from "@/hooks/dashboard/useMyPage";
 import { MyPageModal } from "./MyPageModal";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import Popup from "../Popup";
 import { ResearchPopup, ServerPopup } from "@/utils/popupMsg";
 import { usePopup } from "@/hooks/usePopup";
@@ -51,6 +51,7 @@ export default function Header() {
       </HeaderLeftButton>
       {isServerPopupOpen && (
         <Popup
+          isNoti={true}
           isButtonClick={isServerButtonClick}
           closePopup={closeServerPopup}
           closePopupForOneDay={closeServerPopupForOneDay}

@@ -32,16 +32,17 @@ export const PopupContent = styled.div`
   padding: 50px;
   gap: 14px;
   background: white;
-  border: 8px solid #fff4ee;
+  border: 8px solid ${({ theme }) => theme.color.orange75};
   font-family: Pretendard;
   overflow: auto;
 `;
 
-export const Title = styled.div<{ isNoti?: boolean }>`
+export const Title = styled.div<{ $isNoti: boolean }>`
   font-size: 28px;
   font-weight: 700;
   line-height: 1.5;
-  color: ${(isNoti) => (isNoti ? "#C55858" : "#f49661")};
+  color: ${({ $isNoti, theme }) =>
+    $isNoti ? ({ theme }) => theme.color.red400 : theme.color.orange400};
   margin-bottom: 10px;
 `;
 
@@ -49,11 +50,12 @@ export const Description = styled.div`
   font-size: 16px;
   font-weight: 600;
   line-height: 1.5;
-  color: #353535;
+  color: ${({ theme }) => theme.color.gray900};
 `;
 
-export const Highlight = styled.span<{ isNoti?: boolean }>`
-  color: ${(isNoti) => (isNoti ? "#C55858" : "#f49661")};
+export const Highlight = styled.span<{ $isNoti: boolean }>`
+  color: ${({ $isNoti, theme }) =>
+    $isNoti ? ({ theme }) => theme.color.red400 : theme.color.orange400};
 `;
 
 export const Note = styled.span`
@@ -61,10 +63,11 @@ export const Note = styled.span`
   font-weight: 400;
 `;
 
-export const StyledLink = styled(Link)<{ isNoti?: boolean }>`
+export const StyledLink = styled(Link)<{ $isNoti: boolean }>`
   padding: 5px 20px;
   border-radius: 100px;
-  background-color: ${(isNoti) => (isNoti ? "#C55858" : "#f49661")};
+  background-color: ${({ $isNoti, theme }) =>
+    $isNoti ? ({ theme }) => theme.color.red400 : theme.color.orange400};
   text-align: center;
   cursor: pointer;
   color: white;

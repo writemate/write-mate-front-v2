@@ -56,14 +56,14 @@ export default function Popup({
     >
       <PopupContainer>
         <PopupContent>
-          <Title isNoti={isNoti}>{title}</Title>
+          <Title $isNoti={isNoti}>{title}</Title>
           <Description>
             {content}
             <br />
             <br />
             {extraInfo.map((info) => (
               <div key={info.infoTitle}>
-                <Highlight isNoti={isNoti}>| {info.infoTitle} |</Highlight>
+                <Highlight $isNoti={isNoti}>| {info.infoTitle} |</Highlight>
                 <br />
                 {info.infoContent}
               </div>
@@ -73,7 +73,7 @@ export default function Popup({
           </Description>
           {link != null && (
             <StyledLink
-              isNoti={isNoti}
+              $isNoti={isNoti}
               href={link}
               target="_blank"
               rel="noreferrer"
