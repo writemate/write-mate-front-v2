@@ -8,13 +8,14 @@ const getLimitDateFromLocalStorage = (key: string) => {
 
 export const usePopup = (index: number) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isButtonClick, setIsButtonClick] = useState(false);
 
   useEffect(() => {
     const POPUP_CLOSE_LIMIT_DATE = getLimitDateFromLocalStorage(
       "POPUP_CLOSE_LIMIT_DATE" + index
     );
     const VISITED_NOW_DATE = new Date().getTime();
-    console.log(POPUP_CLOSE_LIMIT_DATE);
+
     if (
       POPUP_CLOSE_LIMIT_DATE == null ||
       POPUP_CLOSE_LIMIT_DATE < VISITED_NOW_DATE
@@ -24,7 +25,15 @@ export const usePopup = (index: number) => {
     }
   }, []);
 
-  const closePopup = () => setIsPopupOpen(false);
+  const openPopup = () => {
+    setIsPopupOpen(true);
+    setIsButtonClick(true);
+  };
+
+  const closePopup = () => {
+    setIsPopupOpen(false);
+    setIsButtonClick(false);
+  };
 
   const closePopupForOneDay = () => {
     const currentDate = new Date();
@@ -35,5 +44,12 @@ export const usePopup = (index: number) => {
     );
     setIsPopupOpen(false);
   };
-  return [isPopupOpen, closePopup, closePopupForOneDay] as const;
+
+  return [
+    isPopupOpen,
+    openPopup,
+    closePopup,
+    closePopupForOneDay,
+    isButtonClick,
+  ] as const;
 };

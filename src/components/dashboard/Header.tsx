@@ -15,13 +15,27 @@ import Chat from "@/assets/dashboard/header/chat.svg";
 import Separator from "@/assets/dashboard/header/separator.svg";
 import { MyPageContext } from "@/hooks/dashboard/useMyPage";
 import { MyPageModal } from "./MyPageModal";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import Popup from "../Popup";
-import { ResearchPopup } from "@/utils/popupMsg";
+import { ResearchPopup, ServerPopup } from "@/utils/popupMsg";
+import { usePopup } from "@/hooks/usePopup";
 
 export default function Header() {
   const { isOpenMyPage, onClickMyPage } = useContext(MyPageContext);
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [
+    isPopupOpen,
+    openPopup,
+    closePopup,
+    closePopupForOneDay,
+    isButtonClick,
+  ] = usePopup(0);
+  const [
+    isServerPopupOpen,
+    openServerPopup,
+    closeServerPopup,
+    closeServerPopupForOneDay,
+    isServerButtonClick,
+  ] = usePopup(1);
 
   return (
     <HeaderContainer>
@@ -32,7 +46,21 @@ export default function Header() {
       >
         <Event /> <p>이벤트 공지</p>
       </HeaderLeftButton>
-      <PopupButton onClick={() => setIsPopupOpen(true)}>
+      <HeaderLeftButton onClick={openServerPopup}>
+        <p>서버 점검 안내</p>
+      </HeaderLeftButton>
+      {isServerPopupOpen && (
+        <Popup
+          isNoti={true}
+          isButtonClick={isServerButtonClick}
+          closePopup={closeServerPopup}
+          closePopupForOneDay={closeServerPopupForOneDay}
+          title={ServerPopup.title}
+          content={ServerPopup.content}
+          extraInfo={ServerPopup.extraInfo}
+        ></Popup>
+      )}
+      <PopupButton onClick={openPopup}>
         <ResearchPanel /> <p>리서치 패널 모집</p>
       </PopupButton>
       {isPopupOpen && (
@@ -43,7 +71,9 @@ export default function Header() {
           link={ResearchPopup.link}
           linkText={ResearchPopup.linkText}
           extraInfo={ResearchPopup.extraInfo}
-          closePopup={() => setIsPopupOpen(false)}
+          closePopupForOneDay={closePopupForOneDay}
+          isButtonClick={isButtonClick}
+          closePopup={closePopup}
         />
       )}
       <HeaderRightButtonList>
