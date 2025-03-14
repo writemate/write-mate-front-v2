@@ -15,7 +15,7 @@ export const usePopup = (index: number) => {
       "POPUP_CLOSE_LIMIT_DATE" + index
     );
     const VISITED_NOW_DATE = new Date().getTime();
-    console.log(POPUP_CLOSE_LIMIT_DATE);
+
     if (
       POPUP_CLOSE_LIMIT_DATE == null ||
       POPUP_CLOSE_LIMIT_DATE < VISITED_NOW_DATE
